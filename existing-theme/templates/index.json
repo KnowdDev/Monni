@@ -1,0 +1,237 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_aQar7a": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_4cHEKU": {
+          "type": "heading",
+          "settings": {
+            "heading": "Holistic health, beauty and fashion",
+            "heading_size": "h2"
+          }
+        },
+        "text_CXJcya": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_Wn7gdC": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop New Arrivals",
+            "button_link_1": "shopify://collections/new-collection",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_4cHEKU",
+        "text_CXJcya",
+        "buttons_Wn7gdC"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/Copy_of_SophieWilliamson0131--000045.jpg",
+        "image_overlay_opacity": 20,
+        "image_height": "medium",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
+        "color_scheme": "inverse",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "left",
+        "show_text_below": true
+      }
+    },
+    "image_banner_n7TFbP": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_RVUdHT": {
+          "type": "heading",
+          "settings": {
+            "heading": "<a href=\"/collections/new-collection\" title=\"New products\">Holistic Health, Beauty and Fashion</a>",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_RVUdHT"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_overlay_opacity": 0,
+        "image_height": "small",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
+        "color_scheme": "inverse",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "left",
+        "show_text_below": false
+      }
+    },
+    "featured_collection_9yJNdj": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "new-website-featured",
+        "products_to_show": 4,
+        "title": "Shop New Arrivals",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 5,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "outline",
+        "color_scheme": "scheme-04e9080f-dbb1-4c6d-8032-3a000315fed4",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_banner_PQ3wT8": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_gLcMER": {
+          "type": "heading",
+          "settings": {
+            "heading": "MONNI",
+            "heading_size": "h1"
+          }
+        },
+        "text_6HT9DF": {
+          "type": "text",
+          "settings": {
+            "text": "Elevated silk, made to order",
+            "text_style": "subtitle"
+          }
+        }
+      },
+      "block_order": [
+        "heading_gLcMER",
+        "text_6HT9DF"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/MONNIxLOFOTEN002-13.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
+        "color_scheme": "inverse",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "left",
+        "show_text_below": false
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "face",
+        "products_to_show": 4,
+        "title": "Face",
+        "heading_size": "h2",
+        "description": "<p>Elevate your skincare routine and protect your face with our selection of natural skincare products, made in New Zealand by top brands like <a href=\"https://teaandtonic.co.nz/collections/love-skin\">Love Skin</a>, <a href=\"https://teaandtonic.co.nz/collections/countrykitchen\">Country Kitchen</a>, <a href=\"https://teaandtonic.co.nz/collections/coskin\">CoSkin</a>, <a href=\"https://teaandtonic.co.nz/collections/aotea\">Aotea </a>and more. Shop now and discover the benefits of using all-natural, locally sourced ingredients on your delicate facial skin. </p>",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "outline",
+        "color_scheme": "background-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 64,
+        "padding_bottom": 68
+      }
+    },
+    "26f64524-6dab-425b-baa6-09ab8f01e736": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "jewellery",
+        "products_to_show": 4,
+        "title": "Jewellery",
+        "heading_size": "h2",
+        "description": "<p>Explore Tea & Tonic Matakana's stunning collection of handcrafted jewellery - discover a range of necklaces, earrings, rings, and bracelets from top brands like Charlotte Penman, Vania and Monarc Jewellery. Whether you're looking for gold hoops, sterling silver huggies, or diamond studs, we have the perfect piece to elevate your style. Shop now and find your new favourite accessory.<br/></p>",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "outline",
+        "color_scheme": "background-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 64,
+        "padding_bottom": 68
+      }
+    },
+    "f86b4c60-0cdd-4c4e-a713-756bee40ba03": {
+      "type": "featured-blog",
+      "settings": {
+        "blog": "journal",
+        "post_limit": 3,
+        "heading": "Holistic Journals",
+        "heading_size": "h2",
+        "columns_desktop": 3,
+        "show_view_all": false,
+        "show_image": true,
+        "show_date": false,
+        "show_author": false,
+        "color_scheme": "scheme-04e9080f-dbb1-4c6d-8032-3a000315fed4",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "image_banner_aQar7a",
+    "image_banner_n7TFbP",
+    "featured_collection_9yJNdj",
+    "image_banner_PQ3wT8",
+    "featured-collection",
+    "26f64524-6dab-425b-baa6-09ab8f01e736",
+    "f86b4c60-0cdd-4c4e-a713-756bee40ba03"
+  ]
+}

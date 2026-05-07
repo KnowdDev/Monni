@@ -1,0 +1,233 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "4837950c-eea4-410f-8595-647c4cb7d4f1": {
+      "type": "rich-text",
+      "blocks": {
+        "template--16192093028523__4837950c-eea4-410f-8595-647c4cb7d4f1-heading-1": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "About Tea & Tonic",
+            "heading_size": "h0"
+          }
+        },
+        "template--16192093028523__4837950c-eea4-410f-8595-647c4cb7d4f1-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Tea and Tonic is a holistic health store located in Matakana Village, with a focus on <a href=\"https://teaandtonic.co.nz/blogs/journal/supporting-women-in-business-going-plastic-free\"><span style=\"text-decoration:underline\">sustainability, supporting women in business </span></a>and the art of gifting. Founded by Monni Jansen in 2017, Tea and Tonic is often described as a calm and thoughtful sanctuary that delights and soothes the senses.<br/><br/>Designed by one of New Zealand’s leading Architectural designers , Fraser Horton, the Tea and Tonic flagship store emanates harmony and tranquility, with influences from eastern design. Showcasing natural materials, the store connects to the elements that flow outside, from the neighbouring river to the courtyard of cherry blossom trees.<br/><br/>Through her own journey to wellbeing, Monni realized that all healing starts with love - love for oneself, others, and the world around us - and that the health of people and our planet go hand in hand. This understanding guides everything we do, from the daily self-care rituals we inspire, to our procurement of local, organic, and sustainable products made by women, and our plastic-free policy.<br/><br/>Thanks to our integrated approach to wellness, gifting, and mindfulness, Tea and Tonic is a must-visit to enjoy tea, discover the finest sustainable products, and be nurtured in every way. We look forward to sharing a little tea with you, and we hope you feel nourished and inspired by every moment you spend with us at Tea & Tonic.<br/><br/>Love,<br/>Monni and the Tea and Tonic Team x</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--16192093028523__4837950c-eea4-410f-8595-647c4cb7d4f1-heading-1",
+        "template--16192093028523__4837950c-eea4-410f-8595-647c4cb7d4f1-text-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 16
+      }
+    },
+    "03d828e6-9500-4697-b7eb-a38c39e2bb8b": {
+      "type": "collage",
+      "blocks": {
+        "template--16192093028523__03d828e6-9500-4697-b7eb-a38c39e2bb8b-image-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_-_2021-09-12T132325.234_720x_1f9bb888-de2f-49de-aef7-4c04cf0ec412.webp"
+          }
+        },
+        "a6486975-82b2-482c-8a37-4f67351ae5aa": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_-_2021-09-12T132435.899_720x_8f5cb950-3dab-4cd6-a4c3-c5e27bb2850b.webp"
+          }
+        },
+        "b741c04d-7c35-4a82-8976-3c459c593e1b": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_-_2021-09-12T132648.770_720x_5bbf73d6-c793-4805-949b-0bad2736a5ea.webp"
+          }
+        }
+      },
+      "block_order": [
+        "template--16192093028523__03d828e6-9500-4697-b7eb-a38c39e2bb8b-image-1",
+        "a6486975-82b2-482c-8a37-4f67351ae5aa",
+        "b741c04d-7c35-4a82-8976-3c459c593e1b"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_size": "h2",
+        "desktop_layout": "left",
+        "mobile_layout": "collage",
+        "card_styles": "product-card-wrapper",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "9edd34de-4aef-45f3-a325-b9d50ef8eda5": {
+      "type": "rich-text",
+      "blocks": {
+        "template--16192093028523__9edd34de-4aef-45f3-a325-b9d50ef8eda5-heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Our Values",
+            "heading_size": "h1"
+          }
+        },
+        "template--16192093028523__9edd34de-4aef-45f3-a325-b9d50ef8eda5-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We curate beautiful spaces filled with delicious scents by selecting quality products that last, resulting in environments that evoke a sanctuary-like feel.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--16192093028523__9edd34de-4aef-45f3-a325-b9d50ef8eda5-heading-1",
+        "template--16192093028523__9edd34de-4aef-45f3-a325-b9d50ef8eda5-text-1"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "49b90e0f-f7bf-49e7-9d59-0bfc98201d38": {
+      "type": "multirow",
+      "blocks": {
+        "template--16192093028523__49b90e0f-f7bf-49e7-9d59-0bfc98201d38-row-1": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/black_and_white_image_of_a_women_in_white_shirt.webp",
+            "caption": "",
+            "heading": "Sustainability & Self Love",
+            "text": "<p>We believe human health and the health of the planet are interconnected. Therefore, to look after ourselves we must live in harmony with mother earth, Papatūānuku. In a world full of misinformation and isolation, we must question convention and reconnect with our heart, intuition and each other. When creating and sourcing our products, we consider the full life cycle of a product and continually innovate to find better solutions. Through this process we embody the change we want to see in the world and can educate and inspire others so that they can do the same.<br/><br/>Self-love is self-care. The greatest thing we can do for the people around us is to learn to truly love and look after ourselves. Tea and Tonic is home to an abundance of beautiful products to inspire the creation of daily rituals and sacred spaces. It is the perfect place to curate a gift to yourself or another, encouraging this act of love in action. In the modern world it is so important to find time to retreat and to nurture our mental, emotional, spiritual and physical well-being. We must learn to love ourselves first before we can truly love another.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "template--16192093028523__49b90e0f-f7bf-49e7-9d59-0bfc98201d38-row-2": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/monni_in_black_jumpsuit.webp",
+            "caption": "",
+            "heading": "Empowering Women & The Art Of Gifting",
+            "text": "<p>Empowering women is essential to the health and social development of families, communities and countries. That is why we align with woman-owned businesses who are contributing to make the world a better place. By doing so, we empower these women so that they can reach their full potential and support sustainable economic growth and social transformation.<br/><br/>Our lives are fulfilling when we give and share — great inner joy comes from helping others to better their lives. Giving provides an intrinsic reward that is far more valuable than the gift we receive. Giving can be a joyous experience and one that does not come at a cost to the environment. That’s why we’ve curated the most beautiful, sustainable, locally sourced, plastic-free products just for you, and wrapped them with care in biodegradable packaging. We also offer sustainable gift boxes that are perfect for every occasion and loved one.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--16192093028523__49b90e0f-f7bf-49e7-9d59-0bfc98201d38-row-1",
+        "template--16192093028523__49b90e0f-f7bf-49e7-9d59-0bfc98201d38-row-2"
+      ],
+      "settings": {
+        "image_height": "medium",
+        "desktop_image_width": "medium",
+        "image_layout": "alternate-left",
+        "heading_size": "h1",
+        "text_style": "body",
+        "button_style": "secondary",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "background-1",
+        "row_color_scheme": "background-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "4f0b02c9-df22-4d8c-98d9-3213a19711d7": {
+      "type": "rich-text",
+      "blocks": {
+        "template--16192093028523__4f0b02c9-df22-4d8c-98d9-3213a19711d7-heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Founder of Tea & Tonic",
+            "heading_size": "h1"
+          }
+        },
+        "template--16192093028523__4f0b02c9-df22-4d8c-98d9-3213a19711d7-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Hello, it's me Monni.<br/><br/>Rather than give you the generic \"where I am from\" etc, I want to say: I am human, as are you. I am energy, as are you and every single thing that makes up our infinite universe.<br/><br/>We reflect each other and learn together on this journey, all made from the same. We are all connected, and deep down we all want to feel love, to feel accepted, to feel we belong. At Tea & Tonic, we stand for creating a culture where these values are at the core of everything we do.<br/><br/>We all know what it feels like to not feel enough, to not feel accepted, to not feel seen for who we are — even to feel like we do not belong. Yet we are here now, living this life in this body and although it may not always feel like it, this is truly a gift.<br/><br/>Know this: you are not your thoughts. You are truly unique. There is not one single person in the world like you. This world needs you to be here. You are already conscious of your power to be the change you wish to see in the world.<br/><br/>Experiencing past trauma has driven my own personal journey to self love and acceptance. We all have trauma to a degree, it is all relative. It is how you choose to look at your life now, and what you do in this moment, and each and every moment moving forward, that will define your story.<br/><br/>Imagine if you had not experienced all you have up until this point in time: you would not be everything that you are. If we can see how all our challenges are gifts in disguise, we can realise our true and best self and the divinity in every moment.<br/><br/>Forget \"should\" and \"should not\", labels and conditioning. Deep down, you know and you will always know what is true for you. Trust this!<br/><br/>Never stop imagining anything is possible!<br/>What is the most true and beautiful life you could imagine?<br/><br/>Wishing you a true and beautiful day…<br/><br/>Love,<br/>Monni</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--16192093028523__4f0b02c9-df22-4d8c-98d9-3213a19711d7-heading-1",
+        "template--16192093028523__4f0b02c9-df22-4d8c-98d9-3213a19711d7-text-1"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 12,
+        "padding_bottom": 52
+      }
+    },
+    "8689b466-9c0e-4583-93f0-8601e8ee2a44": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "newest-products",
+        "products_to_show": 4,
+        "title": "New Products to Tea & Tonic Matakana",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 16,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "4837950c-eea4-410f-8595-647c4cb7d4f1",
+    "03d828e6-9500-4697-b7eb-a38c39e2bb8b",
+    "9edd34de-4aef-45f3-a325-b9d50ef8eda5",
+    "49b90e0f-f7bf-49e7-9d59-0bfc98201d38",
+    "4f0b02c9-df22-4d8c-98d9-3213a19711d7",
+    "8689b466-9c0e-4583-93f0-8601e8ee2a44"
+  ]
+}

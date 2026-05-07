@@ -1,0 +1,192 @@
+<section class="newsletter" data-section-id="{{ section.id }}" data-animate>
+  <div class="newsletter__inner">
+    {% if section.settings.title != blank %}
+      <h2 class="newsletter__title">{{ section.settings.title | escape }}</h2>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <p class="newsletter__description">{{ section.settings.description | escape }}</p>
+    {% endif %}
+
+    {% form 'customer', class: 'newsletter__form' %}
+      {% if form.posted_successfully? %}
+        <p class="newsletter__message newsletter__message--success" role="status">
+          {{ section.settings.success_message | default: 'Thank you for subscribing.' }}
+        </p>
+      {% elsif form.errors %}
+        <p class="newsletter__message newsletter__message--error" role="alert">
+          {{ form.errors.messages['form'] }}
+        </p>
+      {% endif %}
+
+      <input type="hidden" name="contact[tags]" value="newsletter">
+
+      <div class="newsletter__field">
+        <label for="newsletter-email-{{ section.id }}" class="sr-only">
+          {{ section.settings.email_label | default: 'Email address' }}
+        </label>
+        <input
+          id="newsletter-email-{{ section.id }}"
+          type="email"
+          name="contact[email]"
+          placeholder="{{ section.settings.placeholder | escape }}"
+          required
+          autocomplete="email"
+          autocapitalize="off"
+          class="newsletter__input"
+        >
+        <button type="submit" class="newsletter__button">
+          {{ section.settings.button_label | default: 'Subscribe' | escape }}
+        </button>
+      </div>
+    {% endform %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .newsletter {
+    padding: var(--spacing-xxl) 0;
+    text-align: center;
+  }
+
+  .newsletter__inner {
+    grid-column: 2;
+    max-width: 52ch;
+    margin: 0 auto;
+  }
+
+  .newsletter__title {
+    margin-bottom: var(--spacing-sm);
+    font-weight: 300;
+  }
+
+  .newsletter__description {
+    font-size: 1rem;
+    color: var(--color-foreground-light);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .newsletter__form {
+    width: 100%;
+  }
+
+  .newsletter__message {
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .newsletter__message--success { color: var(--color-foreground-light); }
+  .newsletter__message--error { color: var(--color-error); }
+
+  .newsletter__field {
+    display: flex;
+    gap: var(--spacing-xs);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-xs);
+  }
+
+  .newsletter__input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: var(--spacing-sm) 0;
+    font-size: 1rem;
+    color: var(--color-foreground);
+  }
+
+  .newsletter__input:focus {
+    outline: none;
+    border: none;
+  }
+
+  .newsletter__input::placeholder {
+    color: var(--color-foreground-muted);
+  }
+
+  .newsletter__button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: transparent;
+    border: none;
+    color: var(--color-foreground);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color var(--transition-fast);
+  }
+
+  .newsletter__button:hover {
+    color: var(--color-accent-dark);
+  }
+
+  @media (max-width: 480px) {
+    .newsletter__field {
+      flex-direction: column;
+      border-bottom: none;
+    }
+
+    .newsletter__input {
+      border-bottom: 1px solid var(--color-border);
+      padding-left: 0;
+    }
+
+    .newsletter__button {
+      align-self: flex-start;
+      padding-left: 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Stay connected"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Receive quiet notes on new arrivals, seasonal rituals, and thoughtful stories."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email placeholder",
+      "default": "Your email address"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email input label (screen readers)",
+      "default": "Email address"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you for subscribing."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter",
+      "category": "Homepage"
+    }
+  ]
+}
+{% endschema %}

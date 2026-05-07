@@ -1,0 +1,176 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Monni",
+    "theme_version": "1.0.0",
+    "theme_author": "Monni Studio",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://support.shopify.com/"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 50,
+        "max": 400,
+        "step": 10,
+        "unit": "px",
+        "label": "Logo width",
+        "default": 200
+      }
+    ]
+  },
+  {
+    "name": "t:general.typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:general.fonts"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_primary_font",
+        "default": "dm_sans_n4",
+        "label": "t:general.primary"
+      }
+    ]
+  },
+  {
+    "name": "t:general.layout",
+    "settings": [
+      {
+        "type": "select",
+        "id": "max_page_width",
+        "label": "t:labels.page_width",
+        "options": [
+          {
+            "value": "90rem",
+            "label": "t:options.page_width.narrow"
+          },
+          {
+            "value": "110rem",
+            "label": "t:options.page_width.wide"
+          }
+        ],
+        "default": "90rem"
+      },
+      {
+        "type": "range",
+        "id": "min_page_margin",
+        "min": 10,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "t:labels.page_margin",
+        "default": 20
+      }
+    ]
+  },
+  {
+    "name": "t:general.colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "background_color",
+        "default": "#F8F6F4",
+        "label": "Background - Soft Stone"
+      },
+      {
+        "type": "color",
+        "id": "background_alt_color",
+        "default": "#FFFFFF",
+        "label": "Background Alt - White"
+      },
+      {
+        "type": "color",
+        "id": "foreground_color",
+        "default": "#3D3D3D",
+        "label": "Foreground - Warm Gray"
+      },
+      {
+        "type": "color",
+        "id": "foreground_light_color",
+        "default": "#6B6B6B",
+        "label": "Foreground Light"
+      },
+      {
+        "type": "color",
+        "id": "foreground_muted_color",
+        "default": "#9B9590",
+        "label": "Foreground Muted"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "default": "#C4B8A8",
+        "label": "Accent - Washed Timber"
+      },
+      {
+        "type": "color",
+        "id": "accent_light_color",
+        "default": "#D9D0C4",
+        "label": "Accent Light"
+      },
+      {
+        "type": "color",
+        "id": "accent_dark_color",
+        "default": "#A89A8A",
+        "label": "Accent Dark"
+      },
+      {
+        "type": "color",
+        "id": "border_color",
+        "default": "#E5E0DC",
+        "label": "Border"
+      },
+      {
+        "type": "color",
+        "id": "border_light_color",
+        "default": "#F0EBE7",
+        "label": "Border Light"
+      },
+      {
+        "type": "color",
+        "id": "error_color",
+        "default": "#C44B4B",
+        "label": "Error"
+      },
+      {
+        "type": "range",
+        "id": "input_corner_radius",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "px",
+        "label": "t:labels.input_corner_radius",
+        "default": 4
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram_link",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook_link",
+        "label": "Facebook URL"
+      }
+    ]
+  }
+]

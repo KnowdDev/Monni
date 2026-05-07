@@ -1,0 +1,172 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "split-hero": {
+      "type": "homepage-split-hero",
+      "settings": {
+        "image_left": "shopify://shop_images/Copy_of_SophieWilliamson0131--000045.jpg",
+        "label_left": "Face",
+        "link_left": "/collections/face",
+        "image_right": "shopify://shop_images/MONNIxLOFOTEN002-13.jpg",
+        "label_right": "Monni",
+        "link_right": "/collections/monni"
+      }
+    },
+    "values": {
+      "type": "homepage-values",
+      "settings": {},
+      "blocks": {
+        "value-1": {
+          "type": "value",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>",
+            "title": "Curated in store",
+            "text": "An intentional mix of beauty, ritual, fashion, and home from the Monni floor."
+          }
+        },
+        "value-2": {
+          "type": "value",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><path d='M2 12h20'/><path d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'/></svg>",
+            "title": "Wrapped with care",
+            "text": "Thoughtful gifting, beautiful packaging, and a softer pace from Matakana."
+          }
+        },
+        "value-3": {
+          "type": "value",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z'/><path d='m9 12 2 2 4-4'/></svg>",
+            "title": "Quiet luxury",
+            "text": "Natural textures, elevated essentials, and collections chosen for depth and longevity."
+          }
+        }
+      },
+      "block_order": [
+        "value-1",
+        "value-2",
+        "value-3"
+      ]
+    },
+    "collections": {
+      "type": "homepage-collections",
+      "settings": {
+        "title": "Browse the store",
+        "subtitle": "A refined edit of gifting, beauty, ritual, home, clothing, and jewellery."
+      },
+      "blocks": {
+        "cat-1": {
+          "type": "collection",
+          "settings": {
+            "collection_handle": "gifting",
+            "image": "shopify://shop_images/Untitled_design_-_2021-09-12T132325.234_720x_1f9bb888-de2f-49de-aef7-4c04cf0ec412.webp",
+            "title": "Gifting",
+            "link": "/collections/gifting"
+          }
+        },
+        "cat-2": {
+          "type": "collection",
+          "settings": {
+            "collection_handle": "beauty",
+            "image": "shopify://shop_images/black_and_white_image_of_a_women_in_white_shirt.webp",
+            "title": "Beauty",
+            "link": "/collections/beauty"
+          }
+        },
+        "cat-3": {
+          "type": "collection",
+          "settings": {
+            "collection_handle": "health-tea",
+            "image": "shopify://shop_images/Copy_of_SophieWilliamson0131--000045.jpg",
+            "title": "Health & Tea",
+            "link": "/collections/health-tea"
+          }
+        },
+        "cat-4": {
+          "type": "collection",
+          "settings": {
+            "collection_handle": "home",
+            "image": "shopify://shop_images/Untitled_design_-_2021-09-12T132435.899_720x_8f5cb950-3dab-4cd6-a4c3-c5e27bb2850b.webp",
+            "title": "Home",
+            "link": "/collections/home"
+          }
+        },
+        "cat-5": {
+          "type": "collection",
+          "settings": {
+            "collection_handle": "clothing",
+            "image": "shopify://shop_images/monni_in_black_jumpsuit.webp",
+            "title": "Clothing",
+            "link": "/collections/clothing"
+          }
+        },
+        "cat-6": {
+          "type": "collection",
+          "settings": {
+            "collection_handle": "jewellery",
+            "image": "shopify://shop_images/Untitled_design_-_2021-09-12T132648.770_720x_5bbf73d6-c793-4805-949b-0bad2736a5ea.webp",
+            "title": "Jewellery",
+            "link": "/collections/jewellery"
+          }
+        }
+      },
+      "block_order": [
+        "cat-1",
+        "cat-2",
+        "cat-3",
+        "cat-4",
+        "cat-5",
+        "cat-6"
+      ]
+    },
+    "lookbook-1": {
+      "type": "homepage-lookbook",
+      "settings": {
+        "image": "shopify://shop_images/monni_in_black_jumpsuit.webp",
+        "layout": "text-left",
+        "subtitle": "From the journal",
+        "title": "Quiet rituals and thoughtful living",
+        "description": "<p>Explore stories, rituals, and seasonal notes that connect beauty, design, and a calmer way of living.</p>",
+        "button_label": "Read the journal",
+        "button_link": "/blogs/journal"
+      }
+    },
+    "featured-products": {
+      "type": "homepage-featured-products",
+      "settings": {
+        "title": "Fresh from the store",
+        "subtitle": "A live edit pulled from the current catalogue.",
+        "collection": "all",
+        "products_to_show": 4,
+        "show_view_all": true,
+        "view_all_label": "Shop all",
+        "view_all_link": "/collections/all",
+        "empty_message": "Products will appear here once added to the collection."
+      }
+    },
+    "newsletter": {
+      "type": "homepage-newsletter",
+      "settings": {
+        "title": "A quieter inbox",
+        "description": "Receive new arrivals, store notes, and thoughtful rituals from Monni.",
+        "placeholder": "Your email address",
+        "button_label": "Subscribe"
+      }
+    }
+  },
+  "order": [
+    "split-hero",
+    "values",
+    "collections",
+    "lookbook-1",
+    "featured-products",
+    "newsletter"
+  ]
+}

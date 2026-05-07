@@ -1,0 +1,510 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "23c6a239-3bb1-4998-af71-7ed0911dc086": {
+      "type": "page",
+      "settings": {
+        "page": "brands",
+        "heading_size": "h1",
+        "color_scheme": "background-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "main": {
+      "type": "main-list-collections",
+      "disabled": true,
+      "settings": {
+        "title": "Collections",
+        "sort": "alphabetical",
+        "image_ratio": "square",
+        "columns_desktop": 5,
+        "columns_mobile": "2"
+      }
+    },
+    "b148002d-d179-4739-88f9-2ad815c5f4b8": {
+      "type": "collection-list",
+      "blocks": {
+        "template--16154458063019__b148002d-d179-4739-88f9-2ad815c5f4b8-1689669683b8c3f1be-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "abel"
+          }
+        },
+        "template--16154458063019__b148002d-d179-4739-88f9-2ad815c5f4b8-1689669683b8c3f1be-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "absolute-essential"
+          }
+        },
+        "template--16154458063019__b148002d-d179-4739-88f9-2ad815c5f4b8-1689669683b8c3f1be-2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "amber-gold"
+          }
+        },
+        "9e6954df-b0eb-4cc3-b073-dd2aa9fbd6fa": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "aotea"
+          }
+        },
+        "5238c67d-23fd-4ad6-b36f-172cebbf80cb": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "aroma-sense"
+          }
+        },
+        "8de01cfd-a587-4d2e-b214-174dc580b62c": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "artemis"
+          }
+        },
+        "c11bbfbe-bee1-4357-a848-eaa8f8f92594": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "author-ceramics"
+          }
+        },
+        "babc30ae-18b5-41e3-abd6-f67c73452360": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bepure"
+          }
+        },
+        "3d850bf9-6d7b-4742-845e-d43e0a985193": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bodhi-nz"
+          }
+        },
+        "ef1f6cb6-b859-463d-8ee0-6e21e2a942f1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bright-eyes"
+          }
+        },
+        "bd9e1f0f-e765-4b44-ae03-39d7fb409a4d": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "caliwoods"
+          }
+        },
+        "17d816e5-e094-45d6-8d08-3f4a671e8199": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "chakra"
+          }
+        },
+        "b8584356-21bf-4659-b1a6-a2439b09508f": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "charlotte-penman"
+          }
+        },
+        "16a72cc1-c774-4a7a-9f33-bdfda9fe6221": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "come-clean"
+          }
+        }
+      },
+      "block_order": [
+        "template--16154458063019__b148002d-d179-4739-88f9-2ad815c5f4b8-1689669683b8c3f1be-0",
+        "template--16154458063019__b148002d-d179-4739-88f9-2ad815c5f4b8-1689669683b8c3f1be-1",
+        "template--16154458063019__b148002d-d179-4739-88f9-2ad815c5f4b8-1689669683b8c3f1be-2",
+        "9e6954df-b0eb-4cc3-b073-dd2aa9fbd6fa",
+        "5238c67d-23fd-4ad6-b36f-172cebbf80cb",
+        "8de01cfd-a587-4d2e-b214-174dc580b62c",
+        "c11bbfbe-bee1-4357-a848-eaa8f8f92594",
+        "babc30ae-18b5-41e3-abd6-f67c73452360",
+        "3d850bf9-6d7b-4742-845e-d43e0a985193",
+        "ef1f6cb6-b859-463d-8ee0-6e21e2a942f1",
+        "bd9e1f0f-e765-4b44-ae03-39d7fb409a4d",
+        "17d816e5-e094-45d6-8d08-3f4a671e8199",
+        "b8584356-21bf-4659-b1a6-a2439b09508f",
+        "16a72cc1-c774-4a7a-9f33-bdfda9fe6221"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 5,
+        "color_scheme": "background-1",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "cdebccb6-7723-45a5-aaee-b9d3a54fd3b5": {
+      "type": "collection-list",
+      "blocks": {
+        "template--16154458063019__cdebccb6-7723-45a5-aaee-b9d3a54fd3b5-1689669683b8c3f1be-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "coskin"
+          }
+        },
+        "template--16154458063019__cdebccb6-7723-45a5-aaee-b9d3a54fd3b5-1689669683b8c3f1be-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "countrykitchen"
+          }
+        },
+        "template--16154458063019__cdebccb6-7723-45a5-aaee-b9d3a54fd3b5-1689669683b8c3f1be-2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "do-gooder"
+          }
+        },
+        "a35d79d2-4f39-4a1c-b5cc-7b65739909b0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "eco-art"
+          }
+        },
+        "9a4d87dd-922e-4b1c-8045-427886e3f63c": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "eleanor-friends"
+          }
+        },
+        "c5db53fc-01c9-4585-a953-5b9b99ef57db": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "eve-wellness"
+          }
+        },
+        "b20b3089-8348-4c75-b8b8-314febb2891c": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "flint-chocolate"
+          }
+        },
+        "8322511e-d4d7-48e2-bf43-e8f59d826b38": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "fountain-of-youth"
+          }
+        },
+        "d596392d-b6ce-4394-b82f-d9edf363cac5": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "honest-chocolat"
+          }
+        },
+        "572b66a9-e958-419b-8b58-2f8fb82cedc6": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "hyoumankind"
+          }
+        },
+        "1582fa7c-67cd-4a55-9854-fae42f96d962": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "keller-bursten"
+          }
+        },
+        "6abfa1ca-eb78-4fb1-a2f2-2fecfd8231b6": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "kinto"
+          }
+        },
+        "8577aba4-3ebe-42f5-ada9-d24c4bd8127d": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "little-mango"
+          }
+        },
+        "1500b673-ea7c-4b8c-b91e-794923694b20": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "love-skin"
+          }
+        },
+        "649e3e5e-2ea7-4919-89f8-f945bc82f5ea": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "mahurangi-olives"
+          }
+        }
+      },
+      "block_order": [
+        "template--16154458063019__cdebccb6-7723-45a5-aaee-b9d3a54fd3b5-1689669683b8c3f1be-0",
+        "template--16154458063019__cdebccb6-7723-45a5-aaee-b9d3a54fd3b5-1689669683b8c3f1be-1",
+        "template--16154458063019__cdebccb6-7723-45a5-aaee-b9d3a54fd3b5-1689669683b8c3f1be-2",
+        "a35d79d2-4f39-4a1c-b5cc-7b65739909b0",
+        "9a4d87dd-922e-4b1c-8045-427886e3f63c",
+        "c5db53fc-01c9-4585-a953-5b9b99ef57db",
+        "b20b3089-8348-4c75-b8b8-314febb2891c",
+        "8322511e-d4d7-48e2-bf43-e8f59d826b38",
+        "d596392d-b6ce-4394-b82f-d9edf363cac5",
+        "572b66a9-e958-419b-8b58-2f8fb82cedc6",
+        "1582fa7c-67cd-4a55-9854-fae42f96d962",
+        "6abfa1ca-eb78-4fb1-a2f2-2fecfd8231b6",
+        "8577aba4-3ebe-42f5-ada9-d24c4bd8127d",
+        "1500b673-ea7c-4b8c-b91e-794923694b20",
+        "649e3e5e-2ea7-4919-89f8-f945bc82f5ea"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 5,
+        "color_scheme": "background-1",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "9ffdb0c3-154a-4101-8145-22a42b0a6f57": {
+      "type": "collection-list",
+      "blocks": {
+        "template--16154458063019__9ffdb0c3-154a-4101-8145-22a42b0a6f57-1689669683b8c3f1be-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "mangawhai-honey"
+          }
+        },
+        "template--16154458063019__9ffdb0c3-154a-4101-8145-22a42b0a6f57-1689669683b8c3f1be-2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "manu"
+          }
+        },
+        "f461ba45-12f3-4139-8ba7-c5d4f59db229": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "maryse-beauty"
+          }
+        },
+        "8d0babe2-3413-4dd6-9efd-b6a1331413f9": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "maxwell-mcintyre"
+          }
+        },
+        "4d74f1f0-e1fd-49ce-8e8b-f9455bd12a6c": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "monarc-jewellery"
+          }
+        },
+        "2f3174e1-3aaa-4f92-888b-ef6d781111be": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "monmouth-glass-studio"
+          }
+        },
+        "877a6ece-01af-44f2-b9c0-b6a81ceff279": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "monni"
+          }
+        },
+        "2c31af5f-f177-4002-a593-d29cf30dcae7": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "mother-made"
+          }
+        },
+        "1e388227-bf62-4ef9-8df0-e0c8c2e6cae5": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "nz-charly"
+          }
+        },
+        "b3e65748-0e12-4115-acc7-e84c9353dce1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "on-sundays-organic-teas"
+          }
+        },
+        "88b689f3-3bb8-4ef3-9f4c-45c0ff4b3c13": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "people-of-the-earth"
+          }
+        },
+        "c3cbb93c-0a7d-4c2a-91a5-d741e4aa9b96": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "petalhead"
+          }
+        },
+        "4816f4f6-0da9-44e8-aff0-38403e589212": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "santosa"
+          }
+        },
+        "9ea1598c-9ccd-4c4d-a36b-c54cc68de91f": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "sarah-dwyer-perfume-facial-oils"
+          }
+        },
+        "aae6ddf7-7590-4748-8d49-0fe3f654ff89": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "sattva-soul"
+          }
+        }
+      },
+      "block_order": [
+        "template--16154458063019__9ffdb0c3-154a-4101-8145-22a42b0a6f57-1689669683b8c3f1be-1",
+        "template--16154458063019__9ffdb0c3-154a-4101-8145-22a42b0a6f57-1689669683b8c3f1be-2",
+        "f461ba45-12f3-4139-8ba7-c5d4f59db229",
+        "8d0babe2-3413-4dd6-9efd-b6a1331413f9",
+        "4d74f1f0-e1fd-49ce-8e8b-f9455bd12a6c",
+        "2f3174e1-3aaa-4f92-888b-ef6d781111be",
+        "877a6ece-01af-44f2-b9c0-b6a81ceff279",
+        "2c31af5f-f177-4002-a593-d29cf30dcae7",
+        "1e388227-bf62-4ef9-8df0-e0c8c2e6cae5",
+        "b3e65748-0e12-4115-acc7-e84c9353dce1",
+        "88b689f3-3bb8-4ef3-9f4c-45c0ff4b3c13",
+        "c3cbb93c-0a7d-4c2a-91a5-d741e4aa9b96",
+        "4816f4f6-0da9-44e8-aff0-38403e589212",
+        "9ea1598c-9ccd-4c4d-a36b-c54cc68de91f",
+        "aae6ddf7-7590-4748-8d49-0fe3f654ff89"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 5,
+        "color_scheme": "background-1",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "85065b46-b668-4878-aa76-00d1d117921b": {
+      "type": "collection-list",
+      "blocks": {
+        "template--16154458063019__85065b46-b668-4878-aa76-00d1d117921b-1689669683b8c3f1be-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "soul-centre"
+          }
+        },
+        "template--16154458063019__85065b46-b668-4878-aa76-00d1d117921b-1689669683b8c3f1be-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "sphaera"
+          }
+        },
+        "template--16154458063019__85065b46-b668-4878-aa76-00d1d117921b-1689669683b8c3f1be-2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "storm-india"
+          }
+        },
+        "16fc4f7c-7a41-4706-b1c1-5fec0c3b0bc8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "suzanne-day"
+          }
+        },
+        "5ffafa9e-4432-4cbf-bd04-b01e42457890": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "tahi-skincare"
+          }
+        },
+        "5c5ea9c6-0d96-4ed9-adda-2ea6505d958f": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "tea-and-tonic"
+          }
+        },
+        "6eab6a4c-4cd6-4448-87f4-535394fef4ce": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "the-olfactory"
+          }
+        },
+        "54c92e0c-6ea3-4f82-8f31-71c89433615a": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "ti-point-olives"
+          }
+        },
+        "39a93072-9632-4cae-8f89-dee23e4be053": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "valka-yoga"
+          }
+        },
+        "b58670ec-e66e-42bb-8379-0a5fde4d1512": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "vania"
+          }
+        },
+        "3af62309-3ae1-41a5-8d54-0406db07339a": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "wild-indigo"
+          }
+        },
+        "3bf50692-cab0-4f75-bb3f-f5c6e6627064": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "yoga-tribe-official"
+          }
+        }
+      },
+      "block_order": [
+        "template--16154458063019__85065b46-b668-4878-aa76-00d1d117921b-1689669683b8c3f1be-0",
+        "template--16154458063019__85065b46-b668-4878-aa76-00d1d117921b-1689669683b8c3f1be-1",
+        "template--16154458063019__85065b46-b668-4878-aa76-00d1d117921b-1689669683b8c3f1be-2",
+        "16fc4f7c-7a41-4706-b1c1-5fec0c3b0bc8",
+        "5ffafa9e-4432-4cbf-bd04-b01e42457890",
+        "5c5ea9c6-0d96-4ed9-adda-2ea6505d958f",
+        "6eab6a4c-4cd6-4448-87f4-535394fef4ce",
+        "54c92e0c-6ea3-4f82-8f31-71c89433615a",
+        "39a93072-9632-4cae-8f89-dee23e4be053",
+        "b58670ec-e66e-42bb-8379-0a5fde4d1512",
+        "3af62309-3ae1-41a5-8d54-0406db07339a",
+        "3bf50692-cab0-4f75-bb3f-f5c6e6627064"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 5,
+        "color_scheme": "background-1",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "23c6a239-3bb1-4998-af71-7ed0911dc086",
+    "main",
+    "b148002d-d179-4739-88f9-2ad815c5f4b8",
+    "cdebccb6-7723-45a5-aaee-b9d3a54fd3b5",
+    "9ffdb0c3-154a-4101-8145-22a42b0a6f57",
+    "85065b46-b668-4878-aa76-00d1d117921b"
+  ]
+}

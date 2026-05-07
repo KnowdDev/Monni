@@ -1,0 +1,225 @@
+<section
+  class="split-hero full-width"
+  data-section-id="{{ section.id }}"
+  data-animate
+>
+  <div class="split-hero__panel split-hero__panel--left">
+    <div class="split-hero__fallback split-hero__fallback--left texture-grain"></div>
+    {% if section.settings.image_left %}
+      <img
+        src="{{ section.settings.image_left | image_url: width: 1200 }}"
+        srcset="
+          {{ section.settings.image_left | image_url: width: 1800 }} 1800w,
+          {{ section.settings.image_left | image_url: width: 1200 }} 1200w,
+          {{ section.settings.image_left | image_url: width: 800 }} 800w,
+          {{ section.settings.image_left | image_url: width: 600 }} 600w
+        "
+        sizes="(min-width: 768px) 50vw, 100vw"
+        alt="{{ section.settings.image_left.alt | default: section.settings.label_left | escape }}"
+        loading="eager"
+        decoding="async"
+        width="{{ section.settings.image_left.width }}"
+        height="{{ section.settings.image_left.height }}"
+        class="split-hero__image"
+      >
+    {% else %}
+      <img
+        src="{{ 'hero-gifting.jpg' | asset_url }}"
+        alt="{{ section.settings.label_left | escape }}"
+        loading="eager"
+        decoding="async"
+        width="800"
+        height="1000"
+        class="split-hero__image"
+      >
+    {% endif %}
+    <div class="split-hero__overlay"></div>
+    <a
+      href="{{ section.settings.link_left | default: '/collections/gifting' }}"
+      class="split-hero__label"
+    >
+      {{ section.settings.label_left | escape }}
+    </a>
+  </div>
+
+  <div class="split-hero__panel split-hero__panel--right">
+    <div class="split-hero__fallback split-hero__fallback--right texture-grain"></div>
+    {% if section.settings.image_right %}
+      <img
+        src="{{ section.settings.image_right | image_url: width: 1200 }}"
+        srcset="
+          {{ section.settings.image_right | image_url: width: 1800 }} 1800w,
+          {{ section.settings.image_right | image_url: width: 1200 }} 1200w,
+          {{ section.settings.image_right | image_url: width: 800 }} 800w,
+          {{ section.settings.image_right | image_url: width: 600 }} 600w
+        "
+        sizes="(min-width: 768px) 50vw, 100vw"
+        alt="{{ section.settings.image_right.alt | default: section.settings.label_right | escape }}"
+        loading="eager"
+        decoding="async"
+        width="{{ section.settings.image_right.width }}"
+        height="{{ section.settings.image_right.height }}"
+        class="split-hero__image"
+      >
+    {% else %}
+      <img
+        src="{{ 'hero-homewares.jpg' | asset_url }}"
+        alt="{{ section.settings.label_right | escape }}"
+        loading="eager"
+        decoding="async"
+        width="800"
+        height="1000"
+        class="split-hero__image"
+      >
+    {% endif %}
+    <div class="split-hero__overlay"></div>
+    <a
+      href="{{ section.settings.link_right | default: '/collections/homewares' }}"
+      class="split-hero__label"
+    >
+      {{ section.settings.label_right | escape }}
+    </a>
+  </div>
+</section>
+
+{% stylesheet %}
+  .split-hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 70vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .split-hero {
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+  }
+
+  .split-hero__panel {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-height: 60vh;
+  }
+
+  @media (min-width: 768px) {
+    .split-hero__panel {
+      min-height: auto;
+    }
+  }
+
+  .split-hero__image,
+  .split-hero__fallback {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .split-hero__panel:hover .split-hero__image,
+  .split-hero__panel:hover .split-hero__fallback {
+    transform: scale(1.03);
+  }
+
+  .split-hero__fallback {
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(196, 184, 168, 0.35) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(217, 208, 196, 0.3) 0%, transparent 55%),
+      linear-gradient(160deg, var(--color-background) 0%, var(--color-accent-light) 40%, var(--color-border-light) 100%);
+  }
+
+  .split-hero__fallback--right {
+    background:
+      radial-gradient(ellipse at 70% 20%, rgba(196, 184, 168, 0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 30% 80%, rgba(217, 208, 196, 0.25) 0%, transparent 55%),
+      linear-gradient(200deg, var(--color-border-light) 0%, var(--color-accent-light) 40%, var(--color-background) 100%);
+  }
+
+  .split-hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.02) 40%, transparent 70%);
+  }
+
+  .split-hero__label {
+    position: relative;
+    z-index: 2;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 2rem;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
+    transition: opacity var(--transition-fast);
+  }
+
+  .split-hero__label:hover {
+    opacity: 0.75;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .split-hero__image,
+    .split-hero__fallback {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Split Hero (Diptych)",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_left",
+      "label": "Left image"
+    },
+    {
+      "type": "text",
+      "id": "label_left",
+      "label": "Left label",
+      "default": "Gifting"
+    },
+    {
+      "type": "url",
+      "id": "link_left",
+      "label": "Left link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_right",
+      "label": "Right image"
+    },
+    {
+      "type": "text",
+      "id": "label_right",
+      "label": "Right label",
+      "default": "Homewares"
+    },
+    {
+      "type": "url",
+      "id": "link_right",
+      "label": "Right link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Split Hero (Diptych)",
+      "category": "Homepage"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,291 @@
+{% liquid
+  assign overlay_opacity = section.settings.overlay_opacity | divided_by: 100.0
+%}
+
+<section
+  class="hero full-width"
+  data-section-id="{{ section.id }}"
+  style="
+    --hero-min-height: {{ section.settings.height_mobile }}vh;
+    --hero-min-height-desktop: {{ section.settings.height_desktop }}vh;
+    --hero-overlay-opacity: {{ overlay_opacity }};
+  "
+>
+  <div class="hero__media">
+    {% if section.settings.image %}
+      <picture>
+        <source
+          media="(min-width: 768px)"
+          srcset="
+            {{ section.settings.image | image_url: width: 1800 }} 1800w,
+            {{ section.settings.image | image_url: width: 1200 }} 1200w,
+            {{ section.settings.image | image_url: width: 800 }} 800w
+          "
+          sizes="100vw"
+        >
+        <img
+          src="{{ section.settings.image | image_url: width: 800 }}"
+          srcset="
+            {{ section.settings.image | image_url: width: 800 }} 800w,
+            {{ section.settings.image | image_url: width: 600 }} 600w,
+            {{ section.settings.image | image_url: width: 400 }} 400w
+          "
+          sizes="100vw"
+          alt="{{ section.settings.image.alt | escape }}"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          style="object-position: {{ section.settings.image.presentation.focal_point | default: 'center' }};"
+        >
+      </picture>
+    {% else %}
+      <div class="hero__fallback texture-grain"></div>
+    {% endif %}
+    <div class="hero__overlay"></div>
+  </div>
+
+  <div class="hero__content" data-align="{{ section.settings.content_alignment }}">
+    {% if section.settings.subtitle != blank %}
+      <p class="hero__subtitle">{{ section.settings.subtitle | escape }}</p>
+    {% endif %}
+
+    {% if section.settings.title != blank %}
+      <h1 class="hero__title">{{ section.settings.title | escape }}</h1>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <div class="hero__description">
+        {{ section.settings.description }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+      <a href="{{ section.settings.button_link }}" class="hero__button">
+        {{ section.settings.button_label | escape }}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--content-grid);
+    min-height: var(--hero-min-height, 70vh);
+    align-items: center;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .hero { min-height: var(--hero-min-height-desktop, 85vh); }
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero__media picture,
+  .hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__fallback {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(196, 184, 168, 0.35) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(217, 208, 196, 0.3) 0%, transparent 55%),
+      linear-gradient(160deg, var(--color-background) 0%, var(--color-accent-light) 40%, var(--color-border-light) 100%);
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: #3D3D3D;
+    opacity: var(--hero-overlay-opacity, 0.2);
+    z-index: 1;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    grid-column: 2;
+    max-width: 65ch;
+    padding: var(--spacing-xl) 0;
+    color: var(--color-foreground);
+  }
+
+  .hero__content[data-align="center"] {
+    justify-self: center;
+    text-align: center;
+  }
+
+  .hero__content[data-align="right"] {
+    justify-self: end;
+    text-align: right;
+  }
+
+  .hero__content[data-align="left"] {
+    justify-self: start;
+    text-align: left;
+  }
+
+  .hero__subtitle {
+    font-size: 0.8125rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-foreground-muted);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .hero__title {
+    font-family: var(--font-heading--family);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 300;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .hero__description {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--color-foreground-light);
+    margin-bottom: var(--spacing-lg);
+    max-width: 50ch;
+  }
+
+  .hero__content[data-align="center"] .hero__description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+    border: 1px solid var(--color-foreground);
+    transition: all var(--transition-normal);
+  }
+
+  .hero__button:hover {
+    background-color: transparent;
+    color: var(--color-foreground);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__content > * {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .hero__content > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero__content > *:nth-child(2) { animation-delay: 0.25s; }
+    .hero__content > *:nth-child(3) { animation-delay: 0.4s; }
+    .hero__content > *:nth-child(4) { animation-delay: 0.55s; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Homepage Hero",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Tea & Tonic"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "A sanctuary of calm"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Thoughtfully curated products for holistic living, beauty, and wellbeing. Step inside and slow down.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore the collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay opacity",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Min height (mobile)",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "height_desktop",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Min height (desktop)",
+      "default": 85
+    }
+  ],
+  "presets": [
+    {
+      "name": "Homepage Hero",
+      "category": "Homepage"
+    }
+  ]
+}
+{% endschema %}

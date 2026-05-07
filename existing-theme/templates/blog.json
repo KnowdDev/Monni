@@ -1,0 +1,52 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "970a7282-33f1-408a-9867-c274f67cdca0": {
+      "type": "rich-text",
+      "blocks": {
+        "template--16154458030251__970a7282-33f1-408a-9867-c274f67cdca0-16874732672471a551-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Tea & Tonic Journal has all the information & resources you need for your holistic journey. Find holistic guides, health info, tips, news & more here.",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "template--16154458030251__970a7282-33f1-408a-9867-c274f67cdca0-16874732672471a551-0"
+      ],
+      "settings": {
+        "desktop_content_position": "left",
+        "content_alignment": "left",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "layout": "grid",
+        "show_image": true,
+        "image_height": "small",
+        "show_date": true,
+        "show_author": false,
+        "padding_top": 40,
+        "padding_bottom": 68
+      }
+    }
+  },
+  "order": [
+    "970a7282-33f1-408a-9867-c274f67cdca0",
+    "main"
+  ]
+}

@@ -1,0 +1,9 @@
+.env
+.env.*
+!.env.example
+docs/SECRETS.md
+node_modules
+.next
+.vercel
+dist
+.DS_Store

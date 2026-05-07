@@ -1,0 +1,99 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Visit us instore:",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<h2>5A, 2 Matakana Valley Road, Matakana, New Zealand</h2><h2>Tel. +6421975102</h2>"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "paragraph"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 36,
+        "padding_bottom": 44
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "78d9afca-5002-4bee-a73c-8848a43ee433": {
+          "type": "text",
+          "settings": {
+            "heading": "Tea & Tonic",
+            "subtext": "<p>Discover Tea & Tonic, a holistic health store in the heart of Matakana Village. Our mission is to promote sustainability, empower women in business, and celebrate the art of gifting. From eco-friendly products to all-natural supplements, we offer a wide range of items to support your holistic well-being. Shop with us today and join a community of conscious consumers.</p>"
+          }
+        },
+        "97d74362-b0bf-4a8b-9f2f-0c93b03671cd": {
+          "type": "brand_information",
+          "settings": {
+            "show_social": true
+          }
+        },
+        "7153e1ee-cb7a-4853-88e0-bc9cc5e0690b": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Discover",
+            "menu": "discover"
+          }
+        },
+        "d7eb87f2-3cab-4be3-a551-3b980ba82f76": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Help & Info",
+            "menu": "help-info"
+          }
+        }
+      },
+      "block_order": [
+        "78d9afca-5002-4bee-a73c-8848a43ee433",
+        "97d74362-b0bf-4a8b-9f2f-0c93b03671cd",
+        "7153e1ee-cb7a-4853-88e0-bc9cc5e0690b",
+        "d7eb87f2-3cab-4be3-a551-3b980ba82f76"
+      ],
+      "settings": {
+        "color_scheme": "scheme-04e9080f-dbb1-4c6d-8032-3a000315fed4",
+        "newsletter_enable": true,
+        "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": true,
+        "show_social": false,
+        "enable_country_selector": false,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 40,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "newsletter",
+    "footer"
+  ]
+}
