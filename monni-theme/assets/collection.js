@@ -18,32 +18,35 @@ class CollectionPage {
     const filterToggle = this.collectionPage.querySelector('[data-filter-toggle]');
     const filters = this.collectionPage.querySelector('[data-filters]');
     const filtersClose = this.collectionPage.querySelector('[data-filters-close]');
+    const filtersBackdrop = this.collectionPage.querySelector('[data-filters-backdrop]');
     const filtersForm = this.collectionPage.querySelector('.collection-page__filters-form');
     const filtersClear = this.collectionPage.querySelector('[data-filters-clear]');
-    const content = this.collectionPage.querySelector('.collection-page__content');
 
     if (!filterToggle || !filters) return;
 
-    // Toggle filter sidebar
+    // Toggle filter drawer
     filterToggle.addEventListener('click', () => {
-      const isDesktop = window.innerWidth >= 1024;
-      
-      if (isDesktop) {
-        // On desktop, toggle between visible and hidden
-        filters.classList.toggle('is-hidden');
-        if (content) {
-          content.classList.toggle('has-hidden-filters');
-        }
-      } else {
-        // On mobile, toggle the overlay
-        filters.classList.toggle('is-open');
+      filters.classList.toggle('is-open');
+      if (filtersBackdrop) {
+        filtersBackdrop.classList.toggle('is-open');
       }
     });
 
-    // Close filter sidebar
+    // Close filter drawer via close button
     if (filtersClose) {
       filtersClose.addEventListener('click', () => {
         filters.classList.remove('is-open');
+        if (filtersBackdrop) {
+          filtersBackdrop.classList.remove('is-open');
+        }
+      });
+    }
+
+    // Close filter drawer via backdrop click
+    if (filtersBackdrop) {
+      filtersBackdrop.addEventListener('click', () => {
+        filters.classList.remove('is-open');
+        filtersBackdrop.classList.remove('is-open');
       });
     }
 

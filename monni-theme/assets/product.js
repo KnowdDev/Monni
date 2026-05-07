@@ -26,6 +26,7 @@ class ProductPage {
     const thumbs = gallery.querySelectorAll('.media-gallery__thumb');
     const dots = gallery.querySelectorAll('.media-gallery__dot');
     const slides = gallery.querySelectorAll('.media-gallery__slide');
+    const mainGallery = gallery.querySelector('.media-gallery__main');
 
     // Thumbnail click
     thumbs.forEach(thumb => {
@@ -43,6 +44,19 @@ class ProductPage {
       });
     });
 
+    // Main gallery click for zoom
+    if (mainGallery) {
+      mainGallery.addEventListener('click', () => {
+        const activeSlide = gallery.querySelector('.media-gallery__slide.is-active');
+        if (activeSlide) {
+          const activeImage = activeSlide.querySelector('img, video');
+          if (activeImage) {
+            this.openLightbox(activeImage.src || activeImage.currentSrc);
+          }
+        }
+      });
+    }
+
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
@@ -58,7 +72,50 @@ class ProductPage {
 
         this.setActiveSlide(newIndex, slides, thumbs, dots);
       }
+
+      // Close lightbox with Escape
+      if (e.key === 'Escape') {
+        this.closeLightbox();
+      }
     });
+  }
+
+  openLightbox(imageSrc) {
+    // Create lightbox if it doesn't exist
+    let lightbox = document.querySelector('.lightbox');
+    if (!lightbox) {
+      lightbox = document.createElement('div');
+      lightbox.className = 'lightbox';
+      lightbox.innerHTML = `
+        <div class="lightbox__backdrop"></div>
+        <div class="lightbox__content">
+          <button class="lightbox__close" aria-label="Close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <img class="lightbox__image" src="" alt="">
+        </div>
+      `;
+      document.body.appendChild(lightbox);
+
+      // Close on backdrop click
+      lightbox.querySelector('.lightbox__backdrop').addEventListener('click', () => this.closeLightbox());
+      // Close on close button click
+      lightbox.querySelector('.lightbox__close').addEventListener('click', () => this.closeLightbox());
+    }
+
+    // Set image source and show lightbox
+    const lightboxImage = lightbox.querySelector('.lightbox__image');
+    lightboxImage.src = imageSrc;
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeLightbox() {
+    const lightbox = document.querySelector('.lightbox');
+    if (lightbox) {
+      lightbox.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
   }
 
   setActiveSlide(index, slides, thumbs, dots) {

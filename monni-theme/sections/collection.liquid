@@ -4,30 +4,16 @@
 
 {%- assign collection_type = collection.template_suffix | default: 'default' -%}
 
-{%- assign is_fragrance = false -%}
-{%- if collection.tags contains 'fragrance' or collection_type contains 'fragrance' -%}
-  {%- assign is_fragrance = true -%}
-{%- endif -%}
-
-{%- assign is_beauty = false -%}
-{%- if collection.tags contains 'beauty' or collection_type contains 'beauty' -%}
-  {%- assign is_beauty = true -%}
-{%- endif -%}
-
-{%- assign is_homewares = false -%}
-{%- if collection.tags contains 'homewares' or collection_type contains 'homewares' -%}
-  {%- assign is_homewares = true -%}
-{%- endif -%}
-
-{%- assign is_clothing = false -%}
-{%- if collection.tags contains 'clothing' or collection_type contains 'clothing' -%}
-  {%- assign is_clothing = true -%}
-{%- endif -%}
-
-{%- assign is_jewellery = false -%}
-{%- if collection.tags contains 'jewellery' or collection_type contains 'jewellery' -%}
-  {%- assign is_jewellery = true -%}
-{%- endif -%}
+{%- assign collection_types = 'fragrance|beauty|homewares|clothing|jewellery' | split: '|' -%}
+{%- for type in collection_types -%}
+  {%- assign type_key = 'is_' | append: type -%}
+  {%- if collection.tags contains type or collection_type contains type -%}
+    {%- assign type_value = true -%}
+  {%- else -%}
+    {%- assign type_value = false -%}
+  {%- endif -%}
+  {%- assign [type_key] = type_value -%}
+{%- endfor -%}
 
 <collection-page class="collection-page" data-section-id="{{ section.id }}" data-collection-id="{{ collection.id }}">
   <!-- Collection Header -->
@@ -62,9 +48,26 @@
   <!-- Collection Controls (Filtering & Sorting) -->
   {%- if section.settings.show_filters or section.settings.show_sort -%}
     <div class="collection-page__controls">
+      {%- if section.settings.show_filters -%}
+        <button type="button" class="collection-page__filter-toggle" data-filter-toggle aria-label="Open filters">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="4" y1="21" x2="4" y2="14"/>
+            <line x1="4" y1="10" x2="4" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12" y2="3"/>
+            <line x1="20" y1="21" x2="20" y2="16"/>
+            <line x1="20" y1="12" x2="20" y2="3"/>
+            <line x1="1" y1="14" x2="7" y2="14"/>
+            <line x1="9" y1="8" x2="15" y2="8"/>
+            <line x1="17" y1="16" x2="23" y2="16"/>
+          </svg>
+          FILTER
+        </button>
+      {%- endif -%}
+
       {%- if section.settings.show_sort -%}
         <div class="collection-page__sort">
-          <label for="SortBy-{{ section.id }}" class="collection-page__sort-label">Sort by</label>
+          <label for="SortBy-{{ section.id }}" class="collection-page__sort-label">SORT</label>
           <select id="SortBy-{{ section.id }}" class="collection-page__sort-select" data-sort-select>
             <option value="manual" {% if collection.sort_by == 'manual' %}selected{% endif %}>Featured</option>
             <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
@@ -77,19 +80,17 @@
           </select>
         </div>
       {%- endif -%}
-
-      {%- if section.settings.show_filters -%}
-        <button type="button" class="collection-page__filter-toggle" data-filter-toggle>
-          Filter
-          <span class="collection-page__filter-count" data-filter-count></span>
-        </button>
-      {%- endif -%}
     </div>
   {%- endif -%}
 
   <!-- Collection Content -->
   <div class="collection-page__content">
-    <!-- Filters Sidebar (desktop) -->
+    <!-- Filters Backdrop -->
+    {%- if section.settings.show_filters -%}
+      <div class="collection-page__filters-backdrop" data-filters-backdrop></div>
+    {%- endif -%}
+
+    <!-- Filters Drawer (slide-in from left) -->
     {%- if section.settings.show_filters -%}
       <aside class="collection-page__filters" data-filters>
         <div class="collection-page__filters-header">
@@ -165,7 +166,7 @@
     <div class="collection-page__products">
       {%- if collection.products.size > 0 -%}
         {%- paginate collection.products by section.settings.products_per_page -%}
-          <div class="collection-page__grid">
+          <div class="collection-page__grid" data-grid-columns="{{ section.settings.grid_columns }}" data-card-aspect-ratio="{{ section.settings.card_aspect_ratio }}">
             {%- for product in collection.products -%}
               <article class="collection-page__product" data-product-id="{{ product.id }}">
                 <a href="{{ product.url }}" class="collection-page__product-link" aria-label="{{ product.title | escape }}">
@@ -179,12 +180,40 @@
                            loading="lazy" 
                            width="{{ product.featured_image.width }}" 
                            height="{{ product.featured_image.height }}"
-                           class="collection-page__product-image">
+                           class="collection-page__product-image collection-page__product-image--primary">
+                      {%- if product.media[1] -%}
+                        <img src="{{ product.media[1] | image_url: width: 600 }}" 
+                             srcset="{{ product.media[1] | image_url: width: 400 }} 400w, {{ product.media[1] | image_url: width: 600 }} 600w, {{ product.media[1] | image_url: width: 800 }} 800w" 
+                             sizes="(min-width: 768px) 33vw, 50vw" 
+                             alt="{{ product.media[1].alt | default: product.title | escape }}" 
+                             loading="lazy" 
+                             width="{{ product.media[1].width }}" 
+                             height="{{ product.media[1].height }}"
+                             class="collection-page__product-image collection-page__product-image--secondary">
+                      {%- endif -%}
                     {%- else -%}
                       <div class="collection-page__product-image-placeholder texture-grain">
                         <span>{{ product.title | escape }}</span>
                       </div>
                     {%- endif -%}
+
+                    <!-- Badges -->
+                    <div class="collection-page__product-badges">
+                      {%- if product.available == false -%}
+                        <span class="collection-page__product-badge collection-page__product-badge--sold-out">Sold Out</span>
+                      {%- elsif product.compare_at_price > product.price -%}
+                        <span class="collection-page__product-badge collection-page__product-badge--sale">Sale</span>
+                      {%- elsif product.tags contains 'new' -%}
+                        <span class="collection-page__product-badge collection-page__product-badge--new">New</span>
+                      {%- elsif product.selected_or_first_available_variant.inventory_quantity <= 5 and product.selected_or_first_available_variant.inventory_management == 'shopify' -%}
+                        <span class="collection-page__product-badge collection-page__product-badge--low-stock">Only {{ product.selected_or_first_available_variant.inventory_quantity }} left</span>
+                      {%- endif -%}
+                    </div>
+
+                    <!-- Wishlist Button -->
+                    <button type="button" class="collection-page__product-wishlist" data-wishlist-toggle="{{ product.id }}" aria-label="Add to wishlist">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
 
                     <!-- Quick Add Button -->
                     {%- if section.settings.show_quick_add and product.available -%}
@@ -205,9 +234,6 @@
                         <span class="collection-page__product-price--regular">{{ product.price | money }}</span>
                       {%- endif -%}
                     </div>
-                    {%- if product.available == false -%}
-                      <span class="collection-page__product-badge--sold-out">Sold out</span>
-                    {%- endif -%}
                   </div>
                 </a>
               </article>
@@ -245,8 +271,8 @@
         {%- endpaginate -%}
       {%- else -%}
         <div class="collection-page__empty">
-          <p>No products found in this collection.</p>
-          <a href="{{ routes.root_url }}" class="btn btn--primary">Continue Shopping</a>
+          <p class="collection-page__empty-text">No products found in this collection.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">Continue Shopping</a>
         </div>
       {%- endif -%}
     </div>
@@ -319,6 +345,46 @@
       "step": 4,
       "default": 16,
       "label": "Products per page"
+    },
+    {
+      "type": "select",
+      "id": "grid_columns",
+      "label": "Grid columns (desktop)",
+      "options": [
+        {
+          "value": "2",
+          "label": "2 columns"
+        },
+        {
+          "value": "3",
+          "label": "3 columns"
+        },
+        {
+          "value": "4",
+          "label": "4 columns"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "card_aspect_ratio",
+      "label": "Product card aspect ratio",
+      "options": [
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (4:3)"
+        }
+      ],
+      "default": "portrait"
     }
   ]
 }

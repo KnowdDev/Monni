@@ -1,35 +1,76 @@
 {% comment %}
-  This section is used in the blog template to render the blog page listing all
-  articles within a blog.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/blog
+  Blog Page — Monni Theme
+  Editorial blog listing with brand-aligned card layout.
 {% endcomment %}
 
-<h1>{{ blog.title }}</h1>
+<section class="blog-page">
+  <div class="container">
+    <header class="blog-page__header">
+      <h1 class="blog-page__title">{{ blog.title }}</h1>
+    </header>
 
-{% paginate blog.articles by 5 %}
-  {% for article in blog.articles %}
-    <div>
-      {% if article.image %}
-        {{ article.image | image_url: width: 1000 | image_tag }}
-      {% endif %}
-      <h2>
-        {{ article.title | link_to: article.url }}
-      </h2>
-      {% assign date = article.published_at | time_tag: format: 'date' %}
-      <p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
-      <p>{{ article.excerpt }}</p>
+    <div class="blog-page__grid">
+      {% paginate blog.articles by 9 %}
+        {% for article in blog.articles %}
+          <article class="blog-page__card">
+            <a href="{{ article.url }}" class="blog-page__card-link">
+              {% if article.image %}
+                <div class="blog-page__card-image-wrapper">
+                  {{ article.image | image_url: width: 600 | image_tag: class: 'blog-page__card-image', loading: 'lazy' }}
+                </div>
+              {% endif %}
+
+              <div class="blog-page__card-content">
+                <h2 class="blog-page__card-title">{{ article.title }}</h2>
+
+                <div class="blog-page__card-meta">
+                  {% assign date = article.published_at | time_tag: format: 'date' %}
+                  <span class="blog-page__card-meta-item">{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</span>
+                </div>
+
+                {% if article.excerpt %}
+                  <p class="blog-page__card-excerpt">{{ article.excerpt }}</p>
+                {% endif %}
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+
+        {%- if paginate.pages > 1 -%}
+          <div class="blog-page__pagination">
+            {{ paginate | default_pagination }}
+          </div>
+        {%- endif -%}
+      {% endpaginate %}
     </div>
-  {% endfor %}
-
-  {%- if paginate.pages > 1 -%}
-    {{- paginate | default_pagination -}}
-  {%- endif -%}
-{% endpaginate %}
+  </div>
+</section>
 
 {% schema %}
 {
   "name": "t:general.blog",
-  "settings": []
+  "settings": [
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 9,
+      "label": "Articles per page"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpts",
+      "label": "Show article excerpts",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dates",
+      "label": "Show publication dates",
+      "default": true
+    }
+  ]
 }
 {% endschema %}

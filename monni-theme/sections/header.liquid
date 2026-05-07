@@ -168,13 +168,6 @@
 
       <div class="header__side header__side--end">
         <div class="header__tools">
-          {% if section.settings.show_currency %}
-            <span class="header__currency" aria-label="Currency">
-              {{ cart.currency.iso_code }}
-              <span class="header__currency-caret">{{ 'icon-caret.svg' | inline_asset_content }}</span>
-            </span>
-          {% endif %}
-
           <a href="{{ routes.search_url }}" class="header__tool" aria-label="Search">
             {{ 'icon-search.svg' | inline_asset_content }}
           </a>
@@ -725,27 +718,6 @@
     white-space: nowrap;
   }
 
-  .header__currency {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-foreground-light);
-    cursor: default;
-  }
-
-  .header__currency-caret {
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .header__currency-caret svg {
-    width: 0.625rem;
-    height: 0.625rem;
-  }
-
   .header__tool {
     position: relative;
     display: inline-flex;
@@ -1124,7 +1096,6 @@
       display: none;
     }
 
-    .header__currency,
     .header__tool--account,
     .header__tool--wishlist {
       display: none;
@@ -1203,12 +1174,6 @@
       "id": "customer_account_menu",
       "label": "t:labels.customer_account_menu",
       "default": "customer-account-main-menu"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_currency",
-      "label": "Show currency indicator",
-      "default": true
     },
     {
       "type": "checkbox",
