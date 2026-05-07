@@ -184,7 +184,7 @@
             </a>
           {% endif %}
 
-          <a href="{{ routes.cart_url }}" class="header__tool header__tool--cart" aria-label="Cart">
+          <a href="{{ routes.cart_url }}" class="header__tool header__tool--cart" data-cart-toggle aria-label="Cart">
             <span class="header__cart-count" data-cart-count="{{ cart.item_count }}" aria-hidden="true">{{ cart.item_count }}</span>
             {{ 'icon-cart.svg' | inline_asset_content }}
           </a>
@@ -411,7 +411,7 @@
             </a>
           {% endif %}
 
-          <a href="{{ routes.cart_url }}" class="header__drawer-link">
+          <a href="{{ routes.cart_url }}" class="header__drawer-link" data-cart-toggle>
             <span class="header__drawer-link-icon">{{ 'icon-cart.svg' | inline_asset_content }}</span>
             <span>Cart{% if cart.item_count > 0 %} ({{ cart.item_count }}){% endif %}</span>
           </a>
