@@ -11,7 +11,16 @@
   "sections": {
     "main": {
       "type": "collection",
-      "settings": {}
+      "settings": {
+        "show_breadcrumb": true,
+        "show_description": true,
+        "show_product_count": true,
+        "show_filters": true,
+        "show_sort": true,
+        "show_quick_add": true,
+        "show_collection_story": true,
+        "products_per_page": 16
+      }
     }
   },
   "order": [

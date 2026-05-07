@@ -1,52 +1,442 @@
 {% comment %}
-  This section is used in the product template to render product page with
-  media, content, and add-to-cart form.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/product
+  Monni Product Page — Brand-aligned, hyper-converting, modular for product-type customization
 {% endcomment %}
 
-<div class="product-images">
-  {% for image in product.images %}
-    {% render 'image', class: 'product-image', image: image %}
-  {% endfor %}
-</div>
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign featured_media = current_variant.featured_media | default: product.featured_media -%}
+{%- assign product_form_id = 'product-form-' | append: section.id -%}
+{%- assign product_type = product.type | downcase -%}
 
-<div class="product-info">
-  <h1>{{ product.title }}</h1>
-  <p>{{ product.price | money }}</p>
-  <p>{{ product.description }}</p>
-</div>
+{%- assign is_fragrance = false -%}
+{%- if product.tags contains 'fragrance' or product_type contains 'fragrance' or product_type contains 'scent' -%}
+  {%- assign is_fragrance = true -%}
+{%- endif -%}
 
-<div class="product-form">
-  {% form 'product', product %}
-    {% assign current_variant = product.selected_or_first_available_variant %}
+{%- assign is_beauty = false -%}
+{%- if product.tags contains 'beauty' or product_type contains 'beauty' or product_type contains 'skincare' -%}
+  {%- assign is_beauty = true -%}
+{%- endif -%}
 
-    <select name="id">
-      {% for variant in product.variants %}
-        <option
-          value="{{ variant.id }}"
-          {% if variant == current_variant %}
-            selected="selected"
-          {% endif %}
-        >
-          {{ variant.title }} - {{ variant.price | money }}
-        </option>
-      {% endfor %}
-    </select>
+{%- assign is_homewares = false -%}
+{%- if product.tags contains 'homewares' or product_type contains 'home' or product_type contains 'ceramic' -%}
+  {%- assign is_homewares = true -%}
+{%- endif -%}
 
-    <input type="text" name="quantity" min="1" value="1">
+{%- assign is_clothing = false -%}
+{%- if product.tags contains 'clothing' or product_type contains 'clothing' or product_type contains 'apparel' -%}
+  {%- assign is_clothing = true -%}
+{%- endif -%}
 
-    <input type="submit" value="Add to cart">
-    {{ form | payment_button }}
-  {% endform %}
-</div>
+{%- assign is_jewellery = false -%}
+{%- if product.tags contains 'jewellery' or product_type contains 'jewellery' or product_type contains 'jewelry' -%}
+  {%- assign is_jewellery = true -%}
+{%- endif -%}
+
+<product-page class="product-page" data-section-id="{{ section.id }}" data-product-id="{{ product.id }}" data-product-variants="{{ product.variants | json | escape }}" data-product-type="{{ product_type }}" data-update-url="true" data-url="{{ product.url }}">
+  <div class="product-page__layout">
+    <!-- Gallery -->
+    <div class="product-page__gallery">
+      <media-gallery class="media-gallery" data-section="{{ section.id }}">
+        <div class="media-gallery__main">
+          {%- if product.media.size > 0 -%}
+            {%- for media in product.media -%}
+              <div class="media-gallery__slide{% if media == featured_media %} is-active{% endif %}" data-media-id="{{ media.id }}" data-index="{{ forloop.index0 }}" role="tabpanel">
+                {%- case media.media_type -%}
+                  {%- when 'image' -%}
+                    <img src="{{ media | image_url: width: 1200 }}" srcset="{{ media | image_url: width: 1200 }} 1200w, {{ media | image_url: width: 800 }} 800w, {{ media | image_url: width: 600 }} 600w" sizes="(min-width: 1024px) 55vw, 100vw" alt="{{ media.alt | default: product.title | escape }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" decoding="async" width="{{ media.width }}" height="{{ media.height }}" class="media-gallery__image">
+                  {%- when 'external_video' -%}
+                    <div class="media-gallery__video" data-video-url="{{ media | external_video_url }}">
+                      <button type="button" class="media-gallery__play" aria-label="Play video"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+                      <img src="{{ media.preview_image | image_url: width: 1200 }}" alt="{{ media.alt | escape }}" loading="lazy" width="{{ media.preview_image.width }}" height="{{ media.preview_image.height }}">
+                    </div>
+                  {%- else -%}
+                    <img src="{{ media.preview_image | image_url: width: 1200 }}" alt="{{ media.alt | escape }}" loading="lazy" width="{{ media.preview_image.width }}" height="{{ media.preview_image.height }}" class="media-gallery__image">
+                {%- endcase -%}
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            <div class="media-gallery__slide is-active"><div class="media-gallery__placeholder texture-grain"><span>{{ product.title | escape }}</span></div></div>
+          {%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="media-gallery__thumbs" role="tablist">
+            {%- for media in product.media -%}
+              <button type="button" class="media-gallery__thumb{% if media == featured_media %} is-active{% endif %}" data-index="{{ forloop.index0 }}" data-media-id="{{ media.id }}" role="tab" aria-selected="{% if media == featured_media %}true{% else %}false{% endif %}">
+                <img src="{{ media.preview_image | image_url: width: 120 }}" alt="{{ media.alt | escape }}" loading="lazy" width="{{ media.preview_image.width }}" height="{{ media.preview_image.height }}">
+              </button>
+            {%- endfor -%}
+          </div>
+          <div class="media-gallery__dots" role="tablist">
+            {%- for media in product.media -%}
+              <button type="button" class="media-gallery__dot{% if media == featured_media %} is-active{% endif %}" data-index="{{ forloop.index0 }}" role="tab"></button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </media-gallery>
+    </div>
+
+    <!-- Product Info -->
+    <div class="product-page__info">
+      <!-- Breadcrumb -->
+      {%- if section.settings.show_breadcrumb -%}
+        <nav class="product-page__breadcrumb" aria-label="Breadcrumb">
+          <a href="{{ routes.root_url }}">Home</a>
+          {%- if product.type -%}
+            <span>/</span>
+            <a href="{{ product.type | url_for_type }}">{{ product.type }}</a>
+          {%- endif -%}
+          <span>/</span>
+          <span>{{ product.title }}</span>
+        </nav>
+      {%- endif -%}
+
+      <!-- Product Type Badge (for fragrance/beauty categories) -->
+      {%- if is_fragrance or is_beauty -%}
+        <div class="product-page__badge">
+          {%- if is_fragrance -%}Fragrance{%- elsif is_beauty -%}Beauty{%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <!-- Title -->
+      <h1 class="product-page__title">{{ product.title }}</h1>
+
+      <!-- Price -->
+      <div class="product-page__price" data-price-wrapper>
+        {%- if current_variant.compare_at_price > current_variant.price -%}
+          <span class="product-page__price--compare" data-compare-price>
+            <span class="visually-hidden">Regular price</span>
+            {{ current_variant.compare_at_price | money }}
+          </span>
+          <span class="product-page__price--sale" data-sale-price>
+            <span class="visually-hidden">Sale price</span>
+            {{ current_variant.price | money }}
+          </span>
+        {%- else -%}
+          <span class="product-page__price--regular" data-regular-price>
+            <span class="visually-hidden">Regular price</span>
+            {{ current_variant.price | money }}
+          </span>
+        {%- endif -%}
+        {%- if current_variant.available == false -%}
+          <span class="product-page__price--sold-out">Sold out</span>
+        {%- endif -%}
+      </div>
+
+      <!-- Short Description (fragrance notes, key features) -->
+      {%- if product.metafields.descriptors.short_description and section.settings.show_short_description -%}
+        <p class="product-page__short-description">{{ product.metafields.descriptors.short_description }}</p>
+      {%- elsif product.description != blank and section.settings.show_short_description -%}
+        {%- assign short_desc = product.description | strip_html | truncate: 120 -%}
+        <p class="product-page__short-description">{{ short_desc }}</p>
+      {%- endif -%}
+
+      <!-- Product Form -->
+      <product-form class="product-page__form">
+        {%- form 'product', product, id: product_form_id, class: 'form', data-product-form: '' -%}
+          <!-- Variant Selector -->
+          {%- unless product.has_only_default_variant -%}
+            <div class="product-page__variants" data-variant-selector>
+              <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+              {%- for option in product.options_with_values -%}
+                <fieldset class="product-page__variant-fieldset">
+                  <legend class="product-page__variant-label">{{ option.name }}</legend>
+                  <div class="product-page__variant-options">
+                    {%- for value in option.values -%}
+                      <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" name="{{ option.name }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} class="product-page__variant-input visually-hidden">
+                      <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" class="product-page__variant-swatch{% if option.selected_value == value %} is-selected{% endif %}" data-value="{{ value | escape }}">
+                        {{ value }}
+                      </label>
+                    {%- endfor -%}
+                  </div>
+                </fieldset>
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+          {%- endunless -%}
+
+          <!-- Quantity Selector -->
+          {%- if section.settings.show_quantity_selector -%}
+            <div class="product-page__quantity">
+              <label for="Quantity-{{ section.id }}" class="product-page__quantity-label">Quantity</label>
+              <input type="number" name="quantity" id="Quantity-{{ section.id }}" value="1" min="1" class="product-page__quantity-input" data-quantity-input>
+            </div>
+          {%- endif -%}
+
+          <!-- Add to Cart Button -->
+          <div class="product-page__actions">
+            <button type="submit" name="add" class="product-page__add-to-cart btn btn--primary"{% unless current_variant.available %} disabled{% endunless %} data-add-to-cart>
+              <span data-add-to-cart-text>
+                {%- if current_variant.available -%}
+                  Add to cart
+                {%- else -%}
+                  Sold out
+                {%- endif -%}
+              </span>
+            </button>
+
+            <!-- Buy Now Button (Shopify Pay) -->
+            {%- if section.settings.show_buy_now -%}
+              {{ form | payment_button }}
+            {%- endif -%}
+          </div>
+        {%- endform -%}
+      </product-form>
+
+      <!-- Back in Stock Notification -->
+      {%- unless current_variant.available -%}
+        {%- if section.settings.show_back_in_stock -%}
+          <div class="product-page__back-in-stock">
+            <h3 class="product-page__back-in-stock-title">Notify me when back in stock</h3>
+            <p class="product-page__back-in-stock-description">Enter your email and we'll notify you when this item is available again.</p>
+            {%- form 'contact', class: 'product-page__back-in-stock-form' -%}
+              {%- if form.posted_successfully? -%}
+                <div class="product-page__back-in-stock-success">
+                  Thanks! We'll notify you when this item is back in stock.
+                </div>
+              {%- else -%}
+                <div class="product-page__back-in-stock-inputs">
+                  <input type="email" 
+                         name="contact[email]" 
+                         id="BackInStockEmail-{{ section.id }}" 
+                         class="product-page__back-in-stock-email" 
+                         placeholder="Enter your email" 
+                         required
+                         aria-label="Email address">
+                  <input type="hidden" name="contact[body]" value="Back in stock request for: {{ product.title }} - Variant: {{ current_variant.title | default: 'Default' }} (SKU: {{ current_variant.sku | default: 'N/A' }})">
+                  <input type="hidden" name="contact[subject]" value="Back in Stock Request: {{ product.title }}">
+                  <button type="submit" class="product-page__back-in-stock-submit btn btn--primary">Notify me</button>
+                </div>
+                {%- if form.errors -%}
+                  <div class="product-page__back-in-stock-error">
+                    Please enter a valid email address.
+                  </div>
+                {%- endif -%}
+              {%- endif -%}
+            {%- endform -%}
+          </div>
+        {%- endif -%}
+      {%- endunless -%}
+
+      <!-- Trust Signals -->
+      {%- if section.settings.show_trust_signals -%}
+        <div class="product-page__trust">
+          <div class="product-page__trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2" ry="2"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="3" y1="10" x2="14" y2="10"/></svg>
+            <span>Free shipping over $100</span>
+          </div>
+          <div class="product-page__trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span>Easy 30-day returns</span>
+          </div>
+          <div class="product-page__trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Secure checkout</span>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Full Description -->
+      {%- if section.settings.show_description and product.description != blank -%}
+        <div class="product-page__description">
+          <h3>Description</h3>
+          <div class="product-page__description-content rte">
+            {{ product.description }}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Fragrance-specific: Scent Notes -->
+      {%- if is_fragrance and product.metafields.fragrance.top_note -%}
+        <div class="product-page__fragrance-notes">
+          <h3>Fragrance Notes</h3>
+          <div class="product-page__notes-grid">
+            {%- if product.metafields.fragrance.top_note -%}
+              <div class="product-page__note">
+                <span class="product-page__note-label">Top</span>
+                <span>{{ product.metafields.fragrance.top_note }}</span>
+              </div>
+            {%- endif -%}
+            {%- if product.metafields.fragrance.heart_note -%}
+              <div class="product-page__note">
+                <span class="product-page__note-label">Heart</span>
+                <span>{{ product.metafields.fragrance.heart_note }}</span>
+              </div>
+            {%- endif -%}
+            {%- if product.metafields.fragrance.base_note -%}
+              <div class="product-page__note">
+                <span class="product-page__note-label">Base</span>
+                <span>{{ product.metafields.fragrance.base_note }}</span>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Product-specific: Size Guide (clothing) -->
+      {%- if is_clothing and section.settings.show_size_guide -%}
+        <div class="product-page__size-guide">
+          <button type="button" class="product-page__size-guide-toggle" data-size-guide-toggle>Size Guide</button>
+          <div class="product-page__size-guide-content" hidden>
+            <!-- Size guide content - can be pulled from a page or metafield -->
+            <p>Refer to our size guide for accurate measurements.</p>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Accordion: Shipping & Returns -->
+      {%- if section.settings.show_accordion -%}
+        <div class="product-page__accordion">
+          <details class="product-page__accordion-item">
+            <summary class="product-page__accordion-summary">Shipping & Delivery</summary>
+            <div class="product-page__accordion-content">
+              <p>We offer free shipping on orders over $100. Standard shipping takes 3-5 business days. Express shipping available at checkout.</p>
+            </div>
+          </details>
+          <details class="product-page__accordion-item">
+            <summary class="product-page__accordion-summary">Returns & Exchanges</summary>
+            <div class="product-page__accordion-content">
+              <p>We accept returns within 30 days of purchase. Items must be unused and in original packaging. Contact us at hello@monni.co.nz for assistance.</p>
+            </div>
+          </details>
+          {%- if is_fragrance or is_beauty -%}
+            <details class="product-page__accordion-item">
+              <summary class="product-page__accordion-summary">Ingredients</summary>
+              <div class="product-page__accordion-content">
+                <p>{{ product.metafields.product.ingredients | default: 'Full ingredient list available on packaging.' }}</p>
+              </div>
+            </details>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <!-- Social Share -->
+      {%- if section.settings.show_social_share -%}
+        <div class="product-page__share">
+          <span>Share</span>
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: product.url }}" target="_blank" rel="noopener" aria-label="Share on Facebook">Facebook</a>
+          <a href="https://pinterest.com/pin/create/button/?url={{ shop.url | append: product.url }}&description={{ product.title | url_param_escape }}" target="_blank" rel="noopener" aria-label="Share on Pinterest">Pinterest</a>
+          <a href="mailto:?subject=Check out {{ product.title }}&body={{ shop.url | append: product.url }}" aria-label="Share via email">Email</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- Product Type-Specific Sections (modular customization) -->
+  {%- if is_fragrance and section.settings.show_fragrance_story -%}
+    <section class="product-page__story">
+      <div class="product-page__story-content">
+        <h2>The Story Behind This Scent</h2>
+        <p>{{ product.metafields.fragrance.story | default: 'Crafted with intention, this fragrance captures a moment in time—a feeling, a memory, a place.' }}</p>
+      </div>
+    </section>
+  {%- endif -%}
+
+  <!-- Related Products -->
+  {%- if section.settings.show_related_products -%}
+    {%- assign related_collection = collections[section.settings.related_collection] -%}
+    {%- if related_collection and related_collection.products.size > 0 -%}
+      <section class="product-page__related">
+        <h2>You May Also Like</h2>
+        <div class="product-page__related-grid">
+          {%- for related_product in related_collection.products limit: 4 -%}
+            {%- unless related_product.id == product.id -%}
+              <a href="{{ related_product.url }}" class="product-page__related-item">
+                <img src="{{ related_product.featured_image | image_url: width: 400 }}" alt="{{ related_product.title | escape }}" loading="lazy" width="{{ related_product.featured_image.width }}" height="{{ related_product.featured_image.height }}">
+                <h3>{{ related_product.title }}</h3>
+                <span>{{ related_product.price | money }}</span>
+              </a>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </section>
+    {%- endif -%}
+  {%- endif -%}
+</product-page>
 
 {% schema %}
 {
-  "name": "t:general.product",
-  "settings": [],
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  }
+  "name": "Product",
+  "tag": "section",
+  "class": "section-product",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_short_description",
+      "label": "Show short description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity_selector",
+      "label": "Show quantity selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_buy_now",
+      "label": "Show buy now button",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_signals",
+      "label": "Show trust signals",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show full description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_size_guide",
+      "label": "Show size guide (clothing)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_accordion",
+      "label": "Show shipping/returns accordion",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_share",
+      "label": "Show social share",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_back_in_stock",
+      "label": "Show back in stock notification (sold out products)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_fragrance_story",
+      "label": "Show fragrance story (fragrance products)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related_products",
+      "label": "Show related products",
+      "default": true
+    },
+    {
+      "type": "collection",
+      "id": "related_collection",
+      "label": "Related collection"
+    }
+  ]
 }
 {% endschema %}

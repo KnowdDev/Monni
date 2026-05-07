@@ -59,7 +59,7 @@
       "type": "homepage-collections",
       "settings": {
         "title": "Browse the store",
-        "subtitle": "A refined edit of gifting, beauty, ritual, home, clothing, and jewellery."
+        "subtitle": "A curated edit of gifting, beauty, home, and clothing."
       },
       "blocks": {
         "cat-1": {
@@ -75,21 +75,12 @@
           "type": "collection",
           "settings": {
             "collection_handle": "beauty",
-            "image": "shopify://shop_images/black_and_white_image_of_a_women_in_white_shirt.webp",
+            "image": "shopify://shop_images/Copy_of_SophieWilliamson0131--000045.jpg",
             "title": "Beauty",
             "link": "/collections/beauty"
           }
         },
         "cat-3": {
-          "type": "collection",
-          "settings": {
-            "collection_handle": "health-tea",
-            "image": "shopify://shop_images/Copy_of_SophieWilliamson0131--000045.jpg",
-            "title": "Health & Tea",
-            "link": "/collections/health-tea"
-          }
-        },
-        "cat-4": {
           "type": "collection",
           "settings": {
             "collection_handle": "home",
@@ -98,7 +89,7 @@
             "link": "/collections/home"
           }
         },
-        "cat-5": {
+        "cat-4": {
           "type": "collection",
           "settings": {
             "collection_handle": "clothing",
@@ -106,30 +97,32 @@
             "title": "Clothing",
             "link": "/collections/clothing"
           }
-        },
-        "cat-6": {
-          "type": "collection",
-          "settings": {
-            "collection_handle": "jewellery",
-            "image": "shopify://shop_images/Untitled_design_-_2021-09-12T132648.770_720x_5bbf73d6-c793-4805-949b-0bad2736a5ea.webp",
-            "title": "Jewellery",
-            "link": "/collections/jewellery"
-          }
         }
       },
       "block_order": [
         "cat-1",
         "cat-2",
         "cat-3",
-        "cat-4",
-        "cat-5",
-        "cat-6"
+        "cat-4"
       ]
+    },
+    "featured-beauty": {
+      "type": "homepage-featured-products",
+      "settings": {
+        "title": "Beauty favourites",
+        "subtitle": "Skincare, fragrance, and ritual essentials from the Monni edit.",
+        "collection": "beauty",
+        "products_to_show": 4,
+        "show_view_all": true,
+        "view_all_label": "Shop beauty",
+        "view_all_link": "/collections/beauty",
+        "empty_message": "Products will appear here once added to the collection."
+      }
     },
     "lookbook-1": {
       "type": "homepage-lookbook",
       "settings": {
-        "image": "shopify://shop_images/monni_in_black_jumpsuit.webp",
+        "image": "shopify://shop_images/black_and_white_image_of_a_women_in_white_shirt.webp",
         "layout": "text-left",
         "subtitle": "From the journal",
         "title": "Quiet rituals and thoughtful living",
@@ -151,6 +144,27 @@
         "empty_message": "Products will appear here once added to the collection."
       }
     },
+    "lookbook-2": {
+      "type": "homepage-lookbook",
+      "settings": {
+        "image": "shopify://shop_images/MONNIxLOFOTEN002-13.jpg",
+        "layout": "image-left",
+        "subtitle": "Our store",
+        "title": "Visit us in Matakana",
+        "description": "<p>Monni is a calm, considered space in the heart of Matakana village. Step inside for a slower kind of shopping — where every piece is chosen with intention and wrapped with care.</p>",
+        "button_label": "Plan your visit",
+        "button_link": "/pages/contact"
+      }
+    },
+    "instagram": {
+      "type": "homepage-instagram",
+      "settings": {
+        "title": "Follow along",
+        "handle": "teaandtonicmatakana"
+      },
+      "blocks": {},
+      "block_order": []
+    },
     "newsletter": {
       "type": "homepage-newsletter",
       "settings": {
@@ -165,8 +179,11 @@
     "split-hero",
     "values",
     "collections",
+    "featured-beauty",
     "lookbook-1",
     "featured-products",
+    "lookbook-2",
+    "instagram",
     "newsletter"
   ]
 }

@@ -1,47 +1,325 @@
 {% comment %}
-  This section is used in the collection template to render collection page
-  listing all products within a collection.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
+  Monni Collection Page — Brand-aligned, hyper-converting, modular for collection-type customization
 {% endcomment %}
 
-<h1>{{ collection.title }}</h1>
+{%- assign collection_type = collection.template_suffix | default: 'default' -%}
 
-<div class="collection-products">
-  {% paginate collection.products by 20 %}
-    {% for product in collection.products %}
-      <div class="collection-product">
-        {% if product.featured_image %}
-          {% render 'image',
-            class: 'collection-product__image',
-            image: product.featured_image,
-            url: product.url,
-            width: 400,
-            height: 400,
-            crop: 'center'
-          %}
-        {% endif %}
-        <div class="collection-product__content">
-          <p>{{ product.title | escape | link_to: product.url }}</p>
-          <p>{{ product.price | money }}</p>
-        </div>
+{%- assign is_fragrance = false -%}
+{%- if collection.tags contains 'fragrance' or collection_type contains 'fragrance' -%}
+  {%- assign is_fragrance = true -%}
+{%- endif -%}
+
+{%- assign is_beauty = false -%}
+{%- if collection.tags contains 'beauty' or collection_type contains 'beauty' -%}
+  {%- assign is_beauty = true -%}
+{%- endif -%}
+
+{%- assign is_homewares = false -%}
+{%- if collection.tags contains 'homewares' or collection_type contains 'homewares' -%}
+  {%- assign is_homewares = true -%}
+{%- endif -%}
+
+{%- assign is_clothing = false -%}
+{%- if collection.tags contains 'clothing' or collection_type contains 'clothing' -%}
+  {%- assign is_clothing = true -%}
+{%- endif -%}
+
+{%- assign is_jewellery = false -%}
+{%- if collection.tags contains 'jewellery' or collection_type contains 'jewellery' -%}
+  {%- assign is_jewellery = true -%}
+{%- endif -%}
+
+<collection-page class="collection-page" data-section-id="{{ section.id }}" data-collection-id="{{ collection.id }}">
+  <!-- Collection Header -->
+  <header class="collection-page__header">
+    <!-- Breadcrumb -->
+    {%- if section.settings.show_breadcrumb -%}
+      <nav class="collection-page__breadcrumb" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}">Home</a>
+        <span>/</span>
+        <span>{{ collection.title }}</span>
+      </nav>
+    {%- endif -%}
+
+    <!-- Title -->
+    <h1 class="collection-page__title">{{ collection.title }}</h1>
+
+    <!-- Description -->
+    {%- if collection.description != blank and section.settings.show_description -%}
+      <div class="collection-page__description rte">
+        {{ collection.description }}
       </div>
-    {% endfor %}
+    {%- endif -%}
 
-    {{ paginate | default_pagination }}
-  {% endpaginate %}
-</div>
+    <!-- Product Count -->
+    {%- if section.settings.show_product_count -%}
+      <p class="collection-page__count">
+        {{ collection.products_count }} {{ collection.products_count | pluralize: 'product', 'products' }}
+      </p>
+    {%- endif -%}
+  </header>
 
-{% stylesheet %}
-  .collection-products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  }
-{% endstylesheet %}
+  <!-- Collection Controls (Filtering & Sorting) -->
+  {%- if section.settings.show_filters or section.settings.show_sort -%}
+    <div class="collection-page__controls">
+      {%- if section.settings.show_sort -%}
+        <div class="collection-page__sort">
+          <label for="SortBy-{{ section.id }}" class="collection-page__sort-label">Sort by</label>
+          <select id="SortBy-{{ section.id }}" class="collection-page__sort-select" data-sort-select>
+            <option value="manual" {% if collection.sort_by == 'manual' %}selected{% endif %}>Featured</option>
+            <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+            <option value="price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+            <option value="title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>Alphabetical: A-Z</option>
+            <option value="title-descending" {% if collection.sort_by == 'title-descending' %}selected{% endif %}>Alphabetical: Z-A</option>
+            <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
+            <option value="created-ascending" {% if collection.sort_by == 'created-ascending' %}selected{% endif %}>Oldest</option>
+            <option value="best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Best Selling</option>
+          </select>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_filters -%}
+        <button type="button" class="collection-page__filter-toggle" data-filter-toggle>
+          Filter
+          <span class="collection-page__filter-count" data-filter-count></span>
+        </button>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <!-- Collection Content -->
+  <div class="collection-page__content">
+    <!-- Filters Sidebar (desktop) -->
+    {%- if section.settings.show_filters -%}
+      <aside class="collection-page__filters" data-filters>
+        <div class="collection-page__filters-header">
+          <h2>Filter</h2>
+          <button type="button" class="collection-page__filters-close" data-filters-close aria-label="Close filters">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <form action="{{ request.path }}" method="get" class="collection-page__filters-form">
+          {%- for filter in collection.filters -%}
+            <div class="collection-page__filter-group">
+              <h3 class="collection-page__filter-title">{{ filter.label }}</h3>
+              <div class="collection-page__filter-options">
+                {%- case filter.type -%}
+                  {%- when 'list' -%}
+                    <ul class="collection-page__filter-list">
+                      {%- for filter_value in filter.values -%}
+                        <li class="collection-page__filter-item">
+                          <label class="collection-page__filter-label">
+                            <input type="checkbox" 
+                                   name="{{ filter.param_name }}" 
+                                   value="{{ filter_value.value }}" 
+                                   {% if filter_value.active %}checked{% endif %}
+                                   class="collection-page__filter-input">
+                            <span class="collection-page__filter-swatch"></span>
+                            <span>{{ filter_value.label }}</span>
+                            <span class="collection-page__filter-count">({{ filter_value.count }})</span>
+                          </label>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- when 'price_range' -%}
+                    <div class="collection-page__filter-price">
+                      <div class="collection-page__filter-price-inputs">
+                        <div>
+                          <label for="FilterPriceFrom-{{ section.id }}" class="visually-hidden">From</label>
+                          <input type="number" 
+                                 id="FilterPriceFrom-{{ section.id }}" 
+                                 name="{{ filter.min_value.param_name }}" 
+                                 value="{{ filter.min_value.value | default: '' }}" 
+                                 min="20"
+                                 placeholder="20"
+                                 class="collection-page__filter-price-input">
+                        </div>
+                        <span>—</span>
+                        <div>
+                          <label for="FilterPriceTo-{{ section.id }}" class="visually-hidden">To</label>
+                          <input type="number" 
+                                 id="FilterPriceTo-{{ section.id }}" 
+                                 name="{{ filter.max_value.param_name }}" 
+                                 value="{{ filter.max_value.value | default: '' }}" 
+                                 min="20"
+                                 placeholder="250"
+                                 class="collection-page__filter-price-input">
+                        </div>
+                      </div>
+                    </div>
+                {%- endcase -%}
+              </div>
+            </div>
+          {%- endfor -%}
+
+          <div class="collection-page__filters-footer">
+            <button type="submit" class="collection-page__filters-apply btn btn--primary" data-filters-apply>Apply Filters</button>
+            <button type="button" class="collection-page__filters-clear" data-filters-clear>Clear All</button>
+          </div>
+        </form>
+      </aside>
+    {%- endif -%}
+
+    <!-- Product Grid -->
+    <div class="collection-page__products">
+      {%- if collection.products.size > 0 -%}
+        {%- paginate collection.products by section.settings.products_per_page -%}
+          <div class="collection-page__grid">
+            {%- for product in collection.products -%}
+              <article class="collection-page__product" data-product-id="{{ product.id }}">
+                <a href="{{ product.url }}" class="collection-page__product-link" aria-label="{{ product.title | escape }}">
+                  <!-- Product Image -->
+                  <div class="collection-page__product-image-wrapper">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | image_url: width: 600 }}" 
+                           srcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 800 }} 800w" 
+                           sizes="(min-width: 768px) 33vw, 50vw" 
+                           alt="{{ product.featured_image.alt | default: product.title | escape }}" 
+                           loading="lazy" 
+                           width="{{ product.featured_image.width }}" 
+                           height="{{ product.featured_image.height }}"
+                           class="collection-page__product-image">
+                    {%- else -%}
+                      <div class="collection-page__product-image-placeholder texture-grain">
+                        <span>{{ product.title | escape }}</span>
+                      </div>
+                    {%- endif -%}
+
+                    <!-- Quick Add Button -->
+                    {%- if section.settings.show_quick_add and product.available -%}
+                      <button type="button" class="collection-page__quick-add btn btn--primary" data-quick-add="{{ product.id }}" aria-label="Quick add to cart">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                      </button>
+                    {%- endif -%}
+                  </div>
+
+                  <!-- Product Info -->
+                  <div class="collection-page__product-info">
+                    <h3 class="collection-page__product-title">{{ product.title }}</h3>
+                    <div class="collection-page__product-price">
+                      {%- if product.compare_at_price > product.price -%}
+                        <span class="collection-page__product-price--sale">{{ product.price | money }}</span>
+                        <span class="collection-page__product-price--compare">{{ product.compare_at_price | money }}</span>
+                      {%- else -%}
+                        <span class="collection-page__product-price--regular">{{ product.price | money }}</span>
+                      {%- endif -%}
+                    </div>
+                    {%- if product.available == false -%}
+                      <span class="collection-page__product-badge--sold-out">Sold out</span>
+                    {%- endif -%}
+                  </div>
+                </a>
+              </article>
+            {%- endfor -%}
+          </div>
+
+          <!-- Pagination -->
+          {%- if paginate.pages > 1 -%}
+            <nav class="collection-page__pagination" aria-label="Pagination">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="collection-page__pagination-link collection-page__pagination-link--prev" aria-label="Previous page">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+                  Previous
+                </a>
+              {%- endif -%}
+
+              <div class="collection-page__pagination-numbers">
+                {%- for part in paginate.parts -%}
+                  {%- if part.is_link -%}
+                    <a href="{{ part.url }}" class="collection-page__pagination-number">{{ part.title }}</a>
+                  {%- else -%}
+                    <span class="collection-page__pagination-number collection-page__pagination-number--current">{{ part.title }}</span>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="collection-page__pagination-link collection-page__pagination-link--next" aria-label="Next page">
+                  Next
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- endpaginate -%}
+      {%- else -%}
+        <div class="collection-page__empty">
+          <p>No products found in this collection.</p>
+          <a href="{{ routes.root_url }}" class="btn btn--primary">Continue Shopping</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- Collection Type-Specific Content -->
+  {%- if is_fragrance and section.settings.show_collection_story -%}
+    <section class="collection-page__story">
+      <div class="collection-page__story-content">
+        <h2>{{ collection.metafields.collection.story_title | default: 'Our Fragrance Collection' }}</h2>
+        <p>{{ collection.metafields.collection.story | default: 'Discover our curated selection of fragrances, each crafted with intention to capture a moment, a memory, a feeling.' }}</p>
+      </div>
+    </section>
+  {%- endif -%}
+</collection-page>
 
 {% schema %}
 {
-  "name": "t:general.collection",
-  "settings": []
+  "name": "Collection",
+  "tag": "section",
+  "class": "section-collection",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show filters",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort",
+      "label": "Show sort options",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show quick add button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_story",
+      "label": "Show collection story (fragrance collections)",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 16,
+      "label": "Products per page"
+    }
+  ]
 }
 {% endschema %}

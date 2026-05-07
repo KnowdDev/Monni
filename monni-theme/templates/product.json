@@ -11,7 +11,20 @@
   "sections": {
     "main": {
       "type": "product",
-      "settings": {}
+      "settings": {
+        "show_breadcrumb": true,
+        "show_short_description": true,
+        "show_quantity_selector": true,
+        "show_buy_now": false,
+        "show_trust_signals": true,
+        "show_description": true,
+        "show_size_guide": true,
+        "show_accordion": true,
+        "show_social_share": true,
+        "show_back_in_stock": true,
+        "show_fragrance_story": true,
+        "show_related_products": true
+      }
     }
   },
   "order": [

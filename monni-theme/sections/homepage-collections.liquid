@@ -115,13 +115,7 @@
 
   @media (min-width: 768px) {
     .collections__grid {
-      grid-template-columns: repeat(3, 1fr);
       gap: var(--spacing-md);
-    }
-
-    .collection-card:first-child {
-      grid-column: span 2;
-      aspect-ratio: 1.7 / 1;
     }
   }
 
@@ -212,12 +206,6 @@
     background: linear-gradient(to top, rgba(61,61,61,0.45) 0%, rgba(61,61,61,0.05) 60%);
   }
 
-  @media (max-width: 767px) {
-    .collection-card:first-child {
-      grid-column: 1 / -1;
-      aspect-ratio: 1.4 / 1;
-    }
-  }
 {% endstylesheet %}
 
 {% schema %}
