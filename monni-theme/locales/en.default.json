@@ -17,7 +17,27 @@
     "checkout": "Checkout",
     "title": "Cart",
     "update": "Update",
-    "remove": "Remove"
+    "remove": "Remove",
+    "drawer": {
+      "title": "Your cart",
+      "close": "Close cart",
+      "decrease_quantity": "Decrease quantity",
+      "increase_quantity": "Increase quantity",
+      "quantity": "Quantity",
+      "remove": "Remove",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue shopping",
+      "free_shipping_achieved": "You have free shipping!",
+      "free_shipping_remaining": "Free shipping over",
+      "free_shipping_away": "away",
+      "gift_note": "Add a gift note",
+      "gift_note_placeholder": "Write your message...",
+      "subtotal": "Subtotal",
+      "tax_note": "Shipping and taxes calculated at checkout.",
+      "checkout": "Checkout",
+      "secure_checkout": "Secure checkout",
+      "view_cart": "View full cart"
+    }
   },
   "customers": {
     "login": {
@@ -48,5 +68,20 @@
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone number",
+      "message": "Message",
+      "send": "Send message",
+      "post_success": "Thanks for contacting us. We'll get back to you as soon as possible."
+    }
+  },
+  "general": {
+    "breadcrumbs": {
+      "home": "Home"
+    }
   }
 }

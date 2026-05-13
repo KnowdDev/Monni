@@ -270,7 +270,14 @@ class ProductForm {
     submitButton.textContent = 'Adding...';
 
     try {
-      const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+      const cartAddUrl = (() => {
+        const root = window.Shopify?.routes?.root || '/';
+        if (root.startsWith('http') && !root.startsWith(window.location.origin)) {
+          return '/cart/add.js';
+        }
+        return root + 'cart/add.js';
+      })();
+      const response = await fetch(cartAddUrl, {
         method: 'POST',
         body: formData,
         headers: {

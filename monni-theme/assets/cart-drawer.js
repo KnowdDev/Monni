@@ -12,6 +12,16 @@ class CartDrawer extends HTMLElement {
     this.lastFocusedElement = null;
   }
 
+  static cartUrl(path) {
+    const root = window.Shopify?.routes?.root || '/';
+    // On shopify theme dev, routes.root points to the live store domain,
+    // which causes CORS when fetching from localhost. Fall back to relative.
+    if (root.startsWith('http') && !root.startsWith(window.location.origin)) {
+      return '/' + path.replace(/^\//, '');
+    }
+    return root + path;
+  }
+
   connectedCallback() {
     if (window.Shopify?.designMode) return;
 
@@ -77,8 +87,9 @@ class CartDrawer extends HTMLElement {
 
   bindPubSub() {
     document.addEventListener('cart:added', () => {
+      const wasOpen = this.isOpen;
       this.open();
-      this.fetchCart();
+      if (wasOpen) this.fetchCart();
     });
 
     document.addEventListener('click', (e) => {
@@ -137,8 +148,10 @@ class CartDrawer extends HTMLElement {
   }
 
   async fetchCart() {
+    if (this._fetchingCart) return;
+    this._fetchingCart = true;
     try {
-      const response = await fetch(`${window.Shopify?.routes?.root || '/'}cart.js`);
+      const response = await fetch(CartDrawer.cartUrl('cart.js'));
       const cart = await response.json();
       this.updateCart(cart);
       if (typeof publish === 'function') {
@@ -146,6 +159,8 @@ class CartDrawer extends HTMLElement {
       }
     } catch (err) {
       console.error('Cart fetch error:', err);
+    } finally {
+      this._fetchingCart = false;
     }
   }
 
@@ -160,7 +175,7 @@ class CartDrawer extends HTMLElement {
       }
     });
 
-    if (cart.item_count === 0) {
+    if (!cart || !cart.items || cart.items.length === 0 || cart.item_count === 0) {
       this.showEmpty();
     } else {
       this.renderItems(cart.items);
@@ -191,7 +206,7 @@ class CartDrawer extends HTMLElement {
   }
 
   renderItems(items) {
-    if (!this.itemsContainer) return;
+    if (!this.itemsContainer || !Array.isArray(items)) return;
     this.itemsContainer.innerHTML = items.map((item, index) => this.renderItem(item, index + 1)).join('');
   }
 
@@ -250,7 +265,7 @@ class CartDrawer extends HTMLElement {
 
   async updateLine(line, quantity) {
     try {
-      const response = await fetch(`${window.Shopify?.routes?.root || '/'}cart/change.js`, {
+      const response = await fetch(CartDrawer.cartUrl('cart/change.js'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
