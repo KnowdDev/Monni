@@ -3,7 +3,10 @@
   data-section-id="{{ section.id }}"
   data-animate
 >
-  <div class="split-hero__panel split-hero__panel--left">
+  <a
+    href="{{ section.settings.link_left | default: '/collections/gifting' }}"
+    class="split-hero__panel split-hero__panel--left"
+  >
     <div class="split-hero__fallback split-hero__fallback--left texture-grain"></div>
     {% if section.settings.image_left %}
       <img
@@ -34,15 +37,21 @@
       >
     {% endif %}
     <div class="split-hero__overlay"></div>
-    <a
-      href="{{ section.settings.link_left | default: '/collections/gifting' }}"
-      class="split-hero__label"
-    >
-      {{ section.settings.label_left | escape }}
-    </a>
-  </div>
+    <span class="split-hero__label">{{ section.settings.label_left | escape }}</span>
+    <div class="split-hero__info">
+      {% if section.settings.blurb_left != blank %}
+        <p class="split-hero__blurb">{{ section.settings.blurb_left | escape }}</p>
+      {% endif %}
+      {% if section.settings.cta_left != blank %}
+        <span class="split-hero__cta">{{ section.settings.cta_left | escape }}</span>
+      {% endif %}
+    </div>
+  </a>
 
-  <div class="split-hero__panel split-hero__panel--right">
+  <a
+    href="{{ section.settings.link_right | default: '/collections/homewares' }}"
+    class="split-hero__panel split-hero__panel--right"
+  >
     <div class="split-hero__fallback split-hero__fallback--right texture-grain"></div>
     {% if section.settings.image_right %}
       <img
@@ -73,13 +82,16 @@
       >
     {% endif %}
     <div class="split-hero__overlay"></div>
-    <a
-      href="{{ section.settings.link_right | default: '/collections/homewares' }}"
-      class="split-hero__label"
-    >
-      {{ section.settings.label_right | escape }}
-    </a>
-  </div>
+    <span class="split-hero__label">{{ section.settings.label_right | escape }}</span>
+    <div class="split-hero__info">
+      {% if section.settings.blurb_right != blank %}
+        <p class="split-hero__blurb">{{ section.settings.blurb_right | escape }}</p>
+      {% endif %}
+      {% if section.settings.cta_right != blank %}
+        <span class="split-hero__cta">{{ section.settings.cta_right | escape }}</span>
+      {% endif %}
+    </div>
+  </a>
 </section>
 
 {% stylesheet %}
@@ -148,6 +160,21 @@
     z-index: 1;
     pointer-events: none;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.02) 40%, transparent 70%);
+    transition: background 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .split-hero__panel:hover .split-hero__overlay {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.05) 45%, rgba(0, 0, 0, 0.35) 100%);
+  }
+
+  .split-hero__info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    padding: 2rem;
+    max-width: 34ch;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
   }
 
   .split-hero__label {
@@ -158,19 +185,62 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: #FFFFFF;
-    text-decoration: none;
-    padding: 2rem;
     text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    display: block;
     transition: opacity var(--transition-fast);
   }
 
-  .split-hero__label:hover {
+  .split-hero__panel:hover .split-hero__label {
     opacity: 0.75;
+  }
+
+  .split-hero__blurb {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 var(--spacing-sm) 0;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .split-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.08s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.08s;
+  }
+
+  .split-hero__cta::after {
+    content: '\2192';
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .split-hero__panel:hover .split-hero__blurb,
+  .split-hero__panel:hover .split-hero__cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .split-hero__panel:hover .split-hero__cta::after {
+    transform: translateX(4px);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .split-hero__image,
-    .split-hero__fallback {
+    .split-hero__fallback,
+    .split-hero__overlay,
+    .split-hero__blurb,
+    .split-hero__cta {
       transition: none;
     }
   }
@@ -199,6 +269,18 @@
       "label": "Left link"
     },
     {
+      "type": "textarea",
+      "id": "blurb_left",
+      "label": "Left blurb",
+      "default": "Thoughtfully chosen pieces to make every moment feel special."
+    },
+    {
+      "type": "text",
+      "id": "cta_left",
+      "label": "Left CTA",
+      "default": "Explore"
+    },
+    {
       "type": "image_picker",
       "id": "image_right",
       "label": "Right image"
@@ -213,6 +295,18 @@
       "type": "url",
       "id": "link_right",
       "label": "Right link"
+    },
+    {
+      "type": "textarea",
+      "id": "blurb_right",
+      "label": "Right blurb",
+      "default": "Objects that bring warmth, texture, and quiet beauty into your space."
+    },
+    {
+      "type": "text",
+      "id": "cta_right",
+      "label": "Right CTA",
+      "default": "Explore"
     }
   ],
   "presets": [

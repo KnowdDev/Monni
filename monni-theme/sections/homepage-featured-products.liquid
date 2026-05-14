@@ -16,39 +16,14 @@
   {% if collection_obj != blank and collection_obj.products.size > 0 %}
     <div class="featured-products__grid">
       {% for product in collection_obj.products limit: limit %}
-        <a href="{{ product.url }}" class="product-card">
-          {% if product.featured_image %}
-            <div class="product-card__media">
-              <img
-                src="{{ product.featured_image | image_url: width: 600 }}"
-                srcset="
-                  {{ product.featured_image | image_url: width: 600 }} 600w,
-                  {{ product.featured_image | image_url: width: 400 }} 400w
-                "
-                sizes="(min-width: 768px) 25vw, 50vw"
-                alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                loading="lazy"
-                decoding="async"
-                width="{{ product.featured_image.width }}"
-                height="{{ product.featured_image.height }}"
-              >
-            </div>
-          {% else %}
-            <div class="product-card__media product-card__media--placeholder"></div>
-          {% endif %}
-
-          <div class="product-card__info">
-            <h3 class="product-card__name">{{ product.title | escape }}</h3>
-            <p class="product-card__price">
-              {% if product.compare_at_price > product.price %}
-                <span class="product-card__price--sale">{{ product.price | money }}</span>
-                <s class="product-card__price--compare">{{ product.compare_at_price | money }}</s>
-              {% else %}
-                {{ product.price | money }}
-              {% endif %}
-            </p>
-          </div>
-        </a>
+        {%- render 'card-product',
+          card_product: product,
+          aspect_ratio: '3/4',
+          show_quick_add: false,
+          show_wishlist: false,
+          show_badges: false,
+          first_eager: false
+        -%}
       {% endfor %}
     </div>
 
@@ -93,63 +68,6 @@
       grid-template-columns: repeat(4, 1fr);
       gap: var(--spacing-lg);
     }
-  }
-
-  .product-card {
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-  }
-
-  .product-card__media {
-    position: relative;
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-    background-color: var(--color-border-light);
-  }
-
-  .product-card__media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--transition-slow);
-  }
-
-  .product-card__media--placeholder {
-    background: linear-gradient(135deg, var(--color-border-light) 0%, var(--color-border) 100%);
-  }
-
-  .product-card:hover .product-card__media img {
-    transform: scale(1.03);
-  }
-
-  .product-card__info {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-  }
-
-  .product-card__name {
-    font-family: var(--font-primary--family);
-    font-size: 0.9375rem;
-    font-weight: 400;
-    line-height: 1.4;
-    color: var(--color-foreground);
-  }
-
-  .product-card__price {
-    font-size: 0.875rem;
-    color: var(--color-foreground-muted);
-  }
-
-  .product-card__price--sale {
-    color: var(--color-foreground);
-  }
-
-  .product-card__price--compare {
-    margin-left: 0.25rem;
-    text-decoration: line-through;
   }
 
   .featured-products__footer {

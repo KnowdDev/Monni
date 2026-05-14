@@ -2,6 +2,8 @@
   Monni Product Page — Brand-aligned, hyper-converting, modular for product-type customization
 {% endcomment %}
 
+{%- render 'schema-product' -%}
+
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 {%- assign featured_media = current_variant.featured_media | default: product.featured_media -%}
 {%- assign product_form_id = 'product-form-' | append: section.id -%}
@@ -218,6 +220,11 @@
         {%- endif -%}
       {%- endunless -%}
 
+      <!-- Maker Highlight -->
+      {%- if product.metafields.custom.maker.value != blank -%}
+        {%- render 'maker-highlight', maker_object: product.metafields.custom.maker.value -%}
+      {%- endif -%}
+
       <!-- Trust Signals -->
       {%- if section.settings.show_trust_signals -%}
         <div class="product-page__trust">
@@ -322,7 +329,7 @@
     </div>
   </div>
 
-  <!-- Product Type-Specific Sections (modular customization) -->
+      <!-- Product Type-Specific Sections (modular customization) -->
   {%- if is_fragrance and section.settings.show_fragrance_story -%}
     <section class="product-page__story">
       <div class="product-page__story-content">
@@ -331,6 +338,12 @@
       </div>
     </section>
   {%- endif -%}
+
+  <!-- Recently Viewed -->
+  <section class="product-page__recently-viewed" data-recently-viewed hidden>
+    <h2>Recently viewed</h2>
+    <div class="product-page__recently-viewed-grid" data-recently-viewed-grid></div>
+  </section>
 
   <!-- Related Products -->
   {%- if section.settings.show_related_products -%}

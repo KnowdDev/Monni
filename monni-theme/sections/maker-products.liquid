@@ -1,0 +1,167 @@
+{%- comment -%}
+  Monni Maker Products — Grid of products by a specific maker, used on maker profile pages
+{%- endcomment -%}
+
+{%- liquid
+  assign maker = shop.metaobjects.maker[section.settings.maker_handle]
+  if template == 'metaobject'
+    assign maker = metaobject
+  endif
+
+  assign limit = section.settings.products_per_page | default: 12
+  assign grid_columns = section.settings.grid_columns | default: 4
+-%}
+
+{%- if maker != blank -%}
+  {%- assign maker_handle_safe = maker.system.handle | default: maker.handle -%}
+  {%- paginate collections.all.products by limit -%}
+    {%- assign maker_products = '' | split: '' -%}
+    {%- for product in collections.all.products -%}
+      {%- if product.metafields.custom.maker.value.system.handle == maker_handle_safe -%}
+        {%- assign maker_products = maker_products | append: product | split: ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if maker_products.size > 0 -%}
+      <section class="maker-products" data-section-id="{{ section.id }}">
+        <div class="maker-products__shell">
+          {%- if section.settings.title != blank -%}
+            <h2 class="maker-products__title">{{ section.settings.title | escape }}</h2>
+          {%- endif -%}
+
+          <div class="maker-products__grid" data-grid-columns="{{ grid_columns }}">
+            {%- for product in maker_products limit: limit -%}
+              {%- render 'card-product',
+                card_product: product,
+                aspect_ratio: section.settings.card_aspect_ratio,
+                show_quick_add: section.settings.show_quick_add,
+                show_wishlist: section.settings.show_wishlist,
+                show_badges: section.settings.show_badges,
+                first_eager: false
+              -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </section>
+    {%- endif -%}
+  {%- endpaginate -%}
+{%- endif -%}
+
+{% stylesheet %}
+  .maker-products {
+    padding: var(--space-8) 0;
+    background-color: var(--color-warm-white);
+  }
+
+  .maker-products__shell {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 var(--space-5);
+  }
+
+  @media (min-width: 768px) {
+    .maker-products__shell {
+      padding: 0 var(--space-7);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .maker-products__shell {
+      padding: 0 var(--space-8);
+    }
+  }
+
+  .maker-products__title {
+    font-size: var(--text-2xl);
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: var(--space-6);
+  }
+
+  .maker-products__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 768px) {
+    .maker-products__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .maker-products__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Maker Products",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "By this maker"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "label": "Products per page",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "grid_columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Grid columns (desktop)",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "card_aspect_ratio",
+      "label": "Card aspect ratio",
+      "options": [
+        { "value": "3/4", "label": "3:4 (Portrait)" },
+        { "value": "4/5", "label": "4:5 (Portrait)" },
+        { "value": "1/1", "label": "1:1 (Square)" }
+      ],
+      "default": "3/4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show quick add button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Show wishlist button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "Show badges",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Maker Products"
+    }
+  ]
+}
+{% endschema %}

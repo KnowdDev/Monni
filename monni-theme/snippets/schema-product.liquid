@@ -1,0 +1,49 @@
+{%- comment -%}
+  Structured data (JSON-LD) for Product pages
+{%- endcomment -%}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "image": [
+    {%- for media in product.media -%}
+      {%- if media.media_type == 'image' -%}
+        {{ media | image_url: width: 1200 | json }}{%- unless forloop.last -%},{%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ],
+  "description": {{ product.description | strip_html | truncate: 500 | json }},
+  "sku": {{ current_variant.sku | json }},
+  "brand": {
+    "@type": "Brand",
+    "name": {{ product.vendor | json }}
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": {{ shop.url | append: product.url | json }},
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "price": {{ current_variant.price | money_without_currency | json }},
+    "availability": "{% if current_variant.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "itemCondition": "https://schema.org/NewCondition",
+    {%- if current_variant.barcode != blank -%}
+      "gtin": {{ current_variant.barcode | json }},
+    {%- endif -%}
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": {{ cart.currency.iso_code | json }}
+      },
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "NZ"
+      }
+    }
+  }
+}
+</script>

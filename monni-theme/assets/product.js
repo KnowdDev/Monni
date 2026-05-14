@@ -336,8 +336,104 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     new ProductPage();
     new ProductForm();
+    initRecentlyViewed();
   });
 } else {
   new ProductPage();
   new ProductForm();
+  initRecentlyViewed();
+}
+
+// Recently Viewed (client-side)
+function escapeHtml(str) {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function initRecentlyViewed() {
+  const container = document.querySelector('[data-recently-viewed]');
+  const grid = document.querySelector('[data-recently-viewed-grid]');
+  const productPage = document.querySelector('product-page');
+  if (!container || !grid || !productPage) return;
+
+  const productId = productPage.dataset.productId;
+  const productHandle = window.location.pathname.split('/').filter(Boolean).pop() || '';
+  const productTitle = document.querySelector('.product-page__title')?.textContent?.trim() || '';
+
+  // Prefer the active slide image, fall back to first gallery image
+  const activeImage = productPage.querySelector('.media-gallery__slide.is-active .media-gallery__image');
+  const firstImage = productPage.querySelector('.media-gallery__image');
+  const productImage = activeImage?.src || firstImage?.src || '';
+
+  // Capture both sale and regular price if present
+  const salePriceEl = document.querySelector('[data-sale-price]');
+  const regularPriceEl = document.querySelector('[data-regular-price]');
+  const comparePriceEl = document.querySelector('[data-compare-price]');
+  let priceHtml = '';
+  if (salePriceEl) {
+    priceHtml = `<span class="card-product__price--sale">${escapeHtml(salePriceEl.textContent.trim())}</span>`;
+    if (comparePriceEl) {
+      priceHtml += `<span class="card-product__price--compare">${escapeHtml(comparePriceEl.textContent.trim())}</span>`;
+    }
+  } else if (regularPriceEl) {
+    priceHtml = `<span class="card-product__price--regular">${escapeHtml(regularPriceEl.textContent.trim())}</span>`;
+  }
+
+  const productUrl = productPage.dataset.url;
+
+  // Load existing
+  let recent = [];
+  try {
+    recent = JSON.parse(localStorage.getItem('monni:recentlyViewed') || '[]');
+  } catch (e) {
+    recent = [];
+  }
+
+  // Add current product (if not already)
+  recent = recent.filter(item => item.id !== productId);
+  recent.unshift({
+    id: productId,
+    handle: productHandle,
+    title: productTitle,
+    image: productImage,
+    priceHtml: priceHtml,
+    url: productUrl
+  });
+  recent = recent.slice(0, 6);
+  try {
+    localStorage.setItem('monni:recentlyViewed', JSON.stringify(recent));
+  } catch (e) {
+    // Quota exceeded or private mode — silently fail
+  }
+
+  // Render (skip current product)
+  const toRender = recent.filter(item => item.id !== productId).slice(0, 4);
+  if (toRender.length === 0) return;
+
+  container.removeAttribute('hidden');
+  grid.innerHTML = toRender.map(item => {
+    const imgHtml = item.image
+      ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy" class="card-product__image">`
+      : `<div class="card-product__placeholder texture-grain"><span>${escapeHtml(item.title)}</span></div>`;
+    return `
+      <article class="card-product recently-viewed__card">
+        <div class="card-product__media" style="--card-aspect-ratio: 3/4;">
+          <a href="${escapeHtml(item.url)}" class="card-product__image-link" aria-label="${escapeHtml(item.title)}">
+            ${imgHtml}
+          </a>
+        </div>
+        <a href="${escapeHtml(item.url)}" class="card-product__info-link">
+          <div class="card-product__info">
+            <h3 class="card-product__title">${escapeHtml(item.title)}</h3>
+            <div class="card-product__price">${item.priceHtml}</div>
+          </div>
+        </a>
+      </article>
+    `;
+  }).join('');
 }

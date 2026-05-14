@@ -155,6 +155,58 @@
     ]
   },
   {
+    "name": "Announcement bar",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_announcement",
+        "label": "Show announcement bar",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement text",
+        "default": "Free shipping on orders over $100"
+      },
+      {
+        "type": "url",
+        "id": "announcement_link",
+        "label": "Announcement link"
+      },
+      {
+        "type": "color",
+        "id": "announcement_bg",
+        "label": "Background color",
+        "default": "#1E1C1A"
+      },
+      {
+        "type": "color",
+        "id": "announcement_text_color",
+        "label": "Text color",
+        "default": "#FAF8F5"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_drawer_enable",
+        "label": "Enable cart drawer",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free shipping threshold",
+        "default": 100,
+        "info": "Amount in your store currency"
+      }
+    ]
+  },
+  {
     "name": "Social media",
     "settings": [
       {
@@ -170,6 +222,16 @@
         "type": "url",
         "id": "social_facebook_link",
         "label": "Facebook URL"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest_link",
+        "label": "Pinterest URL"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok_link",
+        "label": "TikTok URL"
       }
     ]
   }

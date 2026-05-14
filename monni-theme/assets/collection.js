@@ -1,6 +1,6 @@
 /**
  * Monni Collection Page JavaScript
- * Handles filtering, sorting, and quick add functionality
+ * Handles filtering and sorting
  */
 
 class CollectionPage {
@@ -10,7 +10,6 @@ class CollectionPage {
 
     this.initFilters();
     this.initSort();
-    this.initQuickAdd();
   }
 
   // Filter functionality
@@ -101,90 +100,6 @@ class CollectionPage {
     });
   }
 
-  // Quick add functionality
-  initQuickAdd() {
-    const quickAddButtons = this.collectionPage.querySelectorAll('[data-quick-add]');
-    
-    quickAddButtons.forEach(button => {
-      button.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const productId = button.dataset.quickAdd;
-        await this.quickAddToCart(productId, button);
-      });
-    });
-  }
-
-  async quickAddToCart(productId, button) {
-    const originalContent = button.innerHTML;
-    
-    // Show loading state
-    button.disabled = true;
-    button.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="animate-spin"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="32"/></svg>';
-
-    try {
-      // Fetch product data to get first available variant
-      const productResponse = await fetch(`/products/${productId}?view=ajax`);
-      const productData = await productResponse.json();
-      
-      if (!productData || !productData.variants || productData.variants.length === 0) {
-        throw new Error('No variants found');
-      }
-
-      // Find first available variant
-      const availableVariant = productData.variants.find(v => v.available) || productData.variants[0];
-      
-      if (!availableVariant) {
-        throw new Error('No available variants');
-      }
-
-      // Add to cart
-      const formData = new FormData();
-      formData.append('id', availableVariant.id);
-      formData.append('quantity', 1);
-
-      const cartAddUrl = (() => {
-        const root = window.Shopify?.routes?.root || '/';
-        if (root.startsWith('http') && !root.startsWith(window.location.origin)) {
-          return '/cart/add.js';
-        }
-        return root + 'cart/add.js';
-      })();
-      const response = await fetch(cartAddUrl, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        }
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Success
-        button.innerHTML = '✓';
-        button.classList.add('is-success');
-        
-        // Emit event for cart drawer to listen to
-        document.dispatchEvent(new CustomEvent('cart:added', {
-          detail: { data }
-        }));
-
-        // Reset button after delay
-        setTimeout(() => {
-          button.disabled = false;
-          button.innerHTML = originalContent;
-          button.classList.remove('is-success');
-        }, 2000);
-      } else {
-        throw new Error(data.description || 'Could not add to cart');
-      }
-    } catch (error) {
-      console.error('Quick add error:', error);
-      button.disabled = false;
-      button.innerHTML = originalContent;
-      alert(error.message || 'Could not add to cart. Please try again.');
-    }
-  }
 }
 
 // Initialize when DOM is ready

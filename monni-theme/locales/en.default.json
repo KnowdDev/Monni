@@ -82,6 +82,9 @@
   "general": {
     "breadcrumbs": {
       "home": "Home"
+    },
+    "shopify": {
+      "title": "Powered by Shopify"
     }
   }
 }

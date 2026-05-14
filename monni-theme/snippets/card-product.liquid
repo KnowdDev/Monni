@@ -1,0 +1,108 @@
+{%- liquid
+  assign product = card_product
+  assign aspect_ratio = aspect_ratio | default: '3/4'
+  case aspect_ratio
+    when 'square'
+      assign aspect_ratio = '1/1'
+    when 'portrait'
+      assign aspect_ratio = '3/4'
+    when 'landscape'
+      assign aspect_ratio = '4/3'
+  endcase
+  assign show_quick_add = show_quick_add | default: true
+  assign show_wishlist = show_wishlist | default: true
+  assign show_badges = show_badges | default: true
+  assign first_eager = first_eager | default: false
+-%}
+
+{%- assign has_secondary = false -%}
+{%- unless product.media[1] == blank -%}{%- assign has_secondary = true -%}{%- endunless -%}
+<article class="card-product" data-product-id="{{ product.id }}" {% if has_secondary %}data-has-secondary{% endif %}>
+  <div class="card-product__media" style="--card-aspect-ratio: {{ aspect_ratio }};">
+    <a href="{{ product.url }}" class="card-product__image-link" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_image -%}
+        <img
+          src="{{ product.featured_image | image_url: width: 600 }}"
+          srcset="
+            {{ product.featured_image | image_url: width: 400 }} 400w,
+            {{ product.featured_image | image_url: width: 600 }} 600w,
+            {{ product.featured_image | image_url: width: 800 }} 800w
+          "
+          sizes="(min-width: 1200px) 25vw, (min-width: 768px) 33vw, 50vw"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          loading="{% if first_eager %}eager{% else %}lazy{% endif %}"
+          decoding="async"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}"
+          class="card-product__image card-product__image--primary"
+        >
+        {%- if product.media[1] -%}
+          <img
+            src="{{ product.media[1] | image_url: width: 600 }}"
+            srcset="
+              {{ product.media[1] | image_url: width: 400 }} 400w,
+              {{ product.media[1] | image_url: width: 600 }} 600w,
+              {{ product.media[1] | image_url: width: 800 }} 800w
+            "
+            sizes="(min-width: 1200px) 25vw, (min-width: 768px) 33vw, 50vw"
+            alt="{{ product.media[1].alt | default: product.title | escape }}"
+            loading="lazy"
+            decoding="async"
+            width="{{ product.media[1].width }}"
+            height="{{ product.media[1].height }}"
+            class="card-product__image card-product__image--secondary"
+          >
+        {%- endif -%}
+      {%- else -%}
+        <div class="card-product__placeholder texture-grain">
+          <span>{{ product.title | escape }}</span>
+        </div>
+      {%- endif -%}
+
+      <!-- Badges -->
+      {%- if show_badges -%}
+        <div class="card-product__badges">
+          {%- if product.available == false -%}
+            <span class="card-product__badge card-product__badge--sold-out">Sold Out</span>
+          {%- elsif product.compare_at_price > product.price -%}
+            <span class="card-product__badge card-product__badge--sale">Sale</span>
+          {%- elsif product.tags contains 'new' -%}
+            <span class="card-product__badge card-product__badge--new">New</span>
+          {%- elsif product.selected_or_first_available_variant.inventory_quantity <= 5 and product.selected_or_first_available_variant.inventory_management == 'shopify' -%}
+            <span class="card-product__badge card-product__badge--low-stock">Only {{ product.selected_or_first_available_variant.inventory_quantity }} left</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </a>
+
+    <!-- Wishlist -->
+    {%- if show_wishlist -%}
+      <button
+        type="button"
+        class="card-product__wishlist"
+        data-wishlist-toggle="{{ product.id }}"
+        aria-label="Add to wishlist"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+    {%- endif -%}
+  </div>
+
+  <!-- Info -->
+  <a href="{{ product.url }}" class="card-product__info-link">
+    <div class="card-product__info">
+      <h3 class="card-product__title">{{ product.title | escape }}</h3>
+      <div class="card-product__price">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="card-product__price--sale">{{ product.price | money }}</span>
+          <span class="card-product__price--compare">{{ product.compare_at_price | money }}</span>
+        {%- else -%}
+          <span class="card-product__price--regular">{{ product.price | money }}</span>
+        {%- endif -%}
+      </div>
+      {%- if product.compare_at_price > product.price -%}
+        <span class="card-product__sale-label">Sale</span>
+      {%- endif -%}
+    </div>
+  </a>
+</article>
