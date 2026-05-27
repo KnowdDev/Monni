@@ -17,6 +17,7 @@
     type="checkbox"
     data-header-menu-state
     aria-hidden="true"
+    tabindex="-1"
   >
 
   <div class="header__shell">
@@ -45,7 +46,7 @@
                 {% if link_title_handle == 'sale' or link_title_handle == 'sales' or link_title_handle contains '-sale' or link_title_handle contains 'sale-' or link.url contains '/sale' %}
                   {% assign hide_link = true %}
                 {% endif %}
-                {% if link_title_handle == 'new-arrivals' or link_title_handle == 'new' or link_title_handle == 'gifts' or link_title_handle == 'gifting' or link_title_handle == 'beauty' or link_title_handle == 'home' or link_title_handle == 'clothing' or link_title_handle == 'jewellery' or link_title_handle == 'jewelry' %}
+                {% if link_title_handle == 'new-arrivals' or link_title_handle == 'new' or link_title_handle == 'gifts' or link_title_handle == 'gifting' or link_title_handle == 'beauty' or link_title_handle == 'home' or link_title_handle == 'clothing' or link_title_handle == 'jewellery' or link_title_handle == 'jewelry' or link_title_handle == 'wellness' %}
                   {% assign show_on_desktop = true %}
                 {% endif %}
                 {% if link_title_handle == 'new-arrivals' %}
@@ -180,6 +181,7 @@
 
           {% if section.settings.show_wishlist %}
             <a href="/pages/wishlist" class="header__tool header__tool--wishlist" aria-label="Wishlist">
+              <span class="header__wishlist-count" data-wishlist-count hidden aria-hidden="true">0</span>
               {{ 'icon-heart.svg' | inline_asset_content }}
             </a>
           {% endif %}
@@ -407,7 +409,7 @@
           {% if section.settings.show_wishlist %}
             <a href="/pages/wishlist" class="header__drawer-link">
               <span class="header__drawer-link-icon">{{ 'icon-heart.svg' | inline_asset_content }}</span>
-              <span>Wishlist</span>
+              <span>Wishlist <span data-wishlist-count-mobile hidden></span></span>
             </a>
           {% endif %}
 
@@ -763,13 +765,34 @@
     opacity: 1;
   }
 
+  .header__wishlist-count {
+    position: absolute;
+    top: 0.15rem;
+    right: 0.05rem;
+    min-width: 1rem;
+    padding: 0 0.15rem;
+    border-radius: 999px;
+    font-size: 0.625rem;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+    opacity: 0;
+    color: var(--color-foreground);
+    background-color: rgba(255, 255, 255, 0.92);
+    transition: opacity var(--transition-fast);
+  }
+
+  .header__wishlist-count:not([hidden]) {
+    opacity: 1;
+  }
+
   .header__menu-toggle {
     display: none;
     align-items: center;
     justify-content: center;
     margin-left: -0.1rem;
-    width: 1.75rem;
-    height: 1.75rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
     padding: 0;
     border: none;
     background: none;
@@ -1151,6 +1174,17 @@
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  document.querySelectorAll('[data-header-menu-toggle]').forEach(function(el) {
+    el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+{% endjavascript %}
 
 {% schema %}
 {
