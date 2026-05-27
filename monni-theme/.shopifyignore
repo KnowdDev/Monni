@@ -1,13 +1,25 @@
 # This file contains a list of files that will be excluded from Shopify CLI
 # operations such as push, pull, dev, etc.
 #
-# Examples:
-#
-# Ignore a specific file:
-#   templates/product.json
-#
-# Ignore templates with a wildcard pattern:
-#   templates/*.json
-#
-# Ignore templates and sections with a regular expression:
-#   /(templates|sections)/.*\.json/
+# ─── MANUALLY MANAGED TEMPLATES ─────────────────────────────────────────────
+# These templates are edited directly in the Shopify admin theme editor.
+# Excluding them prevents `shopify theme push` from overwriting live changes.
+
+templates/index.json
+templates/product.json
+templates/page.about.json
+templates/page.contact.json
+templates/page.wishlist.json
+templates/collection.json
+templates/list-collections.json
+templates/blog.json
+templates/article.json
+templates/search.json
+templates/cart.json
+templates/page.json
+
+# Section group configs (managed in admin)
+# `header-group.json` is version-controlled so announcement bar fixes sync from the repo.
+sections/footer-group.json
+
+# Layout (contains repo-managed fixes)

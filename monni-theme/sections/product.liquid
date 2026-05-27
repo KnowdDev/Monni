@@ -177,6 +177,23 @@
               </span>
             </button>
 
+            <!-- Wishlist -->
+            <button
+              type="button"
+              class="product-page__wishlist"
+              data-wishlist-toggle="{{ product.id }}"
+              data-wishlist-handle="{{ product.handle }}"
+              data-wishlist-title="{{ product.title | escape }}"
+              data-wishlist-image="{{ product.featured_image | image_url: width: 600 }}"
+              data-wishlist-price="{{ product.price | money }}"
+              {%- if product.compare_at_price > product.price -%}data-wishlist-compare-price="{{ product.compare_at_price | money }}"{%- endif -%}
+              data-wishlist-url="{{ product.url }}"
+              aria-label="Add to wishlist"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <span data-wishlist-text>Add to wishlist</span>
+            </button>
+
             <!-- Buy Now Button (Shopify Pay) -->
             {%- if section.settings.show_buy_now -%}
               {{ form | payment_button }}
@@ -228,18 +245,24 @@
       <!-- Trust Signals -->
       {%- if section.settings.show_trust_signals -%}
         <div class="product-page__trust">
-          <div class="product-page__trust-item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2" ry="2"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="3" y1="10" x2="14" y2="10"/></svg>
-            <span>Free shipping over $100</span>
-          </div>
-          <div class="product-page__trust-item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            <span>Easy 30-day returns</span>
-          </div>
-          <div class="product-page__trust-item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Secure checkout</span>
-          </div>
+          {%- if section.settings.trust_signal_shipping_text != blank -%}
+            <div class="product-page__trust-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2" ry="2"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="3" y1="10" x2="14" y2="10"/></svg>
+              <span>{{ section.settings.trust_signal_shipping_text }}</span>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.trust_signal_returns_text != blank -%}
+            <div class="product-page__trust-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span>{{ section.settings.trust_signal_returns_text }}</span>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.trust_signal_checkout_text != blank -%}
+            <div class="product-page__trust-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>{{ section.settings.trust_signal_checkout_text }}</span>
+            </div>
+          {%- endif -%}
         </div>
       {%- endif -%}
 
@@ -294,18 +317,22 @@
       <!-- Accordion: Shipping & Returns -->
       {%- if section.settings.show_accordion -%}
         <div class="product-page__accordion">
-          <details class="product-page__accordion-item">
-            <summary class="product-page__accordion-summary">Shipping & Delivery</summary>
-            <div class="product-page__accordion-content">
-              <p>We offer free shipping on orders over $100. Standard shipping takes 3-5 business days. Express shipping available at checkout.</p>
-            </div>
-          </details>
-          <details class="product-page__accordion-item">
-            <summary class="product-page__accordion-summary">Returns & Exchanges</summary>
-            <div class="product-page__accordion-content">
-              <p>We accept returns within 30 days of purchase. Items must be unused and in original packaging. Contact us at hello@monni.co.nz for assistance.</p>
-            </div>
-          </details>
+          {%- if section.settings.shipping_accordion_heading != blank and section.settings.shipping_accordion_content != blank -%}
+            <details class="product-page__accordion-item">
+              <summary class="product-page__accordion-summary">{{ section.settings.shipping_accordion_heading }}</summary>
+              <div class="product-page__accordion-content">
+                {{ section.settings.shipping_accordion_content }}
+              </div>
+            </details>
+          {%- endif -%}
+          {%- if section.settings.returns_accordion_heading != blank and section.settings.returns_accordion_content != blank -%}
+            <details class="product-page__accordion-item">
+              <summary class="product-page__accordion-summary">{{ section.settings.returns_accordion_heading }}</summary>
+              <div class="product-page__accordion-content">
+                {{ section.settings.returns_accordion_content }}
+              </div>
+            </details>
+          {%- endif -%}
           {%- if is_fragrance or is_beauty -%}
             <details class="product-page__accordion-item">
               <summary class="product-page__accordion-summary">Ingredients</summary>
@@ -367,6 +394,37 @@
   {%- endif -%}
 </product-page>
 
+{% stylesheet %}
+  .product-page__wishlist {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-foreground);
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .product-page__wishlist svg {
+    fill: none;
+    transition: fill var(--duration-fast);
+  }
+
+  .product-page__wishlist.is-active svg {
+    fill: currentColor;
+  }
+
+  .product-page__wishlist:hover {
+    border-color: var(--color-foreground);
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "Product",
@@ -404,6 +462,28 @@
       "default": true
     },
     {
+      "type": "header",
+      "content": "Trust signal copy"
+    },
+    {
+      "type": "text",
+      "id": "trust_signal_shipping_text",
+      "label": "Shipping trust signal",
+      "default": "Free shipping over $250"
+    },
+    {
+      "type": "text",
+      "id": "trust_signal_returns_text",
+      "label": "Returns trust signal",
+      "default": "Easy 30-day returns"
+    },
+    {
+      "type": "text",
+      "id": "trust_signal_checkout_text",
+      "label": "Checkout trust signal",
+      "default": "Secure checkout"
+    },
+    {
       "type": "checkbox",
       "id": "show_description",
       "label": "Show full description",
@@ -420,6 +500,34 @@
       "id": "show_accordion",
       "label": "Show shipping/returns accordion",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Accordion copy"
+    },
+    {
+      "type": "text",
+      "id": "shipping_accordion_heading",
+      "label": "Shipping accordion heading",
+      "default": "Shipping & Delivery"
+    },
+    {
+      "type": "richtext",
+      "id": "shipping_accordion_content",
+      "label": "Shipping accordion content",
+      "default": "<p>We offer free shipping on orders over $250. Standard shipping takes 3-5 business days. Express shipping available at checkout.</p>"
+    },
+    {
+      "type": "text",
+      "id": "returns_accordion_heading",
+      "label": "Returns accordion heading",
+      "default": "Returns & Exchanges"
+    },
+    {
+      "type": "richtext",
+      "id": "returns_accordion_content",
+      "label": "Returns accordion content",
+      "default": "<p>We accept returns within 30 days of purchase. Items must be unused and in original packaging. Contact us at hello@monni.co.nz for assistance.</p>"
     },
     {
       "type": "checkbox",

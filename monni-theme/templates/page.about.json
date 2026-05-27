@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "about-monni",
+      "settings": {
+        "padding_top": 24,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

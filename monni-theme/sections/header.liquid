@@ -60,7 +60,7 @@
                       href="{{ link.url }}"
                       class="header__menu-link"
                       {% if link.current or link.active %}aria-current="page"{% endif %}
-                    >
+                      "default": "Free Express Shipping Over $250",
                       <span>{{ desktop_title | escape }}</span>
                     </a>
 
@@ -1194,7 +1194,7 @@
       "type": "text",
       "id": "announcement_text",
       "label": "Announcement text",
-      "default": "Free Express Shipping Over $300",
+      "default": "Free Express Shipping Over $250",
       "info": "Leave blank to hide the announcement bar"
     },
     {

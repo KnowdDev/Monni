@@ -183,7 +183,7 @@
           {%- if paginate.pages > 1 -%}
             <nav class="collection-page__pagination" aria-label="Pagination">
               {%- if paginate.previous -%}
-                <a href="{{ paginate.previous.url }}" class="collection-page__pagination-link collection-page__pagination-link--prev" aria-label="Previous page">
+                <a href="{{ paginate.previous.url }}" rel="prev" class="collection-page__pagination-link collection-page__pagination-link--prev" aria-label="Previous page">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
                   Previous
                 </a>
@@ -200,7 +200,7 @@
               </div>
 
               {%- if paginate.next -%}
-                <a href="{{ paginate.next.url }}" class="collection-page__pagination-link collection-page__pagination-link--next" aria-label="Next page">
+                <a href="{{ paginate.next.url }}" rel="next" class="collection-page__pagination-link collection-page__pagination-link--next" aria-label="Next page">
                   Next
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
                 </a>

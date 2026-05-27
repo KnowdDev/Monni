@@ -23,31 +23,35 @@ class CollectionPage {
 
     if (!filterToggle || !filters) return;
 
+    const openFilter = () => {
+      filters.classList.add('is-open');
+      if (filtersBackdrop) filtersBackdrop.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeFilter = () => {
+      filters.classList.remove('is-open');
+      if (filtersBackdrop) filtersBackdrop.classList.remove('is-open');
+      document.body.style.overflow = '';
+    };
+
     // Toggle filter drawer
     filterToggle.addEventListener('click', () => {
-      filters.classList.toggle('is-open');
-      if (filtersBackdrop) {
-        filtersBackdrop.classList.toggle('is-open');
-      }
+      filters.classList.contains('is-open') ? closeFilter() : openFilter();
     });
 
     // Close filter drawer via close button
     if (filtersClose) {
-      filtersClose.addEventListener('click', () => {
-        filters.classList.remove('is-open');
-        if (filtersBackdrop) {
-          filtersBackdrop.classList.remove('is-open');
-        }
-      });
+      filtersClose.addEventListener('click', closeFilter);
     }
 
     // Close filter drawer via backdrop click
     if (filtersBackdrop) {
-      filtersBackdrop.addEventListener('click', () => {
-        filters.classList.remove('is-open');
-        filtersBackdrop.classList.remove('is-open');
-      });
+      filtersBackdrop.addEventListener('click', closeFilter);
     }
+
+    // Restore scroll if navigating away with filter open
+    window.addEventListener('beforeunload', () => { document.body.style.overflow = ''; });
 
     // Clear filters
     if (filtersClear) {

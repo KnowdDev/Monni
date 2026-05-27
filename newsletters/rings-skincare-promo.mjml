@@ -1,0 +1,92 @@
+<mjml>
+  <mj-head>
+    <mj-title>Discover Our New Favourites — Tea & Tonic</mj-title>
+    <mj-preview>Fine rings and natural skincare, handpicked for you.</mj-preview>
+    <mj-font name="DM Sans" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" />
+    <mj-attributes>
+      <mj-all font-family="DM Sans, Arial, Helvetica, sans-serif" />
+      <mj-text color="#252525" font-size="16px" line-height="1.6" align="center" />
+      <mj-button background-color="#2c332f" color="#ffffff" border-radius="6px" font-size="15px" font-weight="500" padding="14px 32px" inner-padding="14px 32px" />
+      <mj-class name="dark-bg" background-color="#1a1a1a" />
+      <mj-class name="dark-text" color="#efecec" />
+      <mj-class name="dark-card" background-color="#252525" />
+      <mj-class name="dark-accent" background-color="#3f5147" />
+      <mj-class name="dark-cream" background-color="#252525" />
+    </mj-attributes>
+    <mj-style>
+      .product-title { height: 50px !important; line-height: 25px !important; overflow: hidden !important; }
+      @media (prefers-color-scheme: dark) {
+        .dark-bg { background-color: #1a1a1a !important; }
+        .dark-text { color: #efecec !important; }
+        .dark-card { background-color: #252525 !important; }
+        .dark-accent { background-color: #3f5147 !important; }
+        .dark-cream { background-color: #252525 !important; }
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#f7f7f7" css-class="dark-bg">
+    <mj-section padding="40px 0">
+      <mj-column>
+        <mj-image src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/uploads/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/1778905704830_tea_and_tonic_logo-removebg-preview.webp" alt="Tea and Tonic" width="200px" padding="0 20px 30px" />
+        <mj-text font-size="28px" font-weight="700" color="#2c332f" css-class="dark-text" padding="0 40px 16px">Curated for You</mj-text>
+        <mj-text font-size="16px" color="#252525" css-class="dark-text" padding="0 40px 30px">A quiet moment of beauty. We've handpicked fine rings and natural skincare treasures that feel as considered as they look.</mj-text>
+        <mj-divider border-color="#efecec" border-width="1px" padding="0 40px" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Rings Section -->
+    <mj-section background-color="#efecec" css-class="dark-cream" padding="30px 40px 10px">
+      <mj-column>
+        <mj-text font-size="13px" font-weight="700" color="#3f5147" css-class="dark-text" letter-spacing="1.5px" text-transform="uppercase" padding="0 0 6px">Fine Jewellery</mj-text>
+        <mj-text font-size="22px" font-weight="700" color="#2c332f" css-class="dark-text" padding="0 0 20px">Rings to Treasure</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#efecec" css-class="dark-cream" padding="0 40px 30px">
+      <mj-column width="48%" background-color="#ffffff" border-radius="6px" css-class="dark-card" padding="0">
+        <mj-image src="https://cdn.shopify.com/s/files/1/2511/3170/products/byzantia-ring-silver-charlotte-penman-jewellery-tea-tonic-matakana-684000.jpg?v=1708925642" alt="Charlotte Penman Byzantia Ring | Sterling Silver" border-radius="6px 6px 0 0" padding="0" />
+        <mj-text color="#2c332f" font-size="15px" font-weight="700" align="left" padding="16px 16px 6px" css-class="dark-text product-title">Charlotte Penman Byzantia Ring | Sterling Silver</mj-text>
+        <mj-text color="#3f5147" font-size="14px" font-weight="500" align="left" padding="0 16px 10px" css-class="dark-text">$260.00 NZD</mj-text>
+        <mj-text color="#2c332f" font-size="13px" font-weight="500" align="left" padding="0 16px 16px" css-class="dark-text"><a href="https://teaandtonic.co.nz/products/byzantia-ring-silver" style="color:inherit;text-decoration:underline;">View Product</a></mj-text>
+      </mj-column>
+      <mj-column width="4%"></mj-column>
+      <mj-column width="48%" background-color="#ffffff" border-radius="6px" css-class="dark-card" padding="0">
+        <mj-image src="https://cdn.shopify.com/s/files/1/2511/3170/products/ava-ring-charlotte-penman-tea-tonic-matakana-410784.jpg?v=1665438070" alt="Charlotte Penman Fine | Ava Ring | Morganite Stone | 9k" border-radius="6px 6px 0 0" padding="0" />
+        <mj-text color="#2c332f" font-size="15px" font-weight="700" align="left" padding="16px 16px 6px" css-class="dark-text product-title">Charlotte Penman Fine | Ava Ring | Morganite Stone | 9k</mj-text>
+        <mj-text color="#3f5147" font-size="14px" font-weight="500" align="left" padding="0 16px 10px" css-class="dark-text">$820.00 NZD</mj-text>
+        <mj-text color="#2c332f" font-size="13px" font-weight="500" align="left" padding="0 16px 16px" css-class="dark-text"><a href="https://teaandtonic.co.nz/products/ava-ring" style="color:inherit;text-decoration:underline;">View Product</a></mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Skincare Section -->
+    <mj-section background-color="#3f5147" css-class="dark-accent" padding="30px 40px 10px">
+      <mj-column>
+        <mj-text font-size="13px" font-weight="700" color="#efecec" letter-spacing="1.5px" text-transform="uppercase" padding="0 0 6px">Natural Skincare</mj-text>
+        <mj-text font-size="22px" font-weight="700" color="#ffffff" padding="0 0 20px">Glow from Within</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#3f5147" css-class="dark-accent" padding="0 40px 30px">
+      <mj-column width="48%" background-color="#ffffff" border-radius="6px" css-class="dark-card" padding="0">
+        <mj-image src="https://cdn.shopify.com/s/files/1/2511/3170/products/bio-nutrient-face-oil-maryse-tea-tonic-matakana-805203.webp?v=1665438069" alt="Maryse Bio-Nutrient Face Oil" border-radius="6px 6px 0 0" padding="0" />
+        <mj-text color="#2c332f" font-size="15px" font-weight="700" align="left" padding="16px 16px 6px" css-class="dark-text product-title">Maryse Bio-Nutrient Face Oil</mj-text>
+        <mj-text color="#3f5147" font-size="14px" font-weight="500" align="left" padding="0 16px 10px" css-class="dark-text">$88.00 NZD</mj-text>
+        <mj-text color="#2c332f" font-size="13px" font-weight="500" align="left" padding="0 16px 16px" css-class="dark-text"><a href="https://teaandtonic.co.nz/products/bio-nutrientfaceoil" style="color:inherit;text-decoration:underline;">View Product</a></mj-text>
+      </mj-column>
+      <mj-column width="4%"></mj-column>
+      <mj-column width="48%" background-color="#ffffff" border-radius="6px" css-class="dark-card" padding="0">
+        <mj-image src="https://cdn.shopify.com/s/files/1/2511/3170/products/omega-treatment-oil-maryse-tea-tonic-matakana-730435.webp?v=1694912888" alt="Maryse Omega Treatment Oil" border-radius="6px 6px 0 0" padding="0" />
+        <mj-text color="#2c332f" font-size="15px" font-weight="700" align="left" padding="16px 16px 6px" css-class="dark-text product-title">Maryse Omega Treatment Oil</mj-text>
+        <mj-text color="#3f5147" font-size="14px" font-weight="500" align="left" padding="0 16px 10px" css-class="dark-text">$94.00 NZD</mj-text>
+        <mj-text color="#2c332f" font-size="13px" font-weight="500" align="left" padding="0 16px 16px" css-class="dark-text"><a href="https://teaandtonic.co.nz/products/intensiveomegatreatmentoil" style="color:inherit;text-decoration:underline;">View Product</a></mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="30px 40px">
+      <mj-column>
+        <mj-button href="https://teaandtonic.co.nz/collections/all" padding="0 0 30px">Shop All Products</mj-button>
+        <mj-text font-size="15px" color="#252525" css-class="dark-text" padding="0 0 16px">With love,<br><strong style="color:#2c332f;" class="dark-text">The Tea and Tonic Team</strong></mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

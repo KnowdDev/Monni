@@ -14,10 +14,10 @@
     "header": {
       "type": "header",
       "settings": {
-        "announcement_text": "Free Express Shipping Over $300",
-        "menu": "main-menu-2",
+        "announcement_text": "Free Express Shipping Over $250",
+        "menu": "main-menu",
         "show_currency": true,
-        "show_wishlist": false
+        "show_wishlist": true
       }
     }
   },

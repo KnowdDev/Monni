@@ -182,11 +182,11 @@
     "26f64524-6dab-425b-baa6-09ab8f01e736": {
       "type": "featured-collection",
       "settings": {
-        "collection": "jewellery",
+        "collection": "all-jewellery",
         "products_to_show": 4,
         "title": "Jewellery",
         "heading_size": "h2",
-        "description": "<p>Explore Tea & Tonic Matakana's stunning collection of handcrafted jewellery - discover a range of necklaces, earrings, rings, and bracelets from top brands like Charlotte Penman, Vania and Monarc Jewellery. Whether you're looking for gold hoops, sterling silver huggies, or diamond studs, we have the perfect piece to elevate your style. Shop now and find your new favourite accessory.<br/></p>",
+        "description": "",
         "show_description": false,
         "description_style": "body",
         "columns_desktop": 4,

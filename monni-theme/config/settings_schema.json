@@ -167,7 +167,7 @@
         "type": "text",
         "id": "announcement_text",
         "label": "Announcement text",
-        "default": "Free shipping on orders over $100"
+        "default": "Free shipping on orders over $250"
       },
       {
         "type": "url",
@@ -201,7 +201,7 @@
         "type": "number",
         "id": "cart_free_shipping_threshold",
         "label": "Free shipping threshold",
-        "default": 100,
+        "default": 250,
         "info": "Amount in your store currency"
       }
     ]

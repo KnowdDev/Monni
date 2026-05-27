@@ -14,7 +14,9 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "menu": "",
+        "menu_shop": "footer-shop",
+        "menu_help": "help-info",
+        "menu_about": "discover",
         "show_payment_icons": true
       }
     }

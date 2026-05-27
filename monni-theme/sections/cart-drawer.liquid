@@ -121,38 +121,6 @@
           </details>
         {%- endif -%}
 
-        <!-- Complementary Product Upsell -->
-        {%- if section.settings.show_upsell -%}
-          {%- assign upsell_product = cart.items[0].product.metafields.custom.complementary_product.value -%}
-          {%- if upsell_product == blank and section.settings.upsell_product != blank -%}
-            {%- assign upsell_product = all_products[section.settings.upsell_product] -%}
-          {%- endif -%}
-          {%- if upsell_product != blank and upsell_product.available -%}
-            <div class="cart-drawer__upsell">
-              <p class="cart-drawer__upsell-label">{{ section.settings.upsell_label | default: 'Complete the look' }}</p>
-              <div class="cart-drawer__upsell-product">
-                <a href="{{ upsell_product.url }}" class="cart-drawer__upsell-image">
-                  {%- if upsell_product.featured_image -%}
-                    <img src="{{ upsell_product.featured_image | image_url: width: 120 }}" alt="{{ upsell_product.title | escape }}" width="60" height="60" loading="lazy">
-                  {%- endif -%}
-                </a>
-                <div class="cart-drawer__upsell-info">
-                  <a href="{{ upsell_product.url }}" class="cart-drawer__upsell-title">{{ upsell_product.title | escape }}</a>
-                  <span class="cart-drawer__upsell-price">{{ upsell_product.price | money }}</span>
-                </div>
-                <button
-                  type="button"
-                  class="btn btn--secondary cart-drawer__upsell-add"
-                  data-quick-add="{{ upsell_product.selected_or_first_available_variant.id }}"
-                  aria-label="Add {{ upsell_product.title | escape }} to cart"
-                >
-                  Add
-                </button>
-              </div>
-            </div>
-          {%- endif -%}
-        {%- endif -%}
-
         <div class="cart-drawer__totals">
           <div class="cart-drawer__subtotal">
             <span>{{ 'cart.drawer.subtotal' | t | default: 'Subtotal' }}</span>
@@ -211,25 +179,6 @@
       "id": "enable_gift_note",
       "label": "Enable gift note",
       "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_upsell",
-      "label": "Show upsell product",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "upsell_label",
-      "label": "Upsell label",
-      "default": "Complete the look",
-      "info": "Shown above the upsell product."
-    },
-    {
-      "type": "product",
-      "id": "upsell_product",
-      "label": "Fallback upsell product",
-      "info": "Shown when no cart item has a complementary product metafield."
     }
   ]
 }

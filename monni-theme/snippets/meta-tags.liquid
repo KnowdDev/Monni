@@ -55,6 +55,15 @@
     property="og:image:height"
     content="{{ page_image.height }}"
   >
+{%- elsif settings.logo -%}
+  <meta
+    property="og:image"
+    content="https:{{ settings.logo | image_url: width: 1200 }}"
+  >
+  <meta
+    property="og:image:secure_url"
+    content="https:{{ settings.logo | image_url: width: 1200 }}"
+  >
 {%- endif -%}
 
 {%- if request.page_type == 'product' -%}
@@ -84,6 +93,13 @@
   name="twitter:description"
   content="{{ og_description | escape }}"
 >
+{%- assign twitter_image = page_image | default: settings.logo -%}
+{%- if twitter_image -%}
+  <meta
+    name="twitter:image"
+    content="https:{{ twitter_image | image_url: width: 1200 }}"
+  >
+{%- endif -%}
 
 <title>
   {{ page_title }}
@@ -101,5 +117,10 @@
   <meta
     name="description"
     content="{{ page_description | escape }}"
+  >
+{% elsif shop.description %}
+  <meta
+    name="description"
+    content="{{ shop.description | escape }}"
   >
 {% endif %}

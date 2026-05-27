@@ -1,0 +1,493 @@
+{% comment %}
+  About Monni page section
+  Designed for storytelling with editable imagery in Theme Editor
+{% endcomment %}
+
+<section class="about-monni section--padding" data-section-id="{{ section.id }}">
+  <div class="about-monni__hero-wrap">
+    <div class="about-monni__hero-media">
+      {% if section.settings.hero_image != blank %}
+        {{
+          section.settings.hero_image
+          | image_url: width: 2200
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '640, 960, 1280, 1600, 1920, 2200',
+            sizes: '100vw',
+            alt: section.settings.hero_image.alt
+        }}
+      {% else %}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'about-monni__placeholder' }}
+      {% endif %}
+      <div class="about-monni__hero-overlay"></div>
+    </div>
+
+    <div class="about-monni__hero-content container">
+      <p class="about-monni__eyebrow">ABOUT MONNI</p>
+      <h1 class="about-monni__title">A place to pause. A place to reconnect. A place to feel inspired by beauty, nature, and thoughtful living.</h1>
+    </div>
+  </div>
+
+  <div class="about-monni__inner container">
+    <article class="about-monni__block">
+      <header class="about-monni__block-header">
+        <h2>Our Story</h2>
+      </header>
+      <div class="about-monni__story-grid">
+        <div class="about-monni__copy">
+          <p>MONNI is a holistic health, beauty, and home store located in the heart of Matakana Village, grounded in conscious living, thoughtful curation, and meaningful everyday ritual.</p>
+          <p>Founded as Tea &amp; Tonic in 2017 by Monni and her dear friend Aysha, the store began with a vision to create a space that felt calm, meaningful, and deeply connected to wellbeing. Over time, that vision naturally evolved beyond tea and wellness.</p>
+          <p>Today, MONNI is an extension of that evolution, a thoughtfully curated collection of the things Monni loves: natural living, beauty, creativity, ritual, intentional design, and conscious everyday living.</p>
+          <p>Through her own journey towards wellbeing, Monni came to understand that healing begins with love, for ourselves, for others, and for the world around us, and that the wellbeing of people and the planet are deeply connected. This understanding continues to shape everything within MONNI, from the rituals we inspire to the products we source and the environment we create.</p>
+          <p>Whether you find us in store or online, our intention is the same, to create a space that feels calm, considered, and connected.</p>
+        </div>
+        <div class="about-monni__image-card">
+          {% if section.settings.story_image != blank %}
+            {{
+              section.settings.story_image
+              | image_url: width: 1400
+              | image_tag:
+                loading: 'lazy',
+                widths: '500, 700, 900, 1100, 1400',
+                sizes: '(min-width: 900px) 35vw, 100vw',
+                alt: section.settings.story_image.alt
+            }}
+          {% else %}
+            {{ 'image' | placeholder_svg_tag: 'about-monni__placeholder' }}
+          {% endif %}
+        </div>
+      </div>
+    </article>
+
+    <article class="about-monni__block">
+      <header class="about-monni__block-header">
+        <h2>What We Offer</h2>
+      </header>
+      <div class="about-monni__copy">
+        <p>MONNI offers a carefully curated selection of natural fibre clothing, jewellery, ceramics, crystals, natural beauty, tea, books, homewares, art, perfume, candles, and sustainable gifts, alongside holistic wellbeing treatments, including Reiki and energy healing, offered by our skilled and caring team, each sharing MONNI's commitment to holistic wellbeing.</p>
+        <p>Each piece within the store is chosen with intention, favouring natural materials, thoughtful craftsmanship, timeless design, and brands that align with a more conscious and considered way of living.</p>
+        <p>Many of the makers and brands within MONNI are women-led, artist-created, locally made, or small-batch produced, reflecting a slower and more intentional approach to both consumption and creation.</p>
+      </div>
+    </article>
+
+    <article class="about-monni__block about-monni__split-block">
+      <div class="about-monni__split-copy">
+        <header class="about-monni__block-header">
+          <h2>Our Own Creations</h2>
+        </header>
+        <div class="about-monni__copy">
+          <p>MONNI is also home to Monni Label, Monni's New Zealand-made clothing line crafted from natural fibres, alongside Monni's original artwork and prints created using botanical plant inks.</p>
+          <p>Monni Botanicals is a seasonal skincare line born from a deep collaboration with The Herbalologist, crafted from organically grown botanicals harvested in rhythm with the seasons and moon cycles, slowly infused and thoughtfully made into small-batch, seed-to-bottle formulations. Currently available in store, Monni Botanicals is growing quietly and in its own time.</p>
+          <p>Together, these offerings reflect the same philosophy: simplicity, beauty, ritual, care, and connection to the natural world.</p>
+        </div>
+      </div>
+      <div class="about-monni__split-media">
+        {% if section.settings.creations_image != blank %}
+          {{
+            section.settings.creations_image
+            | image_url: width: 1400
+            | image_tag:
+              loading: 'lazy',
+              widths: '500, 700, 900, 1100, 1400',
+              sizes: '(min-width: 900px) 35vw, 100vw',
+              alt: section.settings.creations_image.alt
+          }}
+        {% else %}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'about-monni__placeholder' }}
+        {% endif %}
+      </div>
+    </article>
+
+    <article class="about-monni__block about-monni__split-block about-monni__split-block--reverse">
+      <div class="about-monni__split-copy">
+        <header class="about-monni__block-header">
+          <h2>The Space</h2>
+        </header>
+        <div class="about-monni__copy">
+          <p>Designed by New Zealand architect Frazer Horton, the Matakana flagship store was thoughtfully created to feel grounding, nurturing, and connected to nature. Influenced by Eastern design philosophies and surrounded by flowing water and cherry blossom trees, the space has become known as a sanctuary-like environment that quietly delights the senses and invites people to slow down.</p>
+          <p>Matakana Village holds the distinction of being Australasia's first designated Slow Town, a community built around independent boutiques, local makers, and a deeply considered approach to sustainable living. MONNI is proud to call this pioneering village home, a place that believes how we live, shop, and gather matters.</p>
+          <p>Every object, scent, texture, and interaction within MONNI is considered with care to create a space that feels both inspiring and restorative, whether you experience it in person or through your screen.</p>
+        </div>
+      </div>
+      <div class="about-monni__split-media">
+        {% if section.settings.space_image != blank %}
+          {{
+            section.settings.space_image
+            | image_url: width: 1400
+            | image_tag:
+              loading: 'lazy',
+              widths: '500, 700, 900, 1100, 1400',
+              sizes: '(min-width: 900px) 35vw, 100vw',
+              alt: section.settings.space_image.alt
+          }}
+        {% else %}
+          {{ 'collection-1' | placeholder_svg_tag: 'about-monni__placeholder' }}
+        {% endif %}
+      </div>
+    </article>
+
+    <article class="about-monni__block">
+      <header class="about-monni__block-header">
+        <h2>Our Values</h2>
+      </header>
+      <div class="about-monni__values-grid">
+        <section class="about-monni__value-card">
+          <h3>Sustainability</h3>
+          <p>Like our ancestors, we believe human wellbeing and the wellbeing of the planet are deeply interconnected. By caring for people and place, we practice kaitiakitanga, a philosophy of guardianship and reciprocal care for the natural world. We favour natural materials, slower processes, small-batch production, and makers who create with integrity and care.</p>
+        </section>
+        <section class="about-monni__value-card">
+          <h3>Self Love</h3>
+          <p>Self-love is self-care. The greatest thing we can offer those around us is our own wholeness. MONNI supports daily rituals, restores balance, and helps create sacred spaces within everyday life, encouraging acts of care, connection, and presence for yourself and those you love.</p>
+        </section>
+        <section class="about-monni__value-card">
+          <h3>Empowering Women</h3>
+          <p>Empowering women is essential to the wellbeing of families, communities, and future generations. We proudly support and stock products from women-owned businesses, nurturing sustainable growth, creativity, collaboration, and a more connected and conscious way of doing business.</p>
+        </section>
+        <section class="about-monni__value-card">
+          <h3>The Art of Gifting</h3>
+          <p>Gifting is an ancient ritual of love, care, and connection, one that does not need to come at the expense of the planet. Every piece within MONNI is chosen with intention, and our sustainable gift boxes are designed to bring comfort, beauty, and meaning to every occasion.</p>
+        </section>
+        <section class="about-monni__value-card about-monni__value-card--wide">
+          <h3>Hauora</h3>
+          <p>We believe wellbeing is holistic, a philosophy that sits at the heart of Te Ao Māori. True wellness lives within our relationships, our rituals, our creativity, our connection to nature, and the way we care for ourselves and others each day.</p>
+          <p>Hauora reminds us that wellbeing exists in many interconnected forms:</p>
+          <ul>
+            <li>Taha tinana, physical wellbeing and the health of the body</li>
+            <li>Taha hinengaro, mental and emotional wellbeing</li>
+            <li>Taha wairua, spiritual wellbeing and connection to meaning and purpose</li>
+            <li>Taha whānau, connection to family, relationships, and community</li>
+            <li>Taha whenua, connection to the land, nature, and a sense of belonging</li>
+          </ul>
+          <p>When these parts of ourselves are nurtured together, we move closer towards balance.</p>
+        </section>
+      </div>
+    </article>
+
+    <article class="about-monni__block about-monni__founder">
+      <header class="about-monni__block-header">
+        <h2>Our Founder</h2>
+      </header>
+      <div class="about-monni__founder-grid">
+        <div class="about-monni__founder-media">
+          {% if section.settings.founder_image != blank %}
+            {{
+              section.settings.founder_image
+              | image_url: width: 1400
+              | image_tag:
+                loading: 'lazy',
+                widths: '500, 700, 900, 1100, 1400',
+                sizes: '(min-width: 900px) 35vw, 100vw',
+                alt: section.settings.founder_image.alt
+            }}
+          {% else %}
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'about-monni__placeholder' }}
+          {% endif %}
+        </div>
+        <div class="about-monni__copy">
+          <p class="about-monni__pepeha">Ko Whetumatarau te maunga<br>Ko Awatere te awa<br>Ko Hinerupe te marae<br>Ko Hinerupe te hapū<br>Ko Horouta te waka<br>Ko Ngāti Porou te iwi<br>Ko Monique Jansen taku ingoa</p>
+          <p>I am descended from Ruawaipu, Ngāti Porou, and Te Whānau a Apanui. My ancestors arrived in Aotearoa over a thousand years ago and served as careful guardians of the land for many generations.</p>
+          <p>They understood the sacred connection between people and the natural world, believing that our physical and spiritual wellbeing depends upon our relationship with the whenua. To honour and continue that legacy is a responsibility I carry deeply. It guides every part of my life and my work.</p>
+          <p>I am human, as are you. I am energy, as are you, and so is everything that exists within our infinite universe. We reflect one another and learn from each other on this journey. We are all connected.</p>
+          <p>It is my belief that we are all here to walk each other home.</p>
+          <p>At our core, each of us longs for love, acceptance, and belonging. We all know what it feels like to feel unseen, not enough, or disconnected from who we truly are.</p>
+          <p>Yet here we are, living, breathing, and feeling within these miraculous bodies. Even when life feels difficult, this life itself is a gift.</p>
+          <p>My own path towards self-love and acceptance was shaped by a moment in time when I realised the feelings, thoughts, and beliefs I held about myself were the opposite of love. We all carry wounds and experiences that shape us in different ways, but it is not the pain that defines us. It is how we choose to meet ourselves now, in this moment, and in every moment moving forward.</p>
+          <p>As we learn to love and accept ourselves more deeply, we begin to love and accept others more fully too, because at our essence, we are all connected. Self-love is not a solitary act. It is an invitation to recognise our shared humanity.</p>
+          <p>Let go of the shoulds, the labels, and the conditioning. Deep down, you already know what is true for you. Trust that knowing.</p>
+          <p>Never stop imagining what is possible.</p>
+          <p>What is the most true and beautiful life you can dream into being?</p>
+          <p>More than a store, MONNI is a space for ritual, creativity, wellbeing, and conscious living. We look forward to welcoming you into our world and sharing a little tea with you.</p>
+          <p class="about-monni__signoff">Aroha nui, Monni and the MONNI team</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+{% stylesheet %}
+  .about-monni {
+    background:
+      radial-gradient(circle at 10% 0%, rgba(196, 184, 168, 0.18), transparent 45%),
+      radial-gradient(circle at 100% 30%, rgba(217, 208, 196, 0.22), transparent 38%),
+      var(--color-background);
+    color: var(--color-foreground);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  .about-monni__hero-wrap {
+    position: relative;
+    margin-bottom: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .about-monni__hero-media {
+    position: relative;
+    min-height: 55vh;
+    max-height: 760px;
+    overflow: hidden;
+  }
+
+  .about-monni__hero-media img,
+  .about-monni__hero-media svg,
+  .about-monni__placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 55vh;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-monni__hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(29, 27, 25, 0.58) 0%, rgba(29, 27, 25, 0.2) 48%, rgba(29, 27, 25, 0.16) 100%);
+  }
+
+  .about-monni__hero-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: clamp(1.5rem, 5vw, 4rem);
+    z-index: 2;
+    color: var(--color-background-alt);
+  }
+
+  .about-monni__eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 var(--spacing-sm);
+    opacity: 0.9;
+  }
+
+  .about-monni__title {
+    margin: 0;
+    max-width: 19ch;
+    font-size: clamp(1.85rem, 5vw, 3.4rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: 0.01em;
+  }
+
+  .about-monni__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
+    display: grid;
+    gap: clamp(2rem, 5vw, 4.5rem);
+  }
+
+  .about-monni__block {
+    background: color-mix(in srgb, var(--color-background-alt) 82%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-border) 75%, transparent);
+    padding: clamp(1.25rem, 3.2vw, 2.5rem);
+    border-radius: 2px;
+  }
+
+  .about-monni__block-header {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .about-monni__block-header h2 {
+    margin: 0;
+    font-size: clamp(1.5rem, 3.2vw, 2.4rem);
+    line-height: 1.15;
+    font-weight: 350;
+    color: var(--color-foreground);
+  }
+
+  .about-monni__copy p {
+    margin: 0 0 var(--spacing-md);
+    color: var(--color-foreground);
+    line-height: 1.78;
+    letter-spacing: 0.012em;
+  }
+
+  .about-monni__copy p:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-monni__story-grid,
+  .about-monni__split-block,
+  .about-monni__founder-grid {
+    display: grid;
+    gap: clamp(1.5rem, 3.2vw, 3rem);
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .about-monni__image-card,
+  .about-monni__split-media,
+  .about-monni__founder-media {
+    overflow: hidden;
+    border-radius: 2px;
+    border: 1px solid var(--color-border);
+    min-height: 360px;
+    background: var(--color-border-light);
+  }
+
+  .about-monni__image-card img,
+  .about-monni__split-media img,
+  .about-monni__founder-media img,
+  .about-monni__image-card svg,
+  .about-monni__split-media svg,
+  .about-monni__founder-media svg {
+    width: 100%;
+    height: 100%;
+    min-height: 360px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-monni__values-grid {
+    display: grid;
+    gap: var(--spacing-md);
+    grid-template-columns: 1fr;
+  }
+
+  .about-monni__value-card {
+    border: 1px solid var(--color-border);
+    background: var(--color-background-alt);
+    padding: clamp(1rem, 2.6vw, 1.5rem);
+  }
+
+  .about-monni__value-card h3 {
+    margin: 0 0 var(--spacing-sm);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--color-foreground);
+  }
+
+  .about-monni__value-card p {
+    margin: 0 0 var(--spacing-sm);
+    color: var(--color-foreground-light);
+    line-height: 1.72;
+  }
+
+  .about-monni__value-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-monni__value-card ul {
+    margin: 0 0 var(--spacing-sm);
+    padding-left: 1.2rem;
+    color: var(--color-foreground-light);
+    line-height: 1.72;
+  }
+
+  .about-monni__value-card li {
+    margin-bottom: 0.45rem;
+  }
+
+  .about-monni__pepeha {
+    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+    line-height: 1.62;
+    color: var(--color-foreground);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .about-monni__signoff {
+    font-style: italic;
+    color: var(--color-foreground);
+  }
+
+  @media (min-width: 900px) {
+    .about-monni__story-grid,
+    .about-monni__founder-grid,
+    .about-monni__split-block {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    }
+
+    .about-monni__split-block--reverse .about-monni__split-copy {
+      order: 2;
+    }
+
+    .about-monni__split-block--reverse .about-monni__split-media {
+      order: 1;
+    }
+
+    .about-monni__values-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .about-monni__value-card--wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .about-monni__image-card img,
+    .about-monni__split-media img,
+    .about-monni__founder-media img {
+      transition: transform var(--transition-slow);
+    }
+
+    .about-monni__image-card:hover img,
+    .about-monni__split-media:hover img,
+    .about-monni__founder-media:hover img {
+      transform: scale(1.03);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About Monni",
+  "tag": "section",
+  "class": "section-about-monni",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "image_picker",
+      "id": "story_image",
+      "label": "Our story image"
+    },
+    {
+      "type": "image_picker",
+      "id": "creations_image",
+      "label": "Our creations image"
+    },
+    {
+      "type": "image_picker",
+      "id": "space_image",
+      "label": "The space image"
+    },
+    {
+      "type": "image_picker",
+      "id": "founder_image",
+      "label": "Founder image"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Monni"
+    }
+  ]
+}
+{% endschema %}

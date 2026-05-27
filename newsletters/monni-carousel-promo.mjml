@@ -1,0 +1,204 @@
+<mjml>
+  <mj-head>
+    <mj-title>Just Arrived — Curated for You | Tea & Tonic</mj-title>
+    <mj-preview>New treasures have landed. Explore our latest arrivals in fragrance, tea, and natural skincare.</mj-preview>
+    <mj-font name="DM Sans" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" />
+    <mj-attributes>
+      <mj-all font-family="DM Sans, Arial, Helvetica, sans-serif" />
+      <mj-text color="#252525" font-size="16px" line-height="1.6" align="center" />
+      <mj-button background-color="#2c332f" color="#ffffff" border-radius="6px" font-size="15px" font-weight="500" padding="14px 32px" inner-padding="14px 32px" />
+      <mj-class name="dark-bg" background-color="#1a1a1a" />
+      <mj-class name="dark-text" color="#efecec" />
+      <mj-class name="dark-card" background-color="#252525" />
+      <mj-class name="dark-accent" background-color="#3f5147" />
+      <mj-class name="dark-cream" background-color="#252525" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .product-title { height: 50px !important; line-height: 25px !important; overflow: hidden !important; }
+      .carousel-fallback { display: block !important; }
+      .carousel-interactive { display: none !important; }
+      @media screen and (max-width: 480px) {
+        .carousel-slide img { width: 100% !important; height: auto !important; }
+      }
+    </mj-style>
+    <mj-style>
+      @media (prefers-color-scheme: dark) {
+        .dark-bg { background-color: #1a1a1a !important; }
+        .dark-text { color: #efecec !important; }
+        .dark-card { background-color: #252525 !important; }
+        .dark-accent { background-color: #3f5147 !important; }
+        .dark-cream { background-color: #252525 !important; }
+      }
+      /* Interactive Carousel for Apple Mail, Outlook Mac, Samsung Mail */
+      @media screen and (-webkit-min-device-pixel-ratio: 0) {
+        .carousel-fallback { display: none !important; max-height: 0 !important; overflow: hidden !important; }
+        .carousel-interactive { display: block !important; max-height: none !important; overflow: visible !important; }
+      }
+      .carousel-wrap { position: relative; width: 100%; max-width: 600px; margin: 0 auto; overflow: hidden; }
+      .carousel-slides { display: flex; width: 300%; transition: transform 0.5s ease; }
+      .carousel-slide { width: 33.333%; flex-shrink: 0; text-align: center; }
+      .carousel-nav { text-align: center; margin-top: 16px; }
+      .carousel-nav label { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #c4c4c4; margin: 0 6px; cursor: pointer; transition: background 0.3s; }
+      #slide1:checked ~ .carousel-wrap .carousel-slides { transform: translateX(0); }
+      #slide2:checked ~ .carousel-wrap .carousel-slides { transform: translateX(-33.333%); }
+      #slide3:checked ~ .carousel-wrap .carousel-slides { transform: translateX(-66.666%); }
+      #slide1:checked ~ .carousel-wrap .nav1,
+      #slide2:checked ~ .carousel-wrap .nav2,
+      #slide3:checked ~ .carousel-wrap .nav3 { background: #2c332f; }
+      .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; background: rgba(255,255,255,0.85); border-radius: 50%; line-height: 36px; text-align: center; font-size: 18px; color: #2c332f; cursor: pointer; z-index: 5; }
+      .carousel-arrow.prev { left: 12px; }
+      .carousel-arrow.next { right: 12px; }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#f7f7f7" css-class="dark-bg">
+    <!-- Header / Logo -->
+    <mj-section padding="40px 0 20px">
+      <mj-column>
+        <mj-image src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/uploads/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/1778905704830_tea_and_tonic_logo-removebg-preview.webp" alt="Tea and Tonic" width="200px" padding="0 20px 20px" />
+        <mj-text font-size="13px" font-weight="700" color="#3f5147" css-class="dark-text" letter-spacing="2px" text-transform="uppercase" padding="0 0 10px">New Arrivals</mj-text>
+        <mj-text font-size="32px" font-weight="700" color="#2c332f" css-class="dark-text" padding="0 40px 16px" line-height="1.2">Curated for Calm</mj-text>
+        <mj-text font-size="16px" color="#252525" css-class="dark-text" padding="0 40px 30px">A quiet moment of beauty. Explore our latest treasures — handpicked fragrances, organic teas, and natural skincare that feel as considered as they look.</mj-text>
+        <mj-divider border-color="#efecec" border-width="1px" padding="0 40px" />
+      </mj-column>
+    </mj-section>
+
+    <!-- INTERACTIVE CAROUSEL -->
+    <mj-section padding="20px 0 0" background-color="#ffffff" css-class="dark-card">
+      <mj-column>
+        <mj-text font-size="13px" font-weight="700" color="#3f5147" css-class="dark-text" letter-spacing="1.5px" text-transform="uppercase" padding="0 0 10px">Featured</mj-text>
+        <mj-text font-size="22px" font-weight="700" color="#2c332f" css-class="dark-text" padding="0 0 20px">Swipe to Explore</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Fallback: Static Grid for non-interactive clients -->
+    <mj-section padding="0 40px 30px" background-color="#ffffff" css-class="dark-card carousel-fallback">
+      <mj-column width="100%">
+        <mj-image src="https://cdn.shopify.com/s/files/1/2511/3170/products/black-anise-eau-de-parfum-abel-tea-tonic-matakana-486406.png?v=1686853325" alt="Abel Black Anise Eau de Parfum" border-radius="6px" padding="0 0 16px" />
+        <mj-text color="#2c332f" font-size="18px" font-weight="700" css-class="dark-text" padding="0 0 6px">Abel Black Anise</mj-text>
+        <mj-text color="#3f5147" font-size="14px" font-weight="500" padding="0 0 16px" css-class="dark-text">From $60 NZD</mj-text>
+        <mj-button href="https://teaandtonic.co.nz/products/abel-black-anise?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=carousel_slide1" padding="0 0 30px">Shop Fragrance</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Interactive Carousel (Apple Mail, Outlook Mac, Samsung Mail) -->
+    <mj-raw>
+      <div class="carousel-interactive" style="display:none;max-height:0;overflow:hidden;">
+        <input type="radio" name="carousel" id="slide1" checked style="display:none;" />
+        <input type="radio" name="carousel" id="slide2" style="display:none;" />
+        <input type="radio" name="carousel" id="slide3" style="display:none;" />
+        <div class="carousel-wrap">
+          <div class="carousel-slides">
+            <!-- Slide 1 -->
+            <div class="carousel-slide">
+              <a href="https://teaandtonic.co.nz/products/abel-black-anise?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=carousel_slide1">
+                <img src="https://cdn.shopify.com/s/files/1/2511/3170/products/black-anise-eau-de-parfum-abel-tea-tonic-matakana-486406.png?v=1686853325" alt="Abel Black Anise Eau de Parfum" width="100%" style="display:block;border-radius:6px;" />
+              </a>
+              <div style="padding:16px;text-align:center;font-family:DM Sans, Arial, sans-serif;">
+                <p style="margin:0 0 6px;font-size:18px;font-weight:700;color:#2c332f;">Abel Black Anise</p>
+                <p style="margin:0 0 16px;font-size:14px;font-weight:500;color:#3f5147;">From $60 NZD</p>
+                <a href="https://teaandtonic.co.nz/products/abel-black-anise?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=carousel_slide1_cta" style="display:inline-block;background:#2c332f;color:#ffffff;text-decoration:none;border-radius:6px;font-size:15px;font-weight:500;padding:14px 32px;">Shop Fragrance</a>
+              </div>
+              <label for="slide3" class="carousel-arrow prev" style="position:absolute;top:40%;left:12px;width:36px;height:36px;background:rgba(255,255,255,0.85);border-radius:50%;line-height:36px;text-align:center;font-size:18px;color:#2c332f;cursor:pointer;z-index:5;">&#10094;</label>
+              <label for="slide2" class="carousel-arrow next" style="position:absolute;top:40%;right:12px;width:36px;height:36px;background:rgba(255,255,255,0.85);border-radius:50%;line-height:36px;text-align:center;font-size:18px;color:#2c332f;cursor:pointer;z-index:5;">&#10095;</label>
+            </div>
+            <!-- Slide 2 -->
+            <div class="carousel-slide">
+              <a href="https://teaandtonic.co.nz/products/amber-gold-limeflower-tea?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=carousel_slide2">
+                <img src="https://cdn.shopify.com/s/files/1/2511/3170/files/DSC04256-Large.jpg?v=1767925582" alt="Amber & Gold Organic Limeflower Tea" width="100%" style="display:block;border-radius:6px;" />
+              </a>
+              <div style="padding:16px;text-align:center;font-family:DM Sans, Arial, sans-serif;">
+                <p style="margin:0 0 6px;font-size:18px;font-weight:700;color:#2c332f;">Organic Limeflower Tea</p>
+                <p style="margin:0 0 16px;font-size:14px;font-weight:500;color:#3f5147;">From $20 NZD</p>
+                <a href="https://teaandtonic.co.nz/products/amber-gold-limeflower-tea?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=carousel_slide2_cta" style="display:inline-block;background:#2c332f;color:#ffffff;text-decoration:none;border-radius:6px;font-size:15px;font-weight:500;padding:14px 32px;">Shop Tea</a>
+              </div>
+              <label for="slide1" class="carousel-arrow prev" style="position:absolute;top:40%;left:12px;width:36px;height:36px;background:rgba(255,255,255,0.85);border-radius:50%;line-height:36px;text-align:center;font-size:18px;color:#2c332f;cursor:pointer;z-index:5;">&#10094;</label>
+              <label for="slide3" class="carousel-arrow next" style="position:absolute;top:40%;right:12px;width:36px;height:36px;background:rgba(255,255,255,0.85);border-radius:50%;line-height:36px;text-align:center;font-size:18px;color:#2c332f;cursor:pointer;z-index:5;">&#10095;</label>
+            </div>
+            <!-- Slide 3 -->
+            <div class="carousel-slide">
+              <a href="https://teaandtonic.co.nz/products/bio-nutrientfaceoil?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=carousel_slide3">
+                <img src="https://cdn.shopify.com/s/files/1/2511/3170/products/bio-nutrient-face-oil-maryse-tea-tonic-matakana-805203.webp?v=1665438069" alt="Maryse Bio-Nutrient Face Oil" width="100%" style="display:block;border-radius:6px;" />
+              </a>
+              <div style="padding:16px;text-align:center;font-family:DM Sans, Arial, sans-serif;">
+                <p style="margin:0 0 6px;font-size:18px;font-weight:700;color:#2c332f;">Maryse Bio-Nutrient Face Oil</p>
+                <p style="margin:0 0 16px;font-size:14px;font-weight:500;color:#3f5147;">$88 NZD</p>
+                <a href="https://teaandtonic.co.nz/products/bio-nutrientfaceoil?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=carousel_slide3_cta" style="display:inline-block;background:#2c332f;color:#ffffff;text-decoration:none;border-radius:6px;font-size:15px;font-weight:500;padding:14px 32px;">Shop Skincare</a>
+              </div>
+              <label for="slide2" class="carousel-arrow prev" style="position:absolute;top:40%;left:12px;width:36px;height:36px;background:rgba(255,255,255,0.85);border-radius:50%;line-height:36px;text-align:center;font-size:18px;color:#2c332f;cursor:pointer;z-index:5;">&#10094;</label>
+              <label for="slide1" class="carousel-arrow next" style="position:absolute;top:40%;right:12px;width:36px;height:36px;background:rgba(255,255,255,0.85);border-radius:50%;line-height:36px;text-align:center;font-size:18px;color:#2c332f;cursor:pointer;z-index:5;">&#10095;</label>
+            </div>
+          </div>
+          <div class="carousel-nav" style="text-align:center;margin-top:16px;padding-bottom:24px;">
+            <label for="slide1" class="nav1" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#c4c4c4;margin:0 6px;cursor:pointer;"></label>
+            <label for="slide2" class="nav2" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#c4c4c4;margin:0 6px;cursor:pointer;"></label>
+            <label for="slide3" class="nav3" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#c4c4c4;margin:0 6px;cursor:pointer;"></label>
+          </div>
+        </div>
+      </div>
+    </mj-raw>
+
+    <!-- Product Grid -->
+    <mj-section background-color="#efecec" css-class="dark-cream" padding="30px 40px 10px">
+      <mj-column>
+        <mj-text font-size="13px" font-weight="700" color="#3f5147" css-class="dark-text" letter-spacing="1.5px" text-transform="uppercase" padding="0 0 6px">The Collection</mj-text>
+        <mj-text font-size="22px" font-weight="700" color="#2c332f" css-class="dark-text" padding="0 0 20px">More to Love</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#efecec" css-class="dark-cream" padding="0 40px 30px">
+      <mj-column width="48%" background-color="#ffffff" border-radius="6px" css-class="dark-card" padding="0">
+        <mj-image src="https://cdn.shopify.com/s/files/1/2511/3170/products/omega-treatment-oil-maryse-tea-tonic-matakana-730435.webp?v=1694912888" alt="Maryse Omega Treatment Oil" border-radius="6px 6px 0 0" padding="0" />
+        <mj-text color="#2c332f" font-size="15px" font-weight="700" align="left" padding="16px 16px 6px" css-class="dark-text product-title">Maryse Omega Treatment Oil</mj-text>
+        <mj-text color="#3f5147" font-size="14px" font-weight="500" align="left" padding="0 16px 10px" css-class="dark-text">$94.00 NZD</mj-text>
+        <mj-text color="#2c332f" font-size="13px" font-weight="500" align="left" padding="0 16px 16px" css-class="dark-text"><a href="https://teaandtonic.co.nz/products/intensiveomegatreatmentoil?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=product_grid_1" style="color:inherit;text-decoration:underline;">View Product</a></mj-text>
+      </mj-column>
+      <mj-column width="4%"></mj-column>
+      <mj-column width="48%" background-color="#ffffff" border-radius="6px" css-class="dark-card" padding="0">
+        <mj-image src="https://cdn.shopify.com/s/files/1/2511/3170/products/byzantia-ring-silver-charlotte-penman-jewellery-tea-tonic-matakana-684000.jpg?v=1708925642" alt="Charlotte Penman Byzantia Ring" border-radius="6px 6px 0 0" padding="0" />
+        <mj-text color="#2c332f" font-size="15px" font-weight="700" align="left" padding="16px 16px 6px" css-class="dark-text product-title">Charlotte Penman Byzantia Ring</mj-text>
+        <mj-text color="#3f5147" font-size="14px" font-weight="500" align="left" padding="0 16px 10px" css-class="dark-text">$260.00 NZD</mj-text>
+        <mj-text color="#2c332f" font-size="13px" font-weight="500" align="left" padding="0 16px 16px" css-class="dark-text"><a href="https://teaandtonic.co.nz/products/byzantia-ring-silver?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=product_grid_2" style="color:inherit;text-decoration:underline;">View Product</a></mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Fashion Highlight -->
+    <mj-section background-color="#3f5147" css-class="dark-accent" padding="30px 40px 10px">
+      <mj-column>
+        <mj-text font-size="13px" font-weight="700" color="#efecec" letter-spacing="1.5px" text-transform="uppercase" padding="0 0 6px">MONNI Label</mj-text>
+        <mj-text font-size="22px" font-weight="700" color="#ffffff" padding="0 0 20px">Effortless Style</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#3f5147" css-class="dark-accent" padding="0 40px 30px">
+      <mj-column width="48%" background-color="#ffffff" border-radius="6px" css-class="dark-card" padding="0">
+        <mj-image src="https://cdn.shopify.com/s/files/1/2511/3170/files/Monni_Label_Shoot_Card_1_286_of_1482_-2.jpg?v=1741665904" alt="MONNI Day Lily Jumpsuit" border-radius="6px 6px 0 0" padding="0" />
+        <mj-text color="#2c332f" font-size="15px" font-weight="700" align="left" padding="16px 16px 6px" css-class="dark-text product-title">MONNI Day Lily Jumpsuit</mj-text>
+        <mj-text color="#3f5147" font-size="14px" font-weight="500" align="left" padding="0 16px 10px" css-class="dark-text">$590.00 NZD</mj-text>
+        <mj-text color="#2c332f" font-size="13px" font-weight="500" align="left" padding="0 16px 16px" css-class="dark-text"><a href="https://teaandtonic.co.nz/products/jumpsuit?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=fashion_1" style="color:inherit;text-decoration:underline;">View Product</a></mj-text>
+      </mj-column>
+      <mj-column width="4%"></mj-column>
+      <mj-column width="48%" background-color="#ffffff" border-radius="6px" css-class="dark-card" padding="0">
+        <mj-image src="https://cdn.shopify.com/s/files/1/2511/3170/files/MonniLabelShootCard1_1008of1482.jpg?v=1744692579" alt="MONNI Bias Cami" border-radius="6px 6px 0 0" padding="0" />
+        <mj-text color="#2c332f" font-size="15px" font-weight="700" align="left" padding="16px 16px 6px" css-class="dark-text product-title">MONNI Bias Cami</mj-text>
+        <mj-text color="#3f5147" font-size="14px" font-weight="500" align="left" padding="0 16px 10px" css-class="dark-text">$290.00 NZD</mj-text>
+        <mj-text color="#2c332f" font-size="13px" font-weight="500" align="left" padding="0 16px 16px" css-class="dark-text"><a href="https://teaandtonic.co.nz/products/bias-cami?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=fashion_2" style="color:inherit;text-decoration:underline;">View Product</a></mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- CTA Section -->
+    <mj-section padding="40px 40px">
+      <mj-column>
+        <mj-text font-size="20px" font-weight="700" color="#2c332f" css-class="dark-text" padding="0 0 16px">Discover Your New Favourites</mj-text>
+        <mj-text font-size="15px" color="#252525" css-class="dark-text" padding="0 0 24px">Every piece in our store is chosen with intention. We invite you to slow down, explore, and find something that speaks to you.</mj-text>
+        <mj-button href="https://teaandtonic.co.nz/collections/all?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=shop_all_cta" padding="0 0 30px">Shop All Products</mj-button>
+        <mj-text font-size="15px" color="#252525" css-class="dark-text" padding="0 0 16px">With love,<br><strong style="color:#2c332f;" class="dark-text">The Tea and Tonic Team</strong></mj-text>
+        <mj-divider border-color="#efecec" border-width="1px" padding="20px 0" />
+        <mj-text font-size="12px" color="#888888" padding="0">
+          <a href="https://teaandtonic.co.nz/?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=footer_home" style="color:#888888;text-decoration:underline;">Visit our store</a> &nbsp;|&nbsp;
+          <a href="https://teaandtonic.co.nz/pages/contact?utm_source=senderkit&utm_medium=email&utm_campaign=monni-carousel-may2026&utm_content=footer_contact" style="color:#888888;text-decoration:underline;">Contact us</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
