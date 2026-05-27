@@ -10,6 +10,8 @@ class CartDrawer extends HTMLElement {
     this.debouncedChange = null;
     this.isOpen = false;
     this.lastFocusedElement = null;
+    this._scrollY = 0;
+    this._onTouchMove = null;
   }
 
   static cartUrl(path) {
@@ -30,14 +32,24 @@ class CartDrawer extends HTMLElement {
     this.itemsContainer = this.querySelector('[data-cart-drawer-items]');
     this.emptyState = this.querySelector('[data-cart-drawer-empty]');
     this.footer = this.querySelector('[data-cart-drawer-footer]');
+    this.scrollExtras = this.querySelector('[data-cart-drawer-scroll-extras]');
     this.subtotalEl = this.querySelector('[data-cart-drawer-subtotal]');
     this.shippingBar = this.querySelector('[data-cart-drawer-shipping]');
     this.shippingProgress = this.querySelector('[data-cart-drawer-shipping-progress]');
     this.shippingLabel = this.querySelector('[data-cart-drawer-shipping-label]');
     this.noteInput = this.querySelector('[data-cart-note]');
+    this.scrollBody = this.querySelector('[data-cart-drawer-body]');
 
     this.bindEvents();
     this.bindPubSub();
+
+    window.addEventListener('beforeunload', () => {
+      if (this.isOpen) this.unlockScroll();
+    });
+  }
+
+  disconnectedCallback() {
+    if (this.isOpen) this.unlockScroll();
   }
 
   bindEvents() {
@@ -106,11 +118,10 @@ class CartDrawer extends HTMLElement {
     this.isOpen = true;
     this.lastFocusedElement = document.activeElement;
     this.classList.add('is-open');
-    document.documentElement.classList.add('cart-drawer-open');
+    this.lockScroll();
 
     requestAnimationFrame(() => {
-      const focusable = this.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-      focusable?.focus();
+      this.closeBtn?.focus();
     });
 
     this.fetchCart();
@@ -120,12 +131,51 @@ class CartDrawer extends HTMLElement {
     if (!this.isOpen) return;
     this.isOpen = false;
     this.classList.remove('is-open');
-    document.documentElement.classList.remove('cart-drawer-open');
+    this.unlockScroll();
 
     if (this.lastFocusedElement) {
       this.lastFocusedElement.focus();
       this.lastFocusedElement = null;
     }
+  }
+
+  lockScroll() {
+    this._scrollY = window.scrollY;
+    document.documentElement.classList.add('cart-drawer-open');
+    document.body.classList.add('cart-drawer-open');
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${this._scrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+
+    if (!this._onTouchMove) {
+      this._onTouchMove = (e) => {
+        if (!this.isOpen) return;
+        if (this.scrollBody?.contains(e.target)) return;
+        e.preventDefault();
+      };
+    }
+
+    document.addEventListener('touchmove', this._onTouchMove, { passive: false });
+  }
+
+  unlockScroll() {
+    if (!document.body.classList.contains('cart-drawer-open')) return;
+
+    document.documentElement.classList.remove('cart-drawer-open');
+    document.body.classList.remove('cart-drawer-open');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+
+    if (this._onTouchMove) {
+      document.removeEventListener('touchmove', this._onTouchMove);
+    }
+
+    window.scrollTo(0, this._scrollY || 0);
   }
 
   trapFocus(e) {
@@ -197,12 +247,14 @@ class CartDrawer extends HTMLElement {
     if (this.itemsContainer) this.itemsContainer.hidden = true;
     if (this.emptyState) this.emptyState.hidden = false;
     if (this.footer) this.footer.hidden = true;
+    if (this.scrollExtras) this.scrollExtras.hidden = true;
   }
 
   showItems() {
     if (this.itemsContainer) this.itemsContainer.hidden = false;
     if (this.emptyState) this.emptyState.hidden = true;
     if (this.footer) this.footer.hidden = false;
+    if (this.scrollExtras) this.scrollExtras.hidden = false;
   }
 
   renderItems(items) {
@@ -294,7 +346,7 @@ class CartDrawer extends HTMLElement {
   async updateNote() {
     if (!this.noteInput) return;
     try {
-      await fetch(`${window.Shopify?.routes?.root || '/'}cart/update.js`, {
+      await fetch(CartDrawer.cartUrl('cart/update.js'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

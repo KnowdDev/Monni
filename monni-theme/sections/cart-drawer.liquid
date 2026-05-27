@@ -86,9 +86,9 @@
         <p>{{ 'cart.drawer.empty' | t | default: 'Your cart is empty' }}</p>
         <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">{{ 'cart.drawer.continue_shopping' | t | default: 'Continue shopping' }}</a>
       </div>
-    </div>
 
-    <div class="cart-drawer__footer" data-cart-drawer-footer {% unless cart.item_count > 0 %}hidden{% endunless %}>
+      {%- if section.settings.show_free_shipping_bar or section.settings.enable_gift_note -%}
+      <div class="cart-drawer__scroll-extras" data-cart-drawer-scroll-extras {% unless cart.item_count > 0 %}hidden{% endunless %}>
         {%- if section.settings.show_free_shipping_bar -%}
           {%- assign threshold_cents = section.settings.free_shipping_threshold | times: 100 -%}
           {%- assign progress = cart.total_price | times: 100 | divided_by: threshold_cents -%}
@@ -120,7 +120,11 @@
             >{{ cart.note | escape }}</textarea>
           </details>
         {%- endif -%}
+      </div>
+      {%- endif -%}
+    </div>
 
+    <div class="cart-drawer__footer" data-cart-drawer-footer {% unless cart.item_count > 0 %}hidden{% endunless %}>
         <div class="cart-drawer__totals">
           <div class="cart-drawer__subtotal">
             <span>{{ 'cart.drawer.subtotal' | t | default: 'Subtotal' }}</span>
