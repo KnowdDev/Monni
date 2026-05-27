@@ -2,14 +2,14 @@
   Monni Wishlist Page — Client-side rendered from localStorage
 {% endcomment %}
 
-<div class="wishlist section--padding" data-section-id="{{ section.id }}">
+<section class="wishlist section--padding" data-section-id="{{ section.id }}">
   <div class="wishlist__inner container">
     <header class="wishlist__header">
-      <h1 class="wishlist__title">{{ page.title }}</h1>
+      <h1 class="wishlist__title">{{ section.settings.heading | default: page.title }}</h1>
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <ol class="breadcrumb__list">
           <li class="breadcrumb__item">
-            <a href="{{ routes.root_url }}" class="breadcrumb__link">{{ 'general.breadcrumbs.home' | t }}</a>
+            <a href="{{ routes.root_url }}" class="breadcrumb__link">{{ 'general.breadcrumbs.home' | t | default: 'Home' }}</a>
           </li>
           <li class="breadcrumb__item" aria-current="page">
             <span class="breadcrumb__link breadcrumb__link--current">{{ page.title }}</span>
@@ -19,130 +19,32 @@
     </header>
 
     <div class="wishlist__content">
-      <!-- Empty state -->
       <div class="wishlist__empty" data-wishlist-empty>
-        <p class="wishlist__empty-text">Your wishlist is empty.</p>
-        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">Continue shopping</a>
+        <p class="wishlist__empty-text">{{ section.settings.empty_text }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">
+          {{ section.settings.empty_button_label }}
+        </a>
       </div>
 
-      <!-- Grid populated by JS -->
       <div class="wishlist__grid" data-wishlist-grid hidden></div>
     </div>
   </div>
-</div>
-
-<script>
-(function() {
-  const WISHLIST_KEY = 'monni:wishlist';
-  const emptyEl = document.querySelector('[data-wishlist-empty]');
-  const gridEl = document.querySelector('[data-wishlist-grid]');
-
-  function getWishlist() {
-    try {
-      const raw = JSON.parse(localStorage.getItem(WISHLIST_KEY) || '[]');
-      return raw.map(item => (typeof item === 'string' ? { id: item } : item));
-    } catch {
-      return [];
-    }
-  }
-
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
-
-  function renderWishlist() {
-    const list = getWishlist().filter(item => item.handle);
-
-    if (list.length === 0) {
-      emptyEl.hidden = false;
-      gridEl.hidden = true;
-      gridEl.innerHTML = '';
-      return;
-    }
-
-    emptyEl.hidden = true;
-    gridEl.hidden = false;
-
-    gridEl.innerHTML = list.map(item => {
-      const priceHtml = item.comparePrice
-        ? `<span class="card-product__price--sale">${escapeHtml(item.price)}</span><span class="card-product__price--compare">${escapeHtml(item.comparePrice)}</span>`
-        : `<span class="card-product__price--regular">${escapeHtml(item.price)}</span>`;
-
-      const imgHtml = item.image
-        ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy" width="600" height="800" class="card-product__image card-product__image--primary">`
-        : `<div class="card-product__placeholder texture-grain"><span>${escapeHtml(item.title)}</span></div>`;
-
-      return `
-        <article class="card-product" data-product-id="${escapeHtml(item.id)}">
-          <div class="card-product__media" style="--card-aspect-ratio: 3/4;">
-            <a href="${escapeHtml(item.url)}" class="card-product__image-link" aria-label="${escapeHtml(item.title)}">
-              ${imgHtml}
-            </a>
-            <button
-              type="button"
-              class="card-product__wishlist is-active"
-              data-wishlist-toggle="${escapeHtml(item.id)}"
-              data-wishlist-handle="${escapeHtml(item.handle)}"
-              data-wishlist-title="${escapeHtml(item.title)}"
-              data-wishlist-image="${escapeHtml(item.image)}"
-              data-wishlist-price="${escapeHtml(item.price)}"
-              data-wishlist-compare-price="${escapeHtml(item.comparePrice || '')}"
-              data-wishlist-url="${escapeHtml(item.url)}"
-              aria-label="Remove from wishlist"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <a href="${escapeHtml(item.url)}" class="card-product__info-link">
-            <div class="card-product__info">
-              <h3 class="card-product__title">${escapeHtml(item.title)}</h3>
-              <div class="card-product__price">${priceHtml}</div>
-            </div>
-          </a>
-        </article>
-      `;
-    }).join('');
-  }
-
-  // Remove card from wishlist page when toggled off
-  document.addEventListener('click', function(e) {
-    const btn = e.target.closest('[data-wishlist-toggle]');
-    if (!btn) return;
-    const card = btn.closest('.card-product');
-    if (!card || !gridEl.contains(card)) return;
-
-    // Wait for the toggle handler in cart-drawer.js to run first
-    requestAnimationFrame(function() {
-      if (!btn.classList.contains('is-active')) {
-        card.remove();
-        if (gridEl.children.length === 0) {
-          emptyEl.hidden = false;
-          gridEl.hidden = true;
-        }
-      }
-    });
-  });
-
-  renderWishlist();
-})();
-</script>
+</section>
 
 {% stylesheet %}
   .wishlist {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    margin-top: var(--spacing-xxl);
+    margin-bottom: var(--spacing-xxl);
+    padding-top: {{ section.settings.padding_top | default: 96 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 96 }}px;
   }
 
   .wishlist__inner {
     max-width: var(--page-width);
     margin: 0 auto;
-    padding: 0 var(--page-margin);
+    padding: 0 var(--page-margin) clamp(2rem, 5vw, 4rem);
   }
 
   .wishlist__header {
@@ -178,8 +80,8 @@
 
   .wishlist__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: var(--spacing-lg);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-md);
   }
 
   @media (min-width: 768px) {
@@ -193,6 +95,10 @@
     .wishlist__grid {
       grid-template-columns: repeat(4, 1fr);
     }
+  }
+
+  .wishlist__grid .card-product__wishlist {
+    opacity: 1;
   }
 
   .breadcrumb {
@@ -243,7 +149,50 @@
   "name": "Wishlist",
   "tag": "section",
   "class": "section-wishlist",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Page heading",
+      "info": "Leave blank to use the page title"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty state message",
+      "default": "Your wishlist is empty."
+    },
+    {
+      "type": "text",
+      "id": "empty_button_label",
+      "label": "Empty state button",
+      "default": "Continue shopping"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 96
+    }
+  ],
   "presets": [
     {
       "name": "Wishlist"

@@ -52,13 +52,14 @@
         {% if card_image %}
           <div class="collection-card__media">
             <img
-              src="{{ card_image | image_url: width: 800, format: 'webp' }}"
+              src="{{ card_image | image_url: width: 280, format: 'webp' }}"
               srcset="
-                {{ card_image | image_url: width: 800, format: 'webp' }} 800w,
-                {{ card_image | image_url: width: 600, format: 'webp' }} 600w,
-                {{ card_image | image_url: width: 400, format: 'webp' }} 400w
+                {{ card_image | image_url: width: 480, format: 'webp' }} 480w,
+                {{ card_image | image_url: width: 360, format: 'webp' }} 360w,
+                {{ card_image | image_url: width: 280, format: 'webp' }} 280w,
+                {{ card_image | image_url: width: 220, format: 'webp' }} 220w
               "
-              sizes="(min-width: 768px) 33vw, 100vw"
+              sizes="(max-width: 767px) 45vw, (max-width: 1199px) 33vw, 280px"
               alt="{{ card_image.alt | default: card_title | escape }}"
               loading="lazy"
               decoding="async"

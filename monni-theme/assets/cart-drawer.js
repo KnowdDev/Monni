@@ -202,13 +202,14 @@ class CartDrawer extends HTMLElement {
     this._fetchingCart = true;
     try {
       const response = await fetch(CartDrawer.cartUrl('cart.js'));
+      if (!response.ok) return;
       const cart = await response.json();
       this.updateCart(cart);
       if (typeof publish === 'function') {
         publish('cart-update', { cart });
       }
-    } catch (err) {
-      console.error('Cart fetch error:', err);
+    } catch {
+      /* network error — avoid console noise in production */
     } finally {
       this._fetchingCart = false;
     }
@@ -335,7 +336,6 @@ class CartDrawer extends HTMLElement {
         publish('cart-update', { cart });
       }
     } catch (err) {
-      console.error('Cart update error:', err);
       this.fetchCart();
       if (typeof publish === 'function') {
         publish('cart-error', { error: err });
@@ -354,8 +354,8 @@ class CartDrawer extends HTMLElement {
         },
         body: JSON.stringify({ note: this.noteInput.value }),
       });
-    } catch (err) {
-      console.error('Note update error:', err);
+    } catch {
+      /* ignore note save failures */
     }
   }
 

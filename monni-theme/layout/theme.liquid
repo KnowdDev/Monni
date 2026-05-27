@@ -6,21 +6,23 @@
     {% # Inlined CSS Variables %}
     {% render 'css-variables' %}
 
+    {% if template.name == 'index' %}
+      {% render 'critical-home' %}
+    {% endif %}
+
     {% comment %}
-      Font preloading:
-      1. Preconnect to font CDN for faster connection
-      2. Preload only the critical font variant (base weight)
-      3. Additional variants load on-demand via @font-face
+      Homepage: sync critical CSS so LCP hero paints immediately (async caused ~2s render delay).
+      Other templates: non-blocking load.
     {% endcomment %}
-    {% unless settings.type_primary_font.system? %}
-      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-
-      {% comment %} Preload the base font variant for initial page render {% endcomment %}
-      {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
-    {% endunless %}
-
-    {% # Load and preload the critical CSS %}
-    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+    {% if template.name == 'index' %}
+      {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+    {% else %}
+      {% unless settings.type_primary_font.system? %}
+        <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+        {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+      {% endunless %}
+      {% render 'stylesheet-async', asset: 'critical.css' %}
+    {% endif %}
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
@@ -45,9 +47,38 @@
     <script src="{{ 'constants.js' | asset_url }}" defer></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer></script>
     <script src="{{ 'header.js' | asset_url }}" defer></script>
+
+  {% if template.name == 'index' %}
+    <script>
+      (function () {
+        function loadAnimations() {
+          var s = document.createElement('script');
+          s.src = {{ 'animations.js' | asset_url | json }};
+          s.defer = true;
+          document.body.appendChild(s);
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadAnimations, { timeout: 2500 });
+        } else {
+          window.addEventListener('load', loadAnimations, { once: true });
+        }
+      })();
+    </script>
+  {% else %}
     <script src="{{ 'animations.js' | asset_url }}" defer></script>
-    <script src="{{ 'product.js' | asset_url }}" defer></script>
-    <script src="{{ 'collection.js' | asset_url }}" defer></script>
+  {% endif %}
+
+    {% if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'list-collections' %}
+      <script src="{{ 'product.js' | asset_url }}" defer></script>
+    {% endif %}
+    {% if request.page_type == 'collection' or request.page_type == 'list-collections' %}
+      <script src="{{ 'collection.js' | asset_url }}" defer></script>
+    {% endif %}
     <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+    {% unless template.name == 'index' %}
+      {% if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'search' or request.page_type == 'page' and page.handle == 'wishlist' %}
+        <script src="{{ 'wishlist.js' | asset_url }}" defer></script>
+      {% endif %}
+    {% endunless %}
   </body>
 </html>

@@ -2,7 +2,12 @@
   "sections": {
     "main": {
       "type": "wishlist",
-      "settings": {}
+      "settings": {
+        "empty_text": "Your wishlist is empty.",
+        "empty_button_label": "Continue shopping",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
     }
   },
   "order": [

@@ -137,7 +137,7 @@
           <button type="submit" name="checkout" class="btn btn--primary cart-drawer__checkout-btn">
             {{ 'cart.drawer.checkout' | t | default: 'Checkout' }}
           </button>
-          {%- if additional_checkout_buttons -%}
+          {%- if section.settings.show_express_checkout and additional_checkout_buttons -%}
             <div class="cart-drawer__express">{{ content_for_additional_checkout_buttons }}</div>
           {%- endif -%}
         </form>
@@ -183,6 +183,13 @@
       "id": "enable_gift_note",
       "label": "Enable gift note",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_express_checkout",
+      "label": "Show Shop Pay / express checkout in cart drawer",
+      "default": false,
+      "info": "Leave off unless Shop Pay is fully enabled. Reduces console errors from wallet scripts."
     }
   ]
 }

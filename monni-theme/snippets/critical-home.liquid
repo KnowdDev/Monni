@@ -1,0 +1,100 @@
+{% comment %} Above-the-fold homepage CSS — paints LCP before full critical.css loads {% endcomment %}
+{% style %}
+  body {
+    margin: 0;
+    background-color: var(--color-background, #F8F6F4);
+    color: var(--color-foreground, #3D3D3D);
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 101;
+    width: 100%;
+  }
+
+  .header__shell {
+    background: rgba(248, 246, 244, 0.95);
+    border-bottom: 1px solid rgba(229, 224, 220, 0.85);
+  }
+
+  .header__inner {
+    min-height: 5rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0.875rem var(--page-margin, 1rem);
+  }
+
+  .split-hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 70vh;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .split-hero__panel {
+    position: relative;
+    display: flex;
+    min-height: 60vh;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .split-hero__fallback {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-border-light, #F0EBE7);
+  }
+
+  .split-hero picture {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .split-hero picture img,
+  .split-hero__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .split-hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.12) 0%, transparent 70%);
+  }
+
+  .split-hero__label {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (min-width: 768px) {
+    .split-hero {
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+
+    .split-hero__panel {
+      min-height: auto;
+    }
+  }
+{% endstyle %}

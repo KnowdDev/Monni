@@ -1,26 +1,36 @@
 {% comment %}
   404 Error Page - Monni Theme
-  Calm, minimal error page aligned with brand sanctuary aesthetic.
 {% endcomment %}
 
-<div class="section-404">
-  <div class="container">
+<section class="section-404" data-section-id="{{ section.id }}">
+  <div class="container section-404__container">
     <div class="section-404__inner">
+      <p class="section-404__eyebrow">{{ section.settings.eyebrow }}</p>
+
       <h1 class="section-404__title">
         <span class="section-404__number">404</span>
-        {{ '404.title' | t }}
+        {{ section.settings.heading }}
       </h1>
 
-      <p class="section-404__text">
-        {{ '404.not_found' | t }}
-      </p>
+      <p class="section-404__text">{{ section.settings.text }}</p>
 
-      <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">
-        {{ '404.back_to_shopping' | t }}
-      </a>
+      <div class="section-404__actions">
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary section-404__primary">
+          {{ section.settings.button_label }}
+        </a>
+        <a href="{{ routes.root_url }}" class="section-404__secondary-link">
+          {{ section.settings.secondary_link_label }}
+        </a>
+      </div>
+
+      <div class="section-404__quick-links" aria-label="Quick links">
+        <a href="/collections/beauty">{{ section.settings.quick_link_one }}</a>
+        <a href="/collections/giftboxes">{{ section.settings.quick_link_two }}</a>
+        <a href="/pages/contact">{{ section.settings.quick_link_three }}</a>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 {% schema %}
 {
@@ -28,21 +38,51 @@
   "settings": [
     {
       "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "We couldn't find that page"
+    },
+    {
+      "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Page not found"
+      "default": "Lost in the quiet?"
     },
     {
       "type": "textarea",
       "id": "text",
       "label": "Text",
-      "default": "The page you're looking for doesn't exist or has been moved."
+      "default": "The page you requested has moved, expired, or never existed. Let's guide you back to something beautiful."
     },
     {
       "type": "text",
       "id": "button_label",
       "label": "Button label",
-      "default": "Continue shopping"
+      "default": "Shop all"
+    },
+    {
+      "type": "text",
+      "id": "secondary_link_label",
+      "label": "Secondary link label",
+      "default": "Return home"
+    },
+    {
+      "type": "text",
+      "id": "quick_link_one",
+      "label": "Quick link one label",
+      "default": "Beauty"
+    },
+    {
+      "type": "text",
+      "id": "quick_link_two",
+      "label": "Quick link two label",
+      "default": "Gifting"
+    },
+    {
+      "type": "text",
+      "id": "quick_link_three",
+      "label": "Quick link three label",
+      "default": "Contact"
     }
   ]
 }

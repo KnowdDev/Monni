@@ -1,0 +1,165 @@
+{% comment %}
+  Policy page section
+  Renders Shopify policies (terms, privacy, shipping, refunds) with premium typography.
+{% endcomment %}
+
+<section class="policy section--padding" data-section-id="{{ section.id }}">
+  <div class="policy__inner container">
+    <header class="policy__header">
+      <h1 class="policy__title">{{ policy.title }}</h1>
+    </header>
+
+    <div class="policy__content rte">
+      {{ policy.body }}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .policy {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    margin-top: var(--spacing-xxl);
+    margin-bottom: var(--spacing-xxl);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  .policy__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
+  }
+
+  .policy__header {
+    text-align: center;
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .policy__title {
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    font-weight: 300;
+    line-height: 1.06;
+    letter-spacing: 0.005em;
+    margin: 0;
+    color: var(--color-foreground);
+    text-wrap: balance;
+  }
+
+  .policy__content {
+    max-width: 74ch;
+    margin: 0 auto;
+    font-size: 1.03rem;
+    line-height: 1.85;
+    letter-spacing: 0.01em;
+    color: var(--color-foreground);
+  }
+
+  .policy__content :is(p, ul, ol) {
+    margin: 0 0 var(--spacing-md);
+  }
+
+  .policy__content :is(h2, h3, h4) {
+    color: var(--color-foreground);
+    font-weight: 350;
+    letter-spacing: 0.005em;
+  }
+
+  .policy__content h2 {
+    font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+    margin: clamp(2.25rem, 4vw, 3.25rem) 0 var(--spacing-md);
+    line-height: 1.15;
+  }
+
+  .policy__content h3 {
+    font-size: 1.25rem;
+    margin: var(--spacing-xl) 0 var(--spacing-sm);
+    line-height: 1.25;
+  }
+
+  .policy__content a {
+    color: var(--color-accent);
+    text-decoration: none;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .policy__content a:hover,
+  .policy__content a:focus {
+    color: var(--color-foreground);
+    text-decoration: underline;
+    outline: none;
+  }
+
+  .policy__content ul,
+  .policy__content ol {
+    padding-left: 1.25rem;
+  }
+
+  .policy__content li {
+    margin-bottom: 0.35rem;
+  }
+
+  .policy__content hr {
+    border: 0;
+    height: 1px;
+    background: var(--color-border);
+    margin: clamp(2rem, 4vw, 3rem) 0;
+  }
+
+  .policy__content blockquote {
+    margin: var(--spacing-xl) 0;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-left: 2px solid var(--color-accent);
+    background: color-mix(in srgb, var(--color-border) 55%, transparent);
+    color: var(--color-foreground-light);
+    font-style: italic;
+  }
+
+  @media (max-width: 480px) {
+    .policy__content {
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Policy",
+  "tag": "section",
+  "class": "section-policy",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 96
+    }
+  ],
+  "presets": [
+    {
+      "name": "Policy"
+    }
+  ]
+}
+{% endschema %}
+

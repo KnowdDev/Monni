@@ -21,20 +21,56 @@
 
       <input type="hidden" name="contact[tags]" value="newsletter">
 
-      <div class="newsletter__field">
-        <label for="newsletter-email-{{ section.id }}" class="sr-only">
-          {{ section.settings.email_label | default: 'Email address' }}
-        </label>
-        <input
-          id="newsletter-email-{{ section.id }}"
-          type="email"
-          name="contact[email]"
-          placeholder="{{ section.settings.placeholder | escape }}"
-          required
-          autocomplete="email"
-          autocapitalize="off"
-          class="newsletter__input"
-        >
+      <div class="newsletter__fields">
+        <div class="newsletter__field newsletter__field--name newsletter__field--first-name">
+          <label for="newsletter-first-name-{{ section.id }}" class="sr-only">
+            {{ section.settings.first_name_label | default: 'First name' }}
+          </label>
+          <input
+            id="newsletter-first-name-{{ section.id }}"
+            type="text"
+            name="contact[first_name]"
+            placeholder="{{ section.settings.first_name_placeholder | escape }}"
+            required
+            autocomplete="given-name"
+            class="newsletter__input"
+          >
+        </div>
+
+        {% if section.settings.collect_last_name %}
+          <div class="newsletter__field newsletter__field--name newsletter__field--last-name">
+            <label for="newsletter-last-name-{{ section.id }}" class="sr-only">
+              {{ section.settings.last_name_label | default: 'Last name' }}
+            </label>
+            <input
+              id="newsletter-last-name-{{ section.id }}"
+              type="text"
+              name="contact[last_name]"
+              placeholder="{{ section.settings.last_name_placeholder | escape }}"
+              autocomplete="family-name"
+              class="newsletter__input"
+            >
+          </div>
+        {% endif %}
+
+        <div class="newsletter__field newsletter__field--email">
+          <label for="newsletter-email-{{ section.id }}" class="sr-only">
+            {{ section.settings.email_label | default: 'Email address' }}
+          </label>
+          <input
+            id="newsletter-email-{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            placeholder="{{ section.settings.placeholder | escape }}"
+            required
+            autocomplete="email"
+            autocapitalize="off"
+            class="newsletter__input"
+          >
+        </div>
+      </div>
+
+      <div class="newsletter__actions">
         <button type="submit" class="newsletter__button">
           {{ section.settings.button_label | default: 'Subscribe' | escape }}
         </button>
@@ -51,7 +87,7 @@
 
   .newsletter__inner {
     grid-column: 2;
-    max-width: 52ch;
+    max-width: 60ch;
     margin: 0 auto;
   }
 
@@ -79,16 +115,28 @@
   .newsletter__message--success { color: var(--color-foreground-light); }
   .newsletter__message--error { color: var(--color-error); }
 
+  .newsletter__fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "first-name last-name"
+      "email email";
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+  }
+
   .newsletter__field {
-    display: flex;
-    gap: var(--spacing-xs);
+    min-width: 0;
     border-bottom: 1px solid var(--color-border);
     padding-bottom: var(--spacing-xs);
   }
 
+  .newsletter__field--first-name { grid-area: first-name; }
+  .newsletter__field--last-name { grid-area: last-name; }
+  .newsletter__field--email { grid-area: email; }
+
   .newsletter__input {
-    flex: 1;
-    min-width: 0;
+    width: 100%;
     border: none;
     background: transparent;
     padding: var(--spacing-sm) 0;
@@ -106,36 +154,43 @@
   }
 
   .newsletter__button {
-    padding: var(--spacing-sm) var(--spacing-md);
+    width: 100%;
+    padding: 0.95rem var(--spacing-md);
     font-size: 0.8125rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    background: transparent;
-    border: none;
-    color: var(--color-foreground);
+    background: var(--color-foreground);
+    border: 1px solid var(--color-foreground);
+    color: var(--color-background-alt);
     cursor: pointer;
     white-space: nowrap;
-    transition: color var(--transition-fast);
+    text-align: center;
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .newsletter__actions {
+    display: block;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-sm);
   }
 
   .newsletter__button:hover {
-    color: var(--color-accent-dark);
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-background-alt);
   }
 
   @media (max-width: 480px) {
-    .newsletter__field {
-      flex-direction: column;
-      border-bottom: none;
+    .newsletter__inner {
+      max-width: 100%;
+    }
+
+    .newsletter__fields {
+      gap: var(--spacing-xs);
     }
 
     .newsletter__input {
-      border-bottom: 1px solid var(--color-border);
-      padding-left: 0;
-    }
-
-    .newsletter__button {
-      align-self: flex-start;
-      padding-left: 0;
+      font-size: 0.95rem;
     }
   }
 {% endstylesheet %}
@@ -166,6 +221,24 @@
     },
     {
       "type": "text",
+      "id": "first_name_placeholder",
+      "label": "First name placeholder",
+      "default": "First name"
+    },
+    {
+      "type": "checkbox",
+      "id": "collect_last_name",
+      "label": "Collect last name",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "last_name_placeholder",
+      "label": "Last name placeholder",
+      "default": "Last name"
+    },
+    {
+      "type": "text",
       "id": "button_label",
       "label": "Button label",
       "default": "Subscribe"
@@ -175,6 +248,18 @@
       "id": "email_label",
       "label": "Email input label (screen readers)",
       "default": "Email address"
+    },
+    {
+      "type": "text",
+      "id": "first_name_label",
+      "label": "First name input label (screen readers)",
+      "default": "First name"
+    },
+    {
+      "type": "text",
+      "id": "last_name_label",
+      "label": "Last name input label (screen readers)",
+      "default": "Last name"
     },
     {
       "type": "text",

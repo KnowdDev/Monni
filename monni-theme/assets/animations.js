@@ -21,9 +21,19 @@
   );
 
   function init() {
-    document
-      .querySelectorAll('[data-animate]')
-      .forEach((el) => observer.observe(el));
+    const elements = document.querySelectorAll('[data-animate]');
+    const viewportH = window.innerHeight || document.documentElement.clientHeight;
+
+    elements.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < viewportH * 0.92) {
+        el.classList.add('is-visible');
+      }
+    });
+
+    document.documentElement.classList.add('js-animations');
+
+    elements.forEach((el) => observer.observe(el));
   }
 
   if (document.readyState === 'loading') {

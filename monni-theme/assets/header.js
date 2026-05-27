@@ -175,5 +175,29 @@
     closeAllDrawers();
   });
 
+  function syncWishlistCount() {
+    try {
+      const raw = JSON.parse(localStorage.getItem('monni:wishlist') || '[]');
+      const count = raw.filter((item) =>
+        typeof item === 'object' ? item.handle || item.id : item
+      ).length;
+      document.querySelectorAll('[data-wishlist-count], [data-wishlist-count-mobile]').forEach((el) => {
+        el.textContent = count;
+        if (count > 0) {
+          el.removeAttribute('hidden');
+          el.hidden = false;
+        } else {
+          el.setAttribute('hidden', '');
+          el.hidden = true;
+        }
+      });
+    } catch {
+      /* ignore */
+    }
+  }
+
+  document.addEventListener('wishlist:updated', syncWishlistCount);
+
+  syncWishlistCount();
   syncGlobalState();
 })();

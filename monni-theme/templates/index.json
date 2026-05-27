@@ -170,6 +170,9 @@
       "settings": {
         "title": "A quieter inbox",
         "description": "Receive new arrivals, store notes, and thoughtful rituals from Monni.",
+        "first_name_placeholder": "First name",
+        "collect_last_name": true,
+        "last_name_placeholder": "Last name",
         "placeholder": "Your email address",
         "button_label": "Subscribe"
       }

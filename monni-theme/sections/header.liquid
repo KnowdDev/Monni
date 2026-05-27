@@ -13,10 +13,9 @@
 >
   <input
     id="header-menu-state-{{ section.id }}"
-    class="header__menu-state"
+    class="header__menu-state visually-hidden"
     type="checkbox"
     data-header-menu-state
-    aria-hidden="true"
     tabindex="-1"
   >
 
@@ -26,8 +25,6 @@
         <label
           for="header-menu-state-{{ section.id }}"
           class="header__menu-toggle"
-          role="button"
-          tabindex="0"
           aria-controls="header-drawer-{{ section.id }}"
           data-header-menu-toggle
         >
@@ -228,8 +225,6 @@
         <label
           for="header-menu-state-{{ section.id }}"
           class="header__drawer-close"
-          role="button"
-          tabindex="0"
           data-header-menu-close
         >
           <span class="sr-only">Close navigation menu</span>
@@ -458,12 +453,16 @@
     backdrop-filter: blur(18px);
   }
 
-  .header__menu-state {
+  .header__menu-state.visually-hidden {
     position: absolute;
     width: 1px;
     height: 1px;
-    opacity: 0;
-    pointer-events: none;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .header__inner {
@@ -512,7 +511,7 @@
 
   .header__logo a:hover,
   .header__drawer-brand:hover {
-    opacity: 0.75;
+    opacity: 0.85;
   }
 
   .header__logo-img {

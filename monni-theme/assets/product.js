@@ -305,12 +305,10 @@ class ProductForm {
         throw new Error(data.description || 'Could not add to cart');
       }
     } catch (error) {
-      console.error('Add to cart error:', error);
       submitButton.disabled = false;
       submitButton.textContent = originalText;
-      
-      // Show error message (could be enhanced with a toast notification)
-      alert(error.message || 'Could not add to cart. Please try again.');
+      submitButton.setAttribute('aria-invalid', 'true');
+      submitButton.dataset.cartError = error?.message || 'Could not add to cart. Please try again.';
     }
   }
 

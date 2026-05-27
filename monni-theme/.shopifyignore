@@ -17,6 +17,10 @@ templates/article.json
 templates/search.json
 templates/cart.json
 templates/page.json
+templates/password.json
+templates/policy.json
+templates/gift_card.liquid
+templates/maker.liquid
 
 # Section group configs (managed in admin)
 # `header-group.json` is version-controlled so announcement bar fixes sync from the repo.
