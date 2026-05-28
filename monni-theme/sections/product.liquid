@@ -159,9 +159,55 @@
 
           <!-- Quantity Selector -->
           {%- if section.settings.show_quantity_selector -%}
-            <div class="product-page__quantity">
+            {%- liquid
+              assign quantity_max = section.settings.quantity_max | default: 20
+              if current_variant.inventory_management == 'shopify' and current_variant.inventory_policy != 'continue'
+                if current_variant.inventory_quantity > 0
+                  assign quantity_max = current_variant.inventory_quantity | at_most: quantity_max
+                endif
+              endif
+              if quantity_max < 1
+                assign quantity_max = 1
+              endif
+            -%}
+            <div
+              class="product-page__quantity"
+              data-quantity-selector
+              data-quantity-max="{{ section.settings.quantity_max | default: 20 }}"
+            >
               <label for="Quantity-{{ section.id }}" class="product-page__quantity-label">Quantity</label>
-              <input type="number" name="quantity" id="Quantity-{{ section.id }}" value="1" min="1" class="product-page__quantity-input" data-quantity-input>
+              <div class="product-page__quantity-control">
+                <button
+                  type="button"
+                  class="product-page__quantity-btn"
+                  data-quantity-decrease
+                  aria-label="Decrease quantity"
+                  disabled
+                >
+                  −
+                </button>
+                <select
+                  name="quantity"
+                  id="Quantity-{{ section.id }}"
+                  class="product-page__quantity-select"
+                  data-quantity-input
+                  aria-label="Quantity"
+                >
+                  {%- for i in (1..quantity_max) -%}
+                    <option value="{{ i }}"{% if i == 1 %} selected{% endif %}>{{ i }}</option>
+                  {%- endfor -%}
+                </select>
+                <button
+                  type="button"
+                  class="product-page__quantity-btn"
+                  data-quantity-increase
+                  aria-label="Increase quantity"
+                  {% if quantity_max <= 1 %}disabled{% endif %}
+                >
+                  +
+                </button>
+              </div>
+              <p class="product-page__quantity-error" data-quantity-error hidden role="alert"></p>
             </div>
           {%- endif -%}
 
@@ -443,6 +489,15 @@
       "id": "show_quantity_selector",
       "label": "Show quantity selector",
       "default": true
+    },
+    {
+      "type": "range",
+      "id": "quantity_max",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "label": "Maximum quantity",
+      "default": 20
     },
     {
       "type": "checkbox",

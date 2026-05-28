@@ -76,7 +76,6 @@
         {% endif %}
 
         <div class="collection-card__content">
-          <span class="collection-card__eyebrow">Explore</span>
           <span class="collection-card__label">{{ card_title | escape }}</span>
         </div>
         </a>
@@ -176,19 +175,6 @@
     padding: var(--spacing-md);
     display: grid;
     gap: 0.35rem;
-  }
-
-  .collection-card__eyebrow {
-    display: inline-flex;
-    width: fit-content;
-    padding: 0.35rem 0.6rem;
-    border-radius: 999px;
-    background-color: rgba(255, 255, 255, 0.18);
-    backdrop-filter: blur(12px);
-    font-size: 0.625rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.82);
   }
 
   .collection-card__label {

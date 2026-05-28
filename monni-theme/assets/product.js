@@ -171,29 +171,40 @@ class ProductPage {
     });
   }
 
-  updateVariantId() {
-    // Get all selected variant options
+  getSelectedVariant() {
+    const variants = JSON.parse(this.productPage.dataset.productVariants || '[]');
+    const variantIdInput = this.productPage.querySelector('[data-variant-id]');
+    if (variantIdInput?.value) {
+      const byId = variants.find((variant) => String(variant.id) === String(variantIdInput.value));
+      if (byId) return byId;
+    }
+
     const variantSelector = this.productPage.querySelector('[data-variant-selector]');
-    if (!variantSelector) return;
+    if (!variantSelector) return variants[0] || null;
 
     const selectedOptions = {};
     const inputs = variantSelector.querySelectorAll('.product-page__variant-input:checked');
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       selectedOptions[input.name] = input.value;
     });
 
-    // Find matching variant
-    const variants = JSON.parse(this.productPage.dataset.productVariants || '[]');
-    const matchingVariant = variants.find(variant => {
-      return Object.keys(selectedOptions).every(option => {
-        return variant.options.includes(selectedOptions[option]);
-      });
-    });
+    return (
+      variants.find((variant) =>
+        Object.keys(selectedOptions).every((option) => variant.options.includes(selectedOptions[option]))
+      ) || null
+    );
+  }
 
-    // Update hidden variant ID input
+  updateVariantId() {
+    const matchingVariant = this.getSelectedVariant();
+
     const variantIdInput = this.productPage.querySelector('[data-variant-id]');
     if (variantIdInput && matchingVariant) {
       variantIdInput.value = matchingVariant.id;
+    }
+
+    if (this.updateQuantityForVariant) {
+      this.updateQuantityForVariant();
     }
   }
 
@@ -205,18 +216,117 @@ class ProductPage {
     window.history.replaceState({}, '', url);
   }
 
-  // Quantity selector
+  // Quantity selector — select (1–max) with +/- buttons
   initQuantitySelector() {
-    const quantityInput = this.productPage.querySelector('[data-quantity-input]');
-    if (!quantityInput) return;
+    const wrapper = this.productPage.querySelector('[data-quantity-selector]');
+    if (!wrapper) return;
 
-    // Prevent negative quantities
-    quantityInput.addEventListener('change', () => {
-      const value = parseInt(quantityInput.value, 10);
-      if (isNaN(value) || value < 1) {
-        quantityInput.value = 1;
+    const select = wrapper.querySelector('[data-quantity-input]');
+    const decreaseBtn = wrapper.querySelector('[data-quantity-decrease]');
+    const increaseBtn = wrapper.querySelector('[data-quantity-increase]');
+    const errorEl = wrapper.querySelector('[data-quantity-error]');
+    if (!select || !decreaseBtn || !increaseBtn) return;
+
+    const storeMax = parseInt(wrapper.dataset.quantityMax, 10) || 20;
+    let errorTimeout;
+
+    const getMaxForVariant = () => {
+      let max = storeMax;
+      const variant = this.getSelectedVariant();
+      if (
+        variant &&
+        variant.inventory_management === 'shopify' &&
+        variant.inventory_policy !== 'continue' &&
+        variant.inventory_quantity > 0
+      ) {
+        max = Math.min(max, variant.inventory_quantity);
       }
+      return Math.max(1, max);
+    };
+
+    const getSelectMax = () => {
+      const lastOption = select.options[select.options.length - 1];
+      return lastOption ? parseInt(lastOption.value, 10) : 1;
+    };
+
+    const updateButtons = () => {
+      const value = parseInt(select.value, 10) || 1;
+      const max = getSelectMax();
+      decreaseBtn.disabled = value <= 1;
+      increaseBtn.disabled = value >= max;
+    };
+
+    const showError = (message) => {
+      if (!errorEl) return;
+      errorEl.textContent = message;
+      errorEl.hidden = false;
+      clearTimeout(errorTimeout);
+      errorTimeout = setTimeout(() => {
+        errorEl.hidden = true;
+      }, 2500);
+    };
+
+    const rebuildOptions = (max, preferredValue) => {
+      const previousValue = parseInt(select.value, 10) || 1;
+      const value = Math.min(Math.max(1, preferredValue ?? previousValue), max);
+
+      select.innerHTML = '';
+      for (let i = 1; i <= max; i += 1) {
+        const option = document.createElement('option');
+        option.value = String(i);
+        option.textContent = String(i);
+        if (i === value) option.selected = true;
+        select.appendChild(option);
+      }
+
+      updateButtons();
+    };
+
+    this.updateQuantityForVariant = () => {
+      rebuildOptions(getMaxForVariant(), parseInt(select.value, 10) || 1);
+    };
+
+    decreaseBtn.addEventListener('click', () => {
+      const value = parseInt(select.value, 10) || 1;
+      if (value <= 1) {
+        showError('Minimum quantity is 1');
+        return;
+      }
+      select.value = String(value - 1);
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      updateButtons();
     });
+
+    increaseBtn.addEventListener('click', () => {
+      const value = parseInt(select.value, 10) || 1;
+      const max = getSelectMax();
+      if (value >= max) {
+        showError(`Maximum quantity is ${max}`);
+        return;
+      }
+      select.value = String(value + 1);
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      updateButtons();
+    });
+
+    select.addEventListener('change', () => {
+      const value = parseInt(select.value, 10);
+      const max = getSelectMax();
+      if (isNaN(value) || value < 1) {
+        select.value = '1';
+      } else if (value > max) {
+        select.value = String(max);
+        showError(`Maximum quantity is ${max}`);
+      }
+      updateButtons();
+    });
+
+    const variantSelector = this.productPage.querySelector('[data-variant-selector]');
+    if (variantSelector) {
+      variantSelector.addEventListener('change', () => this.updateQuantityForVariant());
+    }
+
+    this.updateQuantityForVariant();
   }
 
   // Size guide toggle

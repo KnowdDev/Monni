@@ -64,8 +64,6 @@
                     {% if link.links != blank %}
                       <div class="header__submenu-panel">
                         <div class="header__submenu-shell">
-                          <a href="{{ link.url }}" class="header__submenu-overview">Shop all {{ link.title | escape }}</a>
-
                           <ul class="header__submenu-list" role="list">
                             {% for childlink in link.links %}
                               {% assign child_title_handle = childlink.title | handleize %}
@@ -275,8 +273,6 @@
                         hidden
                         data-header-mobile-panel
                       >
-                        <a href="{{ link.url }}" class="header__mobile-overview">Shop all {{ link.title | escape }}</a>
-
                         <ul class="header__mobile-submenu-list" role="list" data-header-mobile-list>
                           {% for childlink in link.links %}
                             {% assign child_title_handle = childlink.title | handleize %}
@@ -645,20 +641,6 @@
     backdrop-filter: blur(22px);
   }
 
-  .header__submenu-overview {
-    display: inline-flex;
-    align-items: center;
-    width: fit-content;
-    font-size: 0.6875rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-foreground-muted);
-  }
-
-  .header__submenu-overview:hover {
-    color: var(--color-foreground);
-  }
-
   .header__submenu-list {
     display: grid;
     gap: 0.85rem;
@@ -954,9 +936,16 @@
 
   .header__mobile-link {
     font-family: var(--font-heading--family);
-    font-size: clamp(1.15rem, 4.4vw, 1.55rem);
-    font-weight: 300;
-    letter-spacing: 0.02em;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    color: var(--color-foreground-light);
+    transition: color var(--transition-fast);
+  }
+
+  .header__mobile-link:hover,
+  .header__mobile-link[aria-current="page"] {
     color: var(--color-foreground);
   }
 
@@ -1011,17 +1000,6 @@
 
   .header__mobile-grandmenu {
     padding: 0.15rem 0 0.2rem 0.9rem;
-  }
-
-  .header__mobile-overview {
-    display: inline-flex;
-    align-items: center;
-    width: fit-content;
-    margin: 0.15rem 0 0.35rem;
-    font-size: 0.6875rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-foreground-muted);
   }
 
   .header__drawer-note {

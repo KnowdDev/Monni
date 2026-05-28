@@ -27,13 +27,13 @@
       <div class="about-monni__hero-overlay"></div>
     </div>
 
-    <div class="about-monni__hero-content container">
+    <div class="about-monni__hero-content">
       <p class="about-monni__eyebrow">{{ section.settings.hero_eyebrow }}</p>
       <h1 class="about-monni__title">{{ section.settings.hero_title }}</h1>
     </div>
   </div>
 
-  <div class="about-monni__inner container">
+  <div class="about-monni__inner">
     <article class="about-monni__block">
       <header class="about-monni__block-header">
         <h2>{{ section.settings.story_heading }}</h2>
@@ -127,7 +127,7 @@
       </header>
       <div class="about-monni__values-grid">
         {% for block in section.blocks %}
-          <section class="about-monni__value-card{% if block.settings.full_width %} about-monni__value-card--wide{% endif %}" {{ block.shopify_attributes }}>
+          <section class="about-monni__value{% if block.settings.full_width %} about-monni__value--wide{% endif %}" {{ block.shopify_attributes }}>
             <h3>{{ block.settings.title }}</h3>
             <div class="about-monni__richtext about-monni__value-body">
               {{ block.settings.body }}
@@ -171,18 +171,15 @@
 
 {% stylesheet %}
   .about-monni {
-    background:
-      radial-gradient(circle at 10% 0%, rgba(196, 184, 168, 0.18), transparent 45%),
-      radial-gradient(circle at 100% 30%, rgba(217, 208, 196, 0.22), transparent 38%),
-      var(--color-background);
+    background: var(--color-background);
     color: var(--color-foreground);
-    padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
+    --about-inline-padding: clamp(1.25rem, 4.5vw, var(--page-margin));
   }
 
   .about-monni__hero-wrap {
     position: relative;
-    margin-bottom: clamp(2.5rem, 6vw, 5rem);
+    margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
   }
 
   .about-monni__hero-media {
@@ -214,6 +211,9 @@
     right: 0;
     bottom: clamp(1.5rem, 5vw, 4rem);
     z-index: 2;
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding-inline: var(--about-inline-padding);
     color: var(--about-hero-text-color, #ffffff);
   }
 
@@ -232,7 +232,7 @@
 
   .about-monni__title {
     margin: 0;
-    max-width: 19ch;
+    max-width: 22ch;
     font-size: clamp(1.85rem, 5vw, 3.4rem);
     font-weight: 300;
     line-height: 1.08;
@@ -242,20 +242,19 @@
   .about-monni__inner {
     max-width: var(--page-width);
     margin: 0 auto;
-    padding: 0 var(--page-margin) clamp(2rem, 5vw, 4rem);
+    padding-inline: var(--about-inline-padding);
+    padding-bottom: clamp(2rem, 5vw, 4rem);
     display: grid;
-    gap: clamp(2rem, 5vw, 4.5rem);
+    gap: clamp(2.75rem, 7vw, 5rem);
   }
 
   .about-monni__block {
-    background: color-mix(in srgb, var(--color-background-alt) 82%, transparent);
-    border: 1px solid color-mix(in srgb, var(--color-border) 75%, transparent);
-    padding: clamp(1.25rem, 3.2vw, 2.5rem);
-    border-radius: 2px;
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 2rem);
   }
 
   .about-monni__block-header {
-    margin-bottom: var(--spacing-md);
+    margin: 0;
   }
 
   .about-monni__block-header h2 {
@@ -269,8 +268,8 @@
   .about-monni__copy p {
     margin: 0 0 var(--spacing-md);
     color: var(--color-foreground);
-    line-height: 1.78;
-    letter-spacing: 0.012em;
+    line-height: 1.75;
+    letter-spacing: 0.01em;
   }
 
   .about-monni__copy p:last-child {
@@ -280,8 +279,8 @@
   .about-monni__richtext :is(p, ul, ol) {
     margin: 0 0 var(--spacing-md);
     color: var(--color-foreground);
-    line-height: 1.78;
-    letter-spacing: 0.012em;
+    line-height: 1.75;
+    letter-spacing: 0.01em;
   }
 
   .about-monni__richtext :is(p, ul, ol):last-child {
@@ -289,8 +288,8 @@
   }
 
   .about-monni__value-body :is(p, ul, ol) {
-    color: var(--color-foreground-light);
-    line-height: 1.72;
+    color: var(--color-foreground);
+    line-height: 1.75;
   }
 
   .about-monni__richtext ul,
@@ -302,7 +301,7 @@
   .about-monni__split-block,
   .about-monni__founder-grid {
     display: grid;
-    gap: clamp(1.5rem, 3.2vw, 3rem);
+    gap: clamp(1.5rem, 4vw, 3rem);
     grid-template-columns: 1fr;
     align-items: start;
   }
@@ -311,9 +310,7 @@
   .about-monni__split-media,
   .about-monni__founder-media {
     overflow: hidden;
-    border-radius: 2px;
-    border: 1px solid var(--color-border);
-    min-height: 360px;
+    min-height: 240px;
     background: var(--color-border-light);
   }
 
@@ -325,49 +322,48 @@
   .about-monni__founder-media svg {
     width: 100%;
     height: 100%;
-    min-height: 360px;
+    min-height: 240px;
     object-fit: cover;
     display: block;
   }
 
   .about-monni__values-grid {
     display: grid;
-    gap: var(--spacing-md);
+    gap: clamp(1.75rem, 4.5vw, 2.5rem);
     grid-template-columns: 1fr;
   }
 
-  .about-monni__value-card {
-    border: 1px solid var(--color-border);
-    background: var(--color-background-alt);
-    padding: clamp(1rem, 2.6vw, 1.5rem);
+  .about-monni__value {
+    display: grid;
+    gap: 0.75rem;
   }
 
-  .about-monni__value-card h3 {
-    margin: 0 0 var(--spacing-sm);
-    font-size: 1.1rem;
+  .about-monni__value h3 {
+    margin: 0;
+    font-size: clamp(1.05rem, 2.5vw, 1.2rem);
     font-weight: 500;
     letter-spacing: 0.02em;
     color: var(--color-foreground);
   }
 
-  .about-monni__value-card p {
+  .about-monni__value p {
     margin: 0 0 var(--spacing-sm);
-    color: var(--color-foreground-light);
-    line-height: 1.72;
+    color: var(--color-foreground);
+    line-height: 1.75;
   }
 
-  .about-monni__value-card p:last-child {
+  .about-monni__value p:last-child {
     margin-bottom: 0;
   }
 
-  .about-monni__value-card ul {
+  .about-monni__value ul {
     margin: 0 0 var(--spacing-sm);
     padding-left: 1.2rem;
-    color: var(--color-foreground-light);
-    line-height: 1.72;
+    color: var(--color-foreground);
+    line-height: 1.75;
   }
 
-  .about-monni__value-card li {
+  .about-monni__value li {
     margin-bottom: 0.45rem;
   }
 
@@ -383,11 +379,33 @@
     color: var(--color-foreground);
   }
 
+  @media (max-width: 899px) {
+    .about-monni__image-card,
+    .about-monni__split-media,
+    .about-monni__founder-media {
+      margin-inline: calc(-1 * var(--about-inline-padding));
+    }
+
+    .about-monni__image-card img,
+    .about-monni__split-media img,
+    .about-monni__founder-media img,
+    .about-monni__image-card svg,
+    .about-monni__split-media svg,
+    .about-monni__founder-media svg {
+      min-height: min(72vw, 420px);
+    }
+  }
+
   @media (min-width: 900px) {
+    .about-monni__inner {
+      --about-inline-padding: var(--page-margin);
+    }
+
     .about-monni__story-grid,
     .about-monni__founder-grid,
     .about-monni__split-block {
-      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: clamp(2rem, 4vw, 3.5rem);
     }
 
     .about-monni__split-block--reverse .about-monni__split-copy {
@@ -398,26 +416,28 @@
       order: 1;
     }
 
-    .about-monni__values-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .about-monni__image-card,
+    .about-monni__split-media,
+    .about-monni__founder-media {
+      min-height: 360px;
     }
 
-    .about-monni__value-card--wide {
-      grid-column: 1 / -1;
-    }
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
     .about-monni__image-card img,
     .about-monni__split-media img,
-    .about-monni__founder-media img {
-      transition: transform var(--transition-slow);
+    .about-monni__founder-media img,
+    .about-monni__image-card svg,
+    .about-monni__split-media svg,
+    .about-monni__founder-media svg {
+      min-height: 360px;
     }
 
-    .about-monni__image-card:hover img,
-    .about-monni__split-media:hover img,
-    .about-monni__founder-media:hover img {
-      transform: scale(1.03);
+    .about-monni__values-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: clamp(2rem, 5vw, 4rem);
+    }
+
+    .about-monni__value--wide {
+      grid-column: 1 / -1;
     }
   }
 {% endstylesheet %}
@@ -557,7 +577,7 @@
       "step": 4,
       "unit": "px",
       "label": "Top padding",
-      "default": 96
+      "default": 0
     },
     {
       "type": "range",
@@ -567,13 +587,13 @@
       "step": 4,
       "unit": "px",
       "label": "Bottom padding",
-      "default": 96
+      "default": 64
     }
   ],
   "blocks": [
     {
       "type": "value",
-      "name": "Value card",
+      "name": "Value",
       "settings": [
         {
           "type": "text",

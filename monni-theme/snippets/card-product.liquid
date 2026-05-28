@@ -79,8 +79,6 @@
             <span class="card-product__badge card-product__badge--sale">{{ 'products.product.on_sale' | t }}</span>
           {%- elsif product.tags contains 'new' -%}
             <span class="card-product__badge card-product__badge--new">{{ 'products.product.new' | t }}</span>
-          {%- elsif product.selected_or_first_available_variant.inventory_quantity <= 5 and product.selected_or_first_available_variant.inventory_management == 'shopify' -%}
-            <span class="card-product__badge card-product__badge--low-stock">Only {{ product.selected_or_first_available_variant.inventory_quantity }} left</span>
           {%- endif -%}
         </div>
       {%- endif -%}
