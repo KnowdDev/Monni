@@ -1,0 +1,180 @@
+<section class="newsletter-v2 full-width" data-section-id="{{ section.id }}">
+  <div class="newsletter-v2__inner">
+    <h2 class="newsletter-v2__title">{{ section.settings.title | default: "Slow down. Stay connected." | escape }}</h2>
+    <p class="newsletter-v2__desc">{{ section.settings.description | default: "Receive new arrivals, store notes, and thoughtful rituals from Monni." | escape }}</p>
+
+    {% form 'customer', class: 'newsletter-v2__form' %}
+      {% if form.posted_successfully? %}
+        <p class="newsletter-v2__success">{{ section.settings.success_message | default: "Thank you for subscribing." }}</p>
+      {% else %}
+        <div class="newsletter-v2__fields">
+          <input
+            type="email"
+            name="contact[email]"
+            class="newsletter-v2__input"
+            placeholder="{{ section.settings.placeholder | default: 'Your email address' | escape }}"
+            aria-label="{{ section.settings.placeholder | default: 'Your email address' | escape }}"
+            required
+          >
+          <button type="submit" class="newsletter-v2__button">
+            {{ section.settings.button_label | default: "Subscribe" | escape }}
+          </button>
+        </div>
+        {% if form.errors %}
+          <p class="newsletter-v2__error">{{ form.errors.messages['email'] }}</p>
+        {% endif %}
+      {% endif %}
+    {% endform %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .newsletter-v2 {
+    background-color: #FAFAF8;
+    padding: clamp(5rem, 14vw, 10rem) 0;
+    text-align: center;
+  }
+
+  .newsletter-v2__inner {
+    max-width: 48ch;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .newsletter-v2__title {
+    font-family: var(--font-heading--family);
+    font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+    font-weight: 400;
+    color: var(--color-foreground);
+    margin: 0 0 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .newsletter-v2__desc {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.7rem, 1vw, 0.82rem);
+    font-weight: 200;
+    color: var(--color-foreground-light);
+    line-height: 1.75;
+    margin: 0 0 2.5rem;
+  }
+
+  .newsletter-v2__form {
+    width: 100%;
+  }
+
+  .newsletter-v2__fields {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .newsletter-v2__input {
+    font-family: var(--font-body--family);
+    font-size: 0.78rem;
+    font-weight: 200;
+    color: var(--color-foreground);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+    flex: 1 1 14rem;
+    min-width: 14rem;
+    max-width: 20rem;
+    outline: none;
+    transition: border-color var(--transition-fast);
+  }
+
+  .newsletter-v2__input::placeholder {
+    color: var(--color-foreground-muted);
+  }
+
+  .newsletter-v2__input:focus {
+    border-color: var(--color-foreground-light);
+  }
+
+  .newsletter-v2__button {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.6rem, 0.9vw, 0.7rem);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    background: transparent;
+    border: 1px solid var(--color-foreground);
+    border-radius: 0;
+    padding: 0.75rem 1.6rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .newsletter-v2__button:hover {
+    background-color: var(--color-foreground);
+    color: var(--color-background-alt);
+  }
+
+  .newsletter-v2__success {
+    font-family: var(--font-body--family);
+    font-size: 0.92rem;
+    font-weight: 200;
+    color: var(--color-foreground);
+    margin: 0;
+  }
+
+  .newsletter-v2__error {
+    font-family: var(--font-body--family);
+    font-size: 0.82rem;
+    color: var(--color-error);
+    margin: 0.6rem 0 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Newsletter Signup",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Slow down. Stay connected."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Receive new arrivals, store notes, and thoughtful rituals from Monni."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Placeholder",
+      "default": "Your email address"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you for subscribing."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter Signup",
+      "category": "Homepage"
+    }
+  ]
+}
+{% endschema %}

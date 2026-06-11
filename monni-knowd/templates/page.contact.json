@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "contact",
+      "settings": {
+        "heading": "Get in Touch",
+        "subheading": "We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+        "show_store_details": true,
+        "store_heading": "Visit Us",
+        "store_address": "5A, 2 Matakana Valley Road, Matakana, New Zealand",
+        "store_hours": "Monday - Friday: 9am - 6pm\nSaturday: 10am - 5pm\nSunday: Closed",
+        "show_contact_details": true,
+        "contact_heading": "Get in Touch",
+        "contact_email": "hello@teaandtonic.co.nz",
+        "contact_phone": "+6421975102",
+        "show_social": true,
+        "social_heading": "Follow Us",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_short_description": true,
+        "show_quantity_selector": true,
+        "show_buy_now": false,
+        "show_trust_signals": true,
+        "show_description": true,
+        "show_size_guide": true,
+        "show_accordion": true,
+        "show_social_share": true,
+        "show_back_in_stock": true,
+        "show_fragrance_story": true,
+        "show_related_products": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

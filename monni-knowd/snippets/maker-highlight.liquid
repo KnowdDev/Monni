@@ -1,0 +1,31 @@
+{%- liquid
+  assign maker = maker_object
+  assign portrait = maker.portrait | default: maker.metafields.custom.portrait
+  assign name = maker.name | default: maker.metafields.custom.name
+-%}
+
+{%- if maker != blank -%}
+  <div class="maker-highlight">
+    <a href="{{ maker.system.url | default: maker.url }}" class="maker-highlight__link">
+      {%- if portrait != blank -%}
+        <img
+          src="{{ portrait | image_url: width: 80 }}"
+          srcset="{{ portrait | image_url: width: 80 }} 80w, {{ portrait | image_url: width: 160 }} 160w"
+          sizes="40px"
+          alt="{{ name | escape }}"
+          loading="lazy"
+          width="80"
+          height="80"
+          class="maker-highlight__portrait"
+        >
+      {%- endif -%}
+      <div class="maker-highlight__meta">
+        <span class="maker-highlight__label">Made by</span>
+        <span class="maker-highlight__name">{{ name | escape }}</span>
+      </div>
+      <span class="maker-highlight__arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </span>
+    </a>
+  </div>
+{%- endif -%}

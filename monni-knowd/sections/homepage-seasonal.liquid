@@ -1,0 +1,205 @@
+<section class="seasonal full-width" data-section-id="{{ section.id }}">
+  <a href="{{ section.settings.link | default: '#' }}" class="seasonal__wrap">
+    <div class="seasonal__image-wrap">
+      {% if section.settings.image %}
+        <img
+          src="{{ section.settings.image | image_url: width: 1600 }}"
+          srcset="
+            {{ section.settings.image | image_url: width: 600 }} 600w,
+            {{ section.settings.image | image_url: width: 1200 }} 1200w,
+            {{ section.settings.image | image_url: width: 1600 }} 1600w
+          "
+          sizes="100vw"
+          alt="{{ section.settings.title | escape }}"
+          loading="eager"
+          width="1600"
+          height="900"
+          class="seasonal__image"
+        >
+      {% else %}
+        <img
+          src="https://images.unsplash.com/photo-1515894203077-8a5e1d8d1b7a?w=1600&h=900&fit=crop&q=80"
+          srcset="
+            https://images.unsplash.com/photo-1515894203077-8a5e1d8d1b7a?w=600&h=338&fit=crop&q=80 600w,
+            https://images.unsplash.com/photo-1515894203077-8a5e1d8d1b7a?w=1200&h=675&fit=crop&q=80 1200w,
+            https://images.unsplash.com/photo-1515894203077-8a5e1d8d1b7a?w=1600&h=900&fit=crop&q=80 1600w
+          "
+          sizes="100vw"
+          alt="{{ section.settings.title | escape }}"
+          loading="eager"
+          width="1600"
+          height="900"
+          class="seasonal__image"
+        >
+      {% endif %}
+      <div class="seasonal__overlay"></div>
+    </div>
+
+    <div class="seasonal__text">
+      <h2 class="seasonal__title">{{ section.settings.title | escape }}</h2>
+      {% if section.settings.subtitle != blank %}
+        <p class="seasonal__subtitle">{{ section.settings.subtitle | escape }}</p>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <p class="seasonal__desc">{{ section.settings.description | escape }}</p>
+      {% endif %}
+      {% if section.settings.cta != blank %}
+        <span class="seasonal__cta">{{ section.settings.cta | escape }}</span>
+      {% endif %}
+    </div>
+  </a>
+</section>
+
+{% stylesheet %}
+  .seasonal {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .seasonal__wrap {
+    display: block;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    min-height: 70vh;
+  }
+
+  .seasonal__image-wrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .seasonal__image,
+  .seasonal__fallback {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .seasonal__wrap:hover .seasonal__image {
+    transform: scale(1.03);
+  }
+
+  .seasonal__fallback {
+    background: linear-gradient(135deg, var(--color-accent-light), var(--color-border-light));
+  }
+
+  .seasonal__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.05) 100%);
+    pointer-events: none;
+  }
+
+  .seasonal__text {
+    position: relative;
+    z-index: 2;
+    max-width: 52ch;
+    padding: clamp(4rem, 12vw, 8rem) var(--page-margin);
+    color: #FFFFFF;
+  }
+
+  .seasonal__title {
+    font-family: var(--font-heading--family);
+    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin: 0 0 0.8rem;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+    text-wrap: balance;
+  }
+
+  .seasonal__subtitle {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.7rem, 1.1vw, 0.82rem);
+    font-weight: 200;
+    letter-spacing: 0.06em;
+    margin: 0 0 1.2rem;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0.92;
+    max-width: 44ch;
+    line-height: 1.6;
+  }
+
+  .seasonal__desc {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.7rem, 1vw, 0.82rem);
+    font-weight: 200;
+    line-height: 1.75;
+    margin: 0 0 2rem;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.25);
+    max-width: 38ch;
+    opacity: 0.95;
+  }
+
+  .seasonal__cta {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.6rem, 0.9vw, 0.7rem);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 0.65rem 1.6rem;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .seasonal__wrap:hover .seasonal__cta {
+    background-color: #FFFFFF;
+    color: var(--color-foreground);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured Seasonal",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "The Winter Trio"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Seed to bottle skincare made in rhythm with the seasons."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Slowly infused, distilled and made by hand. Hydrating and restorative as the cold draws in."
+    },
+    {
+      "type": "text",
+      "id": "cta",
+      "label": "CTA",
+      "default": "Discover"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Seasonal",
+      "category": "Homepage"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,217 @@
+{%- liquid
+  assign brand = shop.metaobjects.brand[section.settings.brand_handle]
+  if metaobject != blank
+    assign brand = metaobject
+  endif
+-%}
+
+{%- if brand != blank -%}
+  <section class="brand-profile section--padding" data-section-id="{{ section.id }}">
+    <div class="brand-profile__inner">
+      <header class="brand-profile__header">
+        <p class="brand-profile__eyebrow">
+          <a href="/pages/brands">{{ section.settings.eyebrow | default: 'Our Brands' }}</a>
+        </p>
+        <h1 class="brand-profile__title">{{ brand.name.value | default: brand.name }}</h1>
+        {%- assign tagline = brand.tagline.value | default: brand.tagline -%}
+        {%- if tagline != blank -%}
+          <p class="brand-profile__tagline">{{ tagline | escape }}</p>
+        {%- endif -%}
+      </header>
+
+      {%- assign hero = brand.hero_image.value | default: brand.hero_image -%}
+      {%- if hero != blank -%}
+        <div class="brand-profile__hero">
+          {{
+            hero
+            | image_url: width: 1400
+            | image_tag:
+              loading: 'eager',
+              widths: '640, 960, 1200, 1400',
+              sizes: '(min-width: 900px) 52rem, 100vw',
+              alt: brand.name.value | default: brand.name
+          }}
+        </div>
+      {%- endif -%}
+
+      {%- if brand.description != blank -%}
+        <article class="brand-profile__body rte">
+          {{ brand.description | metafield_tag }}
+        </article>
+      {%- endif -%}
+
+      {%- liquid
+        assign collection_handle = brand.collection_handle.value | default: brand.collection_handle
+        assign shop_collection = collections[collection_handle]
+      -%}
+      {%- if shop_collection != blank and shop_collection.products_count > 0 -%}
+        <div class="brand-profile__cta-wrap">
+          <a href="{{ shop_collection.url }}" class="brand-profile__cta">
+            {{ section.settings.shop_cta_label | replace: '[brand]', brand.name.value | default: brand.name }}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- else -%}
+  <section class="brand-profile brand-profile--empty section--padding">
+    <p>{{ section.settings.empty_message }}</p>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  .brand-profile {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    --brand-inline-padding: clamp(1.25rem, 4.5vw, var(--page-margin));
+    padding-top: clamp(4rem, 8vw, 6rem);
+  }
+
+  .brand-profile__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding-inline: var(--brand-inline-padding);
+    padding-bottom: clamp(2rem, 5vw, 3rem);
+    display: grid;
+    gap: clamp(2rem, 5vw, 3rem);
+  }
+
+  .brand-profile__header,
+  .brand-profile__body {
+    text-align: center;
+  }
+
+  .brand-profile__eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 var(--spacing-sm);
+    color: var(--color-foreground-muted);
+  }
+
+  .brand-profile__eyebrow a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .brand-profile__eyebrow a:hover {
+    color: var(--color-foreground);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .brand-profile__title {
+    margin: 0 0 var(--spacing-sm);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 350;
+    line-height: 1.12;
+    letter-spacing: 0.02em;
+  }
+
+  .brand-profile__tagline {
+    margin: 0 auto;
+    max-width: 40ch;
+    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--color-foreground-light);
+  }
+
+  .brand-profile__hero {
+    max-width: 52rem;
+    margin: 0 auto;
+    overflow: hidden;
+    background: var(--color-border-light);
+  }
+
+  .brand-profile__hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 16 / 10;
+  }
+
+  .brand-profile__body {
+    max-width: 52rem;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .brand-profile__body :is(p, ul, ol) {
+    margin: 0 0 var(--spacing-md);
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+  }
+
+  .brand-profile__body :is(p, ul, ol):last-child {
+    margin-bottom: 0;
+  }
+
+  .brand-profile__cta-wrap {
+    text-align: center;
+  }
+
+  .brand-profile__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 2rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-foreground);
+    color: var(--color-foreground);
+    text-decoration: none;
+    transition: all var(--transition-normal);
+  }
+
+  .brand-profile__cta:hover {
+    background: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  .brand-profile--empty {
+    text-align: center;
+    color: var(--color-foreground-muted);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Brand profile",
+  "tag": "section",
+  "class": "section-brand-profile",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Our Brands"
+    },
+    {
+      "type": "text",
+      "id": "shop_cta_label",
+      "label": "Shop CTA label",
+      "default": "Shop [brand]"
+    },
+    {
+      "type": "text",
+      "id": "empty_message",
+      "label": "Empty state message",
+      "default": "Brand profile not found."
+    },
+    {
+      "type": "metaobject",
+      "id": "brand_handle",
+      "label": "Brand",
+      "metaobject_type": "brand"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand profile"
+    }
+  ]
+}
+{% endschema %}

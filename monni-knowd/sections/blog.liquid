@@ -1,0 +1,76 @@
+{% comment %}
+  Blog Page — Monni Theme
+  Editorial blog listing with brand-aligned card layout.
+{% endcomment %}
+
+<section class="blog-page">
+  <div class="container">
+    <header class="blog-page__header">
+      <h1 class="blog-page__title">{{ blog.title }}</h1>
+    </header>
+
+    <div class="blog-page__grid">
+      {% paginate blog.articles by 9 %}
+        {% for article in blog.articles %}
+          <article class="blog-page__card">
+            <a href="{{ article.url }}" class="blog-page__card-link">
+              {% if article.image %}
+                <div class="blog-page__card-image-wrapper">
+                  {{ article.image | image_url: width: 600 | image_tag: class: 'blog-page__card-image', loading: 'lazy' }}
+                </div>
+              {% endif %}
+
+              <div class="blog-page__card-content">
+                <h2 class="blog-page__card-title">{{ article.title }}</h2>
+
+                <div class="blog-page__card-meta">
+                  {% assign date = article.published_at | time_tag: format: 'date' %}
+                  <span class="blog-page__card-meta-item">{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</span>
+                </div>
+
+                {% if article.excerpt %}
+                  <p class="blog-page__card-excerpt">{{ article.excerpt }}</p>
+                {% endif %}
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+
+        {%- if paginate.pages > 1 -%}
+          <div class="blog-page__pagination">
+            {{ paginate | default_pagination }}
+          </div>
+        {%- endif -%}
+      {% endpaginate %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:general.blog",
+  "settings": [
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 9,
+      "label": "Articles per page"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpts",
+      "label": "Show article excerpts",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dates",
+      "label": "Show publication dates",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,242 @@
+{%- comment -%}
+  Monni Makers Directory — Grid of all makers, for a dedicated "Our Makers" page
+{%- endcomment -%}
+
+{%- liquid
+  assign limit = section.settings.makers_per_page | default: 12
+  assign grid_columns = section.settings.grid_columns | default: 3
+-%}
+
+<section class="makers-directory" data-section-id="{{ section.id }}">
+  <div class="makers-directory__shell">
+    {%- if section.settings.title != blank -%}
+      <h2 class="makers-directory__title">{{ section.settings.title | escape }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.subtitle != blank -%}
+      <p class="makers-directory__subtitle">{{ section.settings.subtitle | escape }}</p>
+    {%- endif -%}
+
+    {%- assign makers = shop.metaobjects.maker.values -%}
+    {%- if makers.size > 0 -%}
+      <div class="makers-directory__grid" data-grid-columns="{{ grid_columns }}">
+        {%- for maker in makers limit: limit -%}
+          <a href="{{ maker.system.url | default: maker.url }}" class="makers-directory__card">
+            {%- if maker.portrait != blank -%}
+              <div class="makers-directory__portrait">
+                <img
+                  src="{{ maker.portrait | image_url: width: 600 }}"
+                  srcset="
+                    {{ maker.portrait | image_url: width: 400 }} 400w,
+                    {{ maker.portrait | image_url: width: 600 }} 600w,
+                    {{ maker.portrait | image_url: width: 800 }} 800w
+                  "
+                  sizes="(min-width: 1200px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  alt="{{ maker.name | escape }}"
+                  loading="lazy"
+                  width="{{ maker.portrait.width }}"
+                  height="{{ maker.portrait.height }}"
+                  class="makers-directory__portrait-img"
+                >
+              </div>
+            {%- else -%}
+              <div class="makers-directory__portrait makers-directory__portrait--placeholder texture-grain">
+                <span>{{ maker.name | escape | slice: 0 }}</span>
+              </div>
+            {%- endif -%}
+
+            <div class="makers-directory__info">
+              <h3 class="makers-directory__name">{{ maker.name | escape }}</h3>
+              {%- if maker.location != blank -%}
+                <p class="makers-directory__location">{{ maker.location | escape }}</p>
+              {%- endif -%}
+              {%- if maker.bio != blank -%}
+                <p class="makers-directory__bio">{{ maker.bio | metafield_tag | strip_html | truncate: 120 }}</p>
+              {%- endif -%}
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="makers-directory__empty">{{ section.settings.empty_message | escape }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .makers-directory {
+    padding: var(--space-8) 0;
+    background-color: var(--color-warm-white);
+  }
+
+  .makers-directory__shell {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 var(--space-5);
+  }
+
+  @media (min-width: 768px) {
+    .makers-directory__shell {
+      padding: 0 var(--space-7);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .makers-directory__shell {
+      padding: 0 var(--space-8);
+    }
+  }
+
+  .makers-directory__title {
+    font-size: var(--text-2xl);
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: var(--space-3);
+  }
+
+  .makers-directory__subtitle {
+    text-align: center;
+    font-size: var(--text-base);
+    color: var(--color-ink-muted);
+    margin-bottom: var(--space-6);
+  }
+
+  .makers-directory__grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 768px) {
+    .makers-directory__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .makers-directory__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .makers-directory__card {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    transition: opacity var(--duration-fast);
+  }
+
+  .makers-directory__card:hover {
+    opacity: 0.9;
+  }
+
+  .makers-directory__portrait {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background-color: var(--color-stone-dark);
+  }
+
+  .makers-directory__portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+
+  .makers-directory__card:hover .makers-directory__portrait-img {
+    transform: scale(1.03);
+  }
+
+  .makers-directory__portrait--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-4xl);
+    color: var(--color-ink-ghost);
+  }
+
+  .makers-directory__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .makers-directory__name {
+    font-size: var(--text-lg);
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  .makers-directory__location {
+    font-size: var(--text-sm);
+    color: var(--color-ink-muted);
+  }
+
+  .makers-directory__bio {
+    font-size: var(--text-sm);
+    color: var(--color-ink-muted);
+    line-height: 1.6;
+    margin-top: var(--space-1);
+  }
+
+  .makers-directory__empty {
+    text-align: center;
+    color: var(--color-ink-muted);
+    padding: var(--space-8) 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Makers Directory",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Our Makers"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "The artisans and creators behind our curated collection."
+    },
+    {
+      "type": "range",
+      "id": "makers_per_page",
+      "min": 3,
+      "max": 24,
+      "step": 3,
+      "label": "Makers per page",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "grid_columns",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Grid columns (desktop)",
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "empty_message",
+      "label": "Empty state message",
+      "default": "No makers found."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Makers Directory",
+      "category": "Homepage"
+    }
+  ]
+}
+{% endschema %}

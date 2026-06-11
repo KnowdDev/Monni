@@ -1,0 +1,188 @@
+{%- comment -%}
+  Monni Maker Profile — Renders on the metaobject page for a single maker
+{%- endcomment -%}
+
+{%- liquid
+  assign maker = shop.metaobjects.maker[section.settings.maker_handle]
+  if template == 'metaobject'
+    assign maker = metaobject
+  endif
+-%}
+
+{%- if maker != blank -%}
+  <section class="maker-profile" data-section-id="{{ section.id }}">
+    <div class="maker-profile__shell">
+      <!-- Portrait -->
+      {%- if maker.portrait != blank -%}
+        <div class="maker-profile__portrait">
+          <img
+            src="{{ maker.portrait | image_url: width: 800 }}"
+            srcset="
+              {{ maker.portrait | image_url: width: 400 }} 400w,
+              {{ maker.portrait | image_url: width: 600 }} 600w,
+              {{ maker.portrait | image_url: width: 800 }} 800w,
+              {{ maker.portrait | image_url: width: 1200 }} 1200w
+            "
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            alt="{{ maker.name | escape }}"
+            loading="eager"
+            width="{{ maker.portrait.width }}"
+            height="{{ maker.portrait.height }}"
+            class="maker-profile__portrait-img"
+          >
+        </div>
+      {%- endif -%}
+
+      <!-- Content -->
+      <div class="maker-profile__content">
+        <h1 class="maker-profile__name">{{ maker.name | escape }}</h1>
+
+        {%- if maker.location != blank -%}
+          <p class="maker-profile__location">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            {{ maker.location | escape }}
+          </p>
+        {%- endif -%}
+
+        {%- if maker.bio != blank -%}
+          <div class="maker-profile__bio rte">
+            {{ maker.bio | metafield_tag }}
+          </div>
+        {%- endif -%}
+
+        {%- if maker.story != blank -%}
+          <div class="maker-profile__story rte">
+            {{ maker.story | metafield_tag }}
+          </div>
+        {%- endif -%}
+
+        <div class="maker-profile__social">
+          {%- if maker.website != blank -%}
+            <a href="{{ maker.website }}" target="_blank" rel="noopener" class="maker-profile__social-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              Website
+            </a>
+          {%- endif -%}
+          {%- if maker.instagram != blank -%}
+            <a href="{{ maker.instagram }}" target="_blank" rel="noopener" class="maker-profile__social-link">
+              {{ 'icon-instagram.svg' | inline_asset_content }}
+              Instagram
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- else -%}
+  <div class="maker-profile--empty">
+    <p>Maker profile not found.</p>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .maker-profile {
+    padding: var(--space-8) 0;
+    background-color: var(--color-stone);
+  }
+
+  .maker-profile__shell {
+    display: grid;
+    gap: var(--space-6);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-5);
+  }
+
+  @media (min-width: 1024px) {
+    .maker-profile__shell {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: var(--space-8);
+      padding: 0 var(--space-8);
+    }
+  }
+
+  .maker-profile__portrait {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background-color: var(--color-stone-dark);
+  }
+
+  .maker-profile__portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .maker-profile__name {
+    font-size: var(--text-3xl);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: var(--space-3);
+  }
+
+  .maker-profile__location {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-ink-muted);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-5);
+  }
+
+  .maker-profile__bio,
+  .maker-profile__story {
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--color-ink);
+    margin-bottom: var(--space-5);
+  }
+
+  .maker-profile__social {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+  }
+
+  .maker-profile__social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    color: var(--color-ink-muted);
+    transition: color var(--duration-fast);
+  }
+
+  .maker-profile__social-link:hover {
+    color: var(--color-ink);
+  }
+
+  .maker-profile--empty {
+    padding: var(--space-10) var(--space-5);
+    text-align: center;
+    color: var(--color-ink-muted);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Maker Profile",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "metaobject",
+      "id": "maker_handle",
+      "label": "Maker",
+      "metaobject_type": "maker"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Maker Profile"
+    }
+  ]
+}
+{% endschema %}

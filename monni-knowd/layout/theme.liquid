@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+    {% # Inlined CSS Variables %}
+    {% render 'css-variables' %}
+
+    {% if template.name == 'index' %}
+      {% render 'critical-home' %}
+    {% endif %}
+
+    {% comment %}
+      Homepage: sync critical CSS so LCP hero paints immediately (async caused ~2s render delay).
+      Other templates: non-blocking load.
+    {% endcomment %}
+    {% if template.name == 'index' %}
+      {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+    {% else %}
+      {% unless settings.type_primary_font.system? %}
+        <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+        {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+      {% endunless %}
+      {% render 'stylesheet-async', asset: 'critical.css' %}
+    {% endif %}
+
+    {% # Social, title, etc. %}
+    {% render 'meta-tags' %}
+    {% render 'schema-organization' %}
+
+    {{ content_for_header }}
+  </head>
+
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    {% sections 'header-group' %}
+
+    <main id="main-content" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {% section 'cart-drawer' %}
+
+    <script src="{{ 'constants.js' | asset_url }}" defer></script>
+    <script src="{{ 'pubsub.js' | asset_url }}" defer></script>
+    <script src="{{ 'header.js' | asset_url }}" defer></script>
+
+  {% if template.name == 'index' %}
+    <script>
+      (function () {
+        function loadAnimations() {
+          var s = document.createElement('script');
+          s.src = {{ 'animations.js' | asset_url | json }};
+          s.defer = true;
+          document.body.appendChild(s);
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadAnimations, { timeout: 2500 });
+        } else {
+          window.addEventListener('load', loadAnimations, { once: true });
+        }
+      })();
+    </script>
+  {% else %}
+    <script src="{{ 'animations.js' | asset_url }}" defer></script>
+  {% endif %}
+
+    {% if request.page_type == 'product' %}
+      <script src="{{ 'recently-viewed.js' | asset_url }}" defer></script>
+      <script src="{{ 'product.js' | asset_url }}" defer></script>
+    {% elsif request.page_type == 'collection' or request.page_type == 'list-collections' %}
+      <script src="{{ 'product.js' | asset_url }}" defer></script>
+    {% endif %}
+    {% if request.page_type == 'page' and page.handle == 'size-guide' %}
+      <script src="{{ 'recently-viewed.js' | asset_url }}" defer></script>
+      <script src="{{ 'size-guide.js' | asset_url }}" defer></script>
+    {% endif %}
+    {% if request.page_type == 'collection' or request.page_type == 'list-collections' %}
+      <script src="{{ 'collection.js' | asset_url }}" defer></script>
+    {% endif %}
+    <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+    {% unless template.name == 'index' %}
+      {% if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'search' or request.page_type == 'page' and page.handle == 'wishlist' %}
+        <script src="{{ 'wishlist.js' | asset_url }}" defer></script>
+      {% endif %}
+    {% endunless %}
+  </body>
+</html>

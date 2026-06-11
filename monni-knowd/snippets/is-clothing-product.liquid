@@ -1,0 +1,62 @@
+{%- comment -%}
+  Outputs "true" or "false" for capture in parent templates.
+  Usage:
+    {% capture clothing_check %}{% render 'is-clothing-product', product: product %}{% endcapture %}
+    {% assign clothing_stripped = clothing_check | strip %}
+    {% if clothing_stripped == 'true' %}{% assign is_clothing = true %}{% endif %}
+{%- endcomment -%}
+{%- liquid
+  assign clothing = false
+  assign product_type_down = product.type | downcase
+  assign vendor_down = product.vendor | downcase
+
+  if product.tags contains 'clothing'
+    assign clothing = true
+  endif
+
+  unless clothing
+    if product_type_down contains 'clothing' or product_type_down contains 'apparel'
+      assign clothing = true
+    endif
+  endunless
+
+  unless clothing
+    if vendor_down == 'monni label'
+      assign clothing = true
+    endif
+  endunless
+
+  unless clothing
+    assign clothing_handles = 'clothing,all-clothing,monni-art,monni-label,dresses,tops,bottoms,jumpsuits,loungewear' | split: ','
+    for collection in product.collections
+      if clothing
+        break
+      endif
+      for handle in clothing_handles
+        if collection.handle == handle
+          assign clothing = true
+          break
+        endif
+      endfor
+    endfor
+  endunless
+
+  unless clothing
+    assign clothing_types = 'dress,top,bottom,jumpsuit,loungewear,shirt,skirt,coat,jacket,knitwear,tee,pant,trouser' | split: ','
+    for type_token in clothing_types
+      if clothing
+        break
+      endif
+      if product_type_down contains type_token
+        assign clothing = true
+      endif
+    endfor
+  endunless
+
+  if product.metafields.custom.show_size_guide == true
+    assign clothing = true
+  elsif product.metafields.custom.show_size_guide == false
+    assign clothing = false
+  endif
+-%}
+{{- clothing -}}

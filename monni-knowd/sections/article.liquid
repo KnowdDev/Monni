@@ -1,0 +1,118 @@
+{% comment %}
+  Article Page — Monni Theme
+  Editorial blog content with brand-aligned typography and spacing.
+{% endcomment %}
+
+<article class="article-page">
+  <div class="container">
+    <div class="article-page__inner">
+      {% if article.image %}
+        <div class="article-page__image-wrapper">
+          {{ article.image | image_url: width: 1200 | image_tag: class: 'article-page__image', loading: 'eager' }}
+        </div>
+      {% endif %}
+
+      <header class="article-page__header">
+        {% if blog.title %}
+          <a href="{{ blog.url }}" class="article-page__blog-link">{{ blog.title }}</a>
+        {% endif %}
+
+        <h1 class="article-page__title">{{ article.title }}</h1>
+
+        <div class="article-page__meta">
+          {% assign date = article.published_at | time_tag: format: 'date' %}
+          <span class="article-page__meta-item">{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</span>
+        </div>
+      </header>
+
+      <div class="article-page__content">
+        {{ article.content }}
+      </div>
+
+      {% if blog.comments_enabled? %}
+        <section class="article-page__comments" id="comments">
+          <h2 class="article-page__comments-title">{{ 'blog.article_comments' | t }}</h2>
+
+          <div class="article-page__comments-list">
+            {% paginate article.comments by 10 %}
+              {% for comment in article.comments %}
+                <div class="article-page__comment">
+                  <div class="article-page__comment-header">
+                    <span class="article-page__comment-author">{{ comment.author }}</span>
+                    <span class="article-page__comment-date">{{ comment.created_at | time_tag: format: 'date' }}</span>
+                  </div>
+                  <div class="article-page__comment-body">{{ comment.content }}</div>
+                </div>
+              {% endfor %}
+
+              {% if paginate.pages > 1 %}
+                <div class="article-page__pagination">
+                  {{ paginate | default_pagination }}
+                </div>
+              {% endif %}
+            {% endpaginate %}
+          </div>
+
+          <div class="article-page__comment-form">
+            <h3 class="article-page__comment-form-title">{{ 'blog.comment_form_title' | t }}</h3>
+
+            {% form 'new_comment', article %}
+              {{ form.errors | default_errors }}
+
+              <div class="article-page__form-field">
+                <label for="CommentAuthor" class="article-page__form-label">{{ 'blog.comment_form_name' | t }}</label>
+                <input type="text" name="comment[author]" id="CommentAuthor" class="article-page__form-input" value="{{ form.author }}" required>
+              </div>
+
+              <div class="article-page__form-field">
+                <label for="CommentEmail" class="article-page__form-label">{{ 'blog.comment_form_email' | t }}</label>
+                <input type="email" name="comment[email]" id="CommentEmail" class="article-page__form-input" value="{{ form.email }}" required>
+              </div>
+
+              <div class="article-page__form-field">
+                <label for="CommentBody" class="article-page__form-label">{{ 'blog.comment_form_body' | t }}</label>
+                <textarea name="comment[body]" id="CommentBody" class="article-page__form-textarea" rows="5" required>{{ form.body }}</textarea>
+              </div>
+
+              <button type="submit" class="btn btn--primary">{{ 'blog.comment_form_submit' | t }}</button>
+            {% endform %}
+          </div>
+        </section>
+      {% endif %}
+    </div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "t:general.article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_featured_image",
+      "label": "Show featured image",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "Content width",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "Narrow"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
+      ],
+      "default": "medium"
+    }
+  ]
+}
+{% endschema %}

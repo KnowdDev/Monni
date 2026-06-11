@@ -1,0 +1,29 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "collection",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_description": true,
+        "show_product_count": true,
+        "show_filters": true,
+        "show_sort": true,
+        "show_quick_add": true,
+        "show_collection_story": true,
+        "products_per_page": 16
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,6 @@
+# This file contains a list of files that will be excluded from Shopify CLI
+# operations such as push, pull, dev, etc.
+
+# Homepage template — edited in the Shopify theme editor; exclude from push
+# so local deploys don't overwrite live section settings and content.
+templates/index.json

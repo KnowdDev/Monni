@@ -1,0 +1,208 @@
+{
+  "sections": {
+    "split-hero": {
+      "type": "homepage-split-hero",
+      "settings": {
+        "image_left": "shopify://shop_images/Copy_of_SophieWilliamson0131--000045.jpg",
+        "link_left": "/collections/clothing",
+        "image_right": "shopify://shop_images/MONNIxLOFOTEN002-13.jpg",
+        "link_right": "/collections/all-home"
+      }
+    },
+    "opening-statement": {
+      "type": "homepage-opening-statement",
+      "settings": {
+        "line_1": "It begins with love. For ourselves, for others, and for the world around us.",
+        "line_2": "We are all connected."
+      }
+    },
+    "category-grid": {
+      "type": "homepage-category-grid",
+      "settings": {
+        "title": "A collection for the way you live."
+      },
+      "blocks": {
+        "cat-1": {
+          "type": "category",
+          "settings": {
+            "title": "Wellness",
+            "description": "Nourishment for the body and mind.",
+            "link": "/collections/all-wellness"
+          }
+        },
+        "cat-2": {
+          "type": "category",
+          "settings": {
+            "title": "Beauty",
+            "description": "What we place on our skin matters.",
+            "link": "/collections/all-beauty"
+          }
+        },
+        "cat-3": {
+          "type": "category",
+          "settings": {
+            "title": "Clothing",
+            "description": "Natural fibres. Worn for years, not for a moment.",
+            "link": "/collections/all-clothing"
+          }
+        },
+        "cat-4": {
+          "type": "category",
+          "settings": {
+            "title": "Jewellery",
+            "description": "Pieces to wear daily and treasure over time.",
+            "link": "/collections/all-jewellery"
+          }
+        },
+        "cat-5": {
+          "type": "category",
+          "settings": {
+            "title": "Home",
+            "description": "Considered and made to be lived with.",
+            "link": "/collections/all-home"
+          }
+        },
+        "cat-6": {
+          "type": "category",
+          "settings": {
+            "title": "Gifts",
+            "description": "Chosen with intention. Wrapped with love.",
+            "link": "/collections/all-gifting"
+          }
+        }
+      },
+      "block_order": [
+        "cat-1",
+        "cat-2",
+        "cat-3",
+        "cat-4",
+        "cat-5",
+        "cat-6"
+      ]
+    },
+    "creations": {
+      "type": "homepage-creations",
+      "settings": {
+        "title": "Our Own Creations"
+      },
+      "blocks": {
+        "creation-1": {
+          "type": "creation",
+          "settings": {
+            "title": "Monni Botanicals",
+            "description": "Skincare made in rhythm with the seasons.",
+            "cta": "Discover",
+            "link": "/collections/monni-botanicals"
+          }
+        },
+        "creation-2": {
+          "type": "creation",
+          "settings": {
+            "title": "Monni Label",
+            "description": "Clothing as a form of feeling and self-expression.",
+            "cta": "Discover",
+            "link": "/collections/monni-label"
+          }
+        },
+        "creation-3": {
+          "type": "creation",
+          "settings": {
+            "title": "Monni Art",
+            "description": "Creativity as an act of healing for the artist and the earth.",
+            "cta": "Discover",
+            "link": "/collections/monni-art"
+          }
+        }
+      },
+      "block_order": [
+        "creation-1",
+        "creation-2",
+        "creation-3"
+      ]
+    },
+    "seasonal": {
+      "type": "homepage-seasonal",
+      "settings": {
+        "title": "The Winter Trio",
+        "subtitle": "Seed to bottle skincare made in rhythm with the seasons.",
+        "description": "Slowly infused, distilled and made by hand. Hydrating and restorative as the cold draws in.",
+        "cta": "Discover",
+        "link": "/collections/monni-botanicals"
+      }
+    },
+    "makers": {
+      "type": "homepage-makers",
+      "settings": {
+        "eyebrow": "From the Makers",
+        "maker_name": "Frolic Ceramics",
+        "maker_location": "Vicki Fanning, Matakana",
+        "description": "Vicki has been with us since the very beginning, one of our founding suppliers and a ceramist and glass artist of genuine standing. Objects made to be mixed, matched, held and truly lived with at the table.",
+        "cta": "Shop Frolic Ceramics",
+        "link": "/collections/frolic-ceramics"
+      }
+    },
+    "journal": {
+      "type": "homepage-journal",
+      "settings": {
+        "title": "From the Journal",
+        "view_all_label": "Visit the Journal",
+        "view_all_link": "/blogs/journal"
+      },
+      "blocks": {
+        "post-1": {
+          "type": "post",
+          "settings": {
+            "title": "Navigating Grief",
+            "subtitle": "On loss, love and the rituals that hold us.",
+            "teaser": "A personal reflection from Monni on finding your way through life's most challenging moments, one quiet act of care at a time.",
+            "cta": "Read",
+            "link": "/blogs/journal/navigating-grief-monni-explores-finding-comfort-and-healing-in-life-s-most-challenging-times"
+          }
+        },
+        "post-2": {
+          "type": "post",
+          "settings": {
+            "title": "Motherhood and Making",
+            "subtitle": "A conversation with Hannah Jack, founder of Country Kitchen.",
+            "teaser": "On raising five children, building something meaningful and the quiet strength that holds it all together.",
+            "cta": "Read",
+            "link": "/blogs/journal/a-conversation-on-motherhood-and-work-with-hannah-jack-founder-of-country-kitchen"
+          }
+        },
+        "post-3": {
+          "type": "post",
+          "settings": {
+            "title": "Flower Essences Explained",
+            "subtitle": "The ancient practice of plant healing, gently demystified.",
+            "teaser": "What they are, how to use them and why they have been trusted for nearly a century.",
+            "cta": "Read",
+            "link": "/blogs/journal/flower-essences-explained-benefits-uses-and-how-to-harness-their-healing-power"
+          }
+        }
+      },
+      "block_order": [
+        "post-1",
+        "post-2",
+        "post-3"
+      ]
+    },
+    "founder": {
+      "type": "homepage-founder",
+      "settings": {
+        "quote": "What is the most true and beautiful life you can dream into being?",
+        "cta": "About MONNI",
+        "link": "/pages/about"
+      }
+    }
+  },
+  "order": [
+    "split-hero",
+    "opening-statement",
+    "category-grid",
+    "creations",
+    "seasonal",
+    "makers",
+    "journal",
+    "founder"
+  ]
+}

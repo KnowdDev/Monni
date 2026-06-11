@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "main": {
+      "type": "brand-profile",
+      "settings": {
+        "eyebrow": "Our Brands",
+        "shop_cta_label": "Shop [brand]"
+      }
+    },
+    "products": {
+      "type": "brand-products",
+      "settings": {
+        "title": "From [brand]",
+        "products_to_show": 8,
+        "view_all_label": "View all"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "products"
+  ]
+}

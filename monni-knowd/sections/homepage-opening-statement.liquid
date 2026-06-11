@@ -1,0 +1,75 @@
+<section class="opening-statement full-width" data-section-id="{{ section.id }}">
+  <div class="opening-statement__inner">
+    <p class="opening-statement__line opening-statement__line--primary">
+      {{ section.settings.line_1 | default: "It begins with love. For ourselves, for others, and for the world around us." }}
+    </p>
+    <p class="opening-statement__line opening-statement__line--secondary">
+      {{ section.settings.line_2 | default: "We are all connected." }}
+    </p>
+  </div>
+</section>
+
+{% stylesheet %}
+  .opening-statement {
+    background-color: #FAFAF8;
+    padding: clamp(5rem, 14vw, 10rem) 0;
+    text-align: center;
+  }
+
+  .opening-statement__inner {
+    max-width: 48ch;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .opening-statement__line {
+    font-family: var(--font-heading--family);
+    font-weight: 300;
+    color: var(--color-foreground);
+    margin: 0;
+    line-height: 1.6;
+    text-wrap: balance;
+  }
+
+  .opening-statement__line--primary {
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    letter-spacing: 0.04em;
+    margin-bottom: 1.25rem;
+  }
+
+  .opening-statement__line--secondary {
+    font-size: clamp(0.85rem, 1.6vw, 1.05rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-foreground-light);
+    letter-spacing: 0.03em;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Opening Statement",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "line_1",
+      "label": "First line",
+      "default": "It begins with love. For ourselves, for others, and for the world around us."
+    },
+    {
+      "type": "textarea",
+      "id": "line_2",
+      "label": "Second line",
+      "default": "We are all connected."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Opening Statement",
+      "category": "Homepage"
+    }
+  ]
+}
+{% endschema %}

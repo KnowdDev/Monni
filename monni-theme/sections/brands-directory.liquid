@@ -1,0 +1,398 @@
+{%- liquid
+  assign brands = shop.metaobjects.brand.values | sort: 'name'
+  assign show_unpublished = section.settings.show_unpublished
+-%}
+
+<section class="brands-directory section--padding" data-section-id="{{ section.id }}">
+  <div class="brands-directory__inner">
+    <header class="brands-directory__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="brands-directory__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h1 class="brands-directory__title">{{ section.settings.title }}</h1>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <div class="brands-directory__intro rte">{{ section.settings.intro }}</div>
+      {%- endif -%}
+    </header>
+
+    {%- assign visible_count = 0 -%}
+    {%- for brand in brands -%}
+      {%- assign is_published = brand.published.value | default: brand.published | default: true -%}
+      {%- if is_published or show_unpublished -%}
+        {%- assign visible_count = visible_count | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if visible_count > 0 -%}
+      <div class="brands-directory__toolbar">
+        <label class="brands-directory__search">
+          <span class="visually-hidden">Search brands</span>
+          <input
+            type="search"
+            class="brands-directory__search-input"
+            placeholder="{{ section.settings.search_placeholder }}"
+            data-brand-search
+            autocomplete="off"
+          >
+        </label>
+        <nav class="brands-directory__alpha" aria-label="Browse brands by letter" data-brand-alpha>
+          <button type="button" class="brands-directory__alpha-btn is-active" data-letter="all">All</button>
+          {%- assign letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' | split: '' -%}
+          {%- for letter in letters -%}
+            <button type="button" class="brands-directory__alpha-btn" data-letter="{{ letter }}">{{ letter }}</button>
+          {%- endfor -%}
+        </nav>
+      </div>
+
+      <div class="brands-directory__grid" data-brand-grid>
+        {%- for brand in brands -%}
+          {%- liquid
+            assign is_published = brand.published.value | default: brand.published | default: true
+            unless is_published or show_unpublished
+              continue
+            endunless
+
+            assign brand_name = brand.name.value | default: brand.name
+            assign brand_url = brand.system.url | default: brand.url
+            assign tagline = brand.tagline.value | default: brand.tagline
+            assign collection_handle = brand.collection_handle.value | default: brand.collection_handle
+            assign shop_collection = collections[collection_handle]
+            assign first_letter = brand_name | strip | slice: 0 | upcase
+            assign hero = brand.hero_image.value | default: brand.hero_image
+          -%}
+          <article
+            class="brands-directory__card"
+            data-brand-card
+            data-name="{{ brand_name | downcase | escape }}"
+            data-letter="{{ first_letter }}"
+          >
+            <a href="{{ brand_url }}" class="brands-directory__card-link">
+              <div class="brands-directory__media">
+                {%- if hero != blank -%}
+                  {{
+                    hero
+                    | image_url: width: 800
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '400, 600, 800',
+                      sizes: '(min-width: 900px) 25vw, 50vw',
+                      alt: brand_name,
+                      class: 'brands-directory__image'
+                  }}
+                {%- elsif shop_collection != blank and shop_collection.image != blank -%}
+                  {{
+                    shop_collection.image
+                    | image_url: width: 800
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '400, 600, 800',
+                      sizes: '(min-width: 900px) 25vw, 50vw',
+                      alt: brand_name,
+                      class: 'brands-directory__image'
+                  }}
+                {%- else -%}
+                  <div class="brands-directory__placeholder" aria-hidden="true">
+                    <span>{{ first_letter }}</span>
+                  </div>
+                {%- endif -%}
+              </div>
+              <div class="brands-directory__copy">
+                <h2 class="brands-directory__name">{{ brand_name }}</h2>
+                {%- if tagline != blank -%}
+                  <p class="brands-directory__tagline">{{ tagline | escape }}</p>
+                {%- endif -%}
+                <span class="brands-directory__cta">{{ section.settings.card_cta }}</span>
+              </div>
+            </a>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      <p class="brands-directory__empty-filter" data-brand-empty hidden>
+        {{ section.settings.no_results_message }}
+      </p>
+    {%- else -%}
+      <p class="brands-directory__empty">{{ section.settings.empty_message }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (() => {
+    const root = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (!root) return;
+
+    const cards = [...root.querySelectorAll('[data-brand-card]')];
+    const search = root.querySelector('[data-brand-search]');
+    const alpha = root.querySelector('[data-brand-alpha]');
+    const empty = root.querySelector('[data-brand-empty]');
+    let activeLetter = 'all';
+
+    const applyFilters = () => {
+      const query = (search?.value || '').trim().toLowerCase();
+      let visible = 0;
+
+      cards.forEach((card) => {
+        const name = card.dataset.name || '';
+        const letter = card.dataset.letter || '';
+        const matchesQuery = !query || name.includes(query);
+        const matchesLetter = activeLetter === 'all' || letter === activeLetter;
+        const show = matchesQuery && matchesLetter;
+        card.hidden = !show;
+        if (show) visible += 1;
+      });
+
+      if (empty) empty.hidden = visible > 0;
+    };
+
+    search?.addEventListener('input', applyFilters);
+
+    const lettersInUse = new Set(cards.map((card) => card.dataset.letter));
+    alpha?.querySelectorAll('[data-letter]').forEach((button) => {
+      const letter = button.dataset.letter;
+      if (letter !== 'all' && !lettersInUse.has(letter)) {
+        button.disabled = true;
+        button.setAttribute('aria-disabled', 'true');
+      }
+    });
+
+    alpha?.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-letter]');
+      if (!button || button.disabled) return;
+      activeLetter = button.dataset.letter;
+      alpha.querySelectorAll('[data-letter]').forEach((el) => el.classList.toggle('is-active', el === button));
+      applyFilters();
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .brands-directory {
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .brands-directory__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding-inline: var(--page-margin);
+    padding-bottom: clamp(2rem, 5vw, 4rem);
+  }
+
+  .brands-directory__header {
+    text-align: center;
+    max-width: 46rem;
+    margin: 0 auto clamp(2rem, 5vw, 3rem);
+  }
+
+  .brands-directory__eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 var(--spacing-sm);
+    color: var(--color-foreground-muted);
+  }
+
+  .brands-directory__title {
+    margin: 0 0 var(--spacing-md);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 350;
+    line-height: 1.12;
+  }
+
+  .brands-directory__intro {
+    color: var(--color-foreground-light);
+    line-height: 1.7;
+  }
+
+  .brands-directory__toolbar {
+    display: grid;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .brands-directory__search-input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font: inherit;
+  }
+
+  .brands-directory__alpha {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    justify-content: center;
+  }
+
+  .brands-directory__alpha-btn {
+    min-width: 2rem;
+    padding: 0.35rem 0.5rem;
+    border: 0;
+    background: transparent;
+    color: var(--color-foreground-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+  }
+
+  .brands-directory__alpha-btn.is-active,
+  .brands-directory__alpha-btn:hover:not(:disabled) {
+    color: var(--color-foreground);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .brands-directory__alpha-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .brands-directory__grid {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .brands-directory__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .brands-directory__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .brands-directory__card-link {
+    display: grid;
+    gap: var(--spacing-md);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .brands-directory__media {
+    overflow: hidden;
+    background: var(--color-border-light);
+    aspect-ratio: 4 / 3;
+  }
+
+  .brands-directory__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-slow);
+  }
+
+  .brands-directory__card:hover .brands-directory__image {
+    transform: scale(1.03);
+  }
+
+  .brands-directory__placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    color: var(--color-foreground-muted);
+    background: #f3f1ee;
+  }
+
+  .brands-directory__name {
+    margin: 0 0 0.35rem;
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  .brands-directory__tagline {
+    margin: 0 0 0.5rem;
+    color: var(--color-foreground-light);
+    line-height: 1.6;
+    font-size: 0.92rem;
+  }
+
+  .brands-directory__cta {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-foreground-muted);
+  }
+
+  .brands-directory__empty,
+  .brands-directory__empty-filter {
+    text-align: center;
+    color: var(--color-foreground-muted);
+    padding: var(--spacing-xl) 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Brands directory",
+  "tag": "section",
+  "class": "section-brands-directory",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shop by Brand"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Our Brands"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "<p>Discover the makers and houses behind MONNI. Each brand is chosen with intention for quality, integrity, and the rituals of everyday wellbeing.</p>"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder",
+      "default": "Search brands"
+    },
+    {
+      "type": "text",
+      "id": "card_cta",
+      "label": "Card link label",
+      "default": "Discover the brand"
+    },
+    {
+      "type": "text",
+      "id": "no_results_message",
+      "label": "No results message",
+      "default": "No brands match your search."
+    },
+    {
+      "type": "text",
+      "id": "empty_message",
+      "label": "Empty state message",
+      "default": "Brand profiles will appear here once added in Shopify."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_unpublished",
+      "label": "Show unpublished brands (preview)",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brands directory"
+    }
+  ]
+}
+{% endschema %}

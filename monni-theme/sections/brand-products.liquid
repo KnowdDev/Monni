@@ -1,0 +1,162 @@
+{%- liquid
+  assign brand = shop.metaobjects.brand[section.settings.brand_handle]
+  if template.name == 'metaobject' and metaobject.type == 'brand'
+    assign brand = metaobject
+  endif
+
+  assign limit = section.settings.products_to_show | default: 8
+  assign collection_handle = brand.collection_handle.value | default: brand.collection_handle
+  assign vendor_match = brand.vendor_match.value | default: brand.vendor_match | default: brand.name.value | default: brand.name
+  assign shop_collection = collections[collection_handle]
+-%}
+
+{%- if brand != blank -%}
+  {%- assign has_products = false -%}
+
+  {%- if shop_collection != blank and shop_collection.products_count > 0 -%}
+    {%- assign product_source = shop_collection.products -%}
+    {%- assign has_products = true -%}
+  {%- else -%}
+    {%- assign product_source = collections.all.products -%}
+  {%- endif -%}
+
+  {%- if has_products or vendor_match != blank -%}
+    <section class="brand-products" data-section-id="{{ section.id }}">
+      <div class="brand-products__inner">
+        <h2 class="brand-products__title">
+          {{ section.settings.title | replace: '[brand]', brand.name.value | default: brand.name }}
+        </h2>
+
+        <div class="brand-products__grid">
+          {%- assign shown = 0 -%}
+          {%- for product in product_source -%}
+            {%- if shown >= limit -%}
+              {%- break -%}
+            {%- endif -%}
+            {%- unless shop_collection != blank and shop_collection.products_count > 0 -%}
+              {%- unless product.vendor == vendor_match -%}
+                {%- continue -%}
+              {%- endunless -%}
+            {%- endunless -%}
+            {%- render 'card-product',
+              card_product: product,
+              aspect_ratio: '3/4',
+              show_quick_add: false,
+              show_wishlist: true,
+              show_badges: true,
+              first_eager: false
+            -%}
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endfor -%}
+        </div>
+
+        {%- if shop_collection != blank and shop_collection.products_count > limit -%}
+          <div class="brand-products__footer">
+            <a href="{{ shop_collection.url }}" class="brand-products__link">
+              {{ section.settings.view_all_label }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </section>
+  {%- endif -%}
+{%- endif -%}
+
+{% stylesheet %}
+  .brand-products {
+    padding: clamp(2rem, 5vw, 4rem) 0;
+    background: #FAFAF8;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .brand-products__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding-inline: var(--page-margin);
+  }
+
+  .brand-products__title {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    font-weight: 300;
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+  }
+
+  .brand-products__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+  }
+
+  @media (min-width: 768px) {
+    .brand-products__grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-lg);
+    }
+  }
+
+  .brand-products__footer {
+    margin-top: var(--spacing-xl);
+    text-align: center;
+  }
+
+  .brand-products__link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.875rem 2rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-foreground);
+    color: var(--color-foreground);
+    text-decoration: none;
+    transition: all var(--transition-normal);
+  }
+
+  .brand-products__link:hover {
+    background: var(--color-foreground);
+    color: var(--color-background);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Brand products",
+  "tag": "section",
+  "class": "section-brand-products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "From [brand]"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 16,
+      "step": 4,
+      "label": "Products to show",
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "View all"
+    },
+    {
+      "type": "metaobject",
+      "id": "brand_handle",
+      "label": "Brand",
+      "metaobject_type": "brand"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand products"
+    }
+  ]
+}
+{% endschema %}

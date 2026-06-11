@@ -1,0 +1,142 @@
+{% comment %}
+  Search Page — Monni Theme
+  Brand-aligned search with calm, minimal interface.
+{% endcomment %}
+
+<section class="search-page">
+  <div class="container">
+    <header class="search-page__header">
+      <h1 class="search-page__title">{{ 'search.title' | t }}</h1>
+    </header>
+
+    <!-- Search Form -->
+    <form action="{{ routes.search_url }}" method="get" class="search-page__form" role="search">
+      <div class="search-page__input-wrapper">
+        <input
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'search.placeholder' | t }}"
+          class="search-page__input"
+          autocomplete="off"
+        >
+        <button type="submit" class="search-page__submit" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    {% if search.performed %}
+      {% if search.results_count == 0 %}
+        <!-- Empty State -->
+        <div class="search-page__empty">
+          <p class="search-page__empty-text">{{ 'search.no_results_html' | t: terms: search.terms }}</p>
+          <a href="{{ routes.root_url }}" class="btn btn--primary">Continue Shopping</a>
+        </div>
+      {% else %}
+        <!-- Results Header -->
+        <div class="search-page__results-header">
+          <p class="search-page__results-count">{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
+        </div>
+
+        <!-- Results Grid -->
+        <div class="search-page__grid">
+          {% paginate search.results by section.settings.results_per_page %}
+            {% for result in search.results %}
+              <article class="search-page__result">
+                <a href="{{ result.url }}" class="search-page__result-link">
+                  {% assign featured_image = result.featured_image | default: result.image %}
+                  {% if featured_image %}
+                    <div class="search-page__result-image-wrapper">
+                      <img
+                        src="{{ featured_image | image_url: width: 400 }}"
+                        srcset="{{ featured_image | image_url: width: 300 }} 300w, {{ featured_image | image_url: width: 400 }} 400w, {{ featured_image | image_url: width: 600 }} 600w"
+                        sizes="(min-width: 768px) 25vw, 50vw"
+                        alt="{{ featured_image.alt | default: result.title | escape }}"
+                        loading="lazy"
+                        width="{{ featured_image.width }}"
+                        height="{{ featured_image.height }}"
+                        class="search-page__result-image"
+                      >
+                    </div>
+                  {% endif %}
+
+                  <div class="search-page__result-content">
+                    <h3 class="search-page__result-title">{{ result.title }}</h3>
+                    {% if result.object_type == 'product' and result.price %}
+                      <span class="search-page__result-price">{{ result.price | money }}</span>
+                    {% endif %}
+                    {% if result.object_type == 'article' and result.published_at %}
+                      <span class="search-page__result-date">{{ result.published_at | date: "%B %d, %Y" }}</span>
+                    {% endif %}
+                  </div>
+                </a>
+              </article>
+            {% endfor %}
+
+            <!-- Pagination -->
+            {% if paginate.pages > 1 %}
+              <nav class="search-page__pagination" aria-label="Pagination">
+                {% if paginate.previous %}
+                  <a href="{{ paginate.previous.url }}" class="search-page__pagination-link" aria-label="Previous page">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+                    Previous
+                  </a>
+                {% endif %}
+
+                <div class="search-page__pagination-numbers">
+                  {% for part in paginate.parts %}
+                    {% if part.is_link %}
+                      <a href="{{ part.url }}" class="search-page__pagination-number">{{ part.title }}</a>
+                    {% else %}
+                      <span class="search-page__pagination-number search-page__pagination-number--current">{{ part.title }}</span>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+
+                {% if paginate.next %}
+                  <a href="{{ paginate.next.url }}" class="search-page__pagination-link" aria-label="Next page">
+                    Next
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+                  </a>
+                {% endif %}
+              </nav>
+            {% endif %}
+          {% endpaginate %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:general.search",
+  "settings": [
+    {
+      "type": "range",
+      "id": "results_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 16,
+      "label": "Results per page"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_images",
+      "label": "Show product images",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_article_images",
+      "label": "Show article images",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

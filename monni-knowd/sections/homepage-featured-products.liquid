@@ -1,0 +1,166 @@
+{% liquid
+  assign collection_handle = section.settings.collection | default: 'all'
+  assign collection_obj = collections[collection_handle]
+  assign limit = section.settings.products_to_show | default: 4
+%}
+
+<section class="featured-products" data-section-id="{{ section.id }}" data-animate>
+  {% if section.settings.title != blank %}
+    <h2 class="featured-products__title">{{ section.settings.title | escape }}</h2>
+  {% endif %}
+
+  {% if section.settings.subtitle != blank %}
+    <p class="featured-products__subtitle">{{ section.settings.subtitle | escape }}</p>
+  {% endif %}
+
+  {% if collection_obj != blank and collection_obj.products.size > 0 %}
+    <div class="featured-products__grid">
+      {% for product in collection_obj.products limit: limit %}
+        {%- render 'card-product',
+          card_product: product,
+          aspect_ratio: '3/4',
+          show_quick_add: false,
+          show_wishlist: false,
+          show_badges: true,
+          first_eager: false
+        -%}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_view_all and section.settings.view_all_link != blank %}
+      <div class="featured-products__footer">
+        <a href="{{ section.settings.view_all_link }}" class="featured-products__link">
+          {{ section.settings.view_all_label | escape }}
+        </a>
+      </div>
+    {% endif %}
+  {% else %}
+    <p class="featured-products__empty">{{ section.settings.empty_message | escape }}</p>
+  {% endif %}
+</section>
+
+{% stylesheet %}
+  .featured-products {
+    padding: var(--spacing-xxl) 0;
+  }
+
+  .featured-products__title {
+    text-align: center;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 300;
+  }
+
+  .featured-products__subtitle {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--color-foreground-muted);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .featured-products__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+  }
+
+  @media (min-width: 768px) {
+    .featured-products__grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-lg);
+    }
+  }
+
+  .featured-products__footer {
+    margin-top: var(--spacing-xl);
+    text-align: center;
+  }
+
+  .featured-products__link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.875rem 2rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-foreground);
+    color: var(--color-foreground);
+    background-color: transparent;
+    transition: all var(--transition-normal);
+  }
+
+  .featured-products__link:hover {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  .featured-products__empty {
+    text-align: center;
+    color: var(--color-foreground-muted);
+    padding: var(--spacing-xl) 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Recently arrived"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "New pieces we are loving"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 2,
+      "label": "Products to show",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View all' link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    },
+    {
+      "type": "text",
+      "id": "empty_message",
+      "label": "Empty collection message",
+      "default": "Products will appear here once added to the collection."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products",
+      "category": "Homepage"
+    }
+  ]
+}
+{% endschema %}

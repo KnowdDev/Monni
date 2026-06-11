@@ -1,0 +1,476 @@
+<footer class="footer full-width" data-section-id="{{ section.id }}">
+  <div class="footer__inner">
+    <div class="footer__grid">
+      <div class="footer__column footer__column--brand">
+        {% if settings.logo != blank %}
+          <a href="{{ routes.root_url }}" class="footer__logo-link" aria-label="{{ shop.name | escape }}">
+            <img
+              src="{{ settings.logo | image_url: width: 240 }}"
+              alt="{{ shop.name | escape }}"
+              width="{{ settings.logo_width }}"
+              height="{{ settings.logo_width | divided_by: settings.logo.aspect_ratio | round }}"
+              class="footer__logo-img"
+              loading="lazy"
+            >
+          </a>
+        {% else %}
+          <h2 class="footer__logo-text">{{ shop.name | escape }}</h2>
+        {% endif %}
+        <p class="footer__tagline">Holistic health, beauty &amp; home.<br>Matakana Village, Aotearoa.</p>
+        <div class="footer__contact">
+          <p>5A, 2 Matakana Valley Road, Matakana, New Zealand</p>
+          {% if settings.store_hours != blank %}
+            <p>{{ settings.store_hours | newline_to_br }}</p>
+          {% endif %}
+          <p>
+            <a href="mailto:{{ settings.contact_email | default: 'hello@teaandtonic.co.nz' }}">{{ settings.contact_email | default: 'hello@teaandtonic.co.nz' }}</a>
+            {% assign footer_phone = settings.contact_phone | default: '+6421975102' %}
+            | <a href="tel:{{ footer_phone | replace: ' ', '' }}">Tel. {{ footer_phone }}</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="footer__menu-wrap">
+        <div class="footer__column">
+          <h3 class="footer__heading">Explore</h3>
+          <nav class="footer__nav" aria-label="Explore">
+            <ul class="footer__menu">
+              <li><a href="/collections/all">Shop</a></li>
+              <li><a href="/blogs/journal">Journal</a></li>
+              <li><a href="/pages/about">About</a></li>
+              <li><a href="/pages/brands">Brands</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="footer__column">
+          <h3 class="footer__heading">Help</h3>
+          <nav class="footer__nav" aria-label="Help">
+            <ul class="footer__menu">
+              <li><a href="/pages/size-guide">Size Guide</a></li>
+              <li><a href="/pages/shipping">Shipping</a></li>
+              <li><a href="/policies/refund-policy">Returns + Exchanges</a></li>
+              <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+              <li><a href="/policies/terms-of-service">Terms &amp; Conditions</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="footer__column">
+          <h3 class="footer__heading">Follow</h3>
+          <nav class="footer__nav" aria-label="Social">
+            <ul class="footer__menu">
+              {% if settings.social_instagram_link != blank %}
+                <li><a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener">Instagram</a></li>
+              {% endif %}
+              {% if settings.social_facebook_link != blank %}
+                <li><a href="{{ settings.social_facebook_link }}" target="_blank" rel="noopener">Facebook</a></li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div class="footer__newsletter">
+      <h3 class="footer__newsletter-title">Slow down. Stay connected.</h3>
+      <p class="footer__newsletter-desc">Receive new arrivals, store notes, and thoughtful rituals from Monni.</p>
+      {% form 'customer', class: 'footer__newsletter-form' %}
+        {% if form.posted_successfully? %}
+          <p class="footer__newsletter-success">Thank you for subscribing.</p>
+        {% else %}
+          <div class="footer__newsletter-fields">
+            <input
+              type="email"
+              name="contact[email]"
+              class="footer__newsletter-input"
+              placeholder="Your email address"
+              aria-label="Your email address"
+              required
+            >
+            <button type="submit" class="footer__newsletter-button">Subscribe</button>
+          </div>
+          {% if form.errors %}
+            <p class="footer__newsletter-error">{{ form.errors.messages['email'] }}</p>
+          {% endif %}
+        {% endif %}
+      {% endform %}
+    </div>
+    </div>
+
+    <div class="footer__bottom">
+      <div class="footer__legal">
+        <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% stylesheet %}
+  .footer {
+    background-color: #FAFAF8;
+    border-top: 1px solid var(--color-border-light);
+    margin-top: auto;
+    padding: clamp(2rem, 4vw, 3rem) 0 var(--spacing-md);
+  }
+
+  .footer__inner {
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .footer__menu-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) 0;
+    width: 100%;
+  }
+
+  .footer__newsletter {
+    border: none;
+    padding: var(--spacing-sm) 0;
+    text-align: left;
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 768px) {
+    .footer__grid {
+      grid-template-columns: 1.25fr 1fr 1fr;
+      gap: var(--spacing-lg);
+      align-items: start;
+    }
+
+    .footer__menu-wrap {
+      padding: 0;
+      gap: var(--spacing-sm);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .footer__grid {
+      grid-template-columns: 1.25fr 1fr 1fr;
+      gap: var(--spacing-xl);
+    }
+  }
+
+  .footer__column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer__logo-link {
+    display: inline-block;
+    margin: 0 0 var(--spacing-sm);
+  }
+
+  .footer__logo-img {
+    display: block;
+    width: auto;
+    max-width: min(var(--header-logo-width, 200px), 11rem);
+    height: auto;
+  }
+
+  .footer__logo-text {
+    font-family: var(--font-heading--family);
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: var(--color-foreground);
+    margin: 0 0 var(--spacing-sm);
+  }
+
+  .footer__tagline {
+    font-family: var(--font-body--family);
+    font-size: 0.72rem;
+    font-weight: 200;
+    color: var(--color-foreground-light);
+    line-height: 1.65;
+    margin: 0 0 var(--spacing-md);
+    max-width: 32ch;
+    letter-spacing: 0.02em;
+  }
+
+  .footer__contact {
+    font-family: var(--font-body--family);
+    font-size: 0.68rem;
+    font-weight: 200;
+    color: var(--color-foreground-muted);
+    line-height: 1.7;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  .footer__contact p {
+    margin: 0 0 var(--spacing-xs);
+  }
+
+  .footer__contact a {
+    color: var(--color-foreground-light);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer__contact a:hover {
+    color: var(--color-foreground);
+  }
+
+  .footer__heading {
+    font-family: var(--font-body--family);
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    margin: 0 0 var(--spacing-md);
+  }
+
+  .footer__menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer__menu li {
+    margin-bottom: 0.4rem;
+  }
+
+  .footer__menu a {
+    font-family: var(--font-body--family);
+    font-size: 0.72rem;
+    font-weight: 200;
+    letter-spacing: 0.04em;
+    color: var(--color-foreground-light);
+    transition: color var(--transition-fast);
+    text-decoration: none;
+  }
+
+  .footer__menu a:hover,
+  .footer__menu a:focus {
+    color: var(--color-foreground);
+    outline: none;
+  }
+
+  .footer__menu a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .footer__newsletter {
+    border: none;
+    padding: var(--spacing-sm) 0;
+    text-align: left;
+    margin-bottom: 0;
+  }
+
+  .footer__newsletter-title {
+    font-family: var(--font-heading--family);
+    font-size: clamp(0.55rem, 0.8vw, 0.65rem);
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    margin: 0 0 0.5rem;
+  }
+
+  .footer__newsletter-desc {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.6rem, 0.9vw, 0.72rem);
+    font-weight: 200;
+    color: var(--color-foreground-light);
+    line-height: 1.6;
+    margin: 0 0 1rem;
+    max-width: 38ch;
+  }
+
+  .footer__newsletter-form {
+    width: 100%;
+  }
+
+  .footer__newsletter-fields {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+  }
+
+  .footer__newsletter-input {
+    font-family: var(--font-body--family);
+    font-size: 0.68rem;
+    font-weight: 200;
+    color: var(--color-foreground);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    padding: 0.5rem 0.75rem;
+    flex: 1 1 10rem;
+    min-width: 8rem;
+    max-width: 14rem;
+    outline: none;
+    transition: border-color var(--transition-fast);
+  }
+
+  .footer__newsletter-input::placeholder {
+    color: var(--color-foreground-muted);
+  }
+
+  .footer__newsletter-input:focus {
+    border-color: var(--color-foreground-light);
+  }
+
+  .footer__newsletter-button {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.6rem, 0.9vw, 0.7rem);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    background: transparent;
+    border: 1px solid var(--color-foreground);
+    border-radius: 0;
+    padding: 0.5rem 1.6rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .footer__newsletter-button:hover {
+    background-color: var(--color-foreground);
+    color: var(--color-background-alt);
+  }
+
+  .footer__newsletter-success {
+    font-family: var(--font-body--family);
+    font-size: 0.92rem;
+    font-weight: 200;
+    color: var(--color-foreground);
+    margin: 0;
+  }
+
+  .footer__newsletter-error {
+    font-family: var(--font-body--family);
+    font-size: 0.82rem;
+    color: var(--color-error);
+    margin: 0.6rem 0 0;
+  }
+
+  .footer__bottom {
+    padding-top: var(--spacing-md);
+    text-align: center;
+  }
+
+  .footer__legal {
+    font-family: var(--font-body--family);
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: var(--color-foreground-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .footer__legal p {
+    margin: 0;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .footer__menu a,
+    .footer__contact a,
+    .footer__legal {
+      transition: color var(--transition-fast);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.footer",
+  "tag": "section",
+  "class": "section-footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Shop column"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_shop",
+      "label": "Menu"
+    },
+    {
+      "type": "text",
+      "id": "shop_heading",
+      "label": "Heading",
+      "default": "Shop"
+    },
+    {
+      "type": "header",
+      "content": "Help column"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_help",
+      "label": "Menu"
+    },
+    {
+      "type": "text",
+      "id": "help_heading",
+      "label": "Heading",
+      "default": "Help"
+    },
+    {
+      "type": "header",
+      "content": "About column"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_about",
+      "label": "Menu"
+    },
+    {
+      "type": "text",
+      "id": "about_heading",
+      "label": "Heading",
+      "default": "About"
+    },
+    {
+      "type": "header",
+      "content": "Footer options"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_policy_links",
+      "label": "Show policy links",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.footer"
+    }
+  ]
+}
+{% endschema %}

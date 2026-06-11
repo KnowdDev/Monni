@@ -1,0 +1,84 @@
+{% comment %}
+  Contact form snippet
+  Reusable contact form component
+{% endcomment %}
+
+{% form 'contact', class: 'contact__form' %}
+  {% if form.posted_successfully? %}
+    <div class="contact__success" role="status">
+      <p>{{ 'contact.form.post_success' | t }}</p>
+    </div>
+  {% endif %}
+
+  {% if form.errors %}
+    <div class="contact__errors" role="alert">
+      {{ form.errors | default_errors }}
+    </div>
+  {% endif %}
+
+  <div class="contact__field">
+    <label for="contact-name" class="contact__label">
+      {{ 'contact.form.name' | t }}
+    </label>
+    <input 
+      type="text" 
+      name="contact[name]" 
+      id="contact-name" 
+      class="contact__input"
+      {% if form.name %}value="{{ form.name }}"{% endif %}
+      required
+      aria-required="true"
+    >
+  </div>
+
+  <div class="contact__field">
+    <label for="contact-email" class="contact__label">
+      {{ 'contact.form.email' | t }}
+    </label>
+    <input 
+      type="email" 
+      name="contact[email]" 
+      id="contact-email" 
+      class="contact__input"
+      {% if form.email %}value="{{ form.email }}"{% endif %}
+      required
+      aria-required="true"
+      spellcheck="false"
+      autocapitalize="off"
+      autocomplete="email"
+    >
+  </div>
+
+  <div class="contact__field">
+    <label for="contact-phone" class="contact__label">
+      {{ 'contact.form.phone' | t }}
+    </label>
+    <input 
+      type="tel" 
+      name="contact[phone]" 
+      id="contact-phone" 
+      class="contact__input"
+      {% if form.phone %}value="{{ form.phone }}"{% endif %}
+      pattern="[0-9\-\+\.]*"
+      autocomplete="tel"
+    >
+  </div>
+
+  <div class="contact__field">
+    <label for="contact-message" class="contact__label">
+      {{ 'contact.form.message' | t }}
+    </label>
+    <textarea 
+      name="contact[body]" 
+      id="contact-message" 
+      class="contact__textarea"
+      rows="5"
+      required
+      aria-required="true"
+    >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+  </div>
+
+  <button type="submit" class="contact__button button">
+    {{ 'contact.form.send' | t }}
+  </button>
+{% endform %}

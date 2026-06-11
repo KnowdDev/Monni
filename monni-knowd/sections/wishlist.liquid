@@ -1,0 +1,200 @@
+{% comment %}
+  Monni Wishlist Page — Client-side rendered from localStorage
+{% endcomment %}
+
+<section class="wishlist section--padding" data-section-id="{{ section.id }}" style="padding-top: {{ section.settings.padding_top | default: 96 }}px; padding-bottom: {{ section.settings.padding_bottom | default: 96 }}px;">
+  <div class="wishlist__inner container">
+    <header class="wishlist__header">
+      <h1 class="wishlist__title">{{ section.settings.heading | default: page.title }}</h1>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item">
+            <a href="{{ routes.root_url }}" class="breadcrumb__link">{{ 'general.breadcrumbs.home' | t | default: 'Home' }}</a>
+          </li>
+          <li class="breadcrumb__item" aria-current="page">
+            <span class="breadcrumb__link breadcrumb__link--current">{{ page.title }}</span>
+          </li>
+        </ol>
+      </nav>
+    </header>
+
+    <div class="wishlist__content">
+      <div class="wishlist__empty" data-wishlist-empty>
+        <p class="wishlist__empty-text">{{ section.settings.empty_text }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">
+          {{ section.settings.empty_button_label }}
+        </a>
+      </div>
+
+      <div class="wishlist__grid" data-wishlist-grid hidden></div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .wishlist {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    margin-top: var(--spacing-xxl);
+    margin-bottom: var(--spacing-xxl);
+  }
+
+  .wishlist__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin) clamp(2rem, 5vw, 4rem);
+  }
+
+  .wishlist__header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .wishlist__title {
+    font-size: 2.25rem;
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    color: var(--color-foreground);
+    margin: 0 0 var(--spacing-lg);
+  }
+
+  @media (min-width: 768px) {
+    .wishlist__title {
+      font-size: 3rem;
+    }
+  }
+
+  .wishlist__empty {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+  }
+
+  .wishlist__empty-text {
+    font-size: 1rem;
+    color: var(--color-foreground-muted);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .wishlist__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  @media (min-width: 768px) {
+    .wishlist__grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: var(--spacing-xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .wishlist__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .wishlist__grid .card-product__wishlist {
+    opacity: 1;
+  }
+
+  .breadcrumb {
+    margin-top: var(--spacing-md);
+  }
+
+  .breadcrumb__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.8125rem;
+  }
+
+  .breadcrumb__item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+
+  .breadcrumb__item:not(:last-child)::after {
+    content: "/";
+    color: var(--color-foreground-muted);
+  }
+
+  .breadcrumb__link {
+    color: var(--color-foreground-light);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb__link:hover,
+  .breadcrumb__link:focus {
+    color: var(--color-foreground);
+    outline: none;
+  }
+
+  .breadcrumb__link--current {
+    color: var(--color-foreground);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Wishlist",
+  "tag": "section",
+  "class": "section-wishlist",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Page heading",
+      "info": "Leave blank to use the page title"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty state message",
+      "default": "Your wishlist is empty."
+    },
+    {
+      "type": "text",
+      "id": "empty_button_label",
+      "label": "Empty state button",
+      "default": "Continue shopping"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 96
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wishlist"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,260 @@
+<section class="creations full-width" data-section-id="{{ section.id }}">
+  <div class="creations__inner">
+    {% if section.settings.title != blank %}
+      <h2 class="creations__title">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div class="creations__grid">
+      {% for block in section.blocks %}
+        <a
+          href="{{ block.settings.link | default: '#' }}"
+          class="creations__item"
+          {{ block.shopify_attributes }}
+        >
+          <div class="creations__image-wrap">
+            {% if block.settings.image %}
+              <img
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                srcset="
+                  {{ block.settings.image | image_url: width: 300 }} 300w,
+                  {{ block.settings.image | image_url: width: 600 }} 600w,
+                  {{ block.settings.image | image_url: width: 900 }} 900w
+                "
+                sizes="(max-width: 767px) 100vw, 33vw"
+                alt="{{ block.settings.title | escape }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                width="600"
+                height="780"
+                class="creations__image"
+              >
+            {% else %}
+              {% assign unsplash_creation_ids = "photo-1608248543803-ba4f9554aef6,photo-1516762689617-e1cffcef479d,photo-1513364776144-60967b0f800f" | split: "," %}
+              <img
+                src="https://images.unsplash.com/{{ unsplash_creation_ids[forloop.index0] }}?w=600&h=780&fit=crop&q=80"
+                srcset="
+                  https://images.unsplash.com/{{ unsplash_creation_ids[forloop.index0] }}?w=300&h=390&fit=crop&q=80 300w,
+                  https://images.unsplash.com/{{ unsplash_creation_ids[forloop.index0] }}?w=600&h=780&fit=crop&q=80 600w,
+                  https://images.unsplash.com/{{ unsplash_creation_ids[forloop.index0] }}?w=900&h=1170&fit=crop&q=80 900w
+                "
+                sizes="(max-width: 767px) 100vw, 33vw"
+                alt="{{ block.settings.title | escape }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                width="600"
+                height="780"
+                class="creations__image"
+              >
+            {% endif %}
+          </div>
+          <div class="creations__text">
+            <h3 class="creations__label">{{ block.settings.title | escape }}</h3>
+            {% if block.settings.description != blank %}
+              <p class="creations__desc">{{ block.settings.description | escape }}</p>
+            {% endif %}
+            {% if block.settings.cta != blank %}
+              <span class="creations__cta">{{ block.settings.cta | escape }}</span>
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .creations {
+    background-color: var(--color-background-alt);
+    padding: clamp(4rem, 10vw, 7rem) 0;
+  }
+
+  .creations__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .creations__title {
+    font-family: var(--font-heading--family);
+    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    font-weight: 400;
+    text-align: center;
+    color: var(--color-foreground);
+    margin: 0 0 clamp(3rem, 6vw, 5rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .creations__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  @media (min-width: 768px) {
+    .creations__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .creations__item {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .creations__item:hover {
+    transform: translateY(-4px);
+  }
+
+  .creations__image-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1.2;
+    overflow: hidden;
+    background-color: var(--color-border-light);
+    margin-bottom: 1.25rem;
+  }
+
+  .creations__image,
+  .creations__fallback {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .creations__item:hover .creations__image {
+    transform: scale(1.04);
+  }
+
+  .creations__fallback {
+    background: linear-gradient(135deg, var(--color-accent-light), var(--color-border-light));
+  }
+
+  .creations__label {
+    font-family: var(--font-heading--family);
+    font-size: clamp(0.65rem, 1vw, 0.78rem);
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    margin: 0 0 0.5rem;
+  }
+
+  .creations__desc {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.7rem, 1vw, 0.8rem);
+    font-weight: 200;
+    color: var(--color-foreground-light);
+    margin: 0 0 1.25rem;
+    line-height: 1.65;
+    max-width: 28ch;
+    margin-inline: auto;
+  }
+
+  .creations__cta {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.6rem, 0.9vw, 0.7rem);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    border: 1px solid var(--color-border);
+    padding: 0.6rem 1.4rem;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .creations__item:hover .creations__cta {
+    background-color: var(--color-foreground);
+    color: var(--color-background-alt);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Our Own Creations",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Our Own Creations"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "creation",
+      "name": "Creation",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Monni Botanicals"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Skincare made in rhythm with the seasons."
+        },
+        {
+          "type": "text",
+          "id": "cta",
+          "label": "CTA",
+          "default": "Discover"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Own Creations",
+      "category": "Homepage",
+      "blocks": {
+        "creation-0": {
+          "type": "creation",
+          "settings": {
+            "title": "Monni Botanicals",
+            "description": "Skincare made in rhythm with the seasons.",
+            "cta": "Discover",
+            "link": "/collections/monni-botanicals"
+          }
+        },
+        "creation-1": {
+          "type": "creation",
+          "settings": {
+            "title": "Monni Label",
+            "description": "Clothing as a form of feeling and self-expression.",
+            "cta": "Discover",
+            "link": "/collections/monni-label"
+          }
+        },
+        "creation-2": {
+          "type": "creation",
+          "settings": {
+            "title": "Monni Art",
+            "description": "Creativity as an act of healing for the artist and the earth.",
+            "cta": "Discover",
+            "link": "/collections/monni-art"
+          }
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

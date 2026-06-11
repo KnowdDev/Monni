@@ -1,0 +1,22 @@
+{% comment %}
+  Plain-text data attributes for wishlist buttons (money filter HTML breaks data-* values).
+  @param product {Product}
+  @param variant {Variant} optional — defaults to selected/first available
+{% endcomment %}
+{% liquid
+  assign wl_variant = variant | default: product.selected_or_first_available_variant
+  assign wl_image = wl_variant.featured_image | default: product.featured_image
+  assign wl_price = wl_variant.price | default: product.price
+  assign wl_compare = wl_variant.compare_at_price | default: product.compare_at_price
+%}
+data-wishlist-toggle="{{ product.id }}"
+data-wishlist-handle="{{ product.handle }}"
+data-wishlist-title="{{ product.title | escape }}"
+{%- if wl_image -%}
+  data-wishlist-image="{{ wl_image | image_url: width: 600 }}"
+{%- endif -%}
+data-wishlist-price="{{ wl_price | money | strip_html | escape }}"
+{%- if wl_compare > wl_price -%}
+  data-wishlist-compare-price="{{ wl_compare | money | strip_html | escape }}"
+{%- endif -%}
+data-wishlist-url="{{ product.url }}"

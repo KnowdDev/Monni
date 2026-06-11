@@ -1,0 +1,212 @@
+<section class="makers full-width" data-section-id="{{ section.id }}">
+  <div class="makers__inner">
+    <div class="makers__image-wrap">
+      {% if section.settings.image %}
+        <img
+          src="{{ section.settings.image | image_url: width: 900 }}"
+          srcset="
+            {{ section.settings.image | image_url: width: 400 }} 400w,
+            {{ section.settings.image | image_url: width: 800 }} 800w,
+            {{ section.settings.image | image_url: width: 1200 }} 1200w
+          "
+          sizes="(max-width: 767px) 100vw, 50vw"
+          alt="{{ section.settings.maker_name | escape }}"
+          loading="eager"
+          width="900"
+          height="1100"
+          class="makers__image"
+        >
+      {% else %}
+        <img
+          src="{{ 'frolic-ceramics.webp' | asset_url }}"
+          alt="{{ section.settings.maker_name | escape }}"
+          loading="eager"
+          width="900"
+          height="1100"
+          class="makers__image"
+        >
+      {% endif %}
+    </div>
+
+    <div class="makers__text">
+      <span class="makers__eyebrow">{{ section.settings.eyebrow | default: "From the Makers" | escape }}</span>
+      <h2 class="makers__name">{{ section.settings.maker_name | escape }}</h2>
+      {% if section.settings.maker_location != blank %}
+        <p class="makers__location">{{ section.settings.maker_location | escape }}</p>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <p class="makers__desc">{{ section.settings.description | escape }}</p>
+      {% endif %}
+      {% if section.settings.cta != blank %}
+        <a href="{{ section.settings.link | default: '#' }}" class="makers__cta">
+          {{ section.settings.cta | escape }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .makers {
+    background-color: var(--color-background);
+    padding: clamp(4rem, 10vw, 7rem) 0;
+  }
+
+  .makers__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .makers__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .makers__image-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1.15;
+    overflow: hidden;
+    background-color: var(--color-border-light);
+  }
+
+  .makers__image,
+  .makers__fallback {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .makers:hover .makers__image {
+    transform: scale(1.03);
+  }
+
+  .makers__fallback {
+    background: linear-gradient(135deg, var(--color-accent-light), var(--color-border-light));
+  }
+
+  .makers__text {
+    padding: 0.5rem 0;
+  }
+
+  .makers__eyebrow {
+    font-family: var(--font-heading--family);
+    font-size: clamp(0.6rem, 0.9vw, 0.7rem);
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-foreground-muted);
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+
+  .makers__name {
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+    font-weight: 300;
+    color: var(--color-foreground);
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.08em;
+    text-wrap: balance;
+  }
+
+  .makers__location {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.68rem, 1vw, 0.78rem);
+    font-weight: 200;
+    color: var(--color-foreground-light);
+    margin: 0 0 1.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  .makers__desc {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.7rem, 1vw, 0.82rem);
+    font-weight: 200;
+    line-height: 1.8;
+    color: var(--color-foreground-light);
+    margin: 0 0 2rem;
+    max-width: 42ch;
+  }
+
+  .makers__cta {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.6rem, 0.9vw, 0.7rem);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    padding: 0.65rem 1.6rem;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .makers__cta:hover {
+    background-color: var(--color-foreground);
+    color: var(--color-background-alt);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "From the Makers",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "From the Makers"
+    },
+    {
+      "type": "text",
+      "id": "maker_name",
+      "label": "Maker name",
+      "default": "Frolic Ceramics"
+    },
+    {
+      "type": "text",
+      "id": "maker_location",
+      "label": "Maker location",
+      "default": "Vicki Fanning, Matakana"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Vicki has been with us since the very beginning, one of our founding suppliers and a ceramist and glass artist of genuine standing. Objects made to be mixed, matched, held and truly lived with at the table."
+    },
+    {
+      "type": "text",
+      "id": "cta",
+      "label": "CTA",
+      "default": "Shop Frolic Ceramics"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "From the Makers",
+      "category": "Homepage"
+    }
+  ]
+}
+{% endschema %}

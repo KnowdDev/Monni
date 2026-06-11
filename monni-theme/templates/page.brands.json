@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "main": {
+      "type": "brands-directory",
+      "settings": {
+        "eyebrow": "Shop by Brand",
+        "title": "Our Brands",
+        "intro": "<p>Discover the makers and houses behind MONNI. Each brand is chosen with intention for quality, integrity, and the rituals of everyday wellbeing.</p>",
+        "search_placeholder": "Search brands",
+        "card_cta": "Discover the brand",
+        "no_results_message": "No brands match your search.",
+        "empty_message": "Brand profiles will appear here once added in Shopify."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

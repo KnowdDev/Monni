@@ -1,0 +1,10 @@
+{% comment %}
+  Load a stylesheet without blocking first paint.
+  @param asset {string} — filename in /assets, e.g. 'critical.css'
+{% endcomment %}
+{% liquid
+  assign href = asset | asset_url
+%}
+<link rel="preload" href="{{ href }}" as="style">
+<link rel="stylesheet" href="{{ href }}" media="print" onload="this.media='all'">
+<noscript>{{ asset | asset_url | stylesheet_tag }}</noscript>

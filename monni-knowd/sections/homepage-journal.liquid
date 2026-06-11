@@ -1,0 +1,307 @@
+<section class="journal full-width" data-section-id="{{ section.id }}">
+  <div class="journal__inner">
+    {% if section.settings.title != blank %}
+      <h2 class="journal__title">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div class="journal__grid">
+      {% for block in section.blocks %}
+        <article class="journal__item" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.link | default: '#' }}" class="journal__image-wrap">
+            {% if block.settings.image %}
+              <img
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                srcset="
+                  {{ block.settings.image | image_url: width: 300 }} 300w,
+                  {{ block.settings.image | image_url: width: 600 }} 600w,
+                  {{ block.settings.image | image_url: width: 900 }} 900w
+                "
+                sizes="(max-width: 767px) 100vw, 33vw"
+                alt="{{ block.settings.title | escape }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                width="600"
+                height="780"
+                class="journal__image"
+              >
+            {% else %}
+              {% assign unsplash_journal_ids = "photo-1506905924436-d08fb31a2003,photo-1503454537195-1dcabb73ffb9,photo-1466692476868-aef1dfb1e735" | split: "," %}
+              <img
+                src="https://images.unsplash.com/{{ unsplash_journal_ids[forloop.index0] }}?w=600&h=780&fit=crop&q=80"
+                srcset="
+                  https://images.unsplash.com/{{ unsplash_journal_ids[forloop.index0] }}?w=300&h=390&fit=crop&q=80 300w,
+                  https://images.unsplash.com/{{ unsplash_journal_ids[forloop.index0] }}?w=600&h=780&fit=crop&q=80 600w,
+                  https://images.unsplash.com/{{ unsplash_journal_ids[forloop.index0] }}?w=900&h=1170&fit=crop&q=80 900w
+                "
+                sizes="(max-width: 767px) 100vw, 33vw"
+                alt="{{ block.settings.title | escape }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                width="600"
+                height="780"
+                class="journal__image"
+              >
+            {% endif %}
+          </a>
+          <div class="journal__text">
+            <h3 class="journal__item-title">
+              <a href="{{ block.settings.link | default: '#' }}">{{ block.settings.title | escape }}</a>
+            </h3>
+            {% if block.settings.subtitle != blank %}
+              <p class="journal__subtitle">{{ block.settings.subtitle | escape }}</p>
+            {% endif %}
+            {% if block.settings.teaser != blank %}
+              <p class="journal__teaser">{{ block.settings.teaser | escape }}</p>
+            {% endif %}
+            <a href="{{ block.settings.link | default: '#' }}" class="journal__read">
+              {{ block.settings.cta | default: "Read" | escape }}
+            </a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.view_all_link != blank and section.settings.view_all_label != blank %}
+      <div class="journal__footer">
+        <a href="{{ section.settings.view_all_link }}" class="journal__view-all">
+          {{ section.settings.view_all_label | escape }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .journal {
+    background-color: var(--color-background-alt);
+    padding: clamp(4rem, 10vw, 7rem) 0;
+  }
+
+  .journal__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .journal__title {
+    font-family: var(--font-heading--family);
+    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    font-weight: 400;
+    text-align: center;
+    color: var(--color-foreground);
+    margin: 0 0 clamp(3rem, 6vw, 5rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .journal__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  @media (min-width: 768px) {
+    .journal__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .journal__item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .journal__image-wrap {
+    display: block;
+    position: relative;
+    aspect-ratio: 1 / 1.15;
+    overflow: hidden;
+    background-color: var(--color-border-light);
+    margin-bottom: 1.1rem;
+    text-decoration: none;
+  }
+
+  .journal__image,
+  .journal__fallback {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .journal__image-wrap:hover .journal__image {
+    transform: scale(1.04);
+  }
+
+  .journal__fallback {
+    background: linear-gradient(135deg, var(--color-accent-light), var(--color-border-light));
+  }
+
+  .journal__text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .journal__item-title {
+    font-family: var(--font-heading--family);
+    font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+    font-weight: 300;
+    margin: 0 0 0.35rem;
+    letter-spacing: 0.03em;
+  }
+
+  .journal__item-title a {
+    color: var(--color-foreground);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .journal__item-title a:hover {
+    color: var(--color-foreground-light);
+  }
+
+  .journal__subtitle {
+    font-family: var(--font-heading--family);
+    font-size: clamp(0.72rem, 1vw, 0.82rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-foreground-light);
+    margin: 0 0 0.8rem;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+
+  .journal__teaser {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.68rem, 1vw, 0.78rem);
+    font-weight: 200;
+    color: var(--color-foreground-light);
+    line-height: 1.7;
+    margin: 0 0 1.2rem;
+    flex: 1;
+  }
+
+  .journal__read {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.6rem, 0.9vw, 0.7rem);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    padding: 0.5rem 1.2rem;
+    display: inline-block;
+    align-self: flex-start;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .journal__read:hover {
+    background-color: var(--color-foreground);
+    color: var(--color-background-alt);
+  }
+
+  .journal__footer {
+    text-align: center;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .journal__view-all {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.6rem, 0.9vw, 0.7rem);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    padding: 0.65rem 1.6rem;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .journal__view-all:hover {
+    background-color: var(--color-foreground);
+    color: var(--color-background-alt);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "From the Journal",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "From the Journal"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "Visit the Journal"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "post",
+      "name": "Post",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Navigating Grief"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "On loss, love and the rituals that hold us."
+        },
+        {
+          "type": "textarea",
+          "id": "teaser",
+          "label": "Teaser",
+          "default": "A personal reflection from Monni on finding your way through life's most challenging moments, one quiet act of care at a time."
+        },
+        {
+          "type": "text",
+          "id": "cta",
+          "label": "CTA",
+          "default": "Read"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "From the Journal",
+      "category": "Homepage",
+      "blocks": {
+        "post-0": { "type": "post" },
+        "post-1": { "type": "post" },
+        "post-2": { "type": "post" }
+      }
+    }
+  ]
+}
+{% endschema %}

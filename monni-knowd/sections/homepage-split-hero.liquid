@@ -1,0 +1,271 @@
+<section
+  class="split-hero full-width"
+  data-section-id="{{ section.id }}"
+>
+  <a
+    href="{{ section.settings.link_left | default: '/collections/clothing' }}"
+    class="split-hero__panel split-hero__panel--left"
+  >
+    <div class="split-hero__fallback split-hero__fallback--left"></div>
+    {% if section.settings.image_left %}
+      {% render 'split-hero-media',
+        image: section.settings.image_left,
+        alt: section.settings.image_left.alt | default: 'Clothing',
+        lcp: true
+      %}
+    {% else %}
+      <img
+        src="https://images.unsplash.com/photo-1556905055-8f358fab1e7d?w=800&h=1000&fit=crop&q=80"
+        srcset="https://images.unsplash.com/photo-1556905055-8f358fab1e7d?w=400&h=500&fit=crop&q=80 400w, https://images.unsplash.com/photo-1556905055-8f358fab1e7d?w=800&h=1000&fit=crop&q=80 800w"
+        sizes="50vw"
+        alt="Clothing"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        width="800"
+        height="1000"
+        class="split-hero__image"
+      >
+    {% endif %}
+    <div class="split-hero__overlay"></div>
+  </a>
+
+  <a
+    href="{{ section.settings.link_right | default: '/collections/all-home' }}"
+    class="split-hero__panel split-hero__panel--right"
+  >
+    <div class="split-hero__fallback split-hero__fallback--right"></div>
+    {% if section.settings.image_right %}
+      {% render 'split-hero-media',
+        image: section.settings.image_right,
+        alt: section.settings.image_right.alt | default: 'Home',
+        lcp: false
+      %}
+    {% else %}
+      <img
+        src="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=800&h=1000&fit=crop&q=80"
+        srcset="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=400&h=500&fit=crop&q=80 400w, https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=800&h=1000&fit=crop&q=80 800w"
+        sizes="50vw"
+        alt="Home"
+        loading="lazy"
+        decoding="async"
+        width="800"
+        height="1000"
+        class="split-hero__image"
+      >
+    {% endif %}
+    <div class="split-hero__overlay"></div>
+  </a>
+
+  <div class="split-hero__text">
+    <h1 class="split-hero__wordmark">M O N N I</h1>
+    <p class="split-hero__tagline">A place to pause. A place to reconnect.</p>
+  </div>
+</section>
+
+{% stylesheet %}
+  .split-hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .split-hero {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .split-hero__panel {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-height: 50vh;
+  }
+
+  @media (min-width: 768px) {
+    .split-hero__panel {
+      min-height: auto;
+    }
+  }
+
+  .split-hero picture {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .split-hero picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .split-hero__image,
+  .split-hero__fallback {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .split-hero__panel:hover .split-hero__image,
+  .split-hero__panel:hover .split-hero picture img,
+  .split-hero__panel:hover .split-hero__fallback {
+    transform: scale(1.03);
+  }
+
+  @media (max-width: 767px) {
+    .split-hero__panel:hover .split-hero__image,
+    .split-hero__panel:hover .split-hero picture img,
+    .split-hero__panel:hover .split-hero__fallback {
+      transform: none;
+    }
+  }
+
+  .split-hero__fallback {
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(196, 184, 168, 0.35) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(217, 208, 196, 0.3) 0%, transparent 55%),
+      linear-gradient(160deg, var(--color-background) 0%, var(--color-accent-light) 40%, var(--color-border-light) 100%);
+  }
+
+  .split-hero__fallback--right {
+    background:
+      radial-gradient(ellipse at 70% 20%, rgba(196, 184, 168, 0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 30% 80%, rgba(217, 208, 196, 0.25) 0%, transparent 55%),
+      linear-gradient(200deg, var(--color-border-light) 0%, var(--color-accent-light) 40%, var(--color-background) 100%);
+  }
+
+  .split-hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.02) 40%, rgba(0,0,0,0.15) 100%);
+    transition: background 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .split-hero__text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    text-align: center;
+    padding: 2.5rem 1.5rem 3.5rem;
+    pointer-events: none;
+  }
+
+  .split-hero__wordmark {
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 300;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+    margin: 0 0 0.8rem;
+    line-height: 1.2;
+  }
+
+  .split-hero__tagline {
+    font-family: var(--font-heading--family);
+    font-size: clamp(0.7rem, 1.1vw, 0.85rem);
+    font-weight: 200;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.25);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .split-hero__image,
+    .split-hero__fallback,
+    .split-hero__overlay {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Split Hero (Diptych)",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_left",
+      "label": "Left image"
+    },
+    {
+      "type": "text",
+      "id": "label_left",
+      "label": "Left label",
+      "default": "Gifting"
+    },
+    {
+      "type": "url",
+      "id": "link_left",
+      "label": "Left link"
+    },
+    {
+      "type": "textarea",
+      "id": "blurb_left",
+      "label": "Left blurb",
+      "default": "Thoughtfully chosen pieces to make every moment feel special."
+    },
+    {
+      "type": "text",
+      "id": "cta_left",
+      "label": "Left CTA",
+      "default": "Explore"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_right",
+      "label": "Right image"
+    },
+    {
+      "type": "text",
+      "id": "label_right",
+      "label": "Right label",
+      "default": "Homewares"
+    },
+    {
+      "type": "url",
+      "id": "link_right",
+      "label": "Right link"
+    },
+    {
+      "type": "textarea",
+      "id": "blurb_right",
+      "label": "Right blurb",
+      "default": "Objects that bring warmth, texture, and quiet beauty into your space."
+    },
+    {
+      "type": "text",
+      "id": "cta_right",
+      "label": "Right CTA",
+      "default": "Explore"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Split Hero (Diptych)",
+      "category": "Homepage"
+    }
+  ]
+}
+{% endschema %}

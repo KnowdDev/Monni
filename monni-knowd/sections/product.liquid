@@ -24,10 +24,20 @@
   {%- assign is_homewares = true -%}
 {%- endif -%}
 
+{%- capture clothing_check -%}{%- render 'is-clothing-product', product: product -%}{%- endcapture -%}
+{%- assign clothing_stripped = clothing_check | strip -%}
 {%- assign is_clothing = false -%}
-{%- if product.tags contains 'clothing' or product_type contains 'clothing' or product_type contains 'apparel' -%}
+{%- if clothing_stripped == 'true' -%}
   {%- assign is_clothing = true -%}
 {%- endif -%}
+
+{%- assign has_size_option = false -%}
+{%- for option in product.options_with_values -%}
+  {%- assign option_name_down = option.name | downcase -%}
+  {%- if option_name_down contains 'size' -%}
+    {%- assign has_size_option = true -%}
+  {%- endif -%}
+{%- endfor -%}
 
 {%- assign is_jewellery = false -%}
 {%- if product.tags contains 'jewellery' or product_type contains 'jewellery' or product_type contains 'jewelry' -%}
@@ -141,7 +151,15 @@
               <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
               {%- for option in product.options_with_values -%}
                 <fieldset class="product-page__variant-fieldset">
-                  <legend class="product-page__variant-label">{{ option.name }}</legend>
+                  <legend class="product-page__variant-label">
+                    <span>{{ option.name }}</span>
+                    {%- if is_clothing and section.settings.show_size_guide -%}
+                      {%- assign option_name_down = option.name | downcase -%}
+                      {%- if option_name_down contains 'size' -%}
+                        <a href="/pages/size-guide?from={{ product.handle }}" class="product-page__size-guide-inline">Size guide</a>
+                      {%- endif -%}
+                    {%- endif -%}
+                  </legend>
                   <div class="product-page__variant-options">
                     {%- for value in option.values -%}
                       <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" name="{{ option.name }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} class="product-page__variant-input visually-hidden">
@@ -342,14 +360,10 @@
         </div>
       {%- endif -%}
 
-      <!-- Product-specific: Size Guide (clothing) -->
-      {%- if is_clothing and section.settings.show_size_guide -%}
+      <!-- Product-specific: Size Guide (clothing, one-size / no size variant) -->
+      {%- if is_clothing and section.settings.show_size_guide and has_size_option == false -%}
         <div class="product-page__size-guide">
-          <button type="button" class="product-page__size-guide-toggle" data-size-guide-toggle>Size Guide</button>
-          <div class="product-page__size-guide-content" hidden>
-            <!-- Size guide content - can be pulled from a page or metafield -->
-            <p>Refer to our size guide for accurate measurements.</p>
-          </div>
+          <a href="/pages/size-guide?from={{ product.handle }}" class="product-page__size-guide-toggle">Size Guide</a>
         </div>
       {%- endif -%}
 

@@ -1,0 +1,181 @@
+{% comment %}
+  Monni Cart Page — Brand-aligned, calm, minimal, Japanese Scandinavian aesthetic
+{% endcomment %}
+
+<cart-page class="cart-page" data-section-id="{{ section.id }}">
+  <header class="cart-page__header">
+    <h1 class="cart-page__title">Your Cart</h1>
+    <p class="cart-page__count">{{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}</p>
+  </header>
+
+  {%- if cart.items.size > 0 -%}
+    <form action="{{ routes.cart_url }}" method="post" class="cart-page__form">
+      <div class="cart-page__content">
+        <!-- Cart Items -->
+        <div class="cart-page__items">
+          {%- for item in cart.items -%}
+            <div class="cart-page__item" data-cart-item="{{ item.key }}">
+              <!-- Item Image -->
+              <div class="cart-page__item-image">
+                {%- if item.image -%}
+                  <a href="{{ item.url }}" class="cart-page__item-image-link">
+                    <img src="{{ item.image | image_url: width: 200 }}" 
+                         srcset="{{ item.image | image_url: width: 150 }} 150w, {{ item.image | image_url: width: 200 }} 200w" 
+                         sizes="100px" 
+                         alt="{{ item.image.alt | default: item.product.title | escape }}" 
+                         loading="lazy" 
+                         width="{{ item.image.width }}" 
+                         height="{{ item.image.height }}">
+                  </a>
+                {%- else -%}
+                  <div class="cart-page__item-image-placeholder texture-grain">
+                    <span>{{ item.product.title | escape }}</span>
+                  </div>
+                {%- endif -%}
+              </div>
+
+              <!-- Item Details -->
+              <div class="cart-page__item-details">
+                <h3 class="cart-page__item-title">
+                  <a href="{{ item.url }}">{{ item.product.title }}</a>
+                </h3>
+                {%- if item.variant.title != 'Default' -%}
+                  <p class="cart-page__item-variant">{{ item.variant.title }}</p>
+                {%- endif -%}
+                {%- if item.selling_plan_allocation -%}
+                  <p class="cart-page__item-selling-plan">{{ item.selling_plan_allocation.selling_plan.name }}</p>
+                {%- endif -%}
+                <p class="cart-page__item-price">{{ item.final_price | money }}</p>
+              </div>
+
+              <!-- Item Quantity -->
+              <div class="cart-page__item-quantity">
+                <label for="Quantity-{{ item.key }}" class="visually-hidden">Quantity</label>
+                <input type="number" 
+                       name="updates[]" 
+                       id="Quantity-{{ item.key }}" 
+                       value="{{ item.quantity }}" 
+                       min="0" 
+                       class="cart-page__quantity-input"
+                       data-quantity-input="{{ item.key }}">
+              </div>
+
+              <!-- Item Total -->
+              <div class="cart-page__item-total">
+                <p class="cart-page__item-total-price">{{ item.final_line_price | money }}</p>
+                {%- if item.original_line_price > item.final_line_price -%}
+                  <p class="cart-page__item-total-compare">{{ item.original_line_price | money }}</p>
+                {%- endif -%}
+              </div>
+
+              <!-- Item Remove -->
+              <div class="cart-page__item-remove">
+                <a href="{{ item.url_to_remove }}" class="cart-page__remove-link" aria-label="Remove {{ item.product.title | escape }}">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </a>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="cart-page__summary">
+          <div class="cart-page__summary-content">
+            <h2 class="cart-page__summary-title">Order Summary</h2>
+
+            <!-- Subtotal -->
+            <div class="cart-page__summary-row">
+              <span class="cart-page__summary-label">Subtotal</span>
+              <span class="cart-page__summary-value">{{ cart.total_price | money }}</span>
+            </div>
+
+            <!-- Shipping -->
+            <div class="cart-page__summary-row">
+              <span class="cart-page__summary-label">Shipping</span>
+              <span class="cart-page__summary-value">Calculated at checkout</span>
+            </div>
+
+            <!-- Total -->
+            <div class="cart-page__summary-row cart-page__summary-row--total">
+              <span class="cart-page__summary-label">Total</span>
+              <span class="cart-page__summary-value">{{ cart.total_price | money }}</span>
+            </div>
+
+            <!-- Tax Note -->
+            <p class="cart-page__tax-note">
+              Shipping & taxes calculated at checkout
+            </p>
+
+            <!-- Checkout Button -->
+            <button type="submit" name="checkout" class="cart-page__checkout btn btn--primary">
+              Proceed to Checkout
+            </button>
+
+            <!-- Continue Shopping -->
+            <a href="{{ routes.root_url }}" class="cart-page__continue">Continue Shopping</a>
+
+            <!-- Trust Signals -->
+            <div class="cart-page__trust">
+              {%- if section.settings.trust_signal_shipping_text != blank -%}
+                <div class="cart-page__trust-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2" ry="2"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="3" y1="10" x2="14" y2="10"/></svg>
+                  <span>{{ section.settings.trust_signal_shipping_text }}</span>
+                </div>
+              {%- endif -%}
+              {%- if section.settings.trust_signal_returns_text != blank -%}
+                <div class="cart-page__trust-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  <span>{{ section.settings.trust_signal_returns_text }}</span>
+                </div>
+              {%- endif -%}
+              {%- if section.settings.trust_signal_checkout_text != blank -%}
+                <div class="cart-page__trust-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                  <span>{{ section.settings.trust_signal_checkout_text }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  {%- else -%}
+    <!-- Empty Cart -->
+    <div class="cart-page__empty">
+      <p class="cart-page__empty-message">Your cart is empty</p>
+      <a href="{{ routes.root_url }}" class="cart-page__empty-cta btn btn--primary">Continue Shopping</a>
+    </div>
+  {%- endif -%}
+</cart-page>
+
+{% schema %}
+{
+  "name": "Cart",
+  "tag": "section",
+  "class": "section-cart",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Trust signal copy"
+    },
+    {
+      "type": "text",
+      "id": "trust_signal_shipping_text",
+      "label": "Shipping trust signal",
+      "default": "Free shipping over $250"
+    },
+    {
+      "type": "text",
+      "id": "trust_signal_returns_text",
+      "label": "Returns trust signal",
+      "default": "Easy 30-day returns"
+    },
+    {
+      "type": "text",
+      "id": "trust_signal_checkout_text",
+      "label": "Checkout trust signal",
+      "default": "Secure checkout"
+    }
+  ]
+}
+{% endschema %}
