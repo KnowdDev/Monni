@@ -1,0 +1,564 @@
+{%- liquid
+  assign shop_categories = 'wellness,beauty,clothing,jewellery,home,gifts' | split: ','
+  assign shop_labels = 'Wellness,Beauty,Clothing,Jewellery,Home,Gifts' | split: ','
+  assign shop_handles = 'wellness,beauty,clothing,all-jewellery,all-home,giftboxes' | split: ','
+  assign shop_descriptions = 'Nourishment for the body and mind.,What we place on our skin matters.,Natural fibres worn for years.,Pieces to treasure over time.,Considered objects for everyday living.,Chosen with intention and wrapped with care.' | split: ','
+  assign brands = shop.metaobjects.brand.values | sort: 'name'
+-%}
+
+<section class="shop-hub" data-section-id="{{ section.id }}">
+  <div class="shop-hub__hero">
+    <div class="shop-hub__hero-inner">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="shop-hub__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h1 class="shop-hub__title">{{ section.settings.title | escape }}</h1>
+      {%- if section.settings.intro != blank -%}
+        <div class="shop-hub__intro rte">{{ section.settings.intro }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="shop-hub__categories">
+    <div class="shop-hub__categories-inner">
+      <div class="shop-hub__grid">
+        {%- for category_key in shop_categories -%}
+          {%- assign category_index = forloop.index0 -%}
+          {%- assign category_label = shop_labels[category_index] -%}
+          {%- assign category_handle = shop_handles[category_index] -%}
+          {%- assign category_description = shop_descriptions[category_index] -%}
+          {%- assign category_collection = collections[category_handle] -%}
+          {%- assign category_url = '/collections/' | append: category_handle -%}
+          {%- assign category_image = blank -%}
+
+          {%- if category_collection != blank -%}
+            {%- assign category_url = category_collection.url -%}
+            {%- assign category_image = category_collection.image | default: category_collection.featured_image -%}
+            {%- if section.settings.use_collection_titles -%}
+              {%- assign category_label = category_collection.title -%}
+            {%- endif -%}
+          {%- endif -%}
+
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'category_override' and block.settings.category_key == category_key -%}
+              {%- if block.settings.title != blank -%}
+                {%- assign category_label = block.settings.title -%}
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                {%- assign category_description = block.settings.description -%}
+              {%- endif -%}
+              {%- if block.settings.link != blank -%}
+                {%- assign category_url = block.settings.link -%}
+              {%- endif -%}
+              {%- if block.settings.image != blank -%}
+                {%- assign category_image = block.settings.image -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- assign category_unsplash_ids = 'photo-1556228578-0d85b1a4d571,photo-1571781926291-c477ebfd024b,photo-1516762689617-e1cffcef479d,photo-1611591437281-460bfbe1220a,photo-1586023492125-27b2c045efd7,photo-1549465220-1a8b9238cd48' | split: ',' -%}
+
+          <a href="{{ category_url }}" class="shop-hub__card">
+            <div class="shop-hub__card-media">
+              {%- if category_image != blank -%}
+                <img
+                  src="{{ category_image | image_url: width: 800 }}"
+                  alt=""
+                  loading="lazy"
+                  width="800"
+                  height="920"
+                  class="shop-hub__card-image"
+                >
+              {%- else -%}
+                <img
+                  src="https://images.unsplash.com/{{ category_unsplash_ids[category_index] }}?w=800&h=920&fit=crop&q=80"
+                  alt=""
+                  loading="lazy"
+                  width="800"
+                  height="920"
+                  class="shop-hub__card-image"
+                >
+              {%- endif -%}
+            </div>
+            <div class="shop-hub__card-copy">
+              <h2 class="shop-hub__card-title">{{ category_label | escape }}</h2>
+              {%- if category_description != blank -%}
+                <p class="shop-hub__card-desc">{{ category_description | escape }}</p>
+              {%- endif -%}
+              <span class="shop-hub__card-cta">Explore</span>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.show_brands_strip -%}
+    <div class="shop-hub__brands">
+      <div class="shop-hub__brands-inner">
+        <div class="shop-hub__brands-head">
+          <div>
+            <p class="shop-hub__brands-eyebrow">{{ section.settings.brands_eyebrow | escape }}</p>
+            <h2 class="shop-hub__brands-title">{{ section.settings.brands_title | escape }}</h2>
+          </div>
+          <a href="{{ section.settings.brands_link | default: '/pages/brands' }}" class="shop-hub__brands-all">
+            {{ section.settings.brands_cta | escape }}
+          </a>
+        </div>
+
+        {%- if brands.size > 0 -%}
+          <div class="shop-hub__brands-row">
+            {%- for brand in brands limit: section.settings.brands_limit -%}
+              {%- assign brand_name = brand.name.value | default: brand.name -%}
+              {%- assign brand_url = brand.system.url | default: brand.url -%}
+              {%- if brand_url == blank -%}
+                {%- assign brand_url = '/pages/brands/' | append: brand.handle -%}
+              {%- endif -%}
+              <a href="{{ brand_url }}" class="shop-hub__brand-link">{{ brand_name | escape }}</a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_edits -%}
+    <div class="shop-hub__edits">
+      <div class="shop-hub__edits-inner">
+        {%- if section.settings.edits_title != blank -%}
+          <h2 class="shop-hub__edits-title">{{ section.settings.edits_title | escape }}</h2>
+        {%- endif -%}
+        <div class="shop-hub__edits-grid">
+          {%- if section.settings.edit_one_label != blank -%}
+            <a href="{{ section.settings.edit_one_link | default: '/collections/new-website-featured' }}" class="shop-hub__edit-card">
+              <span class="shop-hub__edit-label">{{ section.settings.edit_one_label | escape }}</span>
+              {%- if section.settings.edit_one_note != blank -%}
+                <span class="shop-hub__edit-note">{{ section.settings.edit_one_note | escape }}</span>
+              {%- endif -%}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.edit_two_label != blank -%}
+            <a href="{{ section.settings.edit_two_link | default: '/collections/gift-card' }}" class="shop-hub__edit-card">
+              <span class="shop-hub__edit-label">{{ section.settings.edit_two_label | escape }}</span>
+              {%- if section.settings.edit_two_note != blank -%}
+                <span class="shop-hub__edit-note">{{ section.settings.edit_two_note | escape }}</span>
+              {%- endif -%}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.edit_three_label != blank -%}
+            <a href="{{ section.settings.edit_three_link | default: '/pages/brands' }}" class="shop-hub__edit-card">
+              <span class="shop-hub__edit-label">{{ section.settings.edit_three_label | escape }}</span>
+              {%- if section.settings.edit_three_note != blank -%}
+                <span class="shop-hub__edit-note">{{ section.settings.edit_three_note | escape }}</span>
+              {%- endif -%}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+  .shop-hub {
+    background: var(--color-background);
+  }
+
+  .shop-hub__hero {
+    padding: clamp(3.5rem, 8vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem);
+    border-bottom: 1px solid rgba(196, 184, 168, 0.22);
+  }
+
+  .shop-hub__hero-inner,
+  .shop-hub__categories-inner,
+  .shop-hub__brands-inner,
+  .shop-hub__edits-inner {
+    width: min(var(--content-width), calc(100% - (var(--page-margin) * 2)));
+    margin: 0 auto;
+  }
+
+  .shop-hub__hero-inner {
+    max-width: 42rem;
+    text-align: center;
+  }
+
+  .shop-hub__eyebrow {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-body--family);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: lowercase;
+    color: var(--color-foreground-muted);
+  }
+
+  .shop-hub__title {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading--family);
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--color-foreground);
+  }
+
+  .shop-hub__intro {
+    font-family: var(--font-heading--family);
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--color-foreground-light);
+  }
+
+  .shop-hub__categories {
+    padding: clamp(2.5rem, 5vw, 4rem) 0;
+  }
+
+  .shop-hub__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.25rem, 2.5vw, 2rem);
+  }
+
+  @media (min-width: 640px) {
+    .shop-hub__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .shop-hub__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .shop-hub__card {
+    display: grid;
+    gap: 1rem;
+    color: inherit;
+    text-decoration: none;
+    transition: transform var(--transition-normal);
+  }
+
+  .shop-hub__card:hover {
+    transform: translateY(-3px);
+  }
+
+  .shop-hub__card-media {
+    aspect-ratio: 1 / 1.08;
+    overflow: hidden;
+    background: var(--color-border-light);
+  }
+
+  .shop-hub__card-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow), filter var(--transition-slow);
+  }
+
+  .shop-hub__card:hover .shop-hub__card-image {
+    transform: scale(1.03);
+  }
+
+  .shop-hub__card-copy {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .shop-hub__card-title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.35rem, 2vw, 1.65rem);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--color-foreground);
+  }
+
+  .shop-hub__card-desc {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--color-foreground-light);
+  }
+
+  .shop-hub__card-cta {
+    margin-top: 0.25rem;
+    font-family: var(--font-body--family);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    color: var(--color-foreground-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .shop-hub__card:hover .shop-hub__card-cta {
+    color: var(--color-foreground);
+  }
+
+  .shop-hub__brands {
+    padding: clamp(2rem, 4vw, 3rem) 0;
+    border-top: 1px solid rgba(196, 184, 168, 0.22);
+    background: rgba(252, 250, 248, 0.65);
+  }
+
+  .shop-hub__brands-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.35rem;
+  }
+
+  .shop-hub__brands-eyebrow {
+    margin: 0 0 0.35rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: lowercase;
+    color: var(--color-foreground-muted);
+  }
+
+  .shop-hub__brands-title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    font-weight: 400;
+    color: var(--color-foreground);
+  }
+
+  .shop-hub__brands-all {
+    flex-shrink: 0;
+    font-family: var(--font-heading--family);
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--color-foreground-light);
+    transition: color var(--transition-fast);
+  }
+
+  .shop-hub__brands-all:hover {
+    color: var(--color-foreground);
+  }
+
+  .shop-hub__brands-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem 1.35rem;
+  }
+
+  .shop-hub__brand-link {
+    font-family: var(--font-body--family);
+    font-size: 0.84rem;
+    color: var(--color-foreground-light);
+    transition: color var(--transition-fast);
+  }
+
+  .shop-hub__brand-link:hover {
+    color: var(--color-foreground);
+  }
+
+  .shop-hub__edits {
+    padding: clamp(2rem, 4vw, 3rem) 0 clamp(3.5rem, 7vw, 5rem);
+  }
+
+  .shop-hub__edits-title {
+    margin: 0 0 1.25rem;
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-weight: 400;
+    color: var(--color-foreground);
+  }
+
+  .shop-hub__edits-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  @media (min-width: 768px) {
+    .shop-hub__edits-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .shop-hub__edit-card {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.15rem 1.25rem;
+    border: 1px solid rgba(196, 184, 168, 0.28);
+    background: rgba(252, 250, 248, 0.55);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      border-color var(--transition-fast),
+      background var(--transition-fast);
+  }
+
+  .shop-hub__edit-card:hover {
+    border-color: rgba(168, 154, 138, 0.55);
+    background: rgba(252, 250, 248, 0.95);
+  }
+
+  .shop-hub__edit-label {
+    font-family: var(--font-heading--family);
+    font-size: 1.05rem;
+    color: var(--color-foreground);
+  }
+
+  .shop-hub__edit-note {
+    font-family: var(--font-body--family);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--color-foreground-light);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Shop hub",
+  "tag": "section",
+  "class": "section-shop-hub",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Curated for everyday ritual"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Shop"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro",
+      "default": "<p>Holistic health, beauty, clothing, and home — chosen with intention from Matakana and beyond.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_collection_titles",
+      "label": "Use live collection titles",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Brands strip"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_brands_strip",
+      "label": "Show brands strip",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "brands_eyebrow",
+      "label": "Brands eyebrow",
+      "default": "Makers & houses"
+    },
+    {
+      "type": "text",
+      "id": "brands_title",
+      "label": "Brands title",
+      "default": "Shop by brand"
+    },
+    {
+      "type": "text",
+      "id": "brands_cta",
+      "label": "Brands link label",
+      "default": "View all brands"
+    },
+    {
+      "type": "url",
+      "id": "brands_link",
+      "label": "Brands link"
+    },
+    {
+      "type": "range",
+      "id": "brands_limit",
+      "label": "Brand names shown",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Curated edits"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_edits",
+      "label": "Show curated edits",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "edits_title",
+      "label": "Edits title",
+      "default": "Start here"
+    },
+    {
+      "type": "text",
+      "id": "edit_one_label",
+      "label": "Edit one label",
+      "default": "New arrivals"
+    },
+    {
+      "type": "text",
+      "id": "edit_one_note",
+      "label": "Edit one note",
+      "default": "Fresh pieces from the store floor"
+    },
+    {
+      "type": "url",
+      "id": "edit_one_link",
+      "label": "Edit one link"
+    },
+    {
+      "type": "text",
+      "id": "edit_two_label",
+      "label": "Edit two label",
+      "default": "Gift card"
+    },
+    {
+      "type": "text",
+      "id": "edit_two_note",
+      "label": "Edit two note",
+      "default": "Let them choose something meaningful"
+    },
+    {
+      "type": "url",
+      "id": "edit_two_link",
+      "label": "Edit two link"
+    },
+    {
+      "type": "text",
+      "id": "edit_three_label",
+      "label": "Edit three label",
+      "default": "Our brands"
+    },
+    {
+      "type": "text",
+      "id": "edit_three_note",
+      "label": "Edit three note",
+      "default": "Meet the makers behind MONNI"
+    },
+    {
+      "type": "url",
+      "id": "edit_three_link",
+      "label": "Edit three link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop hub",
+      "category": "Pages"
+    }
+  ]
+}
+{% endschema %}

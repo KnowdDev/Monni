@@ -1,0 +1,70 @@
+{%- comment -%}
+  Renders one shop mega menu category column.
+  Accepts: category_key, category_label, category_url, category_child, link_class, heading_class, list_class
+{%- endcomment -%}
+
+{%- liquid
+  assign link_class = link_class | default: 'header__mega-link'
+  assign heading_class = heading_class | default: 'header__mega-heading'
+  assign list_class = list_class | default: 'header__mega-list'
+  assign has_menu_links = false
+
+  if category_child != blank and category_child.links.size > 0
+    assign has_menu_links = true
+  endif
+-%}
+
+<a href="{{ category_url }}" class="{{ heading_class }}">{{ category_label | escape }}</a>
+
+{%- if has_menu_links -%}
+  <ul class="{{ list_class }}" role="list">
+    {%- for grandchild in category_child.links -%}
+      {%- assign grandchild_handle = grandchild.title | handleize -%}
+      {%- unless grandchild_handle == 'sale' or grandchild_handle == 'sales' or grandchild_handle contains '-sale' or grandchild.url contains '/sale' -%}
+        <li>
+          <a href="{{ grandchild.url }}" class="{{ link_class }}"{% if grandchild.current %} aria-current="page"{% endif %}>
+            {{ grandchild.title | escape }}
+          </a>
+        </li>
+      {%- endunless -%}
+    {%- endfor -%}
+  </ul>
+{%- else -%}
+  <ul class="{{ list_class }}" role="list">
+    {%- case category_key -%}
+      {%- when 'wellness' -%}
+        <li><a href="/collections/aromatherapy" class="{{ link_class }}">Aromatherapy</a></li>
+        <li><a href="/collections/supplements" class="{{ link_class }}">Supplements</a></li>
+        <li><a href="/collections/teaware" class="{{ link_class }}">Tea</a></li>
+      {%- when 'beauty' -%}
+        <li><a href="/collections/face" class="{{ link_class }}">Face</a></li>
+        <li><a href="/collections/body-care" class="{{ link_class }}">Body</a></li>
+        <li><a href="/collections/hair" class="{{ link_class }}">Hair</a></li>
+        <li><a href="/collections/fragrance" class="{{ link_class }}">Fragrance</a></li>
+        <li><a href="/collections/mother-and-baby" class="{{ link_class }}">Mother &amp; baby</a></li>
+      {%- when 'clothing' -%}
+        <li><a href="/collections/clothing" class="{{ link_class }}">MONNI label</a></li>
+        <li><a href="/collections/dresses" class="{{ link_class }}">Dresses</a></li>
+        <li><a href="/collections/tops" class="{{ link_class }}">Tops</a></li>
+        <li><a href="/collections/bottoms" class="{{ link_class }}">Bottoms</a></li>
+        <li><a href="/collections/jumpsuits" class="{{ link_class }}">Jumpsuits</a></li>
+        <li><a href="/collections/loungewear" class="{{ link_class }}">Loungewear</a></li>
+      {%- when 'jewellery' -%}
+        <li><a href="/collections/fine-jewellery" class="{{ link_class }}">Fine jewellery</a></li>
+        <li><a href="/collections/necklaces" class="{{ link_class }}">Necklaces</a></li>
+        <li><a href="/collections/earrings" class="{{ link_class }}">Earrings</a></li>
+        <li><a href="/collections/rings" class="{{ link_class }}">Rings</a></li>
+        <li><a href="/collections/bracelet" class="{{ link_class }}">Bracelets</a></li>
+      {%- when 'home' -%}
+        <li><a href="/collections/ceramics" class="{{ link_class }}">Ceramics</a></li>
+        <li><a href="/collections/home-living" class="{{ link_class }}">Home &amp; living</a></li>
+        <li><a href="/collections/art" class="{{ link_class }}">Art</a></li>
+        <li><a href="/collections/teaware" class="{{ link_class }}">Teaware</a></li>
+        <li><a href="/collections/fragrance" class="{{ link_class }}">Candles &amp; fragrance</a></li>
+      {%- when 'gifts' -%}
+        <li><a href="/collections/giftboxes" class="{{ link_class }}">Gift boxes</a></li>
+        <li><a href="/collections/gift-card" class="{{ link_class }}">Gift card</a></li>
+        <li><a href="/collections/sacred-rituals" class="{{ link_class }}">Rituals</a></li>
+    {%- endcase -%}
+  </ul>
+{%- endif -%}

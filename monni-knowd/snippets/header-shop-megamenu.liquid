@@ -1,0 +1,246 @@
+{%- comment -%}
+  Renders Shop category columns for desktop mega menu or mobile accordion.
+  Accepts:
+    menu — link_list from section settings
+    section_id — section.id
+    variant — 'desktop' | 'mobile'
+{%- endcomment -%}
+
+{%- liquid
+  assign shop_parent = blank
+  if menu != blank
+    for menu_link in menu.links
+      assign menu_link_handle = menu_link.title | handleize
+      if menu_link_handle == 'shop'
+        assign shop_parent = menu_link
+        break
+      endif
+    endfor
+  endif
+
+  assign category_keys = 'wellness,beauty,clothing,jewellery,home,gifts' | split: ','
+  assign category_labels = 'Wellness,Beauty,Clothing,Jewellery,Home,Gifts' | split: ','
+  assign category_urls = '/collections/wellness,/collections/beauty,/collections/clothing,/collections/all-jewellery,/collections/all-home,/collections/giftboxes' | split: ','
+  assign category_collection_handles = 'wellness,beauty,clothing,all-jewellery,all-home,giftboxes' | split: ','
+  assign category_fallback_assets = 'frolic-ceramics.webp,frolic-ceramics.webp,frolic-ceramics.webp,frolic-ceramics.webp,hero-homewares.jpg,hero-gifting.jpg' | split: ','
+  assign category_unsplash_ids = 'photo-1556228578-0d85b1a4d571,photo-1571781926291-c477ebfd024b,photo-1516762689617-e1cffcef479d,photo-1611591437281-460bfbe1220a,photo-1586023492125-27b2c045efd7,photo-1549465220-1a8b9238cd48' | split: ','
+
+  if pages.shop != blank
+    assign shop_hub_url = pages.shop.url
+  else
+    assign shop_hub_url = '/pages/shop'
+  endif
+
+  assign brands_url = '/pages/brands'
+  assign new_arrivals_url = '/collections/new-website-featured'
+  assign gift_card_url = '/collections/gift-card'
+
+  if section != blank
+    if section.settings.mega_shop_link != blank
+      assign shop_hub_url = section.settings.mega_shop_link
+    endif
+    if section.settings.mega_brands_link != blank
+      assign brands_url = section.settings.mega_brands_link
+    endif
+  endif
+-%}
+
+{%- if variant == 'desktop' -%}
+  {%- liquid
+    assign featured_collection = blank
+    assign featured_url = '/collections/wellness'
+    assign featured_image = blank
+    assign featured_caption = 'Shop wellness'
+
+    if section != blank
+      if section.settings.mega_featured_collection != blank
+        assign featured_collection = section.settings.mega_featured_collection
+      else
+        assign featured_collection = collections.wellness
+      endif
+
+      if featured_collection != blank
+        assign featured_url = featured_collection.url
+        assign featured_image = featured_collection.featured_image | default: featured_collection.image
+      endif
+
+      if section.settings.mega_image_featured != blank
+        assign featured_image = section.settings.mega_image_featured
+      endif
+
+      if section.settings.mega_featured_caption != blank
+        assign featured_caption = section.settings.mega_featured_caption
+      endif
+
+      if section.settings.mega_featured_link != blank
+        assign featured_url = section.settings.mega_featured_link
+      endif
+    endif
+  -%}
+
+  <div class="header__mega-panel" id="HeaderShopMega-{{ section_id }}">
+    <div class="header__mega-inner">
+      <div class="header__mega-layout">
+        <a href="{{ featured_url }}" class="header__mega-featured">
+          <span class="header__mega-featured-media">
+            {%- if featured_image != blank -%}
+              <img
+                src="{{ featured_image | image_url: width: 720, height: 900, crop: 'center' }}"
+                alt=""
+                loading="lazy"
+                width="280"
+                height="350"
+                class="header__mega-featured-image"
+              >
+            {%- elsif category_fallback_assets[0] != blank -%}
+              <img
+                src="{{ category_fallback_assets[0] | asset_url }}"
+                alt=""
+                loading="lazy"
+                width="280"
+                height="350"
+                class="header__mega-featured-image"
+              >
+            {%- else -%}
+              <img
+                src="https://images.unsplash.com/{{ category_unsplash_ids[0] }}?w=720&h=900&fit=crop&q=80"
+                alt=""
+                loading="lazy"
+                width="280"
+                height="350"
+                class="header__mega-featured-image"
+              >
+            {%- endif -%}
+          </span>
+          <span class="header__mega-featured-caption">{{ featured_caption | escape }}</span>
+        </a>
+
+        <div class="header__mega-content">
+          <div class="header__mega-categories">
+            <div class="header__mega-grid">
+            {%- for category_key in category_keys -%}
+              {%- assign category_index = forloop.index0 -%}
+              {%- assign category_label = category_labels[category_index] -%}
+              {%- assign category_url = category_urls[category_index] -%}
+              {%- assign category_child = blank -%}
+
+              {%- assign category_collection = collections[category_collection_handles[category_index]] -%}
+              {%- if category_collection != blank -%}
+                {%- assign category_url = category_collection.url -%}
+              {%- endif -%}
+
+              {%- if shop_parent != blank and shop_parent.links.size > 0 -%}
+                {%- for child in shop_parent.links -%}
+                  {%- assign child_handle = child.title | handleize -%}
+                  {%- if child_handle == category_key or child_handle == 'jewelry' and category_key == 'jewellery' or child_handle == 'gifting' and category_key == 'gifts' or child_handle == 'gift' and category_key == 'gifts' -%}
+                    {%- assign category_child = child -%}
+                    {%- assign category_url = child.url -%}
+                    {%- assign category_label = child.title -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- elsif menu != blank -%}
+                {%- for menu_link in menu.links -%}
+                  {%- assign menu_link_handle = menu_link.title | handleize -%}
+                  {%- if menu_link_handle == category_key or menu_link_handle == 'jewelry' and category_key == 'jewellery' or menu_link_handle == 'gifting' and category_key == 'gifts' -%}
+                    {%- assign category_child = menu_link -%}
+                    {%- assign category_url = menu_link.url -%}
+                    {%- assign category_label = menu_link.title -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+
+              <div class="header__mega-column">
+                {%- render 'shop-mega-category',
+                  category_key: category_key,
+                  category_label: category_label,
+                  category_url: category_url,
+                  category_child: category_child
+                -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+          <aside class="header__mega-aside" aria-label="Shop highlights">
+          <p class="header__mega-aside-label">Discover</p>
+          <ul class="header__mega-aside-list" role="list">
+            <li>
+              <a href="{{ shop_hub_url }}" class="header__mega-aside-link">Shop all</a>
+            </li>
+            <li>
+              <a href="{{ brands_url }}" class="header__mega-aside-link">Shop by brand</a>
+            </li>
+            <li>
+              <a href="{{ new_arrivals_url }}" class="header__mega-aside-link">New arrivals</a>
+            </li>
+            <li>
+              <a href="{{ gift_card_url }}" class="header__mega-aside-link">Gift card</a>
+            </li>
+          </ul>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- elsif variant == 'mobile' -%}
+  <div
+    id="HeaderMobileShop-{{ section_id }}"
+    class="header__mobile-submenu header__mobile-submenu--shop"
+    hidden
+    data-header-mobile-panel
+  >
+    <div class="header__mobile-shop-actions">
+      <a href="{{ shop_hub_url }}" class="header__mobile-shop-action">Shop all</a>
+      <a href="{{ brands_url }}" class="header__mobile-shop-action">Shop by brand</a>
+    </div>
+    <div class="header__mobile-shop-grid">
+      {%- for category_key in category_keys -%}
+        {%- assign category_index = forloop.index0 -%}
+        {%- assign category_label = category_labels[category_index] -%}
+        {%- assign category_url = category_urls[category_index] -%}
+        {%- assign category_child = blank -%}
+
+        {%- assign category_collection = collections[category_collection_handles[category_index]] -%}
+        {%- if category_collection != blank -%}
+          {%- assign category_url = category_collection.url -%}
+        {%- endif -%}
+
+        {%- if shop_parent != blank and shop_parent.links.size > 0 -%}
+          {%- for child in shop_parent.links -%}
+            {%- assign child_handle = child.title | handleize -%}
+            {%- if child_handle == category_key or child_handle == 'jewelry' and category_key == 'jewellery' or child_handle == 'gifting' and category_key == 'gifts' -%}
+              {%- assign category_child = child -%}
+              {%- assign category_url = child.url -%}
+              {%- assign category_label = child.title -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- elsif menu != blank -%}
+          {%- for menu_link in menu.links -%}
+            {%- assign menu_link_handle = menu_link.title | handleize -%}
+            {%- if menu_link_handle == category_key or menu_link_handle == 'jewelry' and category_key == 'jewellery' or menu_link_handle == 'gifting' and category_key == 'gifts' -%}
+              {%- assign category_child = menu_link -%}
+              {%- assign category_url = menu_link.url -%}
+              {%- assign category_label = menu_link.title -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+        <div class="header__mobile-shop-column">
+          {%- render 'shop-mega-category',
+            category_key: category_key,
+            category_label: category_label,
+            category_url: category_url,
+            category_child: category_child,
+            link_class: 'header__mobile-shop-link',
+            heading_class: 'header__mobile-shop-heading',
+            list_class: 'header__mobile-shop-list'
+          -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}

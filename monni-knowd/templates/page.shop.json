@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "main": {
+      "type": "shop-hub",
+      "settings": {
+        "eyebrow": "Curated for everyday ritual",
+        "title": "Shop",
+        "intro": "<p>Holistic health, beauty, clothing, and home — chosen with intention from Matakana and beyond.</p>",
+        "show_brands_strip": true,
+        "brands_eyebrow": "Makers & houses",
+        "brands_title": "Shop by brand",
+        "brands_cta": "View all brands",
+        "brands_link": "/pages/brands",
+        "show_edits": true,
+        "edits_title": "Start here",
+        "edit_one_label": "New arrivals",
+        "edit_one_note": "Fresh pieces from the store floor",
+        "edit_one_link": "/collections/new-website-featured",
+        "edit_two_label": "Gift card",
+        "edit_two_note": "Let them choose something meaningful",
+        "edit_two_link": "/collections/gift-card",
+        "edit_three_label": "Our brands",
+        "edit_three_note": "Meet the makers behind MONNI",
+        "edit_three_link": "/pages/brands"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

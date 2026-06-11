@@ -10,6 +10,7 @@
     const panel = panelId ? document.getElementById(panelId) : null;
 
     button.setAttribute('aria-expanded', 'false');
+    syncToggleSymbol(button, false);
 
     if (!(panel instanceof HTMLElement)) return;
 
@@ -26,6 +27,12 @@
     });
   };
 
+  const syncToggleSymbol = (button, isExpanded) => {
+    if (!(button instanceof HTMLElement)) return;
+    const symbol = button.querySelector('span[aria-hidden="true"]');
+    if (symbol) symbol.textContent = isExpanded ? '−' : '+';
+  };
+
   const expandPanel = (button) => {
     if (!(button instanceof HTMLElement)) return;
 
@@ -33,6 +40,7 @@
     const panel = panelId ? document.getElementById(panelId) : null;
 
     button.setAttribute('aria-expanded', 'true');
+    syncToggleSymbol(button, true);
 
     if (panel instanceof HTMLElement) {
       panel.hidden = false;
@@ -197,6 +205,66 @@
   }
 
   document.addEventListener('wishlist:updated', syncWishlistCount);
+
+  document.querySelectorAll('[data-header-root]').forEach((root) => {
+    if (!(root instanceof HTMLElement)) return;
+
+    const shell = root.querySelector('.header__shell');
+    const item = root.querySelector('.header__menu-item--mega');
+    const trigger = root.querySelector('[data-header-shop-trigger]');
+    const panel = root.querySelector('.header__mega-panel');
+    if (!(item instanceof HTMLElement) || !(shell instanceof HTMLElement)) return;
+
+    let closeTimer = null;
+
+    const setOpen = (isOpen) => {
+      item.classList.toggle('is-shop-open', isOpen);
+      if (trigger instanceof HTMLElement) {
+        trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+    };
+
+    const openMenu = () => {
+      if (closeTimer) {
+        window.clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+      setOpen(true);
+    };
+
+    const scheduleClose = () => {
+      if (closeTimer) window.clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(() => setOpen(false), 180);
+    };
+
+    const handleZoneLeave = (event) => {
+      const related = event.relatedTarget;
+      if (related instanceof Node && shell.contains(related)) return;
+      scheduleClose();
+    };
+
+    item.addEventListener('mouseenter', openMenu);
+
+    if (panel instanceof HTMLElement) {
+      panel.addEventListener('mouseenter', openMenu);
+    }
+
+    shell.addEventListener('mouseleave', handleZoneLeave);
+
+    item.addEventListener('focusin', openMenu);
+    item.addEventListener('focusout', (event) => {
+      if (event.relatedTarget instanceof Node && (item.contains(event.relatedTarget) || panel?.contains(event.relatedTarget))) return;
+      scheduleClose();
+    });
+
+    if (panel instanceof HTMLElement) {
+      panel.addEventListener('focusin', openMenu);
+      panel.addEventListener('focusout', (event) => {
+        if (event.relatedTarget instanceof Node && (item.contains(event.relatedTarget) || panel.contains(event.relatedTarget))) return;
+        scheduleClose();
+      });
+    }
+  });
 
   syncWishlistCount();
   syncGlobalState();

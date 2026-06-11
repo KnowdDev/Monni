@@ -27,7 +27,7 @@
           "settings": {
             "title": "Wellness",
             "description": "Nourishment for the body and mind.",
-            "link": "/collections/all-wellness"
+            "link": "/collections/wellness"
           }
         },
         "cat-2": {
@@ -35,7 +35,7 @@
           "settings": {
             "title": "Beauty",
             "description": "What we place on our skin matters.",
-            "link": "/collections/all-beauty"
+            "link": "/collections/beauty"
           }
         },
         "cat-3": {
@@ -43,7 +43,7 @@
           "settings": {
             "title": "Clothing",
             "description": "Natural fibres. Worn for years, not for a moment.",
-            "link": "/collections/all-clothing"
+            "link": "/collections/clothing"
           }
         },
         "cat-4": {
@@ -67,7 +67,7 @@
           "settings": {
             "title": "Gifts",
             "description": "Chosen with intention. Wrapped with love.",
-            "link": "/collections/all-gifting"
+            "link": "/collections/giftboxes"
           }
         }
       },
