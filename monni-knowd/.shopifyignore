@@ -1,6 +1,26 @@
 # This file contains a list of files that will be excluded from Shopify CLI
 # operations such as push, pull, dev, etc.
+#
+# ─── MANUALLY MANAGED TEMPLATES ─────────────────────────────────────────────
+# These templates are edited directly in the Shopify admin theme editor.
+# Excluding them prevents `shopify theme push` from overwriting live changes.
 
-# Homepage template — edited in the Shopify theme editor; exclude from push
-# so local deploys don't overwrite live section settings and content.
 templates/index.json
+templates/product.json
+templates/page.about.json
+templates/page.contact.json
+templates/page.wishlist.json
+templates/collection.json
+templates/list-collections.json
+templates/blog.json
+templates/article.json
+templates/search.json
+templates/cart.json
+templates/page.json
+templates/password.json
+templates/policy.json
+templates/gift_card.liquid
+templates/maker.liquid
+
+# Section group configs (managed in admin)
+sections/footer-group.json

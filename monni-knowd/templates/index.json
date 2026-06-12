@@ -92,7 +92,7 @@
             "title": "Monni Botanicals",
             "description": "Skincare made in rhythm with the seasons.",
             "cta": "Discover",
-            "link": "/collections/monni-botanicals"
+            "link": "/collections/face"
           }
         },
         "creation-2": {
@@ -123,11 +123,12 @@
     "seasonal": {
       "type": "homepage-seasonal",
       "settings": {
-        "title": "The Winter Trio",
-        "subtitle": "Seed to bottle skincare made in rhythm with the seasons.",
-        "description": "Slowly infused, distilled and made by hand. Hydrating and restorative as the cold draws in.",
-        "cta": "Discover",
-        "link": "/collections/monni-botanicals"
+        "collection": "face",
+        "title": "Monni Botanicals",
+        "subtitle": "Spring harvest skincare, seed to bottle with The Herbologist.",
+        "description": "Calendula and wildflower day and night creams — slowly infused botanical oils and seasonal distillates, handmade in Aotearoa. A quiet ritual for skin as the season turns.",
+        "cta": "Shop skincare",
+        "link": "/collections/face"
       }
     },
     "makers": {
