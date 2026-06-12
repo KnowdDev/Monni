@@ -4,32 +4,44 @@
 {% endcomment %}
 
 <article class="article-page">
-  <div class="container">
-    <div class="article-page__inner">
-      {% if article.image %}
-        <div class="article-page__image-wrapper">
-          {{ article.image | image_url: width: 1200 | image_tag: class: 'article-page__image', loading: 'eager' }}
-        </div>
+  <div class="article-page__column">
+    <header class="article-page__header">
+      {% if blog.title %}
+        <a href="{{ blog.url }}" class="article-page__blog-link">{{ blog.title }}</a>
       {% endif %}
 
-      <header class="article-page__header">
-        {% if blog.title %}
-          <a href="{{ blog.url }}" class="article-page__blog-link">{{ blog.title }}</a>
-        {% endif %}
+      <h1 class="article-page__title">{{ article.title }}</h1>
 
-        <h1 class="article-page__title">{{ article.title }}</h1>
-
-        <div class="article-page__meta">
-          {% assign date = article.published_at | time_tag: format: 'date' %}
-          <span class="article-page__meta-item">{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</span>
-        </div>
-      </header>
-
-      <div class="article-page__content">
-        {{ article.content }}
+      <div class="article-page__meta">
+        {% assign date = article.published_at | time_tag: format: 'date' %}
+        <span class="article-page__meta-item">{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</span>
       </div>
+    </header>
 
-      {% if blog.comments_enabled? %}
+    {% if section.settings.show_featured_image and article.image %}
+      <figure class="article-page__featured">
+        <div class="article-page__featured-media">
+          {{
+            article.image
+            | image_url: width: 1600
+            | image_tag:
+              class: 'article-page__featured-image',
+              loading: 'eager',
+              widths: '400, 600, 800, 1000, 1200, 1600',
+              sizes: '(min-width: 740px) 680px, calc(100vw - 2rem)'
+          }}
+        </div>
+        {% if article.image.alt != blank %}
+          <figcaption class="article-page__featured-caption">{{ article.image.alt | escape }}</figcaption>
+        {% endif %}
+      </figure>
+    {% endif %}
+
+    <div class="article-page__content rte">
+      {{ article.content }}
+    </div>
+
+    {% if blog.comments_enabled? %}
         <section class="article-page__comments" id="comments">
           <h2 class="article-page__comments-title">{{ 'blog.article_comments' | t }}</h2>
 
@@ -78,8 +90,7 @@
             {% endform %}
           </div>
         </section>
-      {% endif %}
-    </div>
+    {% endif %}
   </div>
 </article>
 
@@ -92,26 +103,6 @@
       "id": "show_featured_image",
       "label": "Show featured image",
       "default": true
-    },
-    {
-      "type": "select",
-      "id": "content_width",
-      "label": "Content width",
-      "options": [
-        {
-          "value": "narrow",
-          "label": "Narrow"
-        },
-        {
-          "value": "medium",
-          "label": "Medium"
-        },
-        {
-          "value": "wide",
-          "label": "Wide"
-        }
-      ],
-      "default": "medium"
     }
   ]
 }

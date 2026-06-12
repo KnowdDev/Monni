@@ -218,6 +218,62 @@
     ]
   },
   {
+    "name": "Newsletter popup",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "newsletter_popup_enable",
+        "label": "Enable homepage newsletter popup",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "newsletter_popup_scroll_offset",
+        "min": 200,
+        "max": 1200,
+        "step": 20,
+        "unit": "px",
+        "label": "Show after scrolling",
+        "default": 360
+      },
+      {
+        "type": "image_picker",
+        "id": "newsletter_popup_image",
+        "label": "Image (optional)"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_popup_title",
+        "label": "Title",
+        "default": "Slow down. Stay connected."
+      },
+      {
+        "type": "textarea",
+        "id": "newsletter_popup_description",
+        "label": "Description",
+        "default": "Receive new arrivals, store notes, and thoughtful rituals from Monni."
+      },
+      {
+        "type": "text",
+        "id": "newsletter_popup_placeholder",
+        "label": "Email placeholder",
+        "default": "Your email address"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_popup_button",
+        "label": "Button label",
+        "default": "Subscribe"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_popup_success",
+        "label": "Success message",
+        "default": "Thank you for subscribing."
+      }
+    ]
+  },
+  {
     "name": "Cart",
     "settings": [
       {

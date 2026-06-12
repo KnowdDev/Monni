@@ -131,7 +131,7 @@
       {% for block in section.blocks %}
         {% if block.type == 'value_row' %}
           <article
-            class="about-monni__row{% if block.settings.image_position == 'right' %} about-monni__row--reverse{% endif %}"
+            class="about-monni__row about-monni__row--media-{{ block.settings.image_position | default: 'left' }}"
             {{ block.shopify_attributes }}
           >
             <div class="about-monni__row-copy">
@@ -222,7 +222,7 @@
   }
 
   .about-monni__eyebrow {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     margin: 0 0 var(--spacing-sm);
@@ -387,16 +387,24 @@
     }
 
     .about-monni__row {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
       gap: clamp(2rem, 4vw, 3.5rem);
     }
 
-    .about-monni__row--reverse .about-monni__row-copy {
+    .about-monni__row--media-left .about-monni__row-media {
+      order: 1;
+    }
+
+    .about-monni__row--media-left .about-monni__row-copy {
       order: 2;
     }
 
-    .about-monni__row--reverse .about-monni__row-media {
+    .about-monni__row--media-right .about-monni__row-copy {
       order: 1;
+    }
+
+    .about-monni__row--media-right .about-monni__row-media {
+      order: 2;
     }
 
     .about-monni__row-copy {

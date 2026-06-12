@@ -2,7 +2,10 @@
   "sections": {
     "main": {
       "type": "size-guide",
-      "settings": {}
+      "settings": {
+        "intro": "All measurements are in centimetres. Our garments are designed to fit true to size — when between sizes, we recommend sizing up for a more relaxed fit, or sizing down for a closer fit.",
+        "table_note": ""
+      }
     }
   },
   "order": [

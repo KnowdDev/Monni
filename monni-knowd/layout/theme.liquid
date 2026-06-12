@@ -48,11 +48,16 @@
 
     {% section 'cart-drawer' %}
 
+    {% if template.name == 'index' and settings.newsletter_popup_enable %}
+      {% render 'newsletter-popup' %}
+    {% endif %}
+
     <script src="{{ 'constants.js' | asset_url }}" defer></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer></script>
     <script src="{{ 'header.js' | asset_url }}" defer></script>
 
   {% if template.name == 'index' %}
+    <script src="{{ 'newsletter-popup.js' | asset_url }}" defer></script>
     <script>
       (function () {
         function loadAnimations() {

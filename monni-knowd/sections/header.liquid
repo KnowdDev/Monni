@@ -226,9 +226,7 @@
           </ul>
         </nav>
 
-        <div class="header__drawer-note">
-          <p>Beauty, fashion, home, and thoughtful rituals from the Monni world.</p>
-        </div>
+        <div class="header__drawer-separator" aria-hidden="true"></div>
 
         <div class="header__drawer-utilities">
           <a href="{{ routes.search_url }}" class="header__drawer-utility-link">Search</a>
@@ -258,7 +256,7 @@
     color: var(--color-background);
     text-align: center;
     padding: 0.625rem var(--page-margin);
-    font-size: 0.6875rem;
+    font-size: var(--text-announcement);
     letter-spacing: 0.14em;
     text-transform: uppercase;
     font-weight: 400;
@@ -515,7 +513,7 @@
   .header__mega-aside-label {
     margin: 0 0 0.85rem;
     font-family: var(--font-body--family);
-    font-size: 0.68rem;
+    font-size: 0.875rem;
     letter-spacing: 0.1em;
     text-transform: lowercase;
     color: var(--color-foreground-muted);
@@ -671,7 +669,7 @@
 
   .header__mobile-cart {
     display: none;
-    font-size: 0.72rem;
+    font-size: 0.875rem;
     font-weight: 400;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -738,7 +736,7 @@
   .header__submenu-link {
     display: inline-flex;
     align-items: center;
-    font-size: 0.84rem;
+    font-size: 0.9375rem;
     line-height: 1.5;
     color: var(--color-foreground-light);
   }
@@ -764,7 +762,7 @@
   .header__submenu-grandlink {
     display: inline-flex;
     align-items: center;
-    font-size: 0.78rem;
+    font-size: 0.9375rem;
     line-height: 1.45;
     color: var(--color-foreground-light);
   }
@@ -795,7 +793,7 @@
   }
 
   .header__menu-toggle-label {
-    font-size: 0.72rem;
+    font-size: 0.875rem;
     font-weight: 400;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -1061,7 +1059,7 @@
   }
 
   .header__mobile-shop-link {
-    font-size: 0.84rem;
+    font-size: 0.9375rem;
     line-height: 1.5;
     color: var(--color-foreground-light);
   }
@@ -1070,21 +1068,16 @@
     padding: 0.15rem 0 0.2rem 0.9rem;
   }
 
-  .header__drawer-note {
-    padding-top: 0.9rem;
-    border-top: 1px solid rgba(196, 184, 168, 0.24);
-  }
-
-  .header__drawer-note p {
-    font-size: 0.92rem;
-    line-height: 1.7;
-    color: var(--color-foreground-light);
+  .header__drawer-separator {
+    height: 1px;
+    margin: 1.25rem 0 0;
+    background-color: var(--color-accent);
+    border: none;
   }
 
   .header__drawer-utilities {
     display: grid;
     gap: 0;
-    border-top: 1px solid rgba(196, 184, 168, 0.24);
   }
 
   .header__drawer-utility-link {
@@ -1093,7 +1086,7 @@
     justify-content: space-between;
     padding: 0.95rem 0;
     border-bottom: 1px solid rgba(196, 184, 168, 0.22);
-    font-size: 0.78rem;
+    font-size: 0.9375rem;
     font-weight: 400;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -1160,6 +1153,13 @@
 
     .header__mobile-cart {
       display: inline-flex;
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+    }
+
+    .header__menu-toggle-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
     }
 
     .header__logo-img {
@@ -1183,7 +1183,7 @@
   @media (max-width: 767px) {
     .header__announcement {
       padding-block: 0.55rem;
-      font-size: 0.625rem;
+      font-size: var(--text-announcement);
       letter-spacing: 0.11em;
     }
 

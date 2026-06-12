@@ -1,0 +1,266 @@
+{% comment %}
+  Homepage newsletter slide-in — first visit, scroll-triggered.
+{% endcomment %}
+
+{% if settings.newsletter_popup_enable %}
+  <div
+    class="newsletter-popup"
+    id="newsletter-popup"
+    data-newsletter-popup
+    data-scroll-offset="{{ settings.newsletter_popup_scroll_offset | default: 360 }}"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="newsletter-popup-title"
+  >
+    <div class="newsletter-popup__panel">
+      <button
+        type="button"
+        class="newsletter-popup__close"
+        data-newsletter-popup-close
+        aria-label="Close newsletter signup"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      {% if settings.newsletter_popup_image != blank %}
+        <div class="newsletter-popup__media">
+          {{
+            settings.newsletter_popup_image
+            | image_url: width: 600
+            | image_tag:
+              loading: 'lazy',
+              widths: '300, 450, 600',
+              sizes: '280px',
+              alt: settings.newsletter_popup_image.alt | default: 'Monni newsletter',
+              class: 'newsletter-popup__image'
+          }}
+        </div>
+      {% endif %}
+
+      <div class="newsletter-popup__content">
+        <p class="newsletter-popup__label" id="newsletter-popup-title">
+          {{ settings.newsletter_popup_title | default: 'Slow down. Stay connected.' | escape }}
+        </p>
+
+        <p class="newsletter-popup__desc">
+          {{ settings.newsletter_popup_description | default: 'Receive new arrivals, store notes, and thoughtful rituals from Monni.' | escape }}
+        </p>
+
+        {% form 'customer', class: 'newsletter-popup__form', id: 'newsletter-popup-form' %}
+          {% if form.posted_successfully? %}
+            <p class="newsletter-popup__success" role="status">
+              {{ settings.newsletter_popup_success | default: 'Thank you for subscribing.' | escape }}
+            </p>
+          {% else %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+
+            <label class="visually-hidden" for="newsletter-popup-email">Email address</label>
+            <input
+              id="newsletter-popup-email"
+              type="email"
+              name="contact[email]"
+              class="newsletter-popup__input"
+              placeholder="{{ settings.newsletter_popup_placeholder | default: 'Your email address' | escape }}"
+              required
+              autocomplete="email"
+              autocapitalize="off"
+            >
+
+            <button type="submit" class="newsletter-popup__button">
+              {{ settings.newsletter_popup_button | default: 'Subscribe' | escape }}
+            </button>
+
+            {% if form.errors %}
+              <p class="newsletter-popup__error" role="alert">
+                {{ form.errors.messages['email'] }}
+              </p>
+            {% endif %}
+          {% endif %}
+        {% endform %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .newsletter-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-normal), visibility var(--transition-normal);
+  }
+
+  .newsletter-popup.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .newsletter-popup__panel {
+    position: relative;
+    width: min(100%, 20rem);
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+    background-color: var(--color-background-alt);
+    border: 1px solid color-mix(in srgb, var(--color-foreground) 18%, transparent);
+    box-shadow: 0 18px 48px rgba(58, 54, 51, 0.12);
+    text-align: center;
+    transform: translateY(110%);
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .newsletter-popup.is-visible .newsletter-popup__panel {
+    transform: translateY(0);
+  }
+
+  @media (min-width: 768px) {
+    .newsletter-popup {
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 1.5rem;
+    }
+
+    .newsletter-popup__panel {
+      width: min(100%, 22rem);
+    }
+  }
+
+  .newsletter-popup__close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--color-foreground-muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-fast);
+  }
+
+  .newsletter-popup__close:hover {
+    color: var(--color-foreground);
+  }
+
+  .newsletter-popup__media {
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .newsletter-popup__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .newsletter-popup__content {
+    padding: 1.5rem 1.35rem 1.35rem;
+  }
+
+  .newsletter-popup__label {
+    font-family: var(--font-heading--family);
+    font-size: clamp(1rem, 2.4vw, 1.125rem);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    margin: 0 0 0.85rem;
+    line-height: 1.35;
+    text-wrap: balance;
+    padding-inline: 1.25rem;
+  }
+
+  .newsletter-popup__desc {
+    font-family: var(--font-body--family);
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-foreground-light);
+    margin: 0 0 1.25rem;
+    text-wrap: pretty;
+  }
+
+  .newsletter-popup__form {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .newsletter-popup__input,
+  .newsletter-popup__button {
+    width: 100%;
+    font-family: var(--font-body--family);
+    font-size: 0.875rem;
+    border-radius: 0;
+  }
+
+  .newsletter-popup__input {
+    padding: 0.8rem 0.9rem;
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    text-align: center;
+    outline: none;
+    transition: border-color var(--transition-fast);
+  }
+
+  .newsletter-popup__input::placeholder {
+    color: var(--color-foreground-muted);
+  }
+
+  .newsletter-popup__input:focus {
+    border-color: var(--color-foreground-light);
+  }
+
+  .newsletter-popup__button {
+    padding: 0.8rem 1rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    background: transparent;
+    border: 1px solid var(--color-foreground);
+    cursor: pointer;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+  }
+
+  .newsletter-popup__button:hover {
+    background-color: var(--color-foreground);
+    color: var(--color-background-alt);
+  }
+
+  .newsletter-popup__success,
+  .newsletter-popup__error {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .newsletter-popup__success {
+    color: var(--color-foreground);
+  }
+
+  .newsletter-popup__error {
+    color: var(--color-error);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .newsletter-popup,
+    .newsletter-popup__panel {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
