@@ -20,20 +20,17 @@
   <a href="{{ card_link | default: '#' }}" class="seasonal__wrap">
     <div class="seasonal__image-wrap">
       {% if hero_image != blank %}
-        <img
-          src="{{ hero_image | image_url: width: 1600 }}"
-          srcset="
-            {{ hero_image | image_url: width: 600 }} 600w,
-            {{ hero_image | image_url: width: 1200 }} 1200w,
-            {{ hero_image | image_url: width: 1600 }} 1600w
-          "
-          sizes="100vw"
-          alt="{{ hero_image.alt | default: section.settings.title | escape }}"
-          loading="lazy"
-          width="1600"
-          height="900"
-          class="seasonal__image"
-        >
+        {% render 'responsive-img',
+          image: hero_image,
+          alt: section.settings.title,
+          class: 'seasonal__image',
+          sizes: '100vw',
+          widths: '480,720,960,1280',
+          default_width: 720,
+          width: 1280,
+          height: 720,
+          loading: 'lazy'
+        %}
       {% else %}
         <div class="seasonal__fallback texture-grain" aria-hidden="true"></div>
       {% endif %}
@@ -55,7 +52,7 @@
   </a>
 </section>
 
-{% stylesheet %}
+{% style %}
   .seasonal {
     position: relative;
     overflow: hidden;
@@ -160,7 +157,7 @@
     background-color: #FFFFFF;
     color: var(--color-foreground);
   }
-{% endstylesheet %}
+{% endstyle %}
 
 {% schema %}
 {

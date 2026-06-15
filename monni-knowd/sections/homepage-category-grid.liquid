@@ -13,20 +13,17 @@
         >
           <div class="category-grid__image-wrap">
             {% if block.settings.image %}
-              <img
-                src="{{ block.settings.image | image_url: width: 600 }}"
-                srcset="
-                  {{ block.settings.image | image_url: width: 300 }} 300w,
-                  {{ block.settings.image | image_url: width: 600 }} 600w,
-                  {{ block.settings.image | image_url: width: 900 }} 900w
-                "
-                sizes="(max-width: 1023px) 50vw, 33vw"
-                alt="{{ block.settings.title | escape }}"
-                loading="{% if forloop.index <= 3 %}eager{% else %}lazy{% endif %}"
-                width="600"
-                height="750"
-                class="category-grid__image"
-              >
+              {% render 'responsive-img',
+                image: block.settings.image,
+                alt: block.settings.title,
+                class: 'category-grid__image',
+                sizes: '(max-width: 767px) 45vw, (max-width: 1023px) 50vw, 33vw',
+                widths: '200,280,360,480',
+                default_width: 280,
+                width: 600,
+                height: 750,
+                loading: 'lazy'
+              %}
             {% else %}
               {% assign unsplash_ids = "photo-1556228578-0d85b1a4d571,photo-1571781926291-c477ebfd024b,photo-1516762689617-e1cffcef479d,photo-1611591437281-460bfbe1220a,photo-1586023492125-27b2c045efd7,photo-1549465220-1a8b9238cd48" | split: "," %}
               <img
@@ -57,7 +54,7 @@
   </div>
 </section>
 
-{% stylesheet %}
+{% style %}
   .category-grid {
     background-color: var(--color-background);
     padding: clamp(2.5rem, 8vw, 4rem) 0;
@@ -185,7 +182,7 @@
       margin-inline: auto;
     }
   }
-{% endstylesheet %}
+{% endstyle %}
 
 {% schema %}
 {

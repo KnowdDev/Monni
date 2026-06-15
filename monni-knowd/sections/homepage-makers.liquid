@@ -2,27 +2,25 @@
   <div class="makers__inner">
     <div class="makers__image-wrap">
       {% if section.settings.image %}
-        <img
-          src="{{ section.settings.image | image_url: width: 900 }}"
-          srcset="
-            {{ section.settings.image | image_url: width: 400 }} 400w,
-            {{ section.settings.image | image_url: width: 800 }} 800w,
-            {{ section.settings.image | image_url: width: 1200 }} 1200w
-          "
-          sizes="(max-width: 767px) 100vw, 50vw"
-          alt="{{ section.settings.maker_name | escape }}"
-          loading="eager"
-          width="900"
-          height="1100"
-          class="makers__image"
-        >
+        {% render 'responsive-img',
+          image: section.settings.image,
+          alt: section.settings.maker_name,
+          class: 'makers__image',
+          sizes: '(max-width: 767px) 100vw, 50vw',
+          widths: '280,360,480,640',
+          default_width: 360,
+          width: 900,
+          height: 1100,
+          loading: 'lazy'
+        %}
       {% else %}
         <img
-          src="{{ 'frolic-ceramics.webp' | asset_url }}"
+          src="{{ 'frolic-ceramics-720.webp' | asset_url }}"
           alt="{{ section.settings.maker_name | escape }}"
-          loading="eager"
-          width="900"
-          height="1100"
+          loading="lazy"
+          decoding="async"
+          width="720"
+          height="880"
           class="makers__image"
         >
       {% endif %}
@@ -46,7 +44,7 @@
   </div>
 </section>
 
-{% stylesheet %}
+{% style %}
   .makers {
     background-color: var(--color-background);
     padding: clamp(4rem, 10vw, 7rem) 0;
@@ -153,7 +151,7 @@
     background-color: var(--color-foreground);
     color: var(--color-background-alt);
   }
-{% endstylesheet %}
+{% endstyle %}
 
 {% schema %}
 {

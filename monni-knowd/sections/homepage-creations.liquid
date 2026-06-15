@@ -13,20 +13,17 @@
         >
           <div class="creations__image-wrap">
             {% if block.settings.image %}
-              <img
-                src="{{ block.settings.image | image_url: width: 600 }}"
-                srcset="
-                  {{ block.settings.image | image_url: width: 300 }} 300w,
-                  {{ block.settings.image | image_url: width: 600 }} 600w,
-                  {{ block.settings.image | image_url: width: 900 }} 900w
-                "
-                sizes="(max-width: 767px) 100vw, 33vw"
-                alt="{{ block.settings.title | escape }}"
-                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                width="600"
-                height="780"
-                class="creations__image"
-              >
+              {% render 'responsive-img',
+                image: block.settings.image,
+                alt: block.settings.title,
+                class: 'creations__image',
+                sizes: '(max-width: 767px) 100vw, 33vw',
+                widths: '200,240,280,360',
+                default_width: 240,
+                width: 600,
+                height: 780,
+                loading: 'lazy'
+              %}
             {% else %}
               {% assign unsplash_creation_ids = "photo-1608248543803-ba4f9554aef6,photo-1516762689617-e1cffcef479d,photo-1513364776144-60967b0f800f" | split: "," %}
               <img
@@ -60,7 +57,7 @@
   </div>
 </section>
 
-{% stylesheet %}
+{% style %}
   .creations {
     background-color: var(--color-background-alt);
     padding: clamp(4rem, 10vw, 7rem) 0;
@@ -170,7 +167,7 @@
     background-color: var(--color-foreground);
     color: var(--color-background-alt);
   }
-{% endstylesheet %}
+{% endstyle %}
 
 {% schema %}
 {

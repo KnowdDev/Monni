@@ -110,6 +110,7 @@
               height="{{ settings.logo_width | divided_by: settings.logo.aspect_ratio | round }}"
               class="header__logo-img"
               loading="eager"
+              {% if template.name == 'index' %}fetchpriority="low"{% endif %}
             >
           {% else %}
             <span class="header__logo-text">{{ shop.name | escape }}</span>
@@ -248,7 +249,7 @@
   </aside>
 </header>
 
-{% stylesheet %}
+{% style %}
   .header__announcement {
     width: 100vw;
     margin-inline: calc(50% - 50vw);
@@ -1234,7 +1235,7 @@
       grid-template-columns: minmax(0, 1fr);
     }
   }
-{% endstylesheet %}
+{% endstyle %}
 
 {% javascript %}
   document.querySelectorAll('[data-header-menu-toggle]').forEach(function(el) {

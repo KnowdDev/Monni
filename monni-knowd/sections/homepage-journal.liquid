@@ -9,20 +9,17 @@
         <article class="journal__item" {{ block.shopify_attributes }}>
           <a href="{{ block.settings.link | default: '#' }}" class="journal__image-wrap">
             {% if block.settings.image %}
-              <img
-                src="{{ block.settings.image | image_url: width: 600 }}"
-                srcset="
-                  {{ block.settings.image | image_url: width: 300 }} 300w,
-                  {{ block.settings.image | image_url: width: 600 }} 600w,
-                  {{ block.settings.image | image_url: width: 900 }} 900w
-                "
-                sizes="(max-width: 767px) 100vw, 33vw"
-                alt="{{ block.settings.title | escape }}"
-                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                width="600"
-                height="780"
-                class="journal__image"
-              >
+              {% render 'responsive-img',
+                image: block.settings.image,
+                alt: block.settings.title,
+                class: 'journal__image',
+                sizes: '(max-width: 767px) 100vw, 33vw',
+                widths: '200,280,360,480',
+                default_width: 280,
+                width: 600,
+                height: 780,
+                loading: 'lazy'
+              %}
             {% else %}
               {% assign unsplash_journal_ids = "photo-1506905924436-d08fb31a2003,photo-1503454537195-1dcabb73ffb9,photo-1466692476868-aef1dfb1e735" | split: "," %}
               <img
@@ -69,7 +66,7 @@
   </div>
 </section>
 
-{% stylesheet %}
+{% style %}
   .journal {
     background-color: var(--color-background-alt);
     padding: clamp(4rem, 10vw, 7rem) 0;
@@ -224,7 +221,7 @@
     background-color: var(--color-foreground);
     color: var(--color-background-alt);
   }
-{% endstylesheet %}
+{% endstyle %}
 
 {% schema %}
 {

@@ -1,0 +1,16 @@
+{% comment %}
+  Non-blocking Google Fonts — brand typefaces with display=swap.
+  Single preconnect (gstatic) to stay under Lighthouse preconnect budget.
+{% endcomment %}
+{% liquid
+  assign fonts_href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap'
+%}
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% unless template.name == 'index' %}
+  <link rel="preload" as="style" href="{{ fonts_href }}">
+{% endunless %}
+<link rel="stylesheet" href="{{ fonts_href }}" media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" href="{{ fonts_href }}">
+</noscript>

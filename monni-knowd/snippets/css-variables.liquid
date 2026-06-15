@@ -1,9 +1,11 @@
 {% style %}
-  {% # Loads all font variantions with display: swap %}
-  {{ settings.type_primary_font | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {% unless template.name == 'index' %}
+    {% # Homepage uses Cormorant + Jost via fonts-async; skip unused Shopify font faces %}
+    {{ settings.type_primary_font | font_face: font_display: 'swap' }}
+    {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
+    {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+    {{ settings.type_primary_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {% endunless %}
 
   html {
     font-size: 106.25%;
@@ -32,8 +34,8 @@
     --text-announcement: 0.6875rem;
     --text-cta: clamp(0.6875rem, 0.8vw, 0.75rem);
 
-    --font-heading--family: 'Cormorant Garamond', serif;
-    --font-body--family: 'Jost', sans-serif;
+    --font-heading--family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    --font-body--family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
     --font-primary--style: {{ settings.type_primary_font.style }};
     --font-primary--weight: {{ settings.type_primary_font.weight }};

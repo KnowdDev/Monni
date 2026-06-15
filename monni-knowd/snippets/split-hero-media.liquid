@@ -1,39 +1,36 @@
 {% comment %}
   Responsive split-hero image — mobile-first widths for LCP.
-  @param image {Image}
+  @param image {Image} — Shopify image picker (fallback)
+  @param asset_filename {string} — theme asset WebP (preferred for LCP)
   @param alt {string}
   @param lcp {boolean} — true for the first visible panel (preload + eager)
+  @param width {number}
+  @param height {number}
 {% endcomment %}
 {% liquid
   assign is_lcp = lcp | default: false
-  assign mobile_src = image | image_url: width: 400, format: 'webp'
+  assign img_width = width | default: 720
+  assign img_height = height | default: 899
+  assign hero_sizes = '(max-width: 767px) 100vw, 50vw'
 %}
 
-{% if is_lcp %}
-  {{ mobile_src | preload_tag: as: 'image', fetchpriority: 'high' }}
-{% endif %}
-
-<picture>
-  <source
-    type="image/webp"
-    media="(min-width: 768px)"
-    srcset="
-      {{ image | image_url: width: 800, format: 'webp' }} 800w,
-      {{ image | image_url: width: 600, format: 'webp' }} 600w
-    "
-    sizes="50vw"
-  >
+{% if asset_filename != blank %}
+  {% liquid
+    assign asset_base = asset_filename | replace: '.webp', ''
+    assign hero_src_480 = asset_base | append: '-480.webp' | asset_url
+    assign hero_src_720 = asset_base | append: '-720.webp' | asset_url
+    assign hero_src = hero_src_720
+  %}
   <img
-    src="{{ mobile_src }}"
+    src="{{ hero_src }}"
     srcset="
-      {{ image | image_url: width: 400, format: 'webp' }} 400w,
-      {{ image | image_url: width: 320, format: 'webp' }} 320w,
-      {{ image | image_url: width: 240, format: 'webp' }} 240w
+      {{ hero_src_480 }} 480w,
+      {{ hero_src_720 }} 720w
     "
-    sizes="100vw"
+    sizes="{{ hero_sizes }}"
     alt="{{ alt | escape }}"
-    width="{{ image.width }}"
-    height="{{ image.height }}"
+    width="{{ img_width }}"
+    height="{{ img_height }}"
     class="split-hero__image"
     decoding="{% if is_lcp %}sync{% else %}async{% endif %}"
     {% if is_lcp %}
@@ -44,4 +41,38 @@
       fetchpriority="low"
     {% endif %}
   >
-</picture>
+{% else %}
+  {% liquid
+    assign mobile_src = image | image_url: width: 480, format: 'webp'
+    assign img_width = image.width | default: img_width
+    assign img_height = image.height | default: img_height
+  %}
+  <picture>
+    <source
+      type="image/webp"
+      media="(min-width: 768px)"
+      srcset="{{ image | image_url: width: 720, format: 'webp' }} 720w"
+      sizes="50vw"
+    >
+    <img
+      src="{{ mobile_src }}"
+      srcset="
+        {{ image | image_url: width: 480, format: 'webp' }} 480w,
+        {{ image | image_url: width: 720, format: 'webp' }} 720w
+      "
+      sizes="100vw"
+      alt="{{ alt | escape }}"
+      width="{{ img_width }}"
+      height="{{ img_height }}"
+      class="split-hero__image"
+      decoding="{% if is_lcp %}sync{% else %}async{% endif %}"
+      {% if is_lcp %}
+        loading="eager"
+        fetchpriority="high"
+      {% else %}
+        loading="lazy"
+        fetchpriority="low"
+      {% endif %}
+    >
+  </picture>
+{% endif %}

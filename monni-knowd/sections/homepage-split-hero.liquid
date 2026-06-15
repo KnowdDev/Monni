@@ -7,7 +7,15 @@
     class="split-hero__panel split-hero__panel--left"
   >
     <div class="split-hero__fallback split-hero__fallback--left"></div>
-    {% if section.settings.image_left %}
+    {% if section.settings.use_optimized_assets != false %}
+      {% render 'split-hero-media',
+        asset_filename: 'monni-hero-left.webp',
+        alt: section.settings.image_left.alt | default: 'Clothing',
+        lcp: true,
+        width: 720,
+        height: 899
+      %}
+    {% elsif section.settings.image_left %}
       {% render 'split-hero-media',
         image: section.settings.image_left,
         alt: section.settings.image_left.alt | default: 'Clothing',
@@ -35,7 +43,15 @@
     class="split-hero__panel split-hero__panel--right"
   >
     <div class="split-hero__fallback split-hero__fallback--right"></div>
-    {% if section.settings.image_right %}
+    {% if section.settings.use_optimized_assets != false %}
+      {% render 'split-hero-media',
+        asset_filename: 'monni-hero-right.webp',
+        alt: section.settings.image_right.alt | default: 'Home',
+        lcp: false,
+        width: 720,
+        height: 899
+      %}
+    {% elsif section.settings.image_right %}
       {% render 'split-hero-media',
         image: section.settings.image_right,
         alt: section.settings.image_right.alt | default: 'Home',
@@ -63,7 +79,7 @@
   </div>
 </section>
 
-{% stylesheet %}
+{% style %}
   .split-hero {
     display: grid;
     grid-template-columns: 1fr;
@@ -196,7 +212,7 @@
       transition: none;
     }
   }
-{% endstylesheet %}
+{% endstyle %}
 
 {% schema %}
 {
@@ -205,9 +221,17 @@
   "class": "shopify-section",
   "settings": [
     {
+      "type": "checkbox",
+      "id": "use_optimized_assets",
+      "label": "Use optimized WebP hero images",
+      "info": "Serves pre-compressed theme assets for faster mobile load. Disable to use the images below.",
+      "default": true
+    },
+    {
       "type": "image_picker",
       "id": "image_left",
-      "label": "Left image"
+      "label": "Left image",
+      "info": "Also set Theme settings → Performance → LCP preload image to this same image for fastest mobile load."
     },
     {
       "type": "text",

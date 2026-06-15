@@ -24,7 +24,7 @@
           {% endif %}
           <p>
             <a href="mailto:{{ settings.contact_email | default: 'hello@teaandtonic.co.nz' }}">{{ settings.contact_email | default: 'hello@teaandtonic.co.nz' }}</a>
-            {% assign footer_phone = settings.contact_phone | default: '+6421975102' %}
+            {% assign footer_phone = settings.contact_phone | default: '09 422 9083' %}
             | <a href="tel:{{ footer_phone | replace: ' ', '' }}">Tel. {{ footer_phone }}</a>
           </p>
         </div>
@@ -105,7 +105,7 @@
   </div>
 </footer>
 
-{% stylesheet %}
+{% style %}
   .footer {
     background-color: #FAFAF8;
     border-top: 1px solid var(--color-border-light);
@@ -397,7 +397,7 @@
       transition: color var(--transition-fast);
     }
   }
-{% endstylesheet %}
+{% endstyle %}
 
 {% schema %}
 {

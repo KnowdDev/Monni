@@ -31,7 +31,6 @@
     revealed = true;
     popup.classList.add('is-visible');
     popup.setAttribute('aria-hidden', 'false');
-    closeBtn?.focus({ preventScroll: true });
   };
 
   const dismiss = () => {
@@ -55,7 +54,7 @@
     reveal();
   } else {
     window.addEventListener('scroll', onScroll, { passive: true });
-    if (window.scrollY >= threshold) onScroll();
+    requestAnimationFrame(onScroll);
   }
 
   closeBtn?.addEventListener('click', dismiss);

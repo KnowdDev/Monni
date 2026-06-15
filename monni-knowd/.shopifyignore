@@ -3,7 +3,9 @@
 #
 # ─── MANUALLY MANAGED TEMPLATES ─────────────────────────────────────────────
 # These templates are edited directly in the Shopify admin theme editor.
-# Excluding them prevents `shopify theme push` from overwriting live changes.
+# Excluding them prevents `shopify theme push`, `theme dev`, and `theme pull`
+# from syncing them. Do NOT upload these via the Admin API either — that bypasses
+# this file and will overwrite live editor settings.
 
 templates/index.json
 templates/product.json
@@ -23,4 +25,5 @@ templates/gift_card.liquid
 templates/maker.liquid
 
 # Section group configs (managed in admin)
+sections/header-group.json
 sections/footer-group.json

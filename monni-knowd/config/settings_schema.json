@@ -46,13 +46,13 @@
         "type": "text",
         "id": "contact_phone",
         "label": "Contact phone",
-        "default": "+6421975102"
+        "default": "09 422 9083"
       },
       {
         "type": "textarea",
         "id": "store_hours",
         "label": "Store hours",
-        "default": "Monday - Friday: 9am - 6pm\nSaturday: 10am - 5pm\nSunday: Closed"
+        "default": "Sunday to Friday: 10.00am – 4.00pm\nSaturday: 9.00am – 5.00pm"
       }
     ]
   },
@@ -214,6 +214,20 @@
         "id": "announcement_text_color",
         "label": "Text color",
         "default": "#FAF8F5"
+      }
+    ]
+  },
+  {
+    "name": "Performance",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Set the LCP preload image to match the homepage split-hero left panel for faster mobile load."
+      },
+      {
+        "type": "image_picker",
+        "id": "homepage_lcp_image",
+        "label": "Homepage LCP preload image"
       }
     ]
   },
