@@ -1,8 +1,31 @@
+{%- liquid
+  assign founder_bg = section.settings.background_color | default: '#D9D0C4'
+  assign founder_image = section.settings.background_image
+  assign overlay_strength = section.settings.background_overlay | default: 72
+-%}
+
 <section
-  class="founder full-width"
+  class="founder full-width{% if founder_image != blank %} founder--has-image{% endif %}"
   data-section-id="{{ section.id }}"
-  style="--founder-bg: {{ section.settings.background_color | default: '#D9D0C4' }};"
+  style="--founder-bg: {{ founder_bg }}; --founder-overlay: {{ overlay_strength }}%; --founder-image-focus-y: {{ section.settings.image_focus_y | default: 50 }}%;"
 >
+  {% if founder_image != blank %}
+    <div class="founder__media" aria-hidden="true">
+      {% render 'responsive-img',
+        image: founder_image,
+        alt: '',
+        class: 'founder__image',
+        sizes: '100vw',
+        widths: '480,720,960,1280',
+        default_width: 720,
+        width: founder_image.width | default: 1280,
+        height: founder_image.height | default: 720,
+        loading: 'lazy'
+      %}
+      <div class="founder__overlay"></div>
+    </div>
+  {% endif %}
+
   <div class="founder__inner">
     <div class="founder__text">
       <blockquote class="founder__quote">
@@ -19,13 +42,46 @@
 
 {% style %}
   .founder {
+    position: relative;
+    overflow: hidden;
     background:
       radial-gradient(ellipse at 18% 12%, color-mix(in srgb, var(--founder-bg, #D9D0C4) 72%, white) 0%, transparent 58%),
       radial-gradient(ellipse at 88% 88%, color-mix(in srgb, var(--color-accent) 28%, var(--founder-bg, #D9D0C4)) 0%, transparent 52%),
       var(--founder-bg, #D9D0C4);
   }
 
+  .founder--has-image {
+    background: var(--founder-bg, #D9D0C4);
+  }
+
+  .founder__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .founder__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center var(--founder-image-focus-y, 50%);
+    display: block;
+  }
+
+  .founder__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--founder-bg, #D9D0C4) var(--founder-overlay, 72%), transparent) 0%,
+        color-mix(in srgb, var(--founder-bg, #D9D0C4) calc(var(--founder-overlay, 72%) + 8%), transparent) 100%
+      );
+  }
+
   .founder__inner {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,7 +139,35 @@
       "type": "color",
       "id": "background_color",
       "label": "Background color",
+      "info": "Used as fallback and to tint the image overlay for readable text.",
       "default": "#D9D0C4"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "image_focus_y",
+      "label": "Image vertical position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "info": "Move the background image up (0%) or down (100%) when it is cropped to fit the section."
+    },
+    {
+      "type": "range",
+      "id": "background_overlay",
+      "label": "Image overlay strength",
+      "min": 40,
+      "max": 90,
+      "step": 2,
+      "unit": "%",
+      "default": 72,
+      "info": "Higher values soften the photo so the quote stays readable."
     },
     {
       "type": "textarea",

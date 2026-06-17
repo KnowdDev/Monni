@@ -16,7 +16,11 @@
   endif
 -%}
 
-<section class="seasonal full-width" data-section-id="{{ section.id }}">
+<section
+  class="seasonal full-width"
+  data-section-id="{{ section.id }}"
+  style="--seasonal-image-focus-y: {{ section.settings.image_focus_y | default: 50 }}%; --seasonal-image-rotation: {{ section.settings.image_rotation | default: 0 }}deg;"
+>
   <a href="{{ card_link | default: '#' }}" class="seasonal__wrap">
     <div class="seasonal__image-wrap">
       {% if hero_image != blank %}
@@ -77,11 +81,14 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center var(--seasonal-image-focus-y, 50%);
+    transform: rotate(var(--seasonal-image-rotation, 0deg));
+    transform-origin: center center;
     transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .seasonal__wrap:hover .seasonal__image {
-    transform: scale(1.03);
+    transform: rotate(var(--seasonal-image-rotation, 0deg)) scale(1.03);
   }
 
   .seasonal__fallback {
@@ -175,6 +182,27 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image (optional override)"
+    },
+    {
+      "type": "range",
+      "id": "image_focus_y",
+      "label": "Image vertical position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "info": "Move the image up (0%) or down (100%) when it is cropped to fit the section."
+    },
+    {
+      "type": "range",
+      "id": "image_rotation",
+      "label": "Image rotation",
+      "min": -3,
+      "max": 3,
+      "step": 0.1,
+      "default": 0,
+      "info": "Fine tilt in degrees (0.1° steps — Shopify’s finest slider precision). Negative tilts left, positive tilts right."
     },
     {
       "type": "text",
