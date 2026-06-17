@@ -111,6 +111,38 @@
     });
   };
 
+  const megaMenuControllers = [];
+
+  const closeAllMegaMenus = () => {
+    megaMenuControllers.forEach((controller) => controller.forceClose());
+  };
+
+  function syncWishlistCount() {
+    try {
+      const raw = JSON.parse(localStorage.getItem('monni:wishlist') || '[]');
+      const count = raw.filter((item) =>
+        typeof item === 'object' ? item.handle || item.id : item
+      ).length;
+      document.querySelectorAll('[data-wishlist-count], [data-wishlist-count-mobile]').forEach((el) => {
+        el.textContent = count;
+        if (count > 0) {
+          el.removeAttribute('hidden');
+          el.hidden = false;
+        } else {
+          el.setAttribute('hidden', '');
+          el.hidden = true;
+        }
+      });
+    } catch {
+      /* ignore */
+    }
+  }
+
+  document.addEventListener('pageshow', () => {
+    megaMenuControllers.forEach((controller) => controller.scheduleEnableMegaMenu());
+    closeAllDrawers();
+  });
+
   document.addEventListener('click', (event) => {
     if (!(event.target instanceof Element)) return;
 
@@ -153,12 +185,19 @@
       if (root instanceof HTMLElement) {
         setDrawerState(root, false);
       }
+      return;
+    }
+
+    const navLink = event.target.closest('.header__nav--desktop a.header__menu-link:not([data-header-shop-trigger])');
+    if (navLink instanceof HTMLElement) {
+      closeAllMegaMenus();
     }
   });
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       closeAllDrawers();
+      closeAllMegaMenus();
     }
   });
 
@@ -180,28 +219,8 @@
 
   document.addEventListener('shopify:section:load', () => {
     closeAllDrawers();
+    closeAllMegaMenus();
   });
-
-  function syncWishlistCount() {
-    try {
-      const raw = JSON.parse(localStorage.getItem('monni:wishlist') || '[]');
-      const count = raw.filter((item) =>
-        typeof item === 'object' ? item.handle || item.id : item
-      ).length;
-      document.querySelectorAll('[data-wishlist-count], [data-wishlist-count-mobile]').forEach((el) => {
-        el.textContent = count;
-        if (count > 0) {
-          el.removeAttribute('hidden');
-          el.hidden = false;
-        } else {
-          el.setAttribute('hidden', '');
-          el.hidden = true;
-        }
-      });
-    } catch {
-      /* ignore */
-    }
-  }
 
   document.addEventListener('wishlist:updated', syncWishlistCount);
 
@@ -225,6 +244,10 @@
       if (trigger instanceof HTMLElement) {
         trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       }
+      if (panel instanceof HTMLElement) {
+        panel.toggleAttribute('hidden', !isOpen);
+        panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      }
     };
 
     const forceClose = () => {
@@ -235,6 +258,10 @@
       item.classList.remove('is-shop-open');
       if (trigger instanceof HTMLElement) {
         trigger.setAttribute('aria-expanded', 'false');
+      }
+      if (panel instanceof HTMLElement) {
+        panel.setAttribute('hidden', '');
+        panel.setAttribute('aria-hidden', 'true');
       }
     };
 
@@ -253,18 +280,13 @@
       megaReady = false;
       root.removeAttribute('data-mega-ready');
       if (enableTimer) window.clearTimeout(enableTimer);
-      enableTimer = window.setTimeout(enableMegaMenu, 500);
+      enableTimer = window.setTimeout(enableMegaMenu, 750);
     };
 
     forceClose();
-    enableTimer = window.setTimeout(enableMegaMenu, 500);
+    enableTimer = window.setTimeout(enableMegaMenu, 750);
 
-    window.addEventListener('pageshow', (event) => {
-      scheduleEnableMegaMenu();
-      if (event.persisted) {
-        closeAllDrawers();
-      }
-    });
+    megaMenuControllers.push({ root, forceClose, scheduleEnableMegaMenu });
 
     const openMenu = () => {
       if (!megaReady) return;

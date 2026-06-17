@@ -438,6 +438,7 @@
     left: 0;
     right: 0;
     z-index: 6;
+    display: none;
     padding: 1.75rem 0 2.25rem;
     background: rgba(252, 250, 248, 0.98);
     border-top: 1px solid rgba(229, 224, 220, 0.85);
@@ -465,7 +466,8 @@
     height: 1.25rem;
   }
 
-  .header__shell:has(.header__menu-item--mega.is-shop-open) .header__mega-panel {
+  .header[data-mega-ready="true"] .header__shell:has(.header__menu-item--mega.is-shop-open) .header__mega-panel {
+    display: block;
     opacity: 1;
     visibility: visible;
     transform: translateY(0);

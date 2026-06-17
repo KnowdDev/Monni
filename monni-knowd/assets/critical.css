@@ -1426,9 +1426,15 @@ html.js-animations [data-animate].is-visible {
 }
 
 .collection-page__bottom-intro {
-  margin-top: var(--spacing-2xl);
-  padding-top: var(--spacing-xl);
+  margin-top: var(--spacing-xxl);
+  padding-top: var(--spacing-xxl);
   border-top: 1px solid var(--color-border-light);
+}
+
+.collection-page__pagination + .collection-page__bottom-intro {
+  margin-top: 0;
+  padding-top: var(--spacing-xl);
+  border-top: none;
 }
 
 .collection-page__bottom-intro-content {
@@ -1975,8 +1981,9 @@ html.js-animations [data-animate].is-visible {
   align-items: center;
   gap: var(--spacing-md);
   margin-top: var(--spacing-xxl);
-  padding-top: var(--spacing-xl);
+  padding: var(--spacing-xl) 0;
   border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .collection-page__pagination-link {
