@@ -1,6 +1,6 @@
 {% comment %}
   LCP preload — must match split-hero left panel src/srcset selection.
-  Default: optimized theme assets with responsive widths.
+  Mobile gets 480w; desktop gets 720w.
 {% endcomment %}
 {% if template.name == 'index' %}
   {% if settings.homepage_lcp_image != blank %}
@@ -12,17 +12,10 @@
     <link rel="preload" as="image" href="{{ lcp_desktop }}" media="(min-width: 768px)" fetchpriority="high">
   {% else %}
     {% liquid
-      assign lcp_base = 'monni-hero-left'
-      assign lcp_480 = lcp_base | append: '-480.webp' | asset_url
-      assign lcp_720 = lcp_base | append: '-720.webp' | asset_url
+      assign lcp_480 = 'monni-hero-left-480.webp' | asset_url
+      assign lcp_720 = 'monni-hero-left-720.webp' | asset_url
     %}
-    <link
-      rel="preload"
-      as="image"
-      href="{{ lcp_720 }}"
-      imagesrcset="{{ lcp_480 }} 480w, {{ lcp_720 }} 720w"
-      imagesizes="(max-width: 767px) 100vw, 50vw"
-      fetchpriority="high"
-    >
+    <link rel="preload" as="image" href="{{ lcp_480 }}" media="(max-width: 767px)" fetchpriority="high">
+    <link rel="preload" as="image" href="{{ lcp_720 }}" media="(min-width: 768px)" fetchpriority="high">
   {% endif %}
 {% endif %}

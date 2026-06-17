@@ -18,10 +18,10 @@
     endfor
   endif
 
-  assign category_keys = 'wellness,beauty,clothing,jewellery,home,gifts' | split: ','
-  assign category_labels = 'Wellness,Beauty,Clothing,Jewellery,Home,Gifts' | split: ','
-  assign category_urls = '/collections/wellness,/collections/beauty,/collections/clothing,/collections/all-jewellery,/collections/all-home,/collections/giftboxes' | split: ','
-  assign category_collection_handles = 'wellness,beauty,clothing,all-jewellery,all-home,giftboxes' | split: ','
+  assign category_keys = 'wellness,beauty,clothing,jewellery,home,gifting' | split: ','
+  assign category_labels = 'Wellness,Beauty,Clothing,Jewellery,Home,Gifting' | split: ','
+  assign category_urls = '/collections/wellness,/collections/beauty,/collections/clothing,/collections/all-jewellery,/collections/all-home,/collections/all-gifting' | split: ','
+  assign category_collection_handles = 'wellness,beauty,clothing,all-jewellery,all-home,all-gifting' | split: ','
   assign category_fallback_assets = 'frolic-ceramics.webp,frolic-ceramics.webp,frolic-ceramics.webp,frolic-ceramics.webp,hero-homewares.jpg,hero-gifting.jpg' | split: ','
   assign category_unsplash_ids = 'photo-1556228578-0d85b1a4d571,photo-1571781926291-c477ebfd024b,photo-1516762689617-e1cffcef479d,photo-1611591437281-460bfbe1220a,photo-1586023492125-27b2c045efd7,photo-1549465220-1a8b9238cd48' | split: ','
 
@@ -125,6 +125,7 @@
               {%- assign category_child = blank -%}
 
               {%- assign category_collection = collections[category_collection_handles[category_index]] -%}
+              {%- assign category_handle = category_collection_handles[category_index] -%}
               {%- if category_collection != blank -%}
                 {%- assign category_url = category_collection.url -%}
               {%- endif -%}
@@ -132,9 +133,11 @@
               {%- if shop_parent != blank and shop_parent.links.size > 0 -%}
                 {%- for child in shop_parent.links -%}
                   {%- assign child_handle = child.title | handleize -%}
-                  {%- if child_handle == category_key or child_handle == 'jewelry' and category_key == 'jewellery' or child_handle == 'gifting' and category_key == 'gifts' or child_handle == 'gift' and category_key == 'gifts' -%}
+                  {%- if child_handle == category_key or child_handle == 'jewelry' and category_key == 'jewellery' or child_handle == 'gifting' and category_key == 'gifting' or child_handle == 'gift' and category_key == 'gifting' or child_handle == 'gifts' and category_key == 'gifting' -%}
                     {%- assign category_child = child -%}
-                    {%- assign category_url = child.url -%}
+                    {%- if category_collection == blank -%}
+                      {%- assign category_url = child.url -%}
+                    {%- endif -%}
                     {%- assign category_label = child.title -%}
                     {%- break -%}
                   {%- endif -%}
@@ -142,9 +145,11 @@
               {%- elsif menu != blank -%}
                 {%- for menu_link in menu.links -%}
                   {%- assign menu_link_handle = menu_link.title | handleize -%}
-                  {%- if menu_link_handle == category_key or menu_link_handle == 'jewelry' and category_key == 'jewellery' or menu_link_handle == 'gifting' and category_key == 'gifts' -%}
+                  {%- if menu_link_handle == category_key or menu_link_handle == 'jewelry' and category_key == 'jewellery' or menu_link_handle == 'gifting' and category_key == 'gifting' or menu_link_handle == 'gifts' and category_key == 'gifting' -%}
                     {%- assign category_child = menu_link -%}
-                    {%- assign category_url = menu_link.url -%}
+                    {%- if category_collection == blank -%}
+                      {%- assign category_url = menu_link.url -%}
+                    {%- endif -%}
                     {%- assign category_label = menu_link.title -%}
                     {%- break -%}
                   {%- endif -%}
@@ -154,6 +159,7 @@
               <div class="header__mega-column">
                 {%- render 'shop-mega-category',
                   category_key: category_key,
+                  category_handle: category_handle,
                   category_label: category_label,
                   category_url: category_url,
                   category_child: category_child
@@ -203,6 +209,7 @@
         {%- assign category_child = blank -%}
 
         {%- assign category_collection = collections[category_collection_handles[category_index]] -%}
+        {%- assign category_handle = category_collection_handles[category_index] -%}
         {%- if category_collection != blank -%}
           {%- assign category_url = category_collection.url -%}
         {%- endif -%}
@@ -210,9 +217,11 @@
         {%- if shop_parent != blank and shop_parent.links.size > 0 -%}
           {%- for child in shop_parent.links -%}
             {%- assign child_handle = child.title | handleize -%}
-            {%- if child_handle == category_key or child_handle == 'jewelry' and category_key == 'jewellery' or child_handle == 'gifting' and category_key == 'gifts' -%}
+            {%- if child_handle == category_key or child_handle == 'jewelry' and category_key == 'jewellery' or child_handle == 'gifting' and category_key == 'gifting' or child_handle == 'gift' and category_key == 'gifting' or child_handle == 'gifts' and category_key == 'gifting' -%}
               {%- assign category_child = child -%}
-              {%- assign category_url = child.url -%}
+              {%- if category_collection == blank -%}
+                {%- assign category_url = child.url -%}
+              {%- endif -%}
               {%- assign category_label = child.title -%}
               {%- break -%}
             {%- endif -%}
@@ -220,9 +229,11 @@
         {%- elsif menu != blank -%}
           {%- for menu_link in menu.links -%}
             {%- assign menu_link_handle = menu_link.title | handleize -%}
-            {%- if menu_link_handle == category_key or menu_link_handle == 'jewelry' and category_key == 'jewellery' or menu_link_handle == 'gifting' and category_key == 'gifts' -%}
+            {%- if menu_link_handle == category_key or menu_link_handle == 'jewelry' and category_key == 'jewellery' or menu_link_handle == 'gifting' and category_key == 'gifting' or menu_link_handle == 'gifts' and category_key == 'gifting' -%}
               {%- assign category_child = menu_link -%}
-              {%- assign category_url = menu_link.url -%}
+              {%- if category_collection == blank -%}
+                {%- assign category_url = menu_link.url -%}
+              {%- endif -%}
               {%- assign category_label = menu_link.title -%}
               {%- break -%}
             {%- endif -%}
@@ -232,6 +243,7 @@
         <div class="header__mobile-shop-column">
           {%- render 'shop-mega-category',
             category_key: category_key,
+            category_handle: category_handle,
             category_label: category_label,
             category_url: category_url,
             category_child: category_child,

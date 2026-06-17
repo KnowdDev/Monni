@@ -5,8 +5,10 @@
       "settings": {
         "image_left": "shopify://shop_images/Copy_of_SophieWilliamson0131--000045.jpg",
         "link_left": "/collections/clothing",
+        "label_left": "Clothing",
         "image_right": "shopify://shop_images/MONNIxLOFOTEN002-13.jpg",
-        "link_right": "/collections/all-home"
+        "link_right": "/collections/all-home",
+        "label_right": "Home"
       }
     },
     "opening-statement": {

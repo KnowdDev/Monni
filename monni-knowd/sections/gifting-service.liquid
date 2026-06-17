@@ -1,0 +1,215 @@
+{% comment %}
+  Gifting service page — editorial layout aligned with brand-profile / about-monni.
+{% endcomment %}
+
+<section
+  class="gifting-service"
+  data-section-id="{{ section.id }}"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="gifting-service__inner">
+    <header class="gifting-service__header">
+      {%- liquid
+        assign gifting_hub = collections['all-gifting']
+        if gifting_hub != blank
+          assign gifting_hub_url = gifting_hub.url
+        else
+          assign gifting_hub_url = '/collections/all-gifting'
+        endif
+      -%}
+      <p class="gifting-service__eyebrow">
+        <a href="{{ gifting_hub_url }}">{{ section.settings.eyebrow | default: 'Gifting' | escape }}</a>
+      </p>
+      <h1 class="gifting-service__title">{{ page.title | escape }}</h1>
+      {%- if section.settings.top_line != blank -%}
+        <p class="gifting-service__topline">{{ section.settings.top_line | escape }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if section.settings.body != blank -%}
+      <div class="gifting-service__body rte">{{ section.settings.body }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.contact_email != blank or section.settings.contact_phone != blank -%}
+      <div class="gifting-service__contact">
+        {%- if section.settings.contact_label != blank -%}
+          <p class="gifting-service__contact-label">{{ section.settings.contact_label | escape }}</p>
+        {%- endif -%}
+        <p class="gifting-service__contact-details">
+          {%- if section.settings.contact_email != blank -%}
+            <a href="mailto:{{ section.settings.contact_email | escape }}">{{ section.settings.contact_email | escape }}</a>
+          {%- endif -%}
+          {%- if section.settings.contact_email != blank and section.settings.contact_phone != blank -%}
+            <span aria-hidden="true"> | </span>
+          {%- endif -%}
+          {%- if section.settings.contact_phone != blank -%}
+            <a href="tel:{{ section.settings.contact_phone | replace: ' ', '' | escape }}">{{ section.settings.contact_phone | escape }}</a>
+          {%- endif -%}
+        </p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .gifting-service {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    --gifting-inline-padding: clamp(1.25rem, 4.5vw, var(--page-margin));
+  }
+
+  .gifting-service__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding-inline: var(--gifting-inline-padding);
+    display: grid;
+    gap: clamp(2rem, 5vw, 3rem);
+  }
+
+  .gifting-service__header {
+    text-align: center;
+  }
+
+  .gifting-service__eyebrow {
+    font-size: 0.875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 var(--spacing-sm);
+    color: var(--color-foreground-muted);
+  }
+
+  .gifting-service__eyebrow a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .gifting-service__eyebrow a:hover {
+    color: var(--color-foreground);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .gifting-service__title {
+    margin: 0 auto var(--spacing-md);
+    max-width: 16ch;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 350;
+    line-height: 1.12;
+    letter-spacing: 0.02em;
+  }
+
+  .gifting-service__topline {
+    margin: 0 auto;
+    max-width: 38ch;
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    color: var(--color-foreground-light);
+  }
+
+  .gifting-service__body {
+    max-width: 40rem;
+    margin: 0 auto;
+    color: var(--color-foreground);
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+  }
+
+  .gifting-service__body :is(p, ul, ol) {
+    margin: 0 0 var(--spacing-md);
+  }
+
+  .gifting-service__body :is(p, ul, ol):last-child {
+    margin-bottom: 0;
+  }
+
+  .gifting-service__contact {
+    max-width: 40rem;
+    margin: clamp(1rem, 3vw, 2rem) auto 0;
+    padding-top: clamp(2rem, 5vw, 3rem);
+    border-top: 1px solid var(--color-border-light);
+    text-align: center;
+  }
+
+  .gifting-service__contact-label {
+    font-size: var(--text-sm);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-foreground-muted);
+    margin: 0 0 var(--spacing-sm);
+  }
+
+  .gifting-service__contact-details a {
+    color: var(--color-foreground);
+    text-decoration: none;
+  }
+
+  .gifting-service__contact-details a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Gifting service",
+  "tag": "section",
+  "class": "section-gifting-service",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Gifting"
+    },
+    {
+      "type": "text",
+      "id": "top_line",
+      "label": "Top line"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body"
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Contact label"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact email"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "Contact phone"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 48,
+      "max": 160,
+      "step": 4,
+      "default": 96,
+      "unit": "px",
+      "label": "Padding top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 48,
+      "max": 160,
+      "step": 4,
+      "default": 96,
+      "unit": "px",
+      "label": "Padding bottom"
+    }
+  ]
+}
+{% endschema %}

@@ -65,8 +65,8 @@
   };
 
   const syncGlobalState = () => {
-    const hasOpenMenu = Array.from(document.querySelectorAll('[data-header-menu-state]')).some(
-      (input) => input instanceof HTMLInputElement && input.checked
+    const hasOpenMenu = Array.from(document.querySelectorAll('[data-header-root]')).some(
+      (root) => root instanceof HTMLElement && root.classList.contains('header--menu-open')
     );
 
     document.documentElement.classList.toggle('header-menu-open', hasOpenMenu);
@@ -75,14 +75,20 @@
   const setDrawerState = (root, isOpen) => {
     if (!(root instanceof HTMLElement)) return;
 
-    const menuState = root.querySelector('[data-header-menu-state]');
+    const menuToggle = root.querySelector('[data-header-menu-toggle]');
     const closeButton = root.querySelector('[data-header-menu-close]');
-
-    if (menuState instanceof HTMLInputElement) {
-      menuState.checked = isOpen;
-    }
+    const drawer = root.querySelector('[data-header-menu-drawer]');
 
     root.classList.toggle('header--menu-open', isOpen);
+
+    if (menuToggle instanceof HTMLElement) {
+      menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+    }
+
+    if (drawer instanceof HTMLElement) {
+      drawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+    }
 
     if (isOpen) {
       window.requestAnimationFrame(() => {
@@ -105,24 +111,27 @@
     });
   };
 
-  document.addEventListener('change', (event) => {
-    const input = event.target;
-    if (!(input instanceof HTMLInputElement) || !input.matches('[data-header-menu-state]')) return;
-
-    const root = getRoot(input);
-    if (!(root instanceof HTMLElement)) return;
-
-    root.classList.toggle('header--menu-open', input.checked);
-
-    if (!input.checked) {
-      resetMobilePanels(root);
-    }
-
-    syncGlobalState();
-  });
-
   document.addEventListener('click', (event) => {
     if (!(event.target instanceof Element)) return;
+
+    const menuToggle = event.target.closest('[data-header-menu-toggle]');
+    if (menuToggle instanceof HTMLElement) {
+      const root = getRoot(menuToggle);
+      if (root instanceof HTMLElement) {
+        const isOpen = root.classList.contains('header--menu-open');
+        setDrawerState(root, !isOpen);
+      }
+      return;
+    }
+
+    const menuClose = event.target.closest('[data-header-menu-close], [data-header-menu-backdrop]');
+    if (menuClose instanceof HTMLElement) {
+      const root = getRoot(menuClose);
+      if (root instanceof HTMLElement) {
+        setDrawerState(root, false);
+      }
+      return;
+    }
 
     const mobileToggle = event.target.closest('[data-header-mobile-toggle]');
     if (mobileToggle instanceof HTMLElement) {
@@ -150,17 +159,7 @@
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       closeAllDrawers();
-      return;
     }
-
-    if (event.key !== 'Enter' && event.key !== ' ') return;
-    if (!(event.target instanceof Element)) return;
-
-    const labelButton = event.target.closest('[data-header-menu-toggle], [data-header-menu-close]');
-    if (!(labelButton instanceof HTMLElement)) return;
-
-    event.preventDefault();
-    labelButton.click();
   });
 
   let resizeFrame = null;
@@ -216,15 +215,59 @@
     if (!(item instanceof HTMLElement) || !(shell instanceof HTMLElement)) return;
 
     let closeTimer = null;
+    let megaReady = false;
+    let enableTimer = null;
 
     const setOpen = (isOpen) => {
+      if (isOpen && !megaReady) return;
+
       item.classList.toggle('is-shop-open', isOpen);
       if (trigger instanceof HTMLElement) {
         trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       }
     };
 
+    const forceClose = () => {
+      if (closeTimer) {
+        window.clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+      item.classList.remove('is-shop-open');
+      if (trigger instanceof HTMLElement) {
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    };
+
+    const enableMegaMenu = () => {
+      if (megaReady) return;
+      megaReady = true;
+      root.setAttribute('data-mega-ready', 'true');
+      if (enableTimer) {
+        window.clearTimeout(enableTimer);
+        enableTimer = null;
+      }
+    };
+
+    const scheduleEnableMegaMenu = () => {
+      forceClose();
+      megaReady = false;
+      root.removeAttribute('data-mega-ready');
+      if (enableTimer) window.clearTimeout(enableTimer);
+      enableTimer = window.setTimeout(enableMegaMenu, 500);
+    };
+
+    forceClose();
+    enableTimer = window.setTimeout(enableMegaMenu, 500);
+
+    window.addEventListener('pageshow', (event) => {
+      scheduleEnableMegaMenu();
+      if (event.persisted) {
+        closeAllDrawers();
+      }
+    });
+
     const openMenu = () => {
+      if (!megaReady) return;
       if (closeTimer) {
         window.clearTimeout(closeTimer);
         closeTimer = null;
@@ -232,12 +275,21 @@
       setOpen(true);
     };
 
+    const openMenuFromFocus = (event) => {
+      if (!megaReady) return;
+      const target = event.target;
+      if (!(target instanceof HTMLElement) || !target.matches(':focus-visible')) return;
+      openMenu();
+    };
+
     const scheduleClose = () => {
+      if (!megaReady) return;
       if (closeTimer) window.clearTimeout(closeTimer);
       closeTimer = window.setTimeout(() => setOpen(false), 180);
     };
 
     const handleZoneLeave = (event) => {
+      if (!megaReady) return;
       const related = event.relatedTarget;
       if (related instanceof Node && shell.contains(related)) return;
       scheduleClose();
@@ -251,15 +303,17 @@
 
     shell.addEventListener('mouseleave', handleZoneLeave);
 
-    item.addEventListener('focusin', openMenu);
+    item.addEventListener('focusin', openMenuFromFocus);
     item.addEventListener('focusout', (event) => {
+      if (!megaReady) return;
       if (event.relatedTarget instanceof Node && (item.contains(event.relatedTarget) || panel?.contains(event.relatedTarget))) return;
       scheduleClose();
     });
 
     if (panel instanceof HTMLElement) {
-      panel.addEventListener('focusin', openMenu);
+      panel.addEventListener('focusin', openMenuFromFocus);
       panel.addEventListener('focusout', (event) => {
+        if (!megaReady) return;
         if (event.relatedTarget instanceof Node && (item.contains(event.relatedTarget) || panel.contains(event.relatedTarget))) return;
         scheduleClose();
       });

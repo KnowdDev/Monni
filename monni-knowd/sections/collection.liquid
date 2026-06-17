@@ -30,11 +30,9 @@
     <!-- Title -->
     <h1 class="collection-page__title">{{ collection.title }}</h1>
 
-    <!-- Description -->
-    {%- if collection.description != blank and section.settings.show_description -%}
-      <div class="collection-page__description rte">
-        {{ collection.description }}
-      </div>
+    {%- assign top_line = collection.metafields.monni.top_line.value | default: collection.metafields.monni.top_line -%}
+    {%- if top_line != blank and section.settings.show_top_line -%}
+      <p class="collection-page__topline">{{ top_line | escape }}</p>
     {%- endif -%}
 
     <!-- Product Count -->
@@ -217,12 +215,11 @@
     </div>
   </div>
 
-  <!-- Collection Type-Specific Content -->
-  {%- if is_fragrance and section.settings.show_collection_story -%}
-    <section class="collection-page__story">
-      <div class="collection-page__story-content">
-        <h2>{{ collection.metafields.collection.story_title | default: 'Our Fragrance Collection' }}</h2>
-        <p>{{ collection.metafields.collection.story | default: 'Discover our curated selection of fragrances, each crafted with intention to capture a moment, a memory, a feeling.' }}</p>
+  {%- assign bottom_intro = collection.metafields.monni.bottom_intro -%}
+  {%- if bottom_intro != blank and section.settings.show_bottom_intro -%}
+    <section class="collection-page__bottom-intro">
+      <div class="collection-page__bottom-intro-content rte">
+        {{ bottom_intro | metafield_tag }}
       </div>
     </section>
   {%- endif -%}
@@ -242,8 +239,14 @@
     },
     {
       "type": "checkbox",
-      "id": "show_description",
-      "label": "Show collection description",
+      "id": "show_top_line",
+      "label": "Show top line (above products)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_intro",
+      "label": "Show bottom intro (below products)",
       "default": true
     },
     {
@@ -268,12 +271,6 @@
       "type": "checkbox",
       "id": "show_quick_add",
       "label": "Show quick add button",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_collection_story",
-      "label": "Show collection story (fragrance collections)",
       "default": true
     },
     {

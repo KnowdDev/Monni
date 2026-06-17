@@ -19,7 +19,11 @@
     assign asset_base = asset_filename | replace: '.webp', ''
     assign hero_src_480 = asset_base | append: '-480.webp' | asset_url
     assign hero_src_720 = asset_base | append: '-720.webp' | asset_url
-    assign hero_src = hero_src_720
+    if is_lcp
+      assign hero_src = hero_src_480
+    else
+      assign hero_src = asset_filename | asset_url
+    endif
   %}
   <img
     src="{{ hero_src }}"

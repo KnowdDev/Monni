@@ -1,7 +1,7 @@
 {%- liquid
-  assign shop_categories = 'wellness,beauty,clothing,jewellery,home,gifts' | split: ','
-  assign shop_labels = 'Wellness,Beauty,Clothing,Jewellery,Home,Gifts' | split: ','
-  assign shop_handles = 'wellness,beauty,clothing,all-jewellery,all-home,giftboxes' | split: ','
+  assign shop_categories = 'wellness,beauty,clothing,jewellery,home,gifting' | split: ','
+  assign shop_labels = 'Wellness,Beauty,Clothing,Jewellery,Home,Gifting' | split: ','
+  assign shop_handles = 'wellness,beauty,clothing,all-jewellery,all-home,all-gifting' | split: ','
   assign shop_descriptions = 'Nourishment for the body and mind.,What we place on our skin matters.,Natural fibres worn for years.,Pieces to treasure over time.,Considered objects for everyday living.,Chosen with intention and wrapped with care.' | split: ','
   assign brands = shop.metaobjects.brand.values | sort: 'name'
 -%}

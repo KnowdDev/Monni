@@ -11,14 +11,6 @@
   data-header-breakpoint="1160"
   style="--header-logo-width: {{ settings.logo_width | default: 180 }}px;"
 >
-  <input
-    id="header-menu-state-{{ section.id }}"
-    class="header__menu-state visually-hidden"
-    type="checkbox"
-    data-header-menu-state
-    tabindex="-1"
-  >
-
   <div class="header__shell">
     <div class="header__inner">
       {%- liquid
@@ -61,14 +53,16 @@
       -%}
 
       <div class="header__side header__side--start">
-        <label
-          for="header-menu-state-{{ section.id }}"
-          class="header__menu-toggle"
-          aria-controls="header-drawer-{{ section.id }}"
-          data-header-menu-toggle
-        >
-          <span class="header__menu-toggle-label">Menu</span>
-        </label>
+  <button
+    type="button"
+    class="header__menu-toggle"
+    aria-controls="header-drawer-{{ section.id }}"
+    aria-expanded="false"
+    aria-label="Open navigation menu"
+    data-header-menu-toggle
+  >
+    <span class="header__menu-toggle-label" aria-hidden="true">Menu</span>
+  </button>
 
         <nav class="header__nav header__nav--desktop" aria-label="Primary navigation">
           <ul class="header__menu" role="list">
@@ -148,19 +142,21 @@
     {%- render 'header-shop-megamenu', menu: section.settings.menu, section: section, section_id: section.id, variant: 'desktop' -%}
   </div>
 
-  <label
-    for="header-menu-state-{{ section.id }}"
+  <button
+    type="button"
     class="header__drawer-backdrop"
     data-header-menu-backdrop
     aria-label="Close navigation menu"
-  ></label>
+    tabindex="-1"
+  ></button>
 
-  <aside
+  <div
     id="header-drawer-{{ section.id }}"
     class="header__drawer"
     role="dialog"
     aria-modal="true"
     aria-labelledby="header-drawer-title-{{ section.id }}"
+    aria-hidden="true"
     data-header-menu-drawer
   >
     <div class="header__drawer-panel">
@@ -179,14 +175,14 @@
           {% endif %}
         </a>
 
-        <label
-          for="header-menu-state-{{ section.id }}"
+        <button
+          type="button"
           class="header__drawer-close"
           data-header-menu-close
+          aria-label="Close navigation menu"
         >
-          <span class="sr-only">Close navigation menu</span>
           {{ 'icon-close.svg' | inline_asset_content }}
-        </label>
+        </button>
       </div>
 
       <div class="header__drawer-scroll">
@@ -246,7 +242,7 @@
         </div>
       </div>
     </div>
-  </aside>
+  </div>
 </header>
 
 {% style %}
@@ -285,16 +281,18 @@
     backdrop-filter: blur(18px);
   }
 
-  .header__menu-state.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
+  .header__drawer-backdrop,
+  .header__drawer-close,
+  .header__menu-toggle {
     border: 0;
+    background: transparent;
+    font: inherit;
+    color: inherit;
+    padding: 0;
+  }
+
+  .header__menu-toggle {
+    cursor: pointer;
   }
 
   .header__inner {
@@ -430,8 +428,7 @@
   .header__menu-link:hover::before,
   .header__menu-link[aria-current="page"]::before,
   .header__menu-item--mega:hover > .header__menu-link::before,
-  .header__menu-item--mega.is-shop-open > .header__menu-link::before,
-  .header__menu-item--mega:focus-within > .header__menu-link::before {
+  .header__menu-item--mega.is-shop-open > .header__menu-link::before {
     transform: scaleX(1);
   }
 
@@ -450,6 +447,9 @@
     visibility: hidden;
     transform: translateY(0.25rem);
     pointer-events: none;
+  }
+
+  .header[data-mega-ready="true"] .header__mega-panel {
     transition:
       opacity var(--transition-fast),
       transform var(--transition-normal),
@@ -465,11 +465,7 @@
     height: 1.25rem;
   }
 
-  .header__shell:has(.header__menu-item--mega.is-shop-open) .header__mega-panel,
-  .header__shell:has(.header__menu-item--mega:hover) .header__mega-panel,
-  .header__shell:has(.header__menu-item--mega:focus-within) .header__mega-panel,
-  .header__shell:has(.header__mega-panel:hover) .header__mega-panel,
-  .header__shell:has(.header__mega-panel:focus-within) .header__mega-panel {
+  .header__shell:has(.header__menu-item--mega.is-shop-open) .header__mega-panel {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -843,19 +839,16 @@
     transform: translateX(0);
   }
 
-  .header__menu-state:checked ~ .header__drawer-backdrop,
   .header--menu-open .header__drawer-backdrop {
     opacity: 1;
     pointer-events: auto;
   }
 
-  .header__menu-state:checked ~ .header__drawer,
   .header--menu-open .header__drawer {
     visibility: visible;
     pointer-events: auto;
   }
 
-  .header__menu-state:checked ~ .header__drawer .header__drawer-panel,
   .header--menu-open .header__drawer-panel {
     transform: translateX(0);
   }

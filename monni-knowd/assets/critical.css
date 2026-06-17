@@ -1412,11 +1412,34 @@ html.js-animations [data-animate].is-visible {
   color: var(--color-foreground);
 }
 
-.collection-page__description {
-  max-width: 600px;
-  margin: 0 auto var(--spacing-md);
+.collection-page__topline {
+  max-width: 42rem;
+  margin: 0 auto var(--spacing-lg);
+  font-family: var(--font-heading--family);
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  text-align: center;
   color: var(--color-foreground-light);
-  line-height: 1.7;
+}
+
+.collection-page__bottom-intro {
+  margin-top: var(--spacing-2xl);
+  padding-top: var(--spacing-xl);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.collection-page__bottom-intro-content {
+  max-width: 45rem;
+  margin: 0 auto;
+  color: var(--color-foreground-light);
+  line-height: 1.75;
+}
+
+.collection-page__bottom-intro-content p + p {
+  margin-top: var(--spacing-md);
 }
 
 .collection-page__count {

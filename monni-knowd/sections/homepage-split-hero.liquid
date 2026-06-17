@@ -5,12 +5,13 @@
   <a
     href="{{ section.settings.link_left | default: '/collections/clothing' }}"
     class="split-hero__panel split-hero__panel--left"
+    aria-label="{{ section.settings.label_left | default: 'Clothing' | escape }} — {{ section.settings.cta_left | default: 'Explore' | escape }}"
   >
     <div class="split-hero__fallback split-hero__fallback--left"></div>
     {% if section.settings.use_optimized_assets != false %}
       {% render 'split-hero-media',
         asset_filename: 'monni-hero-left.webp',
-        alt: section.settings.image_left.alt | default: 'Clothing',
+        alt: '',
         lcp: true,
         width: 720,
         height: 899
@@ -18,7 +19,7 @@
     {% elsif section.settings.image_left %}
       {% render 'split-hero-media',
         image: section.settings.image_left,
-        alt: section.settings.image_left.alt | default: 'Clothing',
+        alt: '',
         lcp: true
       %}
     {% else %}
@@ -41,12 +42,13 @@
   <a
     href="{{ section.settings.link_right | default: '/collections/all-home' }}"
     class="split-hero__panel split-hero__panel--right"
+    aria-label="{{ section.settings.label_right | default: 'Home' | escape }} — {{ section.settings.cta_right | default: 'Explore' | escape }}"
   >
     <div class="split-hero__fallback split-hero__fallback--right"></div>
     {% if section.settings.use_optimized_assets != false %}
       {% render 'split-hero-media',
         asset_filename: 'monni-hero-right.webp',
-        alt: section.settings.image_right.alt | default: 'Home',
+        alt: '',
         lcp: false,
         width: 720,
         height: 899
@@ -54,7 +56,7 @@
     {% elsif section.settings.image_right %}
       {% render 'split-hero-media',
         image: section.settings.image_right,
-        alt: section.settings.image_right.alt | default: 'Home',
+        alt: '',
         lcp: false
       %}
     {% else %}
@@ -131,6 +133,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    background-color: var(--color-border-light, #F0EBE7);
     transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
