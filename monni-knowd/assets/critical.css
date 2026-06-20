@@ -2173,12 +2173,12 @@ html.js-animations [data-animate].is-visible {
 
 /** Article Page — Medium-style: narrow centered column, left-aligned text */
 .article-page {
-  padding: clamp(2rem, 5vw, 3.5rem) var(--page-margin) clamp(3rem, 8vw, 5rem);
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1rem, 4.5vw, var(--page-margin)) clamp(3rem, 8vw, 5rem);
 }
 
 .article-page__column {
   width: 100%;
-  max-width: min(680px, 100%);
+  max-width: min(42rem, 100%);
   margin: 0 auto;
   text-align: left;
 }
@@ -2389,6 +2389,21 @@ html.js-animations [data-animate].is-visible {
   }
 }
 
+@media (max-width: 739px) {
+  .article-page {
+    padding-inline: clamp(1rem, 4.5vw, 1.25rem);
+  }
+
+  .article-page__column {
+    max-width: none;
+  }
+
+  .article-page__comments {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+  }
+}
+
 /** Comments Section */
 .article-page__comments {
   margin-top: var(--spacing-xxl);
@@ -2445,6 +2460,14 @@ html.js-animations [data-animate].is-visible {
   padding: var(--spacing-xl);
   background-color: var(--color-background-alt);
   border-radius: var(--style-border-radius-inputs);
+}
+
+@media (max-width: 739px) {
+  .article-page__comment-form {
+    padding: var(--spacing-lg) 0 0;
+    background-color: transparent;
+    border-radius: 0;
+  }
 }
 
 .article-page__comment-form-title {

@@ -118,7 +118,7 @@ export const brands = [
     name: 'Come Clean',
     tagline: 'Gentle, honest and made in Aotearoa with genuine care, this is body care extended to its most intimate expression.',
     vendor_match: 'Come Clean',
-    collection_handle: '',
+    collection_handle: 'come-clean',
     published: true,
     paragraphs: [
       'Come Clean begins with a simple premise: that intimacy deserves the same care and integrity we bring to every other act of wellbeing.',
@@ -145,7 +145,7 @@ export const brands = [
     name: 'Dwyer',
     tagline: 'Local, handcrafted and quietly luxurious, Dwyer creates beauty that lingers softly and means something.',
     vendor_match: 'Dwyer',
-    collection_handle: '',
+    collection_handle: 'dwyer',
     published: true,
     paragraphs: [
       'Sarah Dwyer is a Matakana perfumer and maker whose work is guided by a deep love of scent, place and the memories that fragrance can hold. Working from her studio, she blends and bottles perfumes and facial oils by hand in small batches, using exquisite oils and absolutes sourced locally and from around the world.',
@@ -172,7 +172,7 @@ export const brands = [
     name: 'Fountain of Youth',
     tagline: 'Intimate, feminine and genuinely tender, Fountain of Youth invites softness back into the way we care for ourselves, one slow, intentional moment at a time.',
     vendor_match: 'Fountain of Youth',
-    collection_handle: '',
+    collection_handle: 'fountain-of-youth',
     published: true,
     paragraphs: [
       'Fountain of Youth, known as FOY, was founded by Charlotte Keirle with a desire that feels quietly radical: to support women in developing a more loving, more attentive relationship with their own bodies.',
@@ -186,7 +186,7 @@ export const brands = [
     name: 'Frolic Ceramics',
     tagline: 'Tactile, joyful and warmly handmade, Frolic Ceramics brings ease and genuine character to the everyday domestic space.',
     vendor_match: 'Frolic Ceramics',
-    collection_handle: '',
+    collection_handle: 'frolic-ceramics',
     published: true,
     paragraphs: [
       'Vicki Fanning has been with us since the very beginning, one of our founding suppliers, and a maker whose work has lived in this space long enough to feel like it belongs here.',
@@ -285,7 +285,7 @@ export const brands = [
     name: 'Lisa Webb',
     tagline: 'Local, considered and genuinely beautiful, Lisa Webb creates jewellery that feels, from the very first time you wear it, like it was always meant to be yours.',
     vendor_match: 'Lisa Webb',
-    collection_handle: '',
+    collection_handle: 'lisa-webb',
     published: true,
     paragraphs: [
       'Lisa Webb has been making jewellery since childhood, when she first began crafting handmade gifts for the people she loved. That impulse, to make something meaningful and place it in someone else\'s hands, has never left her.',
@@ -313,7 +313,7 @@ export const brands = [
     name: 'Maeve Ceramics',
     tagline: 'Handcrafted, considered and always evolving, Maeve Ceramics brings warmth and individuality to the objects of everyday life.',
     vendor_match: 'Maeve',
-    collection_handle: '',
+    collection_handle: 'maeve-ceramics',
     published: true,
     paragraphs: [
       'Maeve Ceramics is a collection of handmade pottery by Annie-Maeve, made one piece at a time in her Auckland studio, not far from the Matakana coast where her family calls home.',
@@ -328,7 +328,7 @@ export const brands = [
     name: 'Mahurangi Olives',
     tagline: 'Rustic, generous and quietly ancient, Mahurangi Olives bring the nourishment of a working grove and the wisdom of old craft into everyday care.',
     vendor_match: 'Mahurangi Olives',
-    collection_handle: '',
+    collection_handle: 'mahurangi-olives',
     published: true,
     paragraphs: [
       'On the shores of Mahurangi Harbour, surrounded by award-winning wineries and the quietly rolling hills of coastal Northland, more than a thousand mature olive trees grow across seven premium varieties, tended by Isabella and David Sullivan with genuine care for the land and its produce.',
@@ -342,7 +342,7 @@ export const brands = [
     name: 'Mangawhai Honey',
     tagline: 'Local, golden and deeply connected to the land that makes it, Mangawhai Honey carries the quiet sweetness of a place tended with love.',
     vendor_match: 'Mangawhai Honey',
-    collection_handle: '',
+    collection_handle: 'mangawhai-honey',
     published: true,
     paragraphs: [
       'Louis Smith\'s family has called Mangawhai home since his great grandfather purchased the land in the late 1940s. Mangawhai Honey, established in 2015, is the continuation of that deep and rooted relationship with this particular corner of Aotearoa.',
@@ -355,8 +355,8 @@ export const brands = [
     handle: 'maryse',
     name: 'MARYSE',
     tagline: 'Refined, purposeful and elegantly restrained, MARYSE brings simplicity and considered intention to the daily practice of caring for skin.',
-    vendor_match: 'MARYSE',
-    collection_handle: '',
+    vendor_match: 'Maryse',
+    collection_handle: 'maryse',
     published: true,
     paragraphs: [
       'Maryse O\'Donnell spent years as a facialist before she began making her own formulations, watching closely how pure, plant-based products changed the skin over time and realising that what her clients needed didn\'t yet exist in quite the right form.',
@@ -370,7 +370,7 @@ export const brands = [
     name: 'Melitta',
     tagline: 'Considered, innovative and quietly determined, Melitta Skin is sun care made with the kind of integrity that this country\'s climate demands.',
     vendor_match: 'Melitta',
-    collection_handle: '',
+    collection_handle: 'melitta',
     published: true,
     paragraphs: [
       'Melitta Adam grew up in South East Asia where sunscreen was barely a consideration, until she returned to Aotearoa and witnessed firsthand the damage of one of the world\'s harshest sun environments. That experience, combined with years working as a skin specialist, gave her both the knowledge and the urgency to create something better.',
@@ -383,7 +383,7 @@ export const brands = [
     name: 'Monarc Jewellery',
     tagline: 'Refined, conscious and quietly heirloom, Monarc Jewellery is adornment with lasting meaning, made to be worn, loved and one day passed on.',
     vendor_match: 'Monarc Jewellery',
-    collection_handle: '',
+    collection_handle: 'monarc-jewellery',
     published: true,
     paragraphs: [
       'Ella Drake grew up in Mount Maunganui and came to jewellery through an unexpected path, an international modelling career across Europe where she noticed that while fashion changed with every season, the jewellery people wore did not. That observation, and a deep discomfort with the untraceable origins of mined diamonds, led her to found Monarc in 2017 from a workspace in London\'s Hatton Garden.',
@@ -397,7 +397,7 @@ export const brands = [
     name: 'Monni Botanicals',
     tagline: 'Grounded, considered and deeply connected to the land that sustains it, Monni Botanicals is an invitation to tend the skin the way we tend the earth, with patience, presence and love.',
     vendor_match: 'Monni Botanicals',
-    collection_handle: '',
+    collection_handle: 'monni-botanicals',
     published: true,
     paragraphs: [
       'Monni Botanicals is a seed-to-bottle skincare line born from a deep collaboration between MONNI and The Herbologist, Hannah Jack, a maker whose knowledge of plants and their properties was passed down from her mother. The family farm in Kaukapakapa, north of Auckland, is home to over a hundred medicinal herbs and plants grown using organic and biodynamic practices.',
@@ -412,7 +412,7 @@ export const brands = [
     name: 'MONNI Label',
     tagline: 'Designed and made in Aotearoa New Zealand, MONNI Label is clothing as a form of self-expression, daily ritual and a quiet reminder that how we dress and how we live can be the same thing or a reflection of each other.',
     vendor_match: 'MONNI Label',
-    collection_handle: '',
+    collection_handle: 'monni-label',
     published: true,
     paragraphs: [
       'MONNI Label is a vision of what clothing can be when every step is deeply considered. When it begins with love for yourself, for the natural world around you and the understanding that the two are not separate.',
@@ -429,7 +429,7 @@ export const brands = [
     name: 'MONNI Art',
     tagline: 'Rooted in whakapapa and expressed through beauty, Monique Jansen\'s art is a reminder that creativity can be an act of healing, for the artist and for the earth, and that our creativity and our making can exist in true harmony with the natural world.',
     vendor_match: 'Monique Jansen Art',
-    collection_handle: '',
+    collection_handle: 'monni-art',
     published: true,
     paragraphs: [
       'Monique Jansen is an artist of Dutch and Māori descent who has been making, painting and creating for as long as she can remember. Commissioned for her first artwork at seventeen, creating has been the thread running through her entire life, shaped by a deep love for nature and an evolving relationship with the land of her ancestors.',
@@ -443,7 +443,7 @@ export const brands = [
     name: 'MotherMade',
     tagline: 'Earthy, modern and quietly powerful, MotherMade brings ancient plant wisdom into the rhythms of contemporary wellbeing with honesty and grace.',
     vendor_match: 'Mother Made Mushrooms',
-    collection_handle: '',
+    collection_handle: 'mothermade',
     published: true,
     paragraphs: [
       'MotherMade signals something, a departure from the era of man-made additives and synthetic shortcuts, and a return to the earth for remedies that have been trusted long before modern wellness made them fashionable.',
@@ -457,7 +457,7 @@ export const brands = [
     name: 'Nara',
     tagline: 'Gentle, pure and quietly purposeful, Nara is skincare made with love for the body that has given so much and the new one just arriving into the world.',
     vendor_match: 'Nara',
-    collection_handle: '',
+    collection_handle: 'nara',
     published: true,
     paragraphs: [
       'The season of new motherhood asks for a different quality of care, quieter, more attentive, more tender than almost any other moment in a life.',
@@ -480,7 +480,7 @@ export const brands = [
     name: 'On Sundays',
     tagline: 'Gentle, reflective and deeply restorative, On Sundays brings softness and meaning to the rhythm of ordinary life, a reminder that the everyday can be made beautiful, one cup at a time.',
     vendor_match: 'On Sundays',
-    collection_handle: '',
+    collection_handle: 'on-sundays',
     published: true,
     paragraphs: [
       'On Sundays was born from founder Chenae\'s experience of burnout and a deep longing for moments of stillness, a desire to slow down, tread lightly and live more slowly.',
@@ -519,7 +519,7 @@ export const brands = [
     name: 'Santosa',
     tagline: 'Clean, mindful and softly grounding, Santosa brings calm intention and genuine care to the rituals of everyday domestic life.',
     vendor_match: 'Santosa',
-    collection_handle: '',
+    collection_handle: 'santosa',
     published: true,
     paragraphs: [
       'Santosa is a Sanskrit word meaning contentment, a state of finding happiness and satisfaction in all that you do, starting with the simple everyday things. It is an apt name for a brand that believes the way we tend our homes is an extension of the way we tend ourselves.',
@@ -532,7 +532,7 @@ export const brands = [
     name: 'Sattva Soul',
     tagline: 'Warm, considered and quietly uplifting, Sattva Soul offers the kind of care that honours the whole self rather than treating it in parts.',
     vendor_match: 'Sattva Soul',
-    collection_handle: '',
+    collection_handle: 'sattva-soul',
     published: true,
     paragraphs: [
       'Sattva is a Sanskrit word that carries within it an entire way of being, balance, purity, a natural quality of ease that arises when the body and the mind are genuinely nourished.',
@@ -547,7 +547,7 @@ export const brands = [
     name: 'SOUL Centre',
     tagline: 'Grounded, expansive and deeply human, SOUL offers something rare, a space where healing and belonging are not destinations but ways of being.',
     vendor_match: 'Soul Centre',
-    collection_handle: '',
+    collection_handle: 'soul-centre',
     published: true,
     paragraphs: [
       'Wilhemeena Isabella Monroe is a mystic dance artist, poet, healer and teacher who has spent more than two decades creating spaces where people can come back to themselves.',
@@ -606,7 +606,7 @@ export const brands = [
     name: 'Suzanne Day',
     tagline: 'Poetic, thoughtful and gently mystical, Suzanne Day creates things that hold light, and ask you, softly, to pay closer attention.',
     vendor_match: 'Suzanne Day',
-    collection_handle: '',
+    collection_handle: 'suzanne-day',
     published: true,
     paragraphs: [
       'Suzanne Day moves between graphic design, jewellery making, astrology, tarot, plant medicine and alchemy as if they were not separate disciplines at all but different languages for the same inquiry into beauty, meaning and the nature of things.',
@@ -620,7 +620,7 @@ export const brands = [
     name: 'Tahi',
     tagline: 'Earthy, purposeful and woven into the whenua, Tahi offers a daily ritual of belonging, skincare as a form of quiet connection to the land and to oneself.',
     vendor_match: 'Tahi',
-    collection_handle: '',
+    collection_handle: 'tahi',
     published: true,
     paragraphs: [
       'Tahi begins from a single, grounding belief, that we are part of nature, not separate from it. Its guiding ethos, Kotahi Tātou, we are one, shapes everything it makes.',
@@ -634,7 +634,7 @@ export const brands = [
     name: 'Ti Point Olives',
     tagline: 'Coastal, golden and generous in the way that only genuinely local things can be, Ti Point Olives brings the richness of a specific and beloved place to the table.',
     vendor_match: 'Ti Point Olives',
-    collection_handle: '',
+    collection_handle: 'ti-point-olives',
     published: true,
     paragraphs: [
       'Ti Point sits on a volcanic headland along the Northland coast, free-draining soils, high sunshine hours and water drawn from a pure aquifer 42 metres below the surface creating conditions quietly extraordinary for the cultivation of olives. The grove is nestled amongst basalt rock outcrops that extend all the way down to the sea.',

@@ -7,7 +7,7 @@
  *   SHOPIFY_ADMIN_TOKEN=... node scripts/seed-gifting-pages.mjs --dry-run
  */
 
-import { giftingPages } from './gifting-pages-data.mjs';
+import { giftingLegacyRedirects, giftingPages } from './gifting-pages-data.mjs';
 
 const STORE = process.env.SHOPIFY_STORE || 'tea-tonic-matakana.myshopify.com';
 const TOKEN = process.env.SHOPIFY_ADMIN_TOKEN;
@@ -45,7 +45,7 @@ function toHtml(paragraphs) {
 const FIND_PAGE = `
   query FindPage($query: String!) {
     pages(first: 1, query: $query) {
-      nodes { id handle title templateSuffix }
+      nodes { id handle title templateSuffix isPublished }
     }
   }
 `;
@@ -103,10 +103,86 @@ async function upsertPage(entry) {
   console.log(`Created /pages/${entry.handle}`);
 }
 
+async function upsertRedirect(entry) {
+  if (DRY_RUN) {
+    console.log(`[dry-run] redirect ${entry.path} -> ${entry.target}`);
+    return;
+  }
+
+  const found = await gql(
+    `query FindRedirect($query: String!) {
+      urlRedirects(first: 1, query: $query) {
+        nodes { id path target }
+      }
+    }`,
+    { query: `path:${entry.path}` }
+  );
+  const existing = found.data.urlRedirects.nodes[0];
+
+  if (existing?.target === entry.target) {
+    console.log(`Redirect already set: ${entry.path}`);
+    return;
+  }
+
+  if (existing) {
+    const updated = await gql(
+      `mutation UpdateRedirect($id: ID!, $urlRedirect: UrlRedirectInput!) {
+        urlRedirectUpdate(id: $id, urlRedirect: $urlRedirect) {
+          urlRedirect { path target }
+          userErrors { field message }
+        }
+      }`,
+      { id: existing.id, urlRedirect: { path: entry.path, target: entry.target } }
+    );
+    const errors = updated.data.urlRedirectUpdate.userErrors || [];
+    if (errors.length) throw new Error(`${entry.path}: ${errors.map((e) => e.message).join('; ')}`);
+    console.log(`Updated redirect ${entry.path} -> ${entry.target}`);
+    return;
+  }
+
+  const created = await gql(
+    `mutation CreateRedirect($urlRedirect: UrlRedirectInput!) {
+      urlRedirectCreate(urlRedirect: $urlRedirect) {
+        urlRedirect { path target }
+        userErrors { field message }
+      }
+    }`,
+    { urlRedirect: { path: entry.path, target: entry.target } }
+  );
+  const errors = created.data.urlRedirectCreate.userErrors || [];
+  if (errors.length) throw new Error(`${entry.path}: ${errors.map((e) => e.message).join('; ')}`);
+  console.log(`Created redirect ${entry.path} -> ${entry.target}`);
+}
+
+async function unpublishLegacyPage(handle) {
+  if (!handle) return;
+
+  const found = await gql(FIND_PAGE, { query: `handle:${handle}` });
+  const existing = found.data.pages.nodes[0];
+  if (!existing) return;
+
+  if (!existing.isPublished) {
+    console.log(`Legacy page already unpublished: /pages/${handle}`);
+    return;
+  }
+
+  const updated = await gql(UPDATE_PAGE, {
+    id: existing.id,
+    page: { isPublished: false },
+  });
+  const errors = updated.data.pageUpdate.userErrors || [];
+  if (errors.length) throw new Error(`${handle}: ${errors.map((e) => e.message).join('; ')}`);
+  console.log(`Unpublished legacy page /pages/${handle}`);
+}
+
 async function main() {
   console.log(`Seeding ${giftingPages.length} gifting page(s) to ${STORE}${DRY_RUN ? ' [dry-run]' : ''}`);
   for (const entry of giftingPages) {
     await upsertPage(entry);
+  }
+  for (const entry of giftingLegacyRedirects) {
+    await upsertRedirect(entry);
+    await unpublishLegacyPage(entry.unpublishHandle);
   }
   console.log('Done.');
 }

@@ -78,6 +78,7 @@
     const menuToggle = root.querySelector('[data-header-menu-toggle]');
     const closeButton = root.querySelector('[data-header-menu-close]');
     const drawer = root.querySelector('[data-header-menu-drawer]');
+    const backdrop = root.querySelector('[data-header-menu-backdrop]');
 
     root.classList.toggle('header--menu-open', isOpen);
 
@@ -88,6 +89,11 @@
 
     if (drawer instanceof HTMLElement) {
       drawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      drawer.toggleAttribute('hidden', !isOpen);
+    }
+
+    if (backdrop instanceof HTMLElement) {
+      backdrop.toggleAttribute('hidden', !isOpen);
     }
 
     if (isOpen) {
@@ -234,12 +240,21 @@
     if (!(item instanceof HTMLElement) || !(shell instanceof HTMLElement)) return;
 
     let closeTimer = null;
+    let openTimer = null;
     let megaReady = false;
     let enableTimer = null;
+
+    const cancelOpen = () => {
+      if (openTimer) {
+        window.clearTimeout(openTimer);
+        openTimer = null;
+      }
+    };
 
     const setOpen = (isOpen) => {
       if (isOpen && !megaReady) return;
 
+      cancelOpen();
       item.classList.toggle('is-shop-open', isOpen);
       if (trigger instanceof HTMLElement) {
         trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
@@ -251,6 +266,7 @@
     };
 
     const forceClose = () => {
+      cancelOpen();
       if (closeTimer) {
         window.clearTimeout(closeTimer);
         closeTimer = null;
@@ -294,33 +310,52 @@
         window.clearTimeout(closeTimer);
         closeTimer = null;
       }
-      setOpen(true);
+      if (openTimer) return;
+      openTimer = window.setTimeout(() => {
+        openTimer = null;
+        setOpen(true);
+      }, 160);
     };
 
     const openMenuFromFocus = (event) => {
       if (!megaReady) return;
       const target = event.target;
       if (!(target instanceof HTMLElement) || !target.matches(':focus-visible')) return;
-      openMenu();
+      cancelOpen();
+      if (closeTimer) {
+        window.clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+      setOpen(true);
     };
 
     const scheduleClose = () => {
       if (!megaReady) return;
+      cancelOpen();
       if (closeTimer) window.clearTimeout(closeTimer);
       closeTimer = window.setTimeout(() => setOpen(false), 180);
     };
 
     const handleZoneLeave = (event) => {
       if (!megaReady) return;
+      cancelOpen();
       const related = event.relatedTarget;
       if (related instanceof Node && shell.contains(related)) return;
       scheduleClose();
     };
 
     item.addEventListener('mouseenter', openMenu);
+    item.addEventListener('mouseleave', cancelOpen);
 
     if (panel instanceof HTMLElement) {
-      panel.addEventListener('mouseenter', openMenu);
+      panel.addEventListener('mouseenter', () => {
+        cancelOpen();
+        if (closeTimer) {
+          window.clearTimeout(closeTimer);
+          closeTimer = null;
+        }
+        setOpen(true);
+      });
     }
 
     shell.addEventListener('mouseleave', handleZoneLeave);

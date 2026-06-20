@@ -1,4 +1,4 @@
-<section class="opening-statement full-width" data-section-id="{{ section.id }}">
+<section class="opening-statement full-width{% if section.settings.narrow_width %} opening-statement--narrow{% endif %}" data-section-id="{{ section.id }}">
   <div class="opening-statement__inner">
     <p class="opening-statement__line opening-statement__line--primary">
       {{ section.settings.line_1 | default: "It begins with love. For ourselves, for others, and for the world around us." }}
@@ -17,9 +17,20 @@
   }
 
   .opening-statement__inner {
-    max-width: 48ch;
+    max-width: var(--opening-statement-max, 48ch);
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding-inline: var(--opening-statement-padding, 1.5rem);
+  }
+
+  .opening-statement--narrow .opening-statement__inner {
+    --opening-statement-max: 32ch;
+  }
+
+  @media (max-width: 767px) {
+    .opening-statement--narrow .opening-statement__inner {
+      --opening-statement-max: 17.5rem;
+      --opening-statement-padding: clamp(2.25rem, 11vw, 3.5rem);
+    }
   }
 
   .opening-statement__line {
@@ -63,6 +74,13 @@
       "id": "line_2",
       "label": "Second line",
       "default": "We are all connected."
+    },
+    {
+      "type": "checkbox",
+      "id": "narrow_width",
+      "label": "Narrow text width",
+      "default": false,
+      "info": "Tightens the text column for a narrower opening statement."
     }
   ],
   "presets": [

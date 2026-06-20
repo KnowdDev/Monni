@@ -1,3 +1,11 @@
+export const giftingLegacyRedirects = [
+  {
+    path: '/pages/celebrate-meaningful-connections-with-thoughtful-corporate-gifting-from-tea-tonic',
+    target: '/pages/corporate-gifting',
+    unpublishHandle: 'celebrate-meaningful-connections-with-thoughtful-corporate-gifting-from-tea-tonic',
+  },
+];
+
 export const giftingPages = [
   {
     handle: 'bespoke-gifting',

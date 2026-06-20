@@ -13,6 +13,8 @@
     {% # Inlined CSS Variables %}
     {% render 'css-variables' %}
 
+    {% render 'critical-header' %}
+
     {% if template.name == 'index' %}
       {% render 'critical-home' %}
     {% else %}
@@ -31,6 +33,12 @@
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
     {% render 'schema-organization' %}
+
+    {%- if request.path == '/pages/celebrate-meaningful-connections-with-thoughtful-corporate-gifting-from-tea-tonic' -%}
+      <meta http-equiv="refresh" content="0;url=/pages/corporate-gifting">
+      <link rel="canonical" href="{{ shop.url }}/pages/corporate-gifting">
+      <script>window.location.replace('/pages/corporate-gifting');</script>
+    {%- endif -%}
 
     {{ content_for_header }}
   </head>

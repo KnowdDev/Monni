@@ -4,6 +4,17 @@
   </div>
 {% endif %}
 
+<style>
+  .header__mega-panel[hidden],
+  .header__drawer[hidden],
+  .header__drawer-backdrop[hidden],
+  .header__mobile-submenu[hidden] {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+</style>
+
 <header
   class="header"
   data-section-id="{{ section.id }}"
@@ -148,6 +159,7 @@
     data-header-menu-backdrop
     aria-label="Close navigation menu"
     tabindex="-1"
+    hidden
   ></button>
 
   <div
@@ -158,6 +170,7 @@
     aria-labelledby="header-drawer-title-{{ section.id }}"
     aria-hidden="true"
     data-header-menu-drawer
+    hidden
   >
     <div class="header__drawer-panel">
       <div class="header__drawer-top">
