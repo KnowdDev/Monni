@@ -114,14 +114,12 @@
   color: var(--color-background-alt);
 }
 
-.card-product--unavailable .card-product__image--primary,
-.card-product--unavailable .card-product__image--secondary {
+.card-product--unavailable .card-product__image--primary {
   opacity: 0.72;
 }
 
-.card-product--unavailable[data-has-secondary]:hover .card-product__image--primary,
-.card-product--unavailable[data-has-secondary]:hover .card-product__image--secondary {
-  opacity: 0.72;
+.card-product--unavailable .card-product__image--secondary {
+  opacity: 0;
 }
 
 .card-product__wishlist {

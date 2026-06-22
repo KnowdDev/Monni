@@ -26,9 +26,13 @@
 
     {% comment %}
       Homepage: critical-home inlines above-fold CSS; load full critical.css async.
-      Other templates: non-blocking critical.css.
+      Other templates: blocking critical.css prevents typography/layout flash on navigation.
     {% endcomment %}
-    {% render 'stylesheet-async', asset: 'critical.css' %}
+    {% if template.name == 'index' %}
+      {% render 'stylesheet-async', asset: 'critical.css' %}
+    {% else %}
+      {{ 'critical.css' | asset_url | stylesheet_tag }}
+    {% endif %}
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}

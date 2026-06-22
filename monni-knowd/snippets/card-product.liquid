@@ -15,10 +15,14 @@
   assign first_eager = first_eager | default: false
 -%}
 
-{%- assign has_secondary = false -%}
-{%- unless product.media[1] == blank -%}{%- assign has_secondary = true -%}{%- endunless -%}
 {%- assign is_sold_out = false -%}
 {%- unless product.available -%}{%- assign is_sold_out = true -%}{%- endunless -%}
+{%- assign has_secondary = false -%}
+{%- unless is_sold_out -%}
+  {%- unless product.media[1] == blank -%}
+    {%- assign has_secondary = true -%}
+  {%- endunless -%}
+{%- endunless -%}
 <article
   class="card-product{% if is_sold_out %} card-product--unavailable{% endif %}"
   data-product-id="{{ product.id }}"
@@ -45,7 +49,7 @@
           height="{{ product.featured_image.height }}"
           class="card-product__image card-product__image--primary"
         >
-        {%- if product.media[1] -%}
+        {%- if has_secondary -%}
           <img
             src="{{ product.media[1] | image_url: width: 600 }}"
             srcset="
