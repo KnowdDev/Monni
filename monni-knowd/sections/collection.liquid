@@ -20,11 +20,7 @@
   <header class="collection-page__header">
     <!-- Breadcrumb -->
     {%- if section.settings.show_breadcrumb -%}
-      <nav class="collection-page__breadcrumb" aria-label="Breadcrumb">
-        <a href="{{ routes.root_url }}">Home</a>
-        <span>/</span>
-        <span>{{ collection.title }}</span>
-      </nav>
+      {%- render 'breadcrumb-taxonomy', nav_class: 'collection-page__breadcrumb', collection: collection -%}
     {%- endif -%}
 
     <!-- Title -->

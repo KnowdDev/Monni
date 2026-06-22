@@ -91,15 +91,7 @@
     <div class="product-page__info">
       <!-- Breadcrumb -->
       {%- if section.settings.show_breadcrumb -%}
-        <nav class="product-page__breadcrumb" aria-label="Breadcrumb">
-          <a href="{{ routes.root_url }}">Home</a>
-          {%- if product.type -%}
-            <span>/</span>
-            <a href="{{ product.type | url_for_type }}">{{ product.type }}</a>
-          {%- endif -%}
-          <span>/</span>
-          <span>{{ product.title }}</span>
-        </nav>
+        {%- render 'breadcrumb-taxonomy', nav_class: 'product-page__breadcrumb', product: product, collection: collection -%}
       {%- endif -%}
 
       <!-- Product Type Badge (for fragrance/beauty categories) -->

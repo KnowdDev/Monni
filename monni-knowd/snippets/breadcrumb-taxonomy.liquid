@@ -1,0 +1,197 @@
+{%- comment -%}
+  Taxonomy-driven breadcrumb — metafield hierarchy with graceful fallbacks.
+
+  Product:  custom.primary_collection → custom.parent_collection (max 1 parent)
+  Collection: custom.parent_collection on the current collection
+
+  Fallbacks (until metafields are backfilled):
+  - Product primary: URL collection → collection: tags → product.collections
+  - Parent: primary.metafields.custom.parent_collection → canonical handle map
+
+  Usage:
+    {% render 'breadcrumb-taxonomy', nav_class: 'product-page__breadcrumb', product: product, collection: collection %}
+    {% render 'breadcrumb-taxonomy', nav_class: 'collection-page__breadcrumb', collection: collection %}
+{%- endcomment -%}
+
+{%- liquid
+  assign excluded_handles = 'new-arrivals,sale,bestsellers,gift-guide' | split: ','
+  assign subcollection_handles = 'monni-tea,tea,aromatherapy,supplements,monni-botanicals,face,body,hair,fragrance,mother-and-baby,monni-label,dresses,tops,pants,skirts,shorts,jumpsuits,kimonos,loungewear,fine-jewellery,necklaces,earrings,rings,bracelets,monni-art,ceramics,crystals-and-rituals,homewares,teaware,pantry,giftboxes,cards,gift-card' | split: ','
+  assign home_label = 'general.breadcrumbs.home' | t
+  assign breadcrumb_parent = blank
+  assign breadcrumb_primary = blank
+  assign breadcrumb_current_title = blank
+  assign breadcrumb_best_depth = 0
+
+  if product != blank
+    assign breadcrumb_current_title = product.title
+    assign breadcrumb_primary = product.metafields.custom.primary_collection.value
+
+    if breadcrumb_primary != blank and excluded_handles contains breadcrumb_primary.handle
+      assign breadcrumb_primary = blank
+    endif
+
+    if breadcrumb_primary == blank and collection != blank
+      unless excluded_handles contains collection.handle
+        assign breadcrumb_primary = collection
+        assign breadcrumb_best_depth = 2
+        if subcollection_handles contains collection.handle
+          assign breadcrumb_best_depth = 2
+        else
+          assign breadcrumb_best_depth = 1
+        endif
+      endunless
+    endif
+
+    if breadcrumb_primary == blank
+      for tag in product.tags
+        assign tag_norm = tag | downcase | strip
+        if tag_norm contains 'collection:'
+          assign tag_parts = tag_norm | split: ':'
+          assign tag_handle = tag_parts.last | strip
+          unless excluded_handles contains tag_handle
+            assign tag_depth = 1
+            if subcollection_handles contains tag_handle
+              assign tag_depth = 2
+            endif
+            if tag_depth > breadcrumb_best_depth
+              assign tag_collection = collections[tag_handle]
+              if tag_collection != blank
+                assign breadcrumb_best_depth = tag_depth
+                assign breadcrumb_primary = tag_collection
+              endif
+            endif
+          endunless
+        endif
+      endfor
+    endif
+
+    if breadcrumb_primary == blank
+      for col in product.collections
+        unless excluded_handles contains col.handle
+          assign col_depth = 1
+          if subcollection_handles contains col.handle
+            assign col_depth = 2
+          endif
+          if col_depth > breadcrumb_best_depth
+            assign breadcrumb_best_depth = col_depth
+            assign breadcrumb_primary = col
+          endif
+        endunless
+      endfor
+    endif
+
+    if breadcrumb_primary != blank
+      assign breadcrumb_parent = breadcrumb_primary.metafields.custom.parent_collection.value
+    endif
+  elsif collection != blank
+    assign breadcrumb_current_title = collection.title
+    assign breadcrumb_primary = collection
+    assign breadcrumb_parent = collection.metafields.custom.parent_collection.value
+  endif
+
+  if breadcrumb_parent != blank and excluded_handles contains breadcrumb_parent.handle
+    assign breadcrumb_parent = blank
+  endif
+
+  if breadcrumb_primary != blank and breadcrumb_parent == blank
+    case breadcrumb_primary.handle
+      when 'monni-tea', 'tea', 'aromatherapy', 'supplements'
+        assign breadcrumb_parent = collections['wellness']
+      when 'monni-botanicals', 'face', 'body', 'hair', 'fragrance', 'mother-and-baby'
+        assign breadcrumb_parent = collections['beauty']
+      when 'monni-label', 'dresses', 'tops', 'pants', 'skirts', 'shorts', 'jumpsuits', 'kimonos', 'loungewear'
+        assign breadcrumb_parent = collections['clothing']
+      when 'fine-jewellery', 'necklaces', 'earrings', 'rings', 'bracelets'
+        assign breadcrumb_parent = collections['all-jewellery']
+      when 'monni-art', 'ceramics', 'crystals-and-rituals', 'homewares', 'teaware', 'pantry'
+        assign breadcrumb_parent = collections['all-home']
+      when 'giftboxes', 'cards', 'gift-card'
+        assign breadcrumb_parent = collections['all-gifting']
+    endcase
+  endif
+
+  if breadcrumb_parent != blank and excluded_handles contains breadcrumb_parent.handle
+    assign breadcrumb_parent = blank
+  endif
+
+  assign breadcrumb_collapsible = false
+  if breadcrumb_parent != blank and breadcrumb_primary != blank
+    assign breadcrumb_collapsible = true
+  endif
+-%}
+
+<nav
+  class="{{ nav_class }} breadcrumb{% if breadcrumb_collapsible %} breadcrumb--collapsible{% endif %}"
+  aria-label="Breadcrumb"
+>
+  <ol class="breadcrumb__list">
+    <li class="breadcrumb__item">
+      <a href="{{ routes.root_url }}" class="breadcrumb__link" title="{{ home_label }}">{{ home_label }}</a>
+    </li>
+
+    {%- if breadcrumb_collapsible -%}
+      <li class="breadcrumb__item breadcrumb__ellipsis" aria-hidden="true">
+        <span class="breadcrumb__link breadcrumb__link--ellipsis">…</span>
+      </li>
+    {%- endif -%}
+
+    {%- if breadcrumb_parent != blank -%}
+      <li class="breadcrumb__item breadcrumb__item--parent">
+        <a
+          href="{{ breadcrumb_parent.url }}"
+          class="breadcrumb__link"
+          title="{{ breadcrumb_parent.title | escape }}"
+        >
+          {{- breadcrumb_parent.title -}}
+        </a>
+      </li>
+    {%- endif -%}
+
+    {%- if breadcrumb_primary != blank -%}
+      <li class="breadcrumb__item"{% unless product != blank %} aria-current="page"{% endunless %}>
+        {%- if product != blank -%}
+          <a
+            href="{{ breadcrumb_primary.url }}"
+            class="breadcrumb__link"
+            title="{{ breadcrumb_primary.title | escape }}"
+          >
+            {{- breadcrumb_primary.title -}}
+          </a>
+        {%- else -%}
+          <span
+            class="breadcrumb__link breadcrumb__link--current"
+            title="{{ breadcrumb_primary.title | escape }}"
+          >
+            {{- breadcrumb_primary.title -}}
+          </span>
+        {%- endif -%}
+      </li>
+    {%- endif -%}
+  </ol>
+</nav>
+
+{%- if breadcrumb_current_title != blank -%}
+  {%- assign position = 0 -%}
+  {%- capture breadcrumb_items -%}
+    {%- assign position = position | plus: 1 -%}
+    { "@type": "ListItem", "position": {{ position }}, "name": {{ home_label | json }}, "item": {{ shop.url | json }} }
+    {%- if breadcrumb_parent != blank -%}
+      {%- assign position = position | plus: 1 -%}
+      , { "@type": "ListItem", "position": {{ position }}, "name": {{ breadcrumb_parent.title | json }}, "item": {{ shop.url | append: breadcrumb_parent.url | json }} }
+    {%- endif -%}
+    {%- if product != blank and breadcrumb_primary != blank -%}
+      {%- assign position = position | plus: 1 -%}
+      , { "@type": "ListItem", "position": {{ position }}, "name": {{ breadcrumb_primary.title | json }}, "item": {{ shop.url | append: breadcrumb_primary.url | json }} }
+    {%- endif -%}
+    {%- assign position = position | plus: 1 -%}
+    , { "@type": "ListItem", "position": {{ position }}, "name": {{ breadcrumb_current_title | json }} }
+  {%- endcapture -%}
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{{ breadcrumb_items }}]
+    }
+  </script>
+{%- endif -%}
