@@ -31,10 +31,12 @@
     {%- when 'wellness' -%}
       {%- assign sub_links = 'monni-tea:Monni Tea,tea:Tea,aromatherapy:Aromatherapy,supplements:Supplements' | split: ',' -%}
     {%- when 'beauty' -%}
-      {%- assign sub_links = 'monni-botanicals:Monni Botanicals,face:Face,body:Body,hair:Hair,fragrance:Fragrance,mother-and-baby:Mother & Baby' | split: ',' -%}
+      {%- comment -%} Live Body collection handle is body-care (title Body). /collections/body 404s. {%- endcomment -%}
+      {%- assign sub_links = 'monni-botanicals:Monni Botanicals,face:Face,body-care:Body,hair:Hair,fragrance:Fragrance,mother-and-baby:Mother & Baby' | split: ',' -%}
     {%- when 'clothing' -%}
       {%- assign sub_links = 'monni-label:MONNI Label,dresses:Dresses,tops:Tops,pants:Pants,skirts:Skirts,shorts:Shorts,jumpsuits:Jumpsuits,kimonos:Kimonos,loungewear:Loungewear' | split: ',' -%}
     {%- when 'jewellery' -%}
+      {%- comment -%} Bracelets live handle is bracelets. Legacy /collections/bracelet redirects here. {%- endcomment -%}
       {%- assign sub_links = 'fine-jewellery:Fine jewellery,necklaces:Necklaces,earrings:Earrings,rings:Rings,bracelets:Bracelets' | split: ',' -%}
     {%- when 'home' -%}
       {%- assign sub_links = 'monni-art:Monni Art,ceramics:Ceramics,crystals-and-rituals:Crystals & Rituals,homewares:Homewares,teaware:Teaware,pantry:Pantry' | split: ',' -%}
@@ -57,12 +59,23 @@
         {%- assign sub_url = '/' | append: sub_handle -%}
       {%- endif -%}
     {%- else -%}
+      {%- comment -%} Canonical taxonomy → live Shopify handles (legacy mismatches) {%- endcomment -%}
+      {%- if sub_handle == 'body' -%}
+        {%- assign sub_handle = 'body-care' -%}
+      {%- elsif sub_handle == 'bracelet' -%}
+        {%- assign sub_handle = 'bracelets' -%}
+      {%- endif -%}
       {%- assign sub_collection = collections[sub_handle] -%}
       {%- if sub_collection != blank -%}
         {%- assign sub_url = sub_collection.url -%}
       {%- else -%}
         {%- assign sub_url = '/collections/' | append: sub_handle -%}
       {%- endif -%}
+    {%- endif -%}
+    {%- if sub_label == 'Bracelets' -%}
+      {%- assign sub_url = '/collections/bracelets' -%}
+    {%- elsif sub_label == 'Body' -%}
+      {%- assign sub_url = '/collections/body-care' -%}
     {%- endif -%}
     <li>
       <a href="{{ sub_url }}" class="{{ link_class }}">{{ sub_label | escape }}</a>

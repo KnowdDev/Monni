@@ -127,6 +127,8 @@ If old URLs still receive traffic, add **301 redirects** in Shopify Admin → On
 | Old handle | New canonical handle |
 |------------|---------------------|
 | `body-care` | `body` |
+| `body` | `body-care` (live Body collection — `/collections/body` 404s) |
+| `bracelet` | `bracelets` (legacy singular handle — now redirected) |
 | `bottoms` | `pants` |
 | `home-living` | `homewares` |
 | `bracelet` | `bracelets` |
@@ -140,14 +142,63 @@ The `giftboxes` collection still exists for Gift Boxes products — only the **p
 
 ## How to assign products in Shopify Admin
 
+**Important:** Many shop collections are still **automated (smart)** collections. For those, Shopify will **not** let you manually “Add to collection” — membership is controlled by **tags** (and sometimes product type/vendor).
+
+| Collection | Handle | Type | How a product gets in |
+|------------|--------|------|------------------------|
+| All Wellness | `wellness` | Manual | Add to collection in Admin, **or** run the mapping script |
+| Aromatherapy | `aromatherapy` | Smart | Exact tag: `Aromatherapy` |
+| Body | `body-care` | Smart | Exact tag: `Body` |
+| Face | `face` | Smart | Exact tag: `Face` (capital F) |
+| Hair | `hair` | Smart | Exact tag: `hair` (lowercase) |
+| Mother & Baby | `mother-and-baby` | Smart | Exact tag: `Mother & Baby` |
+| All Beauty | `beauty` | Smart | Tag `Beauty` (or other beauty rule tags) |
+
+### For smart collections (Body, Aromatherapy, Face, etc.)
+
+1. Open the product in **Products**.
+2. In **Tags**, add the exact trigger tag (case matters).
+3. Save — the product appears in the collection automatically.
+4. Do **not** try to drag it into the collection from the collection page; Shopify blocks that for smart collections.
+
+### For manual collections (All Wellness, brand collections like Nara, Monni Tea, etc.)
+
 1. Go to **Products** → open a product.
 2. Scroll to **Collections**.
-3. Click **Add to collection** and select the correct collection(s).
+3. Click **Add to collection** and select the collection.
 4. Save.
 
-A product can belong to **multiple collections** (e.g. a face oil in both `face` and `beauty`).
+A product can belong to **multiple collections** (e.g. an essential roller in both `Aromatherapy` / `Body` via tags **and** `All Wellness` via manual membership).
 
-All seeded collections are **manual collections** — products are added by hand, not by automatic rules.
+### Lightspeed → Shopify (easiest ongoing path)
+
+Keep using tags — that is the system of record for smart collections:
+
+| In Lightspeed / Shopify | Effect |
+|-------------------------|--------|
+| Tag `Aromatherapy` | Lands in Aromatherapy |
+| Tag `Body` | Lands in Body |
+| Tag `Face` | Lands in Face |
+| Tag `hair` | Lands in Hair |
+| Tag `Mother & Baby` | Lands in Mother & Baby |
+| Tag `Wellness` + add to `All Wellness` (manual) | Parent wellness grid |
+| Product type / title cues | Mapping script can infer tags on sync |
+
+After Lightspeed syncs new products, run:
+
+```bash
+SHOPIFY_ADMIN_TOKEN=... SHOPIFY_STORE=tea-tonic-matakana.myshopify.com \
+  node scripts/map-products-to-collections.mjs --dry-run
+# then without --dry-run when the preview looks right
+```
+
+The script:
+- Infers one or more categories from tags/type/title (supports dual like Body + Aromatherapy)
+- Adds the exact smart-collection trigger tags
+- Adds products to **manual** parent collections (`wellness`, `clothing`, etc.)
+- Writes `PRODUCT-COLLECTION-MANUAL-REVIEW.md` if anything is unclear
+
+**Sold-out products:** smart collections used to also require inventory > 0 (so OOS items vanished and could not be “added”). That inventory gate has been removed for Body, Aromatherapy, Hair, Supplements, Ceramics, Art, and Gift Boxes so tagged products still appear when out of stock.
 
 ---
 
@@ -176,7 +227,7 @@ Use tags in the format `collection:{handle}` if your sync tool maps tags to coll
 | `collection:ceramics` | Ceramics |
 | `collection:giftboxes` | Gift Boxes |
 
-These tags are **guidance only** — nothing in the theme auto-assigns from tags unless you later create smart collections (not recommended without review).
+These tags are **operational** — smart collections on the live store match them. Prefer exact tags above over inventing new ones.
 
 ### Product type examples
 
@@ -200,10 +251,15 @@ When unsure, leave the product out of the sub-collection and add it to the paren
 - Updated shop navigation to match the new hierarchy
 - Created Bespoke Gifting and Corporate Gifting pages
 
-**Not done (by design):**
-- No bulk product moves between collections
-- No smart collection rules
-- No automatic redirect creation (documented above for manual setup)
+**Not done originally (by design at seed time):**
+- No bulk product moves between collections on first seed
+- Copy seed did not convert legacy smart collections to manual
+- Live store still uses smart rules for Body, Aromatherapy, Face, Hair, etc. — membership is tag-driven
+
+**Fixed Jul 2026:**
+- Removed `inventory > 0` AND-gates on key smart collections (OOS products with the right tag now appear)
+- Re-ran product→collection mapping (tags + manual parent memberships)
+- Mapping script now supports multi-category tags (e.g. Body + Aromatherapy)
 
 ---
 

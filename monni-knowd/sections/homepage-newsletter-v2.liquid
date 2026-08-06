@@ -3,10 +3,12 @@
     <h2 class="newsletter-v2__title">{{ section.settings.title | default: "Slow down. Stay connected." | escape }}</h2>
     <p class="newsletter-v2__desc">{{ section.settings.description | default: "Receive new arrivals, store notes, and thoughtful rituals from Monni." | escape }}</p>
 
-    {% form 'customer', class: 'newsletter-v2__form' %}
+    {% form 'customer', class: 'newsletter-v2__form', data-senderkit-newsletter: true %}
       {% if form.posted_successfully? %}
         <p class="newsletter-v2__success">{{ section.settings.success_message | default: "Thank you for subscribing." }}</p>
       {% else %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input type="hidden" name="contact[accepts_marketing]" value="true">
         <div class="newsletter-v2__fields">
           <input
             type="email"
@@ -15,6 +17,8 @@
             placeholder="{{ section.settings.placeholder | default: 'Your email address' | escape }}"
             aria-label="{{ section.settings.placeholder | default: 'Your email address' | escape }}"
             required
+            autocomplete="email"
+            autocapitalize="off"
           >
           <button type="submit" class="newsletter-v2__button">
             {{ section.settings.button_label | default: "Subscribe" | escape }}

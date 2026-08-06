@@ -1,7 +1,14 @@
 {% comment %}
   Blog Page — Monni Theme
-  Editorial blog listing with brand-aligned card layout.
+  Editorial journal listing. Excerpt HTML from the admin is stripped so
+  rich-text font sizes/styles can never break card cohesion.
 {% endcomment %}
+
+{%- liquid
+  assign articles_per_page = section.settings.articles_per_page | default: 9
+  assign show_excerpts = section.settings.show_excerpts
+  assign show_dates = section.settings.show_dates
+-%}
 
 <section class="blog-page">
   <div class="container">
@@ -10,36 +17,89 @@
     </header>
 
     <div class="blog-page__grid">
-      {% paginate blog.articles by 9 %}
+      {% paginate blog.articles by articles_per_page %}
         {% for article in blog.articles %}
+          {%- liquid
+            assign excerpt_source = article.excerpt
+            if excerpt_source == blank
+              assign excerpt_source = article.content
+            endif
+            assign excerpt_plain = excerpt_source | strip_html | strip | truncatewords: 32, '…'
+          -%}
           <article class="blog-page__card">
             <a href="{{ article.url }}" class="blog-page__card-link">
               {% if article.image %}
+                {%- assign image_alt = article.image.alt | default: article.title -%}
                 <div class="blog-page__card-image-wrapper">
-                  {{ article.image | image_url: width: 600 | image_tag: class: 'blog-page__card-image', loading: 'lazy' }}
+                  {{
+                    article.image
+                    | image_url: width: 800
+                    | image_tag:
+                      class: 'blog-page__card-image',
+                      loading: 'lazy',
+                      widths: '400, 600, 800',
+                      sizes: '(min-width: 900px) 33vw, 100vw',
+                      alt: image_alt
+                  }}
                 </div>
               {% endif %}
 
               <div class="blog-page__card-content">
-                <h2 class="blog-page__card-title">{{ article.title }}</h2>
+                <h2 class="blog-page__card-title">{{ article.title | escape }}</h2>
 
-                <div class="blog-page__card-meta">
-                  {% assign date = article.published_at | time_tag: format: 'date' %}
-                  <span class="blog-page__card-meta-item">{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</span>
-                </div>
+                {%- if show_dates -%}
+                  <div class="blog-page__card-meta">
+                    {% assign date = article.published_at | time_tag: format: 'date' %}
+                    <span class="blog-page__card-meta-item">{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</span>
+                  </div>
+                {%- endif -%}
 
-                {% if article.excerpt %}
-                  <p class="blog-page__card-excerpt">{{ article.excerpt }}</p>
-                {% endif %}
+                {%- if show_excerpts and excerpt_plain != blank -%}
+                  <p class="blog-page__card-excerpt">{{ excerpt_plain | escape }}</p>
+                {%- endif -%}
               </div>
             </a>
           </article>
         {% endfor %}
 
         {%- if paginate.pages > 1 -%}
-          <div class="blog-page__pagination">
-            {{ paginate | default_pagination }}
-          </div>
+          <nav class="blog-page__pagination" aria-label="Journal pagination">
+            {%- if paginate.previous -%}
+              <a
+                href="{{ paginate.previous.url }}"
+                rel="prev"
+                class="blog-page__pagination-link blog-page__pagination-link--prev"
+                aria-label="Previous page"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                Previous
+              </a>
+            {%- endif -%}
+
+            <div class="blog-page__pagination-numbers">
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" class="blog-page__pagination-number">{{ part.title }}</a>
+                {%- elsif part.title == paginate.current_page -%}
+                  <span class="blog-page__pagination-number blog-page__pagination-number--current" aria-current="page">{{ part.title }}</span>
+                {%- else -%}
+                  <span class="blog-page__pagination-number blog-page__pagination-number--ellipsis" aria-hidden="true">{{ part.title }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+
+            {%- if paginate.next -%}
+              <a
+                href="{{ paginate.next.url }}"
+                rel="next"
+                class="blog-page__pagination-link blog-page__pagination-link--next"
+                aria-label="Next page"
+              >
+                Next
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            {%- endif -%}
+          </nav>
         {%- endif -%}
       {% endpaginate %}
     </div>

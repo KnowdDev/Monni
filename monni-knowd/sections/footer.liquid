@@ -74,10 +74,12 @@
       <div class="footer__newsletter">
       <h3 class="footer__newsletter-title">Slow down. Stay connected.</h3>
       <p class="footer__newsletter-desc">Receive new arrivals, store notes, and thoughtful rituals from Monni.</p>
-      {% form 'customer', class: 'footer__newsletter-form' %}
+      {% form 'customer', class: 'footer__newsletter-form', data-senderkit-newsletter: true %}
         {% if form.posted_successfully? %}
           <p class="footer__newsletter-success">Thank you for subscribing.</p>
         {% else %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="hidden" name="contact[accepts_marketing]" value="true">
           <div class="footer__newsletter-fields">
             <input
               type="email"
@@ -86,6 +88,8 @@
               placeholder="Your email address"
               aria-label="Your email address"
               required
+              autocomplete="email"
+              autocapitalize="off"
             >
             <button type="submit" class="footer__newsletter-button">Subscribe</button>
           </div>

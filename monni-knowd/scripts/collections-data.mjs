@@ -113,7 +113,7 @@ export const collections = [
     ],
   },
   {
-    handle: 'body',
+    handle: 'body-care',
     title: 'Body',
     parent: 'beauty',
     nav_label: 'Body',
@@ -502,7 +502,7 @@ export const collections = [
 
 /** Legacy handles that may still exist in Shopify — documented for redirects. */
 export const legacyHandleMap = {
-  'body-care': 'body',
+  body: 'body-care',
   bottoms: 'pants',
   'home-living': 'homewares',
   bracelet: 'bracelets',

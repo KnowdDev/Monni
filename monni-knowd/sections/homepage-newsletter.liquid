@@ -8,7 +8,7 @@
       <p class="newsletter__description">{{ section.settings.description | escape }}</p>
     {% endif %}
 
-    {% form 'customer', class: 'newsletter__form' %}
+    {% form 'customer', class: 'newsletter__form', data-senderkit-newsletter: true %}
       {% if form.posted_successfully? %}
         <p class="newsletter__message newsletter__message--success" role="status">
           {{ section.settings.success_message | default: 'Thank you for subscribing.' }}
@@ -20,6 +20,7 @@
       {% endif %}
 
       <input type="hidden" name="contact[tags]" value="newsletter">
+      <input type="hidden" name="contact[accepts_marketing]" value="true">
 
       <div class="newsletter__fields">
         <div class="newsletter__field newsletter__field--name newsletter__field--first-name">

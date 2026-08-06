@@ -78,7 +78,7 @@
     endif
   -%}
 
-  <div class="header__mega-panel" id="HeaderShopMega-{{ section_id }}" hidden>
+  <div class="header__mega-panel" data-mega-bust="b2" id="HeaderShopMega-{{ section_id }}" hidden>
     <div class="header__mega-inner">
       <div class="header__mega-layout">
         <a href="{{ featured_url }}" class="header__mega-featured">
@@ -157,7 +157,8 @@
               {%- endif -%}
 
               <div class="header__mega-column">
-                {%- render 'shop-mega-category',
+                {%- render 'shop-mega-category-v2',
+                  mega_bust: 'b2',
                   category_key: category_key,
                   category_handle: category_handle,
                   category_label: category_label,
@@ -241,7 +242,8 @@
         {%- endif -%}
 
         <div class="header__mobile-shop-column">
-          {%- render 'shop-mega-category',
+          {%- render 'shop-mega-category-v2',
+            mega_bust: 'b2',
             category_key: category_key,
             category_handle: category_handle,
             category_label: category_label,

@@ -1,29 +1,43 @@
 # This file contains a list of files that will be excluded from Shopify CLI
 # operations such as push, pull, dev, etc.
 #
-# ─── MANUALLY MANAGED TEMPLATES ─────────────────────────────────────────────
-# These templates are edited directly in the Shopify admin theme editor.
-# Excluding them prevents `shopify theme push` from overwriting live changes.
+# ─── DYNAMIC / MERCHANT-EDITED CONTENT (DO NOT PUSH) ─────────────────────────
+# JSON templates + settings_data hold section settings, images, blocks, and
+# theme-editor customizations. Pushing them would wipe live content and force
+# the client to rebuild pages. Code (sections/*.liquid, assets, snippets,
+# layout, settings_schema) is still pushed — only the *content layer* is locked.
+#
+# Do NOT upload these via the Admin Assets API either — that bypasses this file
+# and will overwrite live editor settings.
 
+# Theme editor global settings (logo, colors, contact, etc.)
+config/settings_data.json
+
+# Homepage + core templates (images, copy, section order)
 templates/index.json
 templates/product.json
-templates/page.about.json
-templates/page.contact.json
-templates/page.wishlist.json
 templates/collection.json
 templates/list-collections.json
 templates/blog.json
 templates/article.json
 templates/search.json
 templates/cart.json
+templates/404.json
 templates/page.json
 templates/password.json
 templates/policy.json
 templates/gift_card.liquid
 templates/maker.liquid
 
-# Section group configs (managed in admin)
-# `header-group.json` is version-controlled so announcement bar fixes sync from the repo.
-sections/footer-group.json
+# Page templates
+templates/page.about.json
+templates/page.brands.json
+templates/page.contact.json
+templates/page.wishlist.json
 
-# Layout (contains repo-managed fixes)
+# Metaobject templates (brand profile layout settings)
+templates/metaobject/brand.json
+
+# Section group configs (footer managed in admin)
+# header-group.json is version-controlled so announcement bar fixes sync from the repo.
+sections/footer-group.json

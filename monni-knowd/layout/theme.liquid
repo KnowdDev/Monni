@@ -45,6 +45,17 @@
     {%- endif -%}
 
     {{ content_for_header }}
+
+    {% liquid
+      assign senderkit_enabled = settings.senderkit_newsletter_enable
+      if senderkit_enabled == nil
+        assign senderkit_enabled = true
+      endif
+      assign senderkit_slug = settings.senderkit_signup_slug | default: 'monni-shopify-test'
+    %}
+    {% if senderkit_enabled and senderkit_slug != blank %}
+      <meta name="senderkit-signup-slug" content="{{ senderkit_slug | escape }}">
+    {% endif %}
   </head>
 
   <body>
@@ -67,6 +78,17 @@
     <script src="{{ 'constants.js' | asset_url }}" defer></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer></script>
     <script src="{{ 'header.js' | asset_url }}" defer></script>
+
+    {% liquid
+      assign senderkit_enabled = settings.senderkit_newsletter_enable
+      if senderkit_enabled == nil
+        assign senderkit_enabled = true
+      endif
+      assign senderkit_slug = settings.senderkit_signup_slug | default: 'monni-shopify-test'
+    %}
+    {% if senderkit_enabled and senderkit_slug != blank %}
+      <script src="{{ 'senderkit-newsletter.js' | asset_url }}" defer></script>
+    {% endif %}
 
   {% if template.name == 'index' %}
     <script>

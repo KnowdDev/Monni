@@ -19,7 +19,11 @@
 
     {%- assign visible_count = 0 -%}
     {%- for brand in brands -%}
-      {%- assign is_published = brand.published.value | default: brand.published | default: true -%}
+      {%- comment -%} Explicit == false: Liquid | default treats boolean false as empty. {%- endcomment -%}
+      {%- assign is_published = true -%}
+      {%- if brand.published.value == false -%}
+        {%- assign is_published = false -%}
+      {%- endif -%}
       {%- if is_published or show_unpublished -%}
         {%- assign visible_count = visible_count | plus: 1 -%}
       {%- endif -%}
@@ -49,7 +53,10 @@
       <div class="brands-directory__grid" data-brand-grid>
         {%- for brand in brands -%}
           {%- liquid
-            assign is_published = brand.published.value | default: brand.published | default: true
+            assign is_published = true
+            if brand.published.value == false
+              assign is_published = false
+            endif
             unless is_published or show_unpublished
               continue
             endunless

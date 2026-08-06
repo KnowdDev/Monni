@@ -232,6 +232,25 @@
     ]
   },
   {
+    "name": "SenderKit newsletter",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "senderkit_newsletter_enable",
+        "label": "Dual-submit newsletter forms to SenderKit",
+        "default": true,
+        "info": "Keeps Shopify customer signup and also enrolls into SenderKit via the public signup form slug (no API key in theme)."
+      },
+      {
+        "type": "text",
+        "id": "senderkit_signup_slug",
+        "label": "SenderKit signup form slug",
+        "default": "monni-shopify-test",
+        "info": "Test slug monni-shopify-test → audience Shopify Newsletter Test (798bfa1e-…). After sign-off, create/bind a production form for audience the Monni edit (97a558a5-…) and put that slug here."
+      }
+    ]
+  },
+  {
     "name": "Newsletter popup",
     "settings": [
       {
