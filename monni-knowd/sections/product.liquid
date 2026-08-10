@@ -24,6 +24,21 @@
   {%- assign is_homewares = true -%}
 {%- endif -%}
 
+{%- comment -%} MONNI Label is made to order — storefront CTA reads Pre-order. {%- endcomment -%}
+{%- assign is_monni_label = false -%}
+{%- assign vendor_down = product.vendor | downcase -%}
+{%- if vendor_down == 'monni label' or product.tags contains 'pre-order' or product.tags contains 'Pre-order' or product.tags contains 'monni-label' -%}
+  {%- assign is_monni_label = true -%}
+{%- endif -%}
+{%- unless is_monni_label -%}
+  {%- for collection in product.collections -%}
+    {%- if collection.handle == 'monni-label' -%}
+      {%- assign is_monni_label = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endunless -%}
+
 {%- capture clothing_check -%}{%- render 'is-clothing-product', product: product -%}{%- endcapture -%}
 {%- assign clothing_stripped = clothing_check | strip -%}
 {%- assign is_clothing = false -%}
@@ -223,10 +238,14 @@
 
           <!-- Add to Cart Button -->
           <div class="product-page__actions">
-            <button type="submit" name="add" class="product-page__add-to-cart btn btn--primary"{% unless current_variant.available %} disabled{% endunless %} data-add-to-cart>
+            <button type="submit" name="add" class="product-page__add-to-cart btn btn--primary"{% unless current_variant.available %} disabled{% endunless %} data-add-to-cart{% if is_monni_label %} data-preorder{% endif %}>
               <span data-add-to-cart-text>
                 {%- if current_variant.available -%}
-                  Add to cart
+                  {%- if is_monni_label -%}
+                    Pre-order
+                  {%- else -%}
+                    Add to cart
+                  {%- endif -%}
                 {%- else -%}
                   Sold out
                 {%- endif -%}

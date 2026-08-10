@@ -1,0 +1,32 @@
+---
+description: Never overwrite live Shopify theme dynamic content when pushing updates
+alwaysApply: true
+---
+
+# Theme push safety — never wipe live content
+
+Monni's storefront is a **custom Shopify theme with merchant-edited dynamic content** (homepage images/copy, About gallery, Brands page, Shop hub, theme settings). Live content lives in JSON templates + `config/settings_data.json`, not in Liquid section code.
+
+## Hard rules
+
+1. **Always push from `monni-knowd/` (or the active theme dir) with `.shopifyignore` present.** That file excludes all merchant-edited JSON templates and `config/settings_data.json`.
+2. **Never run `shopify theme push` with `--nodelete` alone as a substitute** — still respect `.shopifyignore`. Prefer normal push; do not force-include ignored paths.
+3. **Never upload ignored files via Admin Assets API** (`assetUpdate` / REST Assets). That bypasses `.shopifyignore` and can wipe the live homepage (see `compress-hero-images.mjs` — treat as exceptional, confirm with human first).
+4. **Never "sync the whole theme" by pulling then pushing** without reviewing diffs on templates/settings_data — a stale local `templates/index.json` would clobber live images.
+5. **New JSON page templates** (`templates/page.*.json`, `templates/metaobject/*.json`) must be added to `.shopifyignore` before the first push after client edits them in the theme editor.
+6. **Safe to push:** `sections/*.liquid`, `snippets/`, `assets/`, `layout/`, `config/settings_schema.json`, `locales/`. These are code/schema — not content.
+7. **Brand product images / brand metaobject fields** live in Shopify Admin (metaobjects/products), not theme files — theme push does not touch them. Theme JSON only holds section *layout settings*.
+
+## When adding a new feature that needs a template structure change
+
+- Prefer adding the section Liquid + schema, then let the merchant (or us in theme editor) add the section on the live theme.
+- Only temporarily remove a path from `.shopifyignore` if you must ship a new template JSON scaffold — push that one file with `--only`, then re-add to `.shopifyignore` immediately. Never leave content templates unignored.
+
+## Sanity check before any production push
+
+```bash
+# Confirm content layer is ignored
+grep -E 'settings_data|templates/index|page.brands' .shopifyignore
+# Push code only (from theme root)
+shopify theme push --theme <id>
+```

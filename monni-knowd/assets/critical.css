@@ -114,6 +114,17 @@
   color: var(--color-background-alt);
 }
 
+.card-product__badge--preorder {
+  padding: 0.2rem 0.45rem;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  background-color: rgba(255, 255, 255, 0.88);
+  color: var(--color-foreground);
+  border: 1px solid rgba(229, 224, 220, 0.95);
+  box-shadow: none;
+}
+
 .card-product--unavailable .card-product__image--primary {
   opacity: 0.72;
 }

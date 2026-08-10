@@ -197,12 +197,20 @@ async function upsertCollection(entry) {
   let collectionId = found.data?.collectionByHandle?.id;
   let action = 'updated';
 
+  const input = {
+    title: entry.title,
+    handle: entry.handle,
+  };
+  if (entry.smart_tag) {
+    input.ruleSet = {
+      appliedDisjunctively: false,
+      rules: [{ column: 'TAG', relation: 'EQUALS', condition: entry.smart_tag }],
+    };
+  }
+
   if (!collectionId) {
     const created = await gql(CREATE_COLLECTION, {
-      input: {
-        title: entry.title,
-        handle: entry.handle,
-      },
+      input,
     });
     const createErrors = created.data?.collectionCreate?.userErrors || [];
     if (createErrors.length) {
@@ -215,6 +223,14 @@ async function upsertCollection(entry) {
       input: {
         id: collectionId,
         title: entry.title,
+        ...(entry.smart_tag
+          ? {
+              ruleSet: {
+                appliedDisjunctively: false,
+                rules: [{ column: 'TAG', relation: 'EQUALS', condition: entry.smart_tag }],
+              },
+            }
+          : {}),
       },
     });
     const updateErrors = updated.data?.collectionUpdate?.userErrors || [];

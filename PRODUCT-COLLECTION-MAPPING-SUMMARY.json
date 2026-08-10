@@ -1,0 +1,400 @@
+{
+  "generated_at": "2026-07-28T06:22:35.140Z",
+  "dry_run": false,
+  "totals": {
+    "active_products": 276,
+    "mapped": 276,
+    "manual_review": 0,
+    "errors": 0
+  },
+  "collect_creates": 48,
+  "tag_updates": 126,
+  "mapped_sample": [
+    {
+      "id": 8865307033771,
+      "title": "Absolute Essential Immune Care",
+      "handle": "0af7b240-ab70-11e8-eddc-53ef79b3b792",
+      "vendor": "Absolute Essential",
+      "product_type": "Aromatherapy",
+      "confidence": "high",
+      "reason": "tag:Aromatherapy+collection:wellness",
+      "subs": [
+        "aromatherapy",
+        "wellness"
+      ],
+      "targets": [
+        "wellness",
+        "aromatherapy"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "absolute-essentials, wellness"
+    },
+    {
+      "id": 8628933984427,
+      "title": "Absolute Essential Inhale",
+      "handle": "absolute-essential-inhale",
+      "vendor": "Absolute Essential",
+      "product_type": "Aromatherapy",
+      "confidence": "high",
+      "reason": "tag:Aromatherapy+collection:wellness",
+      "subs": [
+        "aromatherapy",
+        "wellness"
+      ],
+      "targets": [
+        "wellness",
+        "aromatherapy"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, absolute-essentials"
+    },
+    {
+      "id": 8628933951659,
+      "title": "Absolute Essential Marjoram French",
+      "handle": "0af7b240-ab70-11e8-eddc-53ef77b0c3e6",
+      "vendor": "Absolute Essential",
+      "product_type": "Aromatherapy",
+      "confidence": "high",
+      "reason": "tag:Aromatherapy+collection:wellness",
+      "subs": [
+        "aromatherapy",
+        "wellness"
+      ],
+      "targets": [
+        "wellness",
+        "aromatherapy"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, absolute-essentials"
+    },
+    {
+      "id": 8375527964843,
+      "title": "Alexandra Cleansing Oil Ritual",
+      "handle": "oil-cleaner-by-amber",
+      "vendor": "Alexandra",
+      "product_type": "Face",
+      "confidence": "high",
+      "reason": "tag:Face+collection:beauty",
+      "subs": [
+        "face",
+        "beauty"
+      ],
+      "targets": [
+        "beauty",
+        "face"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "alexandra"
+    },
+    {
+      "id": 8375524262059,
+      "title": "Alexandra Replenishing Oil Moisturiser",
+      "handle": "oil-moisturiser-by-amber",
+      "vendor": "Alexandra",
+      "product_type": "Face",
+      "confidence": "high",
+      "reason": "tag:Face+collection:beauty",
+      "subs": [
+        "face",
+        "beauty"
+      ],
+      "targets": [
+        "beauty",
+        "face"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "alexandra"
+    },
+    {
+      "id": 8876041076907,
+      "title": "Amber & Gold A Kiss Tea",
+      "handle": "a-kiss-a-tea-by-amber-gold",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, amber-gold, tea"
+    },
+    {
+      "id": 8286155112619,
+      "title": "Amber & Gold Buddha Belly Tea",
+      "handle": "0af7b240-ab70-11e8-eddc-53ef7b6d56f1",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    },
+    {
+      "id": 8291395567787,
+      "title": "Amber & Gold Dandelion Coffee",
+      "handle": "ground-dandelion-coffee",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    },
+    {
+      "id": 8291396518059,
+      "title": "Amber & Gold Lady Moon Tea",
+      "handle": "lady-chi-tea",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    },
+    {
+      "id": 8291396223147,
+      "title": "Amber & Gold Libra Sun Tea",
+      "handle": "libra-sun-tea-by-amber",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    },
+    {
+      "id": 8628913602731,
+      "title": "Amber & Gold Lime Flower  Tea",
+      "handle": "amber-gold-limeflower-tea",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    },
+    {
+      "id": 8291398811819,
+      "title": "Amber & Gold Moroccan Rose Tea",
+      "handle": "moroccan-rose-tea-by-amber",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    },
+    {
+      "id": 8286229889195,
+      "title": "Amber & Gold Nourish Tea",
+      "handle": "nourish-tea-by-amber-gold",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    },
+    {
+      "id": 8286232019115,
+      "title": "Amber & Gold Peace Tea | 100g Bag",
+      "handle": "0af7b240-ab70-11e8-eddc-53ef7c192532",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    },
+    {
+      "id": 8291456581803,
+      "title": "Amber & Gold Radiance Tea",
+      "handle": "radiance-tea-by-amber-gold",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    },
+    {
+      "id": 8291390980267,
+      "title": "Amber & Gold Rouse Cacao Tea",
+      "handle": "rouse-cacao-tea",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    },
+    {
+      "id": 8291390914731,
+      "title": "Amber & Gold Ruby Chai Tea",
+      "handle": "0af7b240-ab70-11e8-eddc-53ef7b2548f3",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    },
+    {
+      "id": 8291401236651,
+      "title": "Amber & Gold Scorpio Moon Tea",
+      "handle": "butterfly-pea-tea",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    },
+    {
+      "id": 8291391111339,
+      "title": "Amber & Gold Sleep Support Tea",
+      "handle": "0af7b240-ab70-11e8-eddc-53ef7b8c3609",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "tea, wellness"
+    },
+    {
+      "id": 8291401498795,
+      "title": "Amber & Gold Temple Tea",
+      "handle": "temple-tea",
+      "vendor": "Amber & Gold",
+      "product_type": "Tea",
+      "confidence": "high",
+      "reason": "title/type:tea",
+      "subs": [
+        "tea"
+      ],
+      "targets": [
+        "wellness",
+        "tea"
+      ],
+      "missingCustom": [],
+      "tagChanged": false,
+      "current_collections": "wellness, tea"
+    }
+  ],
+  "errors": []
+}

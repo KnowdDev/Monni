@@ -9,3 +9,14 @@ dist
 .DS_Store
 
 monni-theme/assets/senderkit-assets/
+
+# Local agent / scrape caches
+.firecrawl/
+newsletters/.firecrawl/
+
+# Ephemeral script outputs (may contain customer PII)
+scripts/.tmp*
+scripts/.tmp-*/
+
+# Local Vercel project link metadata
+**/.vercel/

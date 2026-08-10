@@ -1,0 +1,476 @@
+<mjml>
+  <mj-head>
+    <mj-title>MONNI — Introducing Wild Earth Perfume</mj-title>
+    <mj-preview>A few months ago, we discovered a new fragrance. Completely natural, and it lasts.</mj-preview>
+    <mj-raw>
+      <meta name="color-scheme" content="light only" />
+      <meta name="supported-color-schemes" content="light only" />
+      <style type="text/css">
+        :root { color-scheme: light only; supported-color-schemes: light only; }
+      </style>
+    </mj-raw>
+    <mj-font name="Cormorant Garamond" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=Jost:wght@200;300;400;500&amp;display=swap" />
+    <mj-font name="Jost" href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&amp;display=swap" />
+    <mj-attributes>
+      <mj-all font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" color="#5B5347" />
+      <mj-body background-color="#E9E2D5" width="640px" />
+      <mj-section background-color="#F7F2EA" padding="0" />
+      <mj-text font-size="16px" line-height="1.75" color="#5B5347" padding="0" />
+      <mj-button font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-size="12px" letter-spacing="0.18em" text-transform="uppercase" border-radius="0" inner-padding="14px 30px" />
+      <mj-class name="eyebrow" font-size="12px" letter-spacing="0.28em" text-transform="uppercase" color="#B4795A" font-weight="400" />
+      <mj-class name="heading-serif" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="400" color="#2E2A24" line-height="1.15" />
+      <mj-class name="subheading" font-size="14px" letter-spacing="0.04em" color="#5B5347" font-weight="300" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .wordmark-img img, .footer-wordmark-img img {
+        display: block !important;
+        margin: 0 auto !important;
+        border: 0 !important;
+        height: auto !important;
+        max-height: none !important;
+      }
+      .wordmark-img table, .footer-wordmark-img table,
+      .wordmark-img td, .footer-wordmark-img td {
+        line-height: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+      .hero-img img, .section-img img {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 4 / 3 !important;
+        object-fit: cover !important;
+      }
+      .scent-img img, .tea-img img {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        object-fit: cover !important;
+      }
+      .link-cta a {
+        color: #2E2A24 !important;
+        text-decoration: none !important;
+        border-bottom: 1px solid #B4795A !important;
+        padding-bottom: 2px !important;
+        letter-spacing: 0.06em !important;
+        font-size: 13px !important;
+        font-weight: 400 !important;
+      }
+      .quote-table {
+        width: 100% !important;
+        background-color: #FBF8F3 !important;
+        border-left: 2px solid #B4795A !important;
+      }
+      .scent-rule {
+        border-bottom: 1px solid #DDD3C3 !important;
+      }
+      @media only screen and (max-width: 480px) {
+        .mobile-pad > table > tbody > tr > td {
+          padding-left: 28px !important;
+          padding-right: 28px !important;
+        }
+        .heading-serif div { font-size: 28px !important; }
+        .scent-col { padding-left: 0 !important; padding-right: 0 !important; }
+      }
+    </mj-style>
+    <mj-style>
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_qE6GnM.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_v86GnM.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: italic;
+        font-weight: 300;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3smX5slCNuHLi8bLeY9MK7whWMhyjYrGFEsdtdc62E6zd5rDDOjw.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Jost';
+        font-style: normal;
+        font-weight: 200 400;
+        font-display: swap;
+        src: url('https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/18b8e0e7-c67f-42e5-a08c-f51cb7508e68.woff2') format('woff2');
+      }
+      body, .dm-lock { background-color: #E9E2D5 !important; }
+      .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+      .sec-cream > table > tbody > tr > td > div { background-color: #F7F2EA !important; }
+      .sec-panel, .sec-panel > table, .sec-panel > table > tbody > tr > td,
+      .sec-panel > table > tbody > tr > td > div { background-color: #FBF8F3 !important; }
+      .sec-footer, .sec-footer > table, .sec-footer > table > tbody > tr > td,
+      .sec-footer > table > tbody > tr > td > div { background-color: #3C2A1A !important; }
+      @media (prefers-color-scheme: dark) {
+        body, .dm-lock { background-color: #E9E2D5 !important; color: #5B5347 !important; }
+        .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+        .sec-cream > table > tbody > tr > td > div { background-color: #F7F2EA !important; }
+        .sec-panel, .sec-panel > table, .sec-panel > table > tbody > tr > td,
+        .sec-panel > table > tbody > tr > td > div { background-color: #FBF8F3 !important; }
+        .sec-footer, .sec-footer > table, .sec-footer > table > tbody > tr > td,
+        .sec-footer > table > tbody > tr > td > div { background-color: #3C2A1A !important; }
+        .text-body, .text-body div, .text-body span, .text-body p { color: #5B5347 !important; }
+        .text-heading, .text-heading div, .heading-serif div { color: #2E2A24 !important; }
+        .text-eyebrow, .text-eyebrow div, .eyebrow div { color: #B4795A !important; }
+        .text-ink, .text-ink div { color: #2E2A24 !important; }
+        .text-clay, .text-clay div { color: #B4795A !important; }
+        .text-footer, .text-footer div, .text-footer a { color: #E0DCDA !important; }
+        .text-footer-muted, .text-footer-muted div, .text-footer-muted a { color: #8a7060 !important; }
+        .dm-img img { opacity: 1 !important; filter: none !important; mix-blend-mode: normal !important; }
+        .btn-outline table td { background-color: #F7F2EA !important; border-color: #2E2A24 !important; }
+        .btn-outline a { color: #2E2A24 !important; background-color: #F7F2EA !important; }
+        .btn-filled table td { background-color: #B4795A !important; border-color: #B4795A !important; }
+        .btn-filled a { color: #ffffff !important; background-color: #B4795A !important; }
+        .quote-table { background-color: #FBF8F3 !important; border-left-color: #B4795A !important; }
+      }
+      [data-ogsc] .sec-cream, [data-ogsb] .sec-cream { background-color: #F7F2EA !important; }
+      [data-ogsc] .sec-panel, [data-ogsb] .sec-panel { background-color: #FBF8F3 !important; }
+      [data-ogsc] .sec-footer, [data-ogsb] .sec-footer { background-color: #3C2A1A !important; }
+      [data-ogsc] .text-body, [data-ogsb] .text-body { color: #5B5347 !important; }
+      [data-ogsc] .text-heading, [data-ogsb] .text-heading { color: #2E2A24 !important; }
+      [data-ogsc] .quote-table, [data-ogsb] .quote-table { background-color: #FBF8F3 !important; }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#E9E2D5" css-class="dm-lock">
+
+    <!-- Header -->
+    <mj-section background-color="#F7F2EA" padding="56px 40px 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" css-class="text-body" font-size="15px" letter-spacing="0.04em" color="#5B5347" padding="0 0 18px">Tea &amp; Tonic Matakana</mj-text>
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/3a8b249b-16ef-41e4-80c5-4c20d8cc2bf2.png"
+          alt="MONNI"
+          width="153px"
+          height="53px"
+          align="center"
+          padding="0"
+          css-class="dm-img wordmark-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <!-- Hero — Nelly in the Wild Earth studio (4:3) -->
+    <mj-section padding="0" background-color="#F7F2EA" css-class="sec-cream">
+      <mj-column padding="0">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/hero-nelly-4x3.jpg?v=1786343823"
+          alt="Nelly of Wild Earth in her Gisborne perfume studio"
+          href="https://teaandtonic.co.nz/collections/wild-earth"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img hero-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <!-- Intro / Announcement -->
+    <mj-section background-color="#F7F2EA" padding="48px 40px 44px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" mj-class="eyebrow" css-class="text-eyebrow" padding="0 0 14px">New In Store &amp; Online</mj-text>
+        <mj-text align="center" mj-class="heading-serif" css-class="text-heading" font-size="34px" padding="0 0 16px">Introducing Wild Earth</mj-text>
+        <mj-text
+          align="center"
+          font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+          font-style="italic"
+          font-weight="300"
+          font-size="20px"
+          color="#2E2A24"
+          line-height="1.6"
+          padding="0 8px 20px"
+          css-class="text-ink"
+        >A few months ago, we discovered a new fragrance.</mj-text>
+        <mj-text align="center" css-class="text-body" padding="0 0 20px">
+          We don't fall for fragrance easily, and the brand we carried before was never an easy one to replace. Yet this one is different. We've been wearing it ourselves since that first discovery. It's completely natural and lasts — applied in the morning, it still lingers on our skin come evening. It's the kind of quality we look for in everything we carry, and a brand whose values and vision truly align with our own.
+        </mj-text>
+        <mj-text align="center" css-class="text-body" padding="0 0 28px">
+          Most of you won't have come across Wild Earth before, so we wanted to properly introduce you.
+        </mj-text>
+        <mj-button
+          href="https://teaandtonic.co.nz/collections/wild-earth"
+          background-color="#B4795A"
+          color="#ffffff"
+          border="1px solid #B4795A"
+          align="center"
+          css-class="btn-filled"
+        >Shop Wild Earth</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#DDD3C3" border-width="1px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Brand Story -->
+    <mj-section background-color="#F7F2EA" padding="44px 40px 24px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text mj-class="eyebrow" css-class="text-eyebrow" padding="0 0 14px">The Story</mj-text>
+        <mj-text mj-class="heading-serif" css-class="text-heading" font-size="34px" padding="0 0 24px">Handmade in Gisborne, Aotearoa</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="0" background-color="#F7F2EA" css-class="sec-cream">
+      <mj-column padding="0">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/story-quiet-minds-4x3.jpg?v=1786343825"
+          alt="Wild Earth Quiet Minds — handmade botanical perfume"
+          href="https://teaandtonic.co.nz/collections/wild-earth"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img section-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="28px 40px 44px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text css-class="text-body" padding="0 0 24px">
+          Wild Earth is a small, handmade perfume and incense studio founded by Nelly and based in Gisborne. Every bottle begins its life as a plant, distilled, infused, tinctured or extracted into scents designed to feel less like something you put on, and more like something you've always carried.
+        </mj-text>
+
+        <mj-text css-class="text-ink" padding="0 0 24px">
+          <table class="quote-table" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;background-color:#FBF8F3;border-left:2px solid #B4795A;">
+            <tr>
+              <td style="padding:24px 28px;background-color:#FBF8F3;">
+                <p style="margin:0 0 6px;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-style:italic;font-weight:300;font-size:19px;line-height:1.6;color:#2E2A24;">
+                  "Wild Earth was never made to overpower you. It was made to feel like you've always smelled this way."
+                </p>
+                <p style="margin:0;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-style:normal;font-weight:400;font-size:12px;letter-spacing:0.06em;color:#5B5347;">
+                  — Nelly, Founder of Wild Earth
+                </p>
+              </td>
+            </tr>
+          </table>
+        </mj-text>
+
+        <mj-text css-class="text-body" padding="0 0 24px">
+          It's fragrance made for people who want to feel grounded in a chaotic world — for nature, slowness and ritual, but just as much for fun, playfulness and joy. Every note is connected back to the earth it came from, which is exactly the kind of philosophy we love to bring into the store.
+        </mj-text>
+        <mj-text css-class="link-cta text-ink" padding="0">
+          <a href="https://teaandtonic.co.nz/collections/wild-earth">Explore the Wild Earth collection →</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#DDD3C3" border-width="1px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Scent Guide intro -->
+    <mj-section background-color="#F7F2EA" padding="44px 40px 20px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text mj-class="eyebrow" css-class="text-eyebrow" padding="0 0 14px">A Scent for Every Mood</mj-text>
+        <mj-text mj-class="heading-serif" css-class="text-heading" font-size="34px" padding="0 0 4px">Find Your Wild Earth</mj-text>
+        <mj-text mj-class="subheading" css-class="text-body" padding="0 0 8px">Three botanical fragrances, each with its own personality</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Three scent images (1:1) -->
+    <mj-section background-color="#F7F2EA" padding="12px 28px 8px" css-class="sec-cream">
+      <mj-column width="33.33%" padding="8px" css-class="scent-col">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/winter-1x1.jpg?v=1786343829"
+          alt="Winter Solstice"
+          href="https://teaandtonic.co.nz/products/wild-earth-winter-solstice-eau-de-parfum"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img scent-img"
+        />
+      </mj-column>
+      <mj-column width="33.33%" padding="8px" css-class="scent-col">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/quiet-1x1.jpg?v=1786343831"
+          alt="Quiet Minds"
+          href="https://teaandtonic.co.nz/products/wild-earth-quiet-minds-eau-de-parfum"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img scent-img"
+        />
+      </mj-column>
+      <mj-column width="33.33%" padding="8px" css-class="scent-col">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/leather-1x1.jpg?v=1786343833"
+          alt="Leather + Lace"
+          href="https://teaandtonic.co.nz/products/wild-earth-leather-lace-eau-de-parfum"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img scent-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <!-- Scent cards -->
+    <mj-section background-color="#F7F2EA" padding="16px 40px 12px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text css-class="text-ink" padding="24px 0 0">
+          <div class="scent-rule" style="border-bottom:1px solid #DDD3C3;padding:0 0 24px;">
+            <p style="margin:0 0 6px;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-weight:500;font-size:22px;letter-spacing:0.03em;color:#2E2A24;">
+              <a href="https://teaandtonic.co.nz/products/wild-earth-winter-solstice-eau-de-parfum" style="color:#2E2A24;text-decoration:none;">Winter Solstice</a>
+            </p>
+            <p style="margin:0 0 10px;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#B4795A;">Coffee · Magnolia · Oakmoss · Vanilla</p>
+            <p style="margin:0 0 8px;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#5B5347;">Bergamot and black pepper open onto cedarwood and oakmoss, before magnolia and ylang ylang bloom through a cosy finish of caramel, vanilla and coffee.</p>
+            <p style="margin:0;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-style:italic;font-weight:300;font-size:15px;color:#5B5347;">A fireside retreat on a cold winter's night.</p>
+          </div>
+        </mj-text>
+
+        <mj-text css-class="text-ink" padding="24px 0 0">
+          <div class="scent-rule" style="border-bottom:1px solid #DDD3C3;padding:0 0 24px;">
+            <p style="margin:0 0 6px;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-weight:500;font-size:22px;letter-spacing:0.03em;color:#2E2A24;">
+              <a href="https://teaandtonic.co.nz/products/wild-earth-quiet-minds-eau-de-parfum" style="color:#2E2A24;text-decoration:none;">Quiet Minds</a>
+            </p>
+            <p style="margin:0 0 10px;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#B4795A;">Petitgrain · Mimosa · Jasmine Tea</p>
+            <p style="margin:0 0 8px;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#5B5347;">A tranquil blend of petitgrain, cucumber, mimosa and jasmine tea, softened with vanilla and white musk — a scent that feels like exhaling.</p>
+            <p style="margin:0;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-style:italic;font-weight:300;font-size:15px;color:#5B5347;">Introspective, reflective, harmonious.</p>
+          </div>
+        </mj-text>
+
+        <mj-text css-class="text-ink" padding="24px 0 8px">
+          <div style="padding:0 0 8px;">
+            <p style="margin:0 0 6px;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-weight:500;font-size:22px;letter-spacing:0.03em;color:#2E2A24;">
+              <a href="https://teaandtonic.co.nz/products/wild-earth-leather-lace-eau-de-parfum" style="color:#2E2A24;text-decoration:none;">Leather + Lace</a>
+            </p>
+            <p style="margin:0 0 10px;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#B4795A;">Leather · Lace · Amber</p>
+            <p style="margin:0 0 8px;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:300;font-size:15px;line-height:1.7;color:#5B5347;">Worn leather notes of tobacco, patchouli and vetiver meet soft musk and orris, wrapped in a warm amber base — feminine and masculine in one breath.</p>
+            <p style="margin:0;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-style:italic;font-weight:300;font-size:15px;color:#5B5347;">Comforted, nostalgic, intrigued.</p>
+          </div>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="20px 40px 0" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#DDD3C3" border-width="1px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Coming Soon -->
+    <mj-section background-color="#F7F2EA" padding="44px 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" mj-class="eyebrow" css-class="text-eyebrow" padding="0 0 14px">In the Works</mj-text>
+        <mj-text align="center" mj-class="heading-serif" css-class="text-heading" font-size="34px" padding="0 0 20px">New Scents, Coming Soon</mj-text>
+        <mj-text align="center" css-class="text-body" padding="0">
+          Behind the scenes, we've been working alongside Nelly on some new fragrances for the range — and they're divine. We can't wait to bring them into store, but good things take time, and these are worth the wait. Watch this space.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#DDD3C3" border-width="1px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Closing CTA -->
+    <mj-section background-color="#F7F2EA" padding="44px 40px 48px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" css-class="text-body" padding="0 0 28px">
+          Available now in store and online, in 10ml, 30ml and 50ml. Not sure where to start? Pop in and we'll help you find your scent, or try the Discovery Set to sample the whole range at home.
+        </mj-text>
+        <mj-button
+          href="https://teaandtonic.co.nz/collections/wild-earth"
+          background-color="#B4795A"
+          color="#ffffff"
+          border="1px solid #B4795A"
+          align="center"
+          css-class="btn-filled"
+        >Shop Wild Earth</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Tea of the Week — Radiance -->
+    <mj-section background-color="#FBF8F3" padding="44px 40px 16px" css-class="sec-panel mobile-pad">
+      <mj-column>
+        <mj-text align="center" mj-class="eyebrow" css-class="text-eyebrow" padding="0 0 14px">Tea of the Week</mj-text>
+        <mj-text align="center" mj-class="heading-serif" css-class="text-heading" font-size="34px" padding="0 0 6px">Radiance Tea</mj-text>
+        <mj-text align="center" mj-class="eyebrow" css-class="text-eyebrow" font-size="13px" letter-spacing="0.06em" text-transform="none" padding="0 0 24px">By Amber &amp; Gold</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="0 40px 8px" background-color="#FBF8F3" css-class="sec-panel mobile-pad">
+      <mj-column padding="0">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/radiance-1x1.jpg?v=1786343827"
+          alt="Amber &amp; Gold Radiance Tea"
+          href="https://teaandtonic.co.nz/products/radiance-tea-by-amber-gold"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img tea-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FBF8F3" padding="24px 40px 48px" css-class="sec-panel mobile-pad">
+      <mj-column>
+        <mj-text align="center" css-class="text-body" padding="0 0 16px">
+          A gentle floral blend of chamomile and calendula with hibiscus, rose and goji — soft, nourishing and crafted to hydrate the skin and support an inner glow. A sweet infusion of vitamin C makes it a beautiful ritual to soothe, repair and restore natural radiance.
+        </mj-text>
+        <mj-text align="center" css-class="text-body" font-size="15px" padding="0 0 10px">
+          <em>Key ingredients:</em> Calendula, hibiscus, goji — all certified organic.
+        </mj-text>
+        <mj-text align="center" css-class="text-body" font-size="15px" padding="0 0 28px">
+          Available in 25g, 50g and 100g. Made in Aotearoa, New Zealand.
+        </mj-text>
+        <mj-button
+          href="https://teaandtonic.co.nz/products/radiance-tea-by-amber-gold"
+          background-color="#FBF8F3"
+          color="#2E2A24"
+          border="1px solid #2E2A24"
+          align="center"
+          css-class="btn-outline"
+        >Shop Radiance Tea</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Signature -->
+    <mj-section background-color="#F7F2EA" padding="40px 40px 36px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text
+          align="center"
+          font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+          font-style="italic"
+          font-weight="300"
+          font-size="20px"
+          color="#2E2A24"
+          padding="0 0 8px"
+          css-class="text-ink"
+        >With warmth,<br />Monni</mj-text>
+        <mj-text align="center" css-class="text-body" font-size="12px" letter-spacing="0.03em" padding="0 0 4px">Tea &amp; Tonic Matakana</mj-text>
+        <mj-text align="center" css-class="text-body" font-size="12px" letter-spacing="0.03em" padding="0">Matakana Village, Aotearoa</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Brand footer (compliance footer added automatically by Hatched Send) -->
+    <mj-section background-color="#3C2A1A" padding="36px 36px" css-class="sec-footer mobile-pad">
+      <mj-column>
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/6224078f-358d-4dde-9744-0a7f34b24931.png"
+          alt="Tea &amp; Tonic"
+          width="189px"
+          height="43px"
+          align="center"
+          padding="0 0 14px"
+          css-class="dm-img footer-wordmark-img"
+        />
+        <mj-text align="center" css-class="text-footer-muted" font-size="11px" color="#8a7060" line-height="1.8" letter-spacing="0.04em" padding="0">
+          <a href="mailto:hello@teaandtonic.co.nz" style="color:#8a7060;text-decoration:none;">hello@teaandtonic.co.nz</a> &nbsp;·&nbsp;
+          <a href="https://www.instagram.com/teaandtonicmatakana/" style="color:#8a7060;text-decoration:none;">Instagram</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>

@@ -29,7 +29,7 @@
 <ul class="{{ list_class }}" role="list">
   {%- case category_key -%}
     {%- when 'wellness' -%}
-      {%- assign sub_links = 'monni-tea:Monni Tea,tea:Tea,aromatherapy:Aromatherapy,supplements:Supplements' | split: ',' -%}
+      {%- assign sub_links = 'monni-tea:Monni Tea,tea:Tea,aromatherapy:Aromatherapy,sleep|/collections/sleep:Sleep,supplements:Supplements' | split: ',' -%}
     {%- when 'beauty' -%}
       {%- comment -%} Live Body collection handle is body-care (title Body). /collections/body 404s. {%- endcomment -%}
       {%- assign sub_links = 'monni-botanicals:Monni Botanicals,face:Face,body-care:Body,hair:Hair,fragrance:Fragrance,mother-and-baby:Mother & Baby' | split: ',' -%}
@@ -39,7 +39,8 @@
       {%- comment -%} Bracelets live handle is bracelets. Legacy /collections/bracelet redirects here. {%- endcomment -%}
       {%- assign sub_links = 'fine-jewellery:Fine jewellery,necklaces:Necklaces,earrings:Earrings,rings:Rings,bracelets:Bracelets' | split: ',' -%}
     {%- when 'home' -%}
-      {%- assign sub_links = 'monni-art:Monni Art,ceramics:Ceramics,crystals-and-rituals:Crystals & Rituals,homewares:Homewares,teaware:Teaware,pantry:Pantry' | split: ',' -%}
+      {%- comment -%} Candles omitted until assortment is ready. Home Care is live. {%- endcomment -%}
+      {%- assign sub_links = 'monni-art:Monni Art,ceramics:Ceramics,crystals-and-rituals:Crystals & Rituals,homewares:Homewares,home-care:Home Care,teaware:Teaware,pantry:Pantry' | split: ',' -%}
     {%- when 'gifting' -%}
       {%- assign sub_links = 'giftboxes:Gift Boxes,pages/bespoke-gifting:Bespoke Gifting,pages/corporate-gifting:Corporate Gifting,cards:Cards,gift-card:Online Gift Card' | split: ',' -%}
     {%- else -%}

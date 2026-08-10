@@ -233,11 +233,10 @@
   document.querySelectorAll('[data-header-root]').forEach((root) => {
     if (!(root instanceof HTMLElement)) return;
 
-    const shell = root.querySelector('.header__shell');
     const item = root.querySelector('.header__menu-item--mega');
     const trigger = root.querySelector('[data-header-shop-trigger]');
     const panel = root.querySelector('.header__mega-panel');
-    if (!(item instanceof HTMLElement) || !(shell instanceof HTMLElement)) return;
+    if (!(item instanceof HTMLElement)) return;
 
     let closeTimer = null;
     let openTimer = null;
@@ -304,66 +303,81 @@
 
     megaMenuControllers.push({ root, forceClose, scheduleEnableMegaMenu });
 
-    const openMenu = () => {
-      if (!megaReady) return;
+    // Hover zone = Shop trigger + mega panel only.
+    // Do NOT close on shell mouseleave — WebKit/Safari fires that when the pointer
+    // moves into the absolutely positioned panel (outside the shell's content box),
+    // which causes an open/close flicker and makes the menu unusable.
+    const isInsideMegaZone = (node) => {
+      if (!(node instanceof Node)) return false;
+      if (item.contains(node)) return true;
+      if (panel instanceof HTMLElement && panel.contains(node)) return true;
+      return false;
+    };
+
+    const cancelClose = () => {
       if (closeTimer) {
         window.clearTimeout(closeTimer);
         closeTimer = null;
+      }
+    };
+
+    const scheduleClose = () => {
+      if (!megaReady) return;
+      cancelOpen();
+      cancelClose();
+      closeTimer = window.setTimeout(() => {
+        closeTimer = null;
+        setOpen(false);
+      }, 220);
+    };
+
+    const openMenu = ({ immediate = false } = {}) => {
+      if (!megaReady) return;
+      cancelClose();
+      if (immediate) {
+        cancelOpen();
+        setOpen(true);
+        return;
       }
       if (openTimer) return;
       openTimer = window.setTimeout(() => {
         openTimer = null;
         setOpen(true);
-      }, 160);
+      }, 120);
+    };
+
+    const handleMegaEnter = () => {
+      if (!megaReady) return;
+      const alreadyOpen = item.classList.contains('is-shop-open');
+      openMenu({ immediate: alreadyOpen });
+    };
+
+    const handleMegaLeave = (event) => {
+      if (!megaReady) return;
+      // Still moving within Shop ↔ panel (or Safari null relatedTarget while crossing).
+      if (isInsideMegaZone(event.relatedTarget)) return;
+      scheduleClose();
     };
 
     const openMenuFromFocus = (event) => {
       if (!megaReady) return;
       const target = event.target;
       if (!(target instanceof HTMLElement) || !target.matches(':focus-visible')) return;
-      cancelOpen();
-      if (closeTimer) {
-        window.clearTimeout(closeTimer);
-        closeTimer = null;
-      }
-      setOpen(true);
+      openMenu({ immediate: true });
     };
 
-    const scheduleClose = () => {
-      if (!megaReady) return;
-      cancelOpen();
-      if (closeTimer) window.clearTimeout(closeTimer);
-      closeTimer = window.setTimeout(() => setOpen(false), 180);
-    };
-
-    const handleZoneLeave = (event) => {
-      if (!megaReady) return;
-      cancelOpen();
-      const related = event.relatedTarget;
-      if (related instanceof Node && shell.contains(related)) return;
-      scheduleClose();
-    };
-
-    item.addEventListener('mouseenter', openMenu);
-    item.addEventListener('mouseleave', cancelOpen);
+    item.addEventListener('mouseenter', handleMegaEnter);
+    item.addEventListener('mouseleave', handleMegaLeave);
 
     if (panel instanceof HTMLElement) {
-      panel.addEventListener('mouseenter', () => {
-        cancelOpen();
-        if (closeTimer) {
-          window.clearTimeout(closeTimer);
-          closeTimer = null;
-        }
-        setOpen(true);
-      });
+      panel.addEventListener('mouseenter', () => openMenu({ immediate: true }));
+      panel.addEventListener('mouseleave', handleMegaLeave);
     }
-
-    shell.addEventListener('mouseleave', handleZoneLeave);
 
     item.addEventListener('focusin', openMenuFromFocus);
     item.addEventListener('focusout', (event) => {
       if (!megaReady) return;
-      if (event.relatedTarget instanceof Node && (item.contains(event.relatedTarget) || panel?.contains(event.relatedTarget))) return;
+      if (isInsideMegaZone(event.relatedTarget)) return;
       scheduleClose();
     });
 
@@ -371,7 +385,7 @@
       panel.addEventListener('focusin', openMenuFromFocus);
       panel.addEventListener('focusout', (event) => {
         if (!megaReady) return;
-        if (event.relatedTarget instanceof Node && (item.contains(event.relatedTarget) || panel.contains(event.relatedTarget))) return;
+        if (isInsideMegaZone(event.relatedTarget)) return;
         scheduleClose();
       });
     }

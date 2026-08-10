@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matariki — Tea & Tonic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #F4F3F0; font-family: 'Jost', sans-serif; font-weight: 300; color: #2C2420; }
+  .email-wrap { max-width: 620px; margin: 0 auto; background: #FAFAFA; }
+
+  .header { padding: 32px 40px 24px; text-align: center; border-bottom: 1px solid #E0DCDA; }
+  .header-store { font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #8a8278; margin-bottom: 6px; }
+  .header-wordmark { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 28px; letter-spacing: 0.25em; color: #2C2420; }
+
+  .hero-portrait { width: 100%; display: block; aspect-ratio: 3/4; object-fit: cover; object-position: center 20%; }
+
+  .matariki-band { background: #2C2420; padding: 48px 48px 44px; text-align: center; }
+  .matariki-stars { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: #c8b99a; margin-bottom: 18px; }
+  .matariki-heading { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 44px; letter-spacing: 0.08em; color: #FAFAFA; line-height: 1.1; margin-bottom: 20px; }
+  .matariki-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: 17px; color: #c8b99a; letter-spacing: 0.04em; }
+
+  .section { padding: 48px 48px 0; }
+  .section-label { font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #8a8278; margin-bottom: 16px; }
+  .section h2 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 26px; line-height: 1.3; margin-bottom: 18px; color: #2C2420; }
+  .section p { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 15px; line-height: 1.85; color: #3a3230; margin-bottom: 16px; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .divider { margin: 44px 48px; border: none; border-top: 1px solid #E0DCDA; }
+
+  .quote-block { margin: 44px 48px 0; padding: 36px 40px; background: #F0E8E5; border-left: 2px solid #c8b99a; }
+  .quote-block blockquote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: 21px; line-height: 1.65; color: #2C2420; margin-bottom: 16px; }
+  .quote-attr { font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8278; }
+
+  .artwork-section { padding: 48px 0 0; }
+  .artwork-img { width: 100%; display: block; }
+  .artwork-caption { padding: 28px 48px 0; }
+  .artwork-title { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 20px; letter-spacing: 0.04em; color: #2C2420; margin-bottom: 6px; }
+  .artwork-sub { font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: 0.08em; color: #8a8278; margin-bottom: 18px; text-transform: uppercase; }
+  .artwork-body { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: #3a3230; }
+
+  .giveaway { margin: 44px 48px 0; padding: 40px; background: #2C2420; text-align: center; }
+  .giveaway-eyebrow { font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: #c8b99a; margin-bottom: 16px; }
+  .giveaway h3 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 32px; letter-spacing: 0.06em; color: #FAFAFA; margin-bottom: 18px; line-height: 1.2; }
+  .giveaway p { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.8; color: #c8b99a; margin-bottom: 28px; }
+  .giveaway-steps { list-style: none; margin-bottom: 32px; text-align: left; }
+  .giveaway-steps li { font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 300; color: #FAFAFA; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: baseline; gap: 14px; }
+  .giveaway-steps li:last-child { border-bottom: none; }
+  .step-num { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #c8b99a; flex-shrink: 0; width: 20px; }
+  .giveaway-btn { display: inline-block; background: transparent; border: 1px solid #c8b99a; color: #c8b99a; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; padding: 14px 36px; text-decoration: none; }
+
+  /* ── TEA OF THE WEEK ── */
+  .tea-section { margin: 44px 0 0; }
+  .tea-header { background: #F4F3F0; padding: 32px 48px 24px; border-top: 1px solid #E0DCDA; border-bottom: 1px solid #E0DCDA; }
+  .tea-eyebrow { font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #8a8278; margin-bottom: 10px; }
+  .tea-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 34px; letter-spacing: 0.06em; color: #2C2420; margin-bottom: 4px; }
+  .tea-tagline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: #8a8278; }
+
+  /* Image placeholder */
+  .tea-image-placeholder {
+    width: 100%;
+    height: 320px;
+    background: #ECEAE6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .tea-image-placeholder span {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #b0a89c;
+  }
+  .placeholder-icon { font-size: 28px; opacity: 0.3; }
+
+  .tea-body { padding: 32px 48px 0; }
+  .tea-body p { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.85; color: #3a3230; margin-bottom: 16px; }
+
+  .tea-details { padding: 28px 48px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .tea-detail-block h4 { font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #8a8278; margin-bottom: 10px; }
+  .tea-detail-block ul { list-style: none; }
+  .tea-detail-block ul li { font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 300; color: #3a3230; line-height: 1.8; padding-left: 12px; position: relative; }
+  .tea-detail-block ul li::before { content: '–'; position: absolute; left: 0; color: #c8b99a; }
+
+  .tea-ritual { margin: 28px 48px 0; padding: 24px 28px; background: #F4F3F0; border-left: 2px solid #E0DCDA; }
+  .tea-ritual h4 { font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #8a8278; margin-bottom: 10px; }
+  .tea-ritual p { font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 300; line-height: 1.8; color: #3a3230; font-style: italic; }
+
+  .tea-ingredients { padding: 20px 48px 0; }
+  .tea-ingredients p { font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 300; color: #8a8278; line-height: 1.7; letter-spacing: 0.02em; }
+
+  .tea-btn-wrap { padding: 32px 48px 0; text-align: center; }
+  .tea-btn { display: inline-block; background: #2C2420; color: #FAFAFA; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; padding: 14px 36px; text-decoration: none; }
+
+  .closing { padding: 48px; text-align: center; }
+  .closing p { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.8; color: #3a3230; margin-bottom: 24px; }
+  .closing-sign { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; color: #2C2420; }
+
+  .footer { background: #3C2A1A; padding: 36px 48px; text-align: center; }
+  .footer-wordmark { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 20px; letter-spacing: 0.25em; color: #F4F3F0; margin-bottom: 12px; }
+  .footer-detail { font-family: 'Jost', sans-serif; font-size: 11px; color: #8a7060; line-height: 1.8; letter-spacing: 0.04em; }
+  .footer-detail a { color: #8a7060; text-decoration: none; }
+  .footer-links { margin-top: 20px; font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5a4a3a; }
+  .footer-links a { color: #5a4a3a; text-decoration: none; margin: 0 10px; }
+
+  @media (max-width: 640px) {
+    .matariki-heading { font-size: 34px; }
+    .section, .divider, .quote-block, .artwork-caption, .giveaway, .closing { padding-left: 28px; padding-right: 28px; }
+    .giveaway, .quote-block { margin-left: 0; margin-right: 0; }
+    .tea-header, .tea-body, .tea-btn-wrap, .tea-ingredients, .tea-ritual, .tea-detail-block { padding-left: 28px; padding-right: 28px; }
+    .tea-details { grid-template-columns: 1fr; gap: 16px; padding-left: 28px; padding-right: 28px; }
+    .tea-ritual { margin-left: 0; margin-right: 0; }
+    .footer { padding-left: 28px; padding-right: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrap">
+
+  <div class="header">
+    <div class="header-store">Tea &amp; Tonic Matakana</div>
+    <div class="header-wordmark">M O N N I</div>
+  </div>
+
+  <img class="hero-portrait" src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/a2d542e0-2e23-42ab-8781-b2cd8df5d0ec.jpeg" alt="Monique Jansen, Matakana">
+
+  <div class="matariki-band">
+    <div class="matariki-stars">✦ &nbsp; Matariki 2026 &nbsp; ✦</div>
+    <div class="matariki-heading">Ngā mihi o<br>Matariki</div>
+    <div class="matariki-sub">Warm greetings of Matariki to you</div>
+  </div>
+
+  <div class="section" style="padding-top:48px;">
+    <div class="section-label">What is Matariki</div>
+    <h2>The rising of the Pleiades. The beginning of the Māori New Year.</h2>
+    <p>Matariki is the name given to the cluster of stars known internationally as the Pleiades, and its annual rising on the horizon at dawn marks the beginning of the Māori New Year. For our tīpuna, this was a time of deep significance — a moment to pause between the harvest and the planting, to look upward, and to remember.</p>
+    <p>The nine stars of Matariki each carry their own meaning and domain. Matariki herself governs health, environment, and the wellbeing of people. Pōhutukawa connects us to those who have passed. Tupuānuku and Tupuārangi govern the food that grows from the earth and falls from the trees. Waitī and Waitā hold the waters — fresh and salt. Waipuna-ā-Rangi speaks to rain. Ururangi governs the winds. And Hiwa-i-te-rangi is the wishing star, the one to whom aspirations for the year ahead are offered.</p>
+    <p>Together they remind us that we are not separate from the natural world — we are woven into it, and the turning of the seasons is a turning within us too.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">From Monni</div>
+    <h2>A time to remember, give thanks, and look forward.</h2>
+    <p>Matariki is one of the times of year that moves me most deeply. As a Māori woman, as a descendant of Ngāti Porou and Te Whānau a Apanui, this season carries a weight that is both personal and ancestral. It is a moment when I feel most connected to my tīpuna, to the land, and to the long thread of whakapapa that holds us all.</p>
+    <p>My ancestors arrived in Aotearoa over a thousand years ago. They were kaitiaki — guardians — of this land, its waters, its seasons, its skies. Matariki was not simply a calendar event for them. It was a practice of care, of remembrance, of gratitude and of hope. It was the time to speak the names of those who had left us in the year that had passed, to release them to the stars, and to plant new intentions for the year ahead.</p>
+    <p>At MONNI, this season is a reminder of why we do what we do. We believe that beauty, wellbeing, and connection to the natural world are not luxuries — they are part of what it means to live well. Matariki asks us to tend to all of it: our people, our land, ourselves.</p>
+    <p>I am so grateful you are part of this community. Ngā mihi maioha ki a koutou — warm and grateful greetings to you all.</p>
+  </div>
+
+  <div class="quote-block">
+    <blockquote>"We are not separate from the natural world. We are woven into it, and the turning of the seasons is a turning within us too."</blockquote>
+    <div class="quote-attr">Monique Jansen &nbsp;·&nbsp; Ngāti Porou</div>
+  </div>
+
+  <div class="artwork-section">
+    <img class="artwork-img" src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/a2d542e0-2e23-42ab-8781-b2cd8df5d0ec.jpeg" alt="Ngā Maunga Tupuna by Monique Jansen">
+    <div class="artwork-caption">
+      <div class="artwork-title">Ngā Maunga Tupuna</div>
+      <div class="artwork-sub">Original fine-line artwork &nbsp;·&nbsp; Monique Jansen (Ngāti Porou)</div>
+      <p class="artwork-body">The ancestral mountains. Ruapehu, Ngāuruhoe and Tongariro rising from the central plateau in the quiet, considered way that only line work can hold.<br><br>For Ngāti Tūwharetoa, the iwi of this place, these are not simply mountains but living ancestors, carrying whakapapa, identity, and a relationship with the land that stretches back across generations. In 1887, paramount chief Horonuku Te Heuheu Tūkino IV gifted the mountain peaks to the people of New Zealand — an extraordinary act of kaitiakitanga that established Tongariro as the first national park in Aotearoa and the fourth in the world. In 1993, it became the first place on earth to receive dual UNESCO World Heritage status, recognised for both its extraordinary natural landscape and its profound cultural significance. A recognition that land and the people connected to it cannot truly be separated.<br><br>Made using natural plant pigments and Indian ink.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="giveaway">
+    <div class="giveaway-eyebrow">Matariki Giveaway</div>
+    <h3>Win an A3 print of<br>Ngā Maunga Tupuna</h3>
+    <p>To celebrate Matariki and to say thank you to this beautiful community, I am gifting one A3 fine-art print of my latest work to one of you. To enter, head to our Instagram.</p>
+    <ul class="giveaway-steps">
+      <li><span class="step-num">1</span><span>Follow @teaandtonicmatakana on Instagram</span></li>
+      <li><span class="step-num">2</span><span>Like the Matariki giveaway post</span></li>
+      <li><span class="step-num">3</span><span>Tag someone in the comments who deserves a moment of beauty in their life</span></li>
+    </ul>
+    <a class="giveaway-btn" href="https://www.instagram.com/teaandtonicmatakana/">Enter on Instagram</a>
+  </div>
+
+  <hr class="divider">
+
+  <!-- TEA OF THE WEEK -->
+  <div class="tea-section">
+    <div class="tea-header">
+      <div class="tea-eyebrow">Tea of the Week</div>
+      <div class="tea-name">Amber &amp; Gold</div>
+      <div class="tea-tagline">A Kiss</div>
+    </div>
+
+    <img class="artwork-img" src="https://cdn.shopify.com/s/files/1/2511/3170/files/B90E072C-AFB3-412E-B3E5-46A2B276F654.jpg?v=1783643768" alt="Amber & Gold — A Kiss Tea" />
+
+    <div class="tea-body">
+      <p>A Kiss blends New Zealand kawakawa with fragrant lemongrass, a warming infusion traditionally valued for its restorative, tonic qualities. Bright and gently spiced, it wraps the senses in comfort, softened further by a stir of fresh ginger, making it a comforting companion through the day or a cosy addition to the colder months.</p>
+      <p>Kawakawa is a native New Zealand herb long used in traditional Māori rongoā, grounding this blend in local plant wisdom — and making it a fitting cup for Matariki.</p>
+    </div>
+
+    <div class="tea-details">
+      <div class="tea-detail-block">
+        <h4>Benefits</h4>
+        <ul>
+          <li>Warms the body during cooler months</li>
+          <li>Supports everyday wellbeing</li>
+          <li>Soothes with gentle spice</li>
+          <li>Uplifts the senses</li>
+          <li>Nourishes as a comforting daily tonic</li>
+        </ul>
+      </div>
+      <div class="tea-detail-block">
+        <h4>How to brew</h4>
+        <ul>
+          <li>Add a heaped teaspoon of herb and a teaspoon of freshly grated ginger per cup</li>
+          <li>Simmer on the stove for five minutes</li>
+          <li>Steep for a further five minutes before serving</li>
+          <li>Available in 25g, 50g and 100g</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tea-ritual">
+      <h4>The Ritual</h4>
+      <p>Bloom the flavour by preheating the teapot with boiling water before use. After brewing, return the spent herbs to the earth — compost, a worm farm, or the garden — and use the cooled leftover tea to nourish your plants.</p>
+    </div>
+
+    <div class="tea-ingredients">
+      <p>Kawakawa* · Lemongrass* &nbsp;&nbsp;·&nbsp;&nbsp; *Certified Organic &nbsp;&nbsp;·&nbsp;&nbsp; Made in Matakana, Aotearoa, New Zealand</p>
+    </div>
+
+    <div class="tea-btn-wrap">
+      <a class="tea-btn" href="https://teaandtonic.co.nz/collections/tea">Shop Monni Tea</a>
+    </div>
+  </div>
+
+  <div class="closing" style="padding-top:48px;">
+    <p>Wishing you a meaningful and restorative Matariki. May this season bring rest, remembrance, and renewed intention for the year ahead.</p>
+    <p>With love and gratitude from Matakana Village.</p>
+    <div class="closing-sign">Aroha nui, Monni</div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-wordmark">T E A &nbsp;&amp;&nbsp; T O N I C</div>
+    <div class="footer-detail">
+      5A, 2 Matakana Valley Road, Matakana Village, Aotearoa<br>
+      <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a> &nbsp;·&nbsp; 09 422 9083<br>
+      Sunday to Friday 10.00am – 4.00pm &nbsp;·&nbsp; Saturday 9.00am – 5.00pm
+    </div>
+    <div class="footer-links">
+      <a href="https://teaandtonic.co.nz">Shop</a>
+      <a href="https://teaandtonic.co.nz/pages/about">About</a>
+      <a href="https://www.instagram.com/teaandtonicmatakana/">Instagram</a>
+      <a href="#">Unsubscribe</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

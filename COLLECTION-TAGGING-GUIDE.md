@@ -57,6 +57,7 @@ Contact: hello@teaandtonic.co.nz | 09 422 9083
 | Monni Tea | `monni-tea` | `/collections/monni-tea` |
 | Tea | `tea` | `/collections/tea` |
 | Aromatherapy | `aromatherapy` | `/collections/aromatherapy` |
+| Sleep | `sleep` | `/collections/sleep` |
 | Supplements | `supplements` | `/collections/supplements` |
 
 ### Beauty
@@ -106,6 +107,7 @@ Contact: hello@teaandtonic.co.nz | 09 422 9083
 | Ceramics | `ceramics` | `/collections/ceramics` |
 | Crystals & Rituals | `crystals-and-rituals` | `/collections/crystals-and-rituals` |
 | Homewares | `homewares` | `/collections/homewares` |
+| Home Care | `home-care` | `/collections/home-care` |
 | Teaware | `teaware` | `/collections/teaware` |
 | Pantry | `pantry` | `/collections/pantry` |
 
@@ -153,6 +155,8 @@ The `giftboxes` collection still exists for Gift Boxes products — only the **p
 | Hair | `hair` | Smart | Exact tag: `hair` (lowercase) |
 | Mother & Baby | `mother-and-baby` | Smart | Exact tag: `Mother & Baby` |
 | All Beauty | `beauty` | Smart | Tag `Beauty` (or other beauty rule tags) |
+| Tops | `tops` | Smart | Exact tag: `Top` or `Tops` (product type alone is not enough) |
+| Brand collections (e.g. The Knitter) | brand handle | Manual | On the product: **Collections → Add to collection**. Tags like `theknitter` do nothing for brand pages. |
 
 ### For smart collections (Body, Aromatherapy, Face, etc.)
 
@@ -181,6 +185,7 @@ Keep using tags — that is the system of record for smart collections:
 | Tag `Face` | Lands in Face |
 | Tag `hair` | Lands in Hair |
 | Tag `Mother & Baby` | Lands in Mother & Baby |
+| Tag `sleep` | Lands in Sleep |
 | Tag `Wellness` + add to `All Wellness` (manual) | Parent wellness grid |
 | Product type / title cues | Mapping script can infer tags on sync |
 

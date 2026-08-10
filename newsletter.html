@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MONNI — Frolic Ceramics Newsletter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F7F2EA;
+    --panel:#FBF8F3;
+    --ink:#2E2A24;
+    --ink-soft:#5B5347;
+    --clay:#B4795A;
+    --clay-soft:#D8B9A6;
+    --rule:#DDD3C3;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#E9E2D5;
+    font-family:'Jost',sans-serif;
+    color:var(--ink);
+  }
+  .email-shell{
+    max-width:640px;
+    margin:0 auto;
+    background:var(--cream);
+  }
+  .preheader{
+    display:none;
+  }
+
+  /* Eyebrow / label style */
+  .eyebrow{
+    font-family:'Jost',sans-serif;
+    font-weight:400;
+    font-size:12px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--clay);
+    margin:0 0 14px;
+  }
+
+  /* Header eyebrow: "Tea & Tonic Matakana" */
+  .header-eyebrow{
+    font-family:'Jost',sans-serif;
+    font-weight:400;
+    font-size:15px;
+    letter-spacing:0.04em;
+    text-align:center;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+  }
+
+  /* Wordmark */
+  .wordmark{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:400;
+    font-size:38px;
+    letter-spacing:0.42em;
+    text-align:center;
+    color:var(--ink);
+    margin:0;
+    padding-left:0.42em; /* optical centering for tracked type */
+  }
+  .tagline{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:300;
+    font-style:italic;
+    font-size:19px;
+    text-align:center;
+    color:#fff;
+    letter-spacing:0.02em;
+    margin:14px 0 0;
+  }
+
+  /* Section heading, e.g. "Frolic Ceramics" */
+  .section-heading{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:400;
+    font-size:34px;
+    line-height:1.15;
+    margin:0 0 4px;
+    color:var(--ink);
+  }
+  .section-subheading{
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    font-size:14px;
+    letter-spacing:0.04em;
+    color:var(--ink-soft);
+    margin:0 0 20px;
+  }
+
+  /* Body copy */
+  p.body-copy{
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    font-size:16px;
+    line-height:1.75;
+    color:var(--ink-soft);
+    margin:0 0 20px;
+  }
+
+  .hero-img{
+    width:100%;
+    height:360px;
+    background:linear-gradient(135deg,#c9bba9,#a89380);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:rgba(255,255,255,0.85);
+    font-family:'Jost',sans-serif;
+    font-size:13px;
+    letter-spacing:0.08em;
+    padding:20px;
+  }
+
+  .img-block{
+    width:100%;
+    height:280px;
+    background:#E4D9C9;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#8B7E6C;
+    font-family:'Jost',sans-serif;
+    font-size:13px;
+    letter-spacing:0.06em;
+    line-height:1.6;
+    border-radius:2px;
+    padding:20px;
+  }
+  .img-caption{
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    font-style:normal;
+    font-size:11px;
+    letter-spacing:0.03em;
+    color:#A79B87;
+    text-align:center;
+    margin-top:8px;
+  }
+
+  .section{
+    padding:48px 40px;
+  }
+  .section.center{
+    text-align:center;
+  }
+  .divider{
+    border:none;
+    border-top:1px solid var(--rule);
+    margin:0 40px;
+  }
+
+  a.link-cta{
+    font-family:'Jost',sans-serif;
+    font-weight:400;
+    font-size:13px;
+    letter-spacing:0.06em;
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px solid var(--clay);
+    padding-bottom:2px;
+  }
+  a.link-cta:hover{ color:var(--clay); }
+
+  .cta-row{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+    margin-top:6px;
+  }
+
+  .btn{
+    display:inline-block;
+    font-family:'Jost',sans-serif;
+    font-weight:500;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--ink);
+    text-decoration:none;
+    border:1px solid var(--ink);
+    padding:14px 30px;
+    margin-top:10px;
+  }
+  .btn:hover{
+    background:var(--ink);
+    color:var(--cream);
+  }
+  .btn.filled{
+    background:var(--clay);
+    border-color:var(--clay);
+    color:#fff;
+  }
+  .btn.filled:hover{
+    background:var(--ink);
+    border-color:var(--ink);
+  }
+
+  .quote-block{
+    background:var(--panel);
+    border-left:2px solid var(--clay);
+    padding:20px 26px;
+    margin:0 0 24px;
+  }
+  .quote-block p{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:300;
+    font-size:19px;
+    color:var(--ink);
+    margin:0;
+    line-height:1.5;
+  }
+
+  .footer{
+    padding:40px;
+    text-align:center;
+  }
+  .footer p{
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    font-size:12px;
+    color:var(--ink-soft);
+    letter-spacing:0.03em;
+    margin:4px 0;
+  }
+  .footer .sign{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:300;
+    font-size:20px;
+    color:var(--ink);
+    margin:0 0 4px;
+  }
+
+  .notes{
+    max-width:640px;
+    margin:24px auto 0;
+    font-family:'Jost',sans-serif;
+    font-size:12px;
+    color:#8a8a86;
+    line-height:1.7;
+    padding:0 16px 40px;
+  }
+  .notes strong{ color:#5B5347; }
+</style>
+</head>
+<body>
+
+<!-- Preview/wrapper background so the cream email reads correctly on a grey canvas -->
+<div style="padding:32px 12px;">
+<div class="email-shell">
+
+  <!-- HEADER -->
+  <div style="background:var(--cream); padding:56px 30px 40px;">
+    <p class="header-eyebrow">Tea &amp; Tonic Matakana</p>
+    <p class="wordmark">MONNI</p>
+  </div>
+
+  <!-- HERO IMAGE -->
+  <div class="hero-img" style="height:440px; border-radius:0;">
+    [ IMAGE — sourdough or oats served in a Frolic bowl, soft morning light, echoing your homepage hero ]
+  </div>
+
+  <!-- INTRO -->
+  <div class="section center">
+    <p class="body-copy" style="font-family:'Cormorant Garamond',serif; font-weight:300; font-style:italic; font-size:20px; color:var(--ink); line-height:1.6;">
+      There's a particular kind of morning that calls for something handmade —
+      a mug with weight to it, water poured from a jug shaped by hands rather than a machine.
+    </p>
+    <p class="body-copy">
+      This week, we celebrate a maker who's been part of our story from day one.
+      Vicki from Frolic Ceramics, a maker who reminds us why we fell in love with
+      handmade in the first place.
+    </p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- MAKER OF THE MONTH -->
+  <div class="section">
+    <p class="eyebrow">Maker of the Month</p>
+    <h2 class="section-heading">Frolic Ceramics</h2>
+    <p class="section-subheading">Vicki Fanning, Matakana</p>
+
+    <div class="img-block" style="margin-bottom:24px;">
+      [ IMAGE — Frolic jugs &amp; mugs on the Tea &amp; Tonic back bench, styled with blooms ]
+    </div>
+
+    <p class="body-copy">
+      We're grateful to walk alongside Vicki Fanning of Frolic Ceramics, a treasured local
+      ceramicist and glass artist who has been part of our story since the very beginning.
+      Her pieces are functional while still holding an organic, unrepeatable form — no two
+      are ever quite the same.
+    </p>
+    <p class="body-copy">
+      Her famous water jugs, often first spotted at The Brewery, are one of our favourites.
+      You'll find them filled with blooms on our back bench, alongside soap dishes and mugs
+      crafted for comfort and quiet moments of solace. Every piece is a small ritual in itself.
+    </p>
+    <p class="body-copy">
+      We sat down with Vicki to talk childhood farms, the seduction of glass, and building a
+      creative life around a growing son.
+    </p>
+
+    <div class="cta-row">
+      <a href="#" class="link-cta">Read the full interview →</a>
+      <a href="#" class="link-cta">Shop Frolic Ceramics →</a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- GIVEAWAY -->
+  <div class="section center">
+    <p class="eyebrow">Instagram Giveaway</p>
+    <h2 class="section-heading">Win a Frolic Jug, Large</h2>
+
+    <div class="img-block" style="margin:20px 0 22px;">
+      [ IMAGE — Frolic Large Jug, styled for Instagram ]
+    </div>
+
+    <p class="body-copy">
+      Handmade by Vicki in her Matakana studio — soft, organic, and just as happy pouring
+      water as it is holding a loose gathering of stems.
+    </p>
+    <p class="body-copy" style="margin-bottom:8px;">
+      Head to our Instagram to enter — follow along for how to win.
+    </p>
+    <a href="#" class="btn filled">Enter on Instagram</a>
+  </div>
+
+  <hr class="divider">
+
+  <!-- TEA OF THE WEEK -->
+  <div class="section">
+    <p class="eyebrow">Tea of the Week</p>
+    <h2 class="section-heading">Ruby Chai</h2>
+    <p class="section-subheading">By Amber &amp; Gold</p>
+
+    <div class="img-block" style="margin-bottom:24px;">
+      [ IMAGE — Ruby Chai, poured from a Frolic jug ]
+    </div>
+
+    <p class="body-copy">
+      A warming, nourishing blend built on a base of rooibos and layered with delicious
+      spice. Rich, grounding and full of comfort, it's the kind of cup that invites you
+      to slow down and savour the moment.
+    </p>
+    <p class="body-copy">
+      Naturally caffeine-free, it's lovely in the afternoon as a gentle pick-me-up, and
+      just as welcome in the evening — a quiet moment of reflection to help you digest
+      the day before easing into rest.
+    </p>
+    <a href="#" class="btn">Shop Ruby Chai</a>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p class="sign">With warmth,<br>Monni</p>
+    <p>Tea &amp; Tonic Matakana</p>
+    <p>Matakana Village, Aotearoa</p>
+  </div>
+
+</div>
+</div>
+
+<div class="notes">
+  <strong>Notes on this preview —</strong> built with your live fonts (Cormorant Garamond for the wordmark, headings, and editorial italic moments; Jost for body copy, eyebrows, and CTAs), and a palette pulled from your homepage's warm clay and cream tones. Image blocks are placeholders — swap in your actual photography and the layout will hold. Links are placeholders (#) — drop in your real URLs for the blog interview, collection page, and Instagram post before sending. This is a visual reference; for actual sending through an ESP, the layout would need converting to table-based email-safe HTML.
+</div>
+
+</body>
+</html>

@@ -1,0 +1,354 @@
+<mjml>
+  <mj-head>
+    <mj-title>Maker of the Month — Frolic Ceramics</mj-title>
+    <mj-preview>There's a particular kind of morning that calls for something handmade — celebrating Vicki of Frolic Ceramics.</mj-preview>
+    <mj-raw>
+      <meta name="color-scheme" content="light only" />
+      <meta name="supported-color-schemes" content="light only" />
+      <style type="text/css">
+        :root { color-scheme: light only; supported-color-schemes: light only; }
+      </style>
+    </mj-raw>
+    <mj-font name="Cormorant Garamond" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=Jost:wght@200;300;400;500&amp;display=swap" />
+    <mj-font name="Jost" href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&amp;display=swap" />
+    <mj-attributes>
+      <mj-all font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" color="#5B5347" />
+      <mj-body background-color="#E9E2D5" width="640px" />
+      <mj-section background-color="#F7F2EA" padding="0" />
+      <mj-text font-size="16px" line-height="1.75" color="#5B5347" padding="0" />
+      <mj-button font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-size="12px" letter-spacing="0.18em" text-transform="uppercase" border-radius="0" inner-padding="14px 30px" />
+      <mj-class name="eyebrow" font-size="12px" letter-spacing="0.28em" text-transform="uppercase" color="#B4795A" font-weight="400" />
+      <mj-class name="heading-serif" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="400" color="#2E2A24" line-height="1.15" />
+      <mj-class name="subheading" font-size="14px" letter-spacing="0.04em" color="#5B5347" font-weight="300" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .wordmark-img img, .footer-wordmark-img img {
+        display: block !important;
+        margin: 0 auto !important;
+        border: 0 !important;
+        height: auto !important;
+        max-height: none !important;
+      }
+      .wordmark-img table, .footer-wordmark-img table,
+      .wordmark-img td, .footer-wordmark-img td {
+        line-height: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+      .hero-img img, .section-img img {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+      }
+      .link-cta a {
+        color: #2E2A24 !important;
+        text-decoration: none !important;
+        border-bottom: 1px solid #B4795A !important;
+        padding-bottom: 2px !important;
+        letter-spacing: 0.06em !important;
+        font-size: 13px !important;
+        font-weight: 400 !important;
+      }
+      @media only screen and (max-width: 480px) {
+        .mobile-pad > table > tbody > tr > td {
+          padding-left: 28px !important;
+          padding-right: 28px !important;
+        }
+        .heading-serif div { font-size: 28px !important; }
+      }
+    </mj-style>
+    <mj-style>
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_qE6GnM.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_v86GnM.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: italic;
+        font-weight: 300;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3smX5slCNuHLi8bLeY9MK7whWMhyjYrGFEsdtdc62E6zd5rDDOjw.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Jost';
+        font-style: normal;
+        font-weight: 200 400;
+        font-display: swap;
+        src: url('https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/18b8e0e7-c67f-42e5-a08c-f51cb7508e68.woff2') format('woff2');
+      }
+      body, .dm-lock { background-color: #E9E2D5 !important; }
+      .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+      .sec-cream > table > tbody > tr > td > div { background-color: #F7F2EA !important; }
+      .sec-panel, .sec-panel > table, .sec-panel > table > tbody > tr > td,
+      .sec-panel > table > tbody > tr > td > div { background-color: #FBF8F3 !important; }
+      .sec-footer, .sec-footer > table, .sec-footer > table > tbody > tr > td,
+      .sec-footer > table > tbody > tr > td > div { background-color: #3C2A1A !important; }
+      @media (prefers-color-scheme: dark) {
+        body, .dm-lock { background-color: #E9E2D5 !important; color: #5B5347 !important; }
+        .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+        .sec-cream > table > tbody > tr > td > div { background-color: #F7F2EA !important; }
+        .sec-panel, .sec-panel > table, .sec-panel > table > tbody > tr > td,
+        .sec-panel > table > tbody > tr > td > div { background-color: #FBF8F3 !important; }
+        .sec-footer, .sec-footer > table, .sec-footer > table > tbody > tr > td,
+        .sec-footer > table > tbody > tr > td > div { background-color: #3C2A1A !important; }
+        .text-body, .text-body div, .text-body span, .text-body p { color: #5B5347 !important; }
+        .text-heading, .text-heading div, .heading-serif div { color: #2E2A24 !important; }
+        .text-eyebrow, .text-eyebrow div, .eyebrow div { color: #B4795A !important; }
+        .text-ink, .text-ink div { color: #2E2A24 !important; }
+        .text-footer, .text-footer div, .text-footer a { color: #E0DCDA !important; }
+        .text-footer-muted, .text-footer-muted div, .text-footer-muted a { color: #8a7060 !important; }
+        .dm-img img { opacity: 1 !important; filter: none !important; mix-blend-mode: normal !important; }
+        .btn-outline table td { background-color: #F7F2EA !important; border-color: #2E2A24 !important; }
+        .btn-outline a { color: #2E2A24 !important; background-color: #F7F2EA !important; }
+        .btn-filled table td { background-color: #B4795A !important; border-color: #B4795A !important; }
+        .btn-filled a { color: #ffffff !important; background-color: #B4795A !important; }
+      }
+      [data-ogsc] .sec-cream, [data-ogsb] .sec-cream { background-color: #F7F2EA !important; }
+      [data-ogsc] .sec-panel, [data-ogsb] .sec-panel { background-color: #FBF8F3 !important; }
+      [data-ogsc] .sec-footer, [data-ogsb] .sec-footer { background-color: #3C2A1A !important; }
+      [data-ogsc] .text-body, [data-ogsb] .text-body { color: #5B5347 !important; }
+      [data-ogsc] .text-heading, [data-ogsb] .text-heading { color: #2E2A24 !important; }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#E9E2D5" css-class="dm-lock">
+
+    <!-- Header -->
+    <mj-section background-color="#F7F2EA" padding="48px 40px 36px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" css-class="text-body" font-size="15px" letter-spacing="0.04em" color="#5B5347" padding="0 0 18px">Tea &amp; Tonic Matakana</mj-text>
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/3a8b249b-16ef-41e4-80c5-4c20d8cc2bf2.png"
+          alt="MONNI"
+          width="153px"
+          height="53px"
+          align="center"
+          padding="0"
+          css-class="dm-img wordmark-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <!-- Hero — homepage image placeholder -->
+    <mj-section padding="0" background-color="#F7F2EA" css-class="sec-cream">
+      <mj-column padding="0">
+        <mj-image
+          src="https://teaandtonic.co.nz/cdn/shop/t/61/assets/monni-hero-left.webp"
+          alt="A quiet morning moment at Tea &amp; Tonic"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img hero-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <!-- Intro -->
+    <mj-section background-color="#F7F2EA" padding="44px 40px 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text
+          align="center"
+          font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+          font-style="italic"
+          font-weight="300"
+          font-size="20px"
+          color="#2E2A24"
+          line-height="1.6"
+          padding="0 8px 20px"
+          css-class="text-ink"
+        >There's a particular kind of morning that calls for something handmade — a mug with weight to it, water poured from a jug shaped by hands rather than a machine.</mj-text>
+        <mj-text align="center" css-class="text-body" font-size="16px" line-height="1.75" padding="0 4px">
+          This week, we celebrate a maker who's been part of our story from day one. Vicki from Frolic Ceramics — a maker who reminds us why we fell in love with handmade in the first place.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#DDD3C3" border-width="1px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Maker of the Month -->
+    <mj-section background-color="#F7F2EA" padding="44px 40px 24px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text css-class="eyebrow text-eyebrow" padding="0 0 14px">Maker of the Month</mj-text>
+        <mj-text css-class="heading-serif text-heading" font-size="34px" padding="0 0 4px">Frolic Ceramics</mj-text>
+        <mj-text css-class="subheading text-body" padding="0 0 24px">Vicki Fanning, Matakana</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="0" background-color="#F7F2EA" css-class="sec-cream">
+      <mj-column padding="0">
+        <mj-image
+          src="https://teaandtonic.co.nz/cdn/shop/t/61/assets/frolic-ceramics.webp"
+          alt="Frolic Ceramics — handmade pieces from Matakana"
+          href="https://teaandtonic.co.nz/collections/frolic-ceramics"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img section-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="28px 40px 44px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text css-class="text-body" padding="0 0 18px">
+          We're grateful to walk alongside Vicki Fanning of Frolic Ceramics, a treasured local ceramicist and glass artist who has been part of our story since the very beginning. Her pieces are functional while still holding an organic, unrepeatable form — no two are ever quite the same.
+        </mj-text>
+        <mj-text css-class="text-body" padding="0 0 18px">
+          Her famous water jugs, often first spotted at The Brewery, are one of our favourites. You'll find them filled with blooms on our back bench, alongside soap dishes and mugs crafted for comfort and quiet moments of solace. Every piece is a small ritual in itself.
+        </mj-text>
+        <mj-text css-class="text-body" padding="0 0 28px">
+          We sat down with Vicki to talk childhood farms, the seduction of glass, and building a creative life around a growing son.
+        </mj-text>
+        <mj-text css-class="link-cta text-ink" padding="0 0 10px">
+          <a href="https://teaandtonic.co.nz/blogs/journal">Read the full interview →</a>
+        </mj-text>
+        <mj-text css-class="link-cta text-ink" padding="0">
+          <a href="https://teaandtonic.co.nz/collections/frolic-ceramics">Shop Frolic Ceramics →</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#DDD3C3" border-width="1px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Instagram Giveaway -->
+    <mj-section background-color="#F7F2EA" padding="44px 40px 20px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" css-class="eyebrow text-eyebrow" padding="0 0 14px">Instagram Giveaway</mj-text>
+        <mj-text align="center" css-class="heading-serif text-heading" font-size="34px" padding="0 0 20px">Win a Frolic Jug, Large</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="0 40px" background-color="#F7F2EA" css-class="sec-cream mobile-pad">
+      <mj-column padding="0">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/C6FD5D6E-1FEC-4217-84E8-9E3B324311F5.jpg?v=1783136939"
+          alt="Frolic Jug | Large — handmade by Vicki Fanning"
+          href="https://teaandtonic.co.nz/products/frolic-jug-large"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img section-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="24px 40px 44px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" css-class="text-body" padding="0 0 18px">
+          Handmade by Vicki in her Matakana studio — soft, organic, and just as happy pouring water as it is holding a loose gathering of stems.
+        </mj-text>
+        <mj-text align="center" css-class="text-body" padding="0 0 24px">
+          Head to our Instagram to enter — follow along for how to win.
+        </mj-text>
+        <mj-button
+          href="https://www.instagram.com/teaandtonicmatakana/"
+          background-color="#B4795A"
+          color="#ffffff"
+          border="1px solid #B4795A"
+          align="center"
+          css-class="btn-filled"
+        >Enter on Instagram</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#DDD3C3" border-width="1px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Tea of the Week -->
+    <mj-section background-color="#FBF8F3" padding="44px 40px 20px" css-class="sec-panel mobile-pad">
+      <mj-column>
+        <mj-text css-class="eyebrow text-eyebrow" padding="0 0 14px">Tea of the Week</mj-text>
+        <mj-text css-class="heading-serif text-heading" font-size="34px" padding="0 0 4px">Ruby Chai</mj-text>
+        <mj-text css-class="subheading text-body" padding="0 0 24px">By Amber &amp; Gold</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="0" background-color="#FBF8F3" css-class="sec-panel">
+      <mj-column padding="0">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/Frame-19.png?v=1732760796"
+          alt="Amber &amp; Gold Ruby Chai Tea"
+          href="https://teaandtonic.co.nz/products/0af7b240-ab70-11e8-eddc-53ef7b2548f3"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img section-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FBF8F3" padding="28px 40px 48px" css-class="sec-panel mobile-pad">
+      <mj-column>
+        <mj-text css-class="text-body" padding="0 0 18px">
+          A warming, nourishing blend built on a base of rooibos and layered with delicious spice. Rich, grounding and full of comfort, it's the kind of cup that invites you to slow down and savour the moment.
+        </mj-text>
+        <mj-text css-class="text-body" padding="0 0 28px">
+          Naturally caffeine-free, it's lovely in the afternoon as a gentle pick-me-up, and just as welcome in the evening — a quiet moment of reflection to help you digest the day before easing into rest.
+        </mj-text>
+        <mj-button
+          href="https://teaandtonic.co.nz/products/0af7b240-ab70-11e8-eddc-53ef7b2548f3"
+          background-color="#FBF8F3"
+          color="#2E2A24"
+          border="1px solid #2E2A24"
+          align="left"
+          css-class="btn-outline"
+        >Shop Ruby Chai</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Signature -->
+    <mj-section background-color="#F7F2EA" padding="40px 40px 36px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text
+          align="center"
+          font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+          font-style="italic"
+          font-weight="300"
+          font-size="20px"
+          color="#2E2A24"
+          padding="0 0 8px"
+          css-class="text-ink"
+        >With warmth,<br />Monni</mj-text>
+        <mj-text align="center" css-class="text-body" font-size="12px" letter-spacing="0.03em" padding="0 0 4px">Tea &amp; Tonic Matakana</mj-text>
+        <mj-text align="center" css-class="text-body" font-size="12px" letter-spacing="0.03em" padding="0">Matakana Village, Aotearoa</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Brand footer (compliance footer added automatically by SenderKit) -->
+    <mj-section background-color="#3C2A1A" padding="36px 36px" css-class="sec-footer mobile-pad">
+      <mj-column>
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/6224078f-358d-4dde-9744-0a7f34b24931.png"
+          alt="Tea &amp; Tonic"
+          width="189px"
+          height="43px"
+          align="center"
+          padding="0 0 14px"
+          css-class="dm-img footer-wordmark-img"
+        />
+        <mj-text align="center" css-class="text-footer-muted" font-size="11px" color="#8a7060" line-height="1.8" letter-spacing="0.04em" padding="0">
+          <a href="mailto:hello@teaandtonic.co.nz" style="color:#8a7060;text-decoration:none;">hello@teaandtonic.co.nz</a> &nbsp;·&nbsp;
+          <a href="https://www.instagram.com/teaandtonicmatakana/" style="color:#8a7060;text-decoration:none;">Instagram</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>

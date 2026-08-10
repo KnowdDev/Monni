@@ -634,7 +634,7 @@ export const brands = [
     name: 'The Knitter',
     tagline: 'Handmade, unhurried and quietly joyful, the Knitter offers knitwear with genuine warmth and character, pieces made to be worn, loved and kept for years.',
     vendor_match: 'The Knitter',
-    collection_handle: '',
+    collection_handle: 'the-knitter',
     published: true,
     paragraphs: [
       'Nicole Leybourne taught herself to knit from YouTube tutorials, after falling in love with a yellow fluffy jumper she spotted in a boutique and couldn\'t stop thinking about. Her first attempt was a black jumper, unwearable, its pieces never properly sewn together. She kept going anyway.',

@@ -44,6 +44,8 @@ export const collections = [
     parent: 'wellness',
     nav_label: 'Tea',
     sort_order: 2,
+    // Live smart-collection rule (Shopify TAG match is case-sensitive)
+    smart_tag: 'tea',
     top_line: 'An act of nourishment, repeated daily.',
     bottom_paragraphs: [
       'Our collection spans herbal infusions and restorative blends, everyday drinking teas and single origin teas, chosen for their quality, their provenance and the quiet ritual of brewing and drinking. Whether you are drawn to something grounding and earthy, uplifting and bright, or deeply calming, there is a cup here for the moment you are in.',
@@ -62,11 +64,25 @@ export const collections = [
     ],
   },
   {
+    handle: 'sleep',
+    title: 'Sleep',
+    parent: 'wellness',
+    nav_label: 'Sleep',
+    sort_order: 4,
+    // Live smart-collection rule (Shopify TAG match is case-sensitive)
+    smart_tag: 'sleep',
+    top_line: 'A quieter end to the day.',
+    bottom_paragraphs: [
+      'Our sleep collection gathers the rituals that help the body soften into rest — supportive pillows, calming teas, night-time supplements, and a gentle sleep spray for the pillow and the air.',
+      'Chosen for genuine quality and a slower approach to winding down, these are pieces for evenings that ask for less stimulation and more care.',
+    ],
+  },
+  {
     handle: 'supplements',
     title: 'Supplements',
     parent: 'wellness',
     nav_label: 'Supplements',
-    sort_order: 4,
+    sort_order: 5,
     top_line: 'Nothing excessive. Everything purposeful.',
     bottom_paragraphs: [
       'A considered approach to supporting the body from within.',
@@ -424,11 +440,25 @@ export const collections = [
     ],
   },
   {
+    handle: 'home-care',
+    title: 'Home Care',
+    parent: 'home',
+    nav_label: 'Home Care',
+    sort_order: 5,
+    // Live smart-collection rule (Shopify TAG match is case-sensitive)
+    smart_tag: 'home care',
+    top_line: 'Care for the spaces that hold you.',
+    bottom_paragraphs: [
+      'Our home care collection brings together natural cleaning and everyday essentials chosen for what they leave out as much as what they do — gentle on skin, kind to surfaces, and made without the harsh chemistry that so often fills the air at home.',
+      'Hand washes, refills, and multipurpose sprays from makers who favour plant-based ingredients and refillable rituals, supporting a cleaner home that still feels calm to live in.',
+    ],
+  },
+  {
     handle: 'teaware',
     title: 'Teaware',
     parent: 'home',
     nav_label: 'Teaware',
-    sort_order: 5,
+    sort_order: 6,
     top_line: 'The art of making something simple, sacred.',
     bottom_paragraphs: [
       'The way you make tea changes the way tea tastes.',
@@ -440,7 +470,7 @@ export const collections = [
     title: 'Pantry',
     parent: 'home',
     nav_label: 'Pantry',
-    sort_order: 6,
+    sort_order: 7,
     top_line: 'Chosen because it is genuinely exceptional.',
     bottom_paragraphs: [
       'Our pantry collection is small and deliberate, each product chosen because it is genuinely exceptional, sourced from makers who care deeply about quality, integrity, and the land.',

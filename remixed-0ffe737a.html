@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MONNI Size Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAFA;
+    --bg-alt: #F4F3F0;
+    --charcoal: #2C2420;
+    --border: #E0DCDA;
+    --white: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--charcoal);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 72px 24px 120px;
+  }
+
+  /* ── PAGE HEADER ── */
+  .eyebrow {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #8a8278;
+    margin-bottom: 10px;
+  }
+  h1 {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 44px;
+    letter-spacing: 0.02em;
+    margin-bottom: 16px;
+  }
+  .intro {
+    text-align: center;
+    max-width: 540px;
+    margin: 0 auto 56px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #4a423c;
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0 0 16px;
+    margin-bottom: -1px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #b0a89c;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .tab-btn.active {
+    color: var(--charcoal);
+    border-bottom-color: var(--charcoal);
+  }
+
+  /* ── TAB PANELS ── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── DESKTOP TABLE ── */
+  .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  table.size-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 540px;
+  }
+  table.size-table thead th {
+    background: var(--charcoal);
+    color: var(--white);
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 16px 12px;
+    text-align: center;
+  }
+  table.size-table tbody td {
+    padding: 16px 12px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+  }
+  table.size-table tbody tr:nth-child(even) td {
+    background: var(--bg-alt);
+  }
+  .table-note {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #8a8278;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  /* ── MOBILE CARDS (hidden on desktop) ── */
+  .mobile-cards { display: none; }
+
+  .size-card {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .size-card-head {
+    background: var(--charcoal);
+    color: var(--white);
+    padding: 14px 20px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .card-size {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+  }
+  .card-gen {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  .size-card-body {
+    background: var(--white);
+    padding: 14px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 24px;
+  }
+  .stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 6px;
+    border-bottom: 1px dotted var(--border);
+  }
+  .stat-key {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #8a8278;
+  }
+  .stat-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  /* ── HOW TO MEASURE ── */
+  .measure-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  .measure-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 28px 24px;
+  }
+  .measure-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+  .measure-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #4a423c;
+  }
+  .tip {
+    background: var(--bg-alt);
+    border-radius: 3px;
+    padding: 20px 24px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #4a423c;
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    h1 { font-size: 32px; }
+    .tabs { gap: 28px; }
+
+    /* hide desktop table, show cards */
+    .desktop-table { display: none; }
+    .mobile-cards { display: block; }
+
+    .measure-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <p class="eyebrow">Fit &amp; Sizing</p>
+  <h1>Size Guide</h1>
+  <p class="intro">All measurements are in centimetres. Our garments are designed to fit true to size — when between sizes, we recommend sizing up for a more relaxed fit, or sizing down for a closer fit.</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('clothing', this)">Clothing</button>
+    <button class="tab-btn" onclick="showTab('measure', this)">How to Measure</button>
+  </div>
+
+  <!-- TAB 1: CLOTHING -->
+  <div id="clothing" class="tab-panel active">
+
+    <!-- Desktop table -->
+    <div class="desktop-table table-wrap">
+      <table class="size-table">
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>General</th>
+            <th>AUS</th>
+            <th>USA</th>
+            <th>Bust (cm)</th>
+            <th>Waist (cm)</th>
+            <th>Hips (cm)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>XS/S</td><td>6</td><td>2</td><td>79</td><td>65</td><td>92</td></tr>
+          <tr><td>1</td><td>S/M</td><td>8</td><td>4</td><td>84</td><td>70</td><td>97</td></tr>
+          <tr><td>2</td><td>S/M</td><td>10</td><td>6</td><td>89</td><td>75</td><td>102</td></tr>
+          <tr><td>3</td><td>M/L</td><td>12</td><td>8</td><td>94</td><td>80</td><td>107</td></tr>
+          <tr><td>4</td><td>M/L</td><td>14</td><td>10</td><td>99</td><td>85</td><td>112</td></tr>
+          <tr><td>5</td><td>L/XL</td><td>16</td><td>12</td><td>105</td><td>91</td><td>118</td></tr>
+          <tr><td>6</td><td>L/XL</td><td>18</td><td>14</td><td>112</td><td>98</td><td>125</td></tr>
+        </tbody>
+      </table>
+      <p class="table-note">If you are between sizes, we recommend sizing up for a more relaxed fit, or sizing down for a closer fit. Fit may vary slightly by style — refer to individual product pages for specific fit notes.</p>
+    </div>
+
+    <!-- Mobile cards -->
+    <div class="mobile-cards">
+      <div class="size-card">
+        <div class="size-card-head"><span class="card-size">Size 0</span><span class="card-gen">XS / S</span></div>
+        <div class="size-card-body">
+          <div class="stat"><span class="stat-key">AUS</span><span class="stat-val">6</span></div>
+          <div class="stat"><span class="stat-key">USA</span><span class="stat-val">2</span></div>
+          <div class="stat"><span class="stat-key">Bust</span><span class="stat-val">79cm</span></div>
+          <div class="stat"><span class="stat-key">Waist</span><span class="stat-val">65cm</span></div>
+          <div class="stat"><span class="stat-key">Hips</span><span class="stat-val">92cm</span></div>
+        </div>
+      </div>
+      <div class="size-card">
+        <div class="size-card-head"><span class="card-size">Size 1</span><span class="card-gen">S / M</span></div>
+        <div class="size-card-body">
+          <div class="stat"><span class="stat-key">AUS</span><span class="stat-val">8</span></div>
+          <div class="stat"><span class="stat-key">USA</span><span class="stat-val">4</span></div>
+          <div class="stat"><span class="stat-key">Bust</span><span class="stat-val">84cm</span></div>
+          <div class="stat"><span class="stat-key">Waist</span><span class="stat-val">70cm</span></div>
+          <div class="stat"><span class="stat-key">Hips</span><span class="stat-val">97cm</span></div>
+        </div>
+      </div>
+      <div class="size-card">
+        <div class="size-card-head"><span class="card-size">Size 2</span><span class="card-gen">S / M</span></div>
+        <div class="size-card-body">
+          <div class="stat"><span class="stat-key">AUS</span><span class="stat-val">10</span></div>
+          <div class="stat"><span class="stat-key">USA</span><span class="stat-val">6</span></div>
+          <div class="stat"><span class="stat-key">Bust</span><span class="stat-val">89cm</span></div>
+          <div class="stat"><span class="stat-key">Waist</span><span class="stat-val">75cm</span></div>
+          <div class="stat"><span class="stat-key">Hips</span><span class="stat-val">102cm</span></div>
+        </div>
+      </div>
+      <div class="size-card">
+        <div class="size-card-head"><span class="card-size">Size 3</span><span class="card-gen">M / L</span></div>
+        <div class="size-card-body">
+          <div class="stat"><span class="stat-key">AUS</span><span class="stat-val">12</span></div>
+          <div class="stat"><span class="stat-key">USA</span><span class="stat-val">8</span></div>
+          <div class="stat"><span class="stat-key">Bust</span><span class="stat-val">94cm</span></div>
+          <div class="stat"><span class="stat-key">Waist</span><span class="stat-val">80cm</span></div>
+          <div class="stat"><span class="stat-key">Hips</span><span class="stat-val">107cm</span></div>
+        </div>
+      </div>
+      <div class="size-card">
+        <div class="size-card-head"><span class="card-size">Size 4</span><span class="card-gen">M / L</span></div>
+        <div class="size-card-body">
+          <div class="stat"><span class="stat-key">AUS</span><span class="stat-val">14</span></div>
+          <div class="stat"><span class="stat-key">USA</span><span class="stat-val">10</span></div>
+          <div class="stat"><span class="stat-key">Bust</span><span class="stat-val">99cm</span></div>
+          <div class="stat"><span class="stat-key">Waist</span><span class="stat-val">85cm</span></div>
+          <div class="stat"><span class="stat-key">Hips</span><span class="stat-val">112cm</span></div>
+        </div>
+      </div>
+      <div class="size-card">
+        <div class="size-card-head"><span class="card-size">Size 5</span><span class="card-gen">L / XL</span></div>
+        <div class="size-card-body">
+          <div class="stat"><span class="stat-key">AUS</span><span class="stat-val">16</span></div>
+          <div class="stat"><span class="stat-key">USA</span><span class="stat-val">12</span></div>
+          <div class="stat"><span class="stat-key">Bust</span><span class="stat-val">105cm</span></div>
+          <div class="stat"><span class="stat-key">Waist</span><span class="stat-val">91cm</span></div>
+          <div class="stat"><span class="stat-key">Hips</span><span class="stat-val">118cm</span></div>
+        </div>
+      </div>
+      <div class="size-card">
+        <div class="size-card-head"><span class="card-size">Size 6</span><span class="card-gen">L / XL</span></div>
+        <div class="size-card-body">
+          <div class="stat"><span class="stat-key">AUS</span><span class="stat-val">18</span></div>
+          <div class="stat"><span class="stat-key">USA</span><span class="stat-val">14</span></div>
+          <div class="stat"><span class="stat-key">Bust</span><span class="stat-val">112cm</span></div>
+          <div class="stat"><span class="stat-key">Waist</span><span class="stat-val">98cm</span></div>
+          <div class="stat"><span class="stat-key">Hips</span><span class="stat-val">125cm</span></div>
+        </div>
+      </div>
+      <p class="table-note">If you are between sizes, we recommend sizing up for a more relaxed fit, or sizing down for a closer fit. Fit may vary slightly by style — refer to individual product pages for specific fit notes.</p>
+    </div>
+
+  </div>
+
+  <!-- TAB 2: HOW TO MEASURE -->
+  <div id="measure" class="tab-panel">
+    <div class="measure-grid">
+      <div class="measure-card">
+        <h3>Bust</h3>
+        <p>Measure around the fullest part of your chest, keeping the tape horizontal. Do not pull too tightly.</p>
+      </div>
+      <div class="measure-card">
+        <h3>Waist</h3>
+        <p>Measure around your natural waist at the narrowest point, just above your belly button. Keep the tape relaxed.</p>
+      </div>
+      <div class="measure-card">
+        <h3>Hips</h3>
+        <p>Stand with feet together and measure around the widest part of your hips, approximately 20cm below your natural waist.</p>
+      </div>
+    </div>
+    <p class="tip">For the most accurate results, use a soft measuring tape and wear minimal clothing. Ask a friend to help for a more precise measurement. All measurements refer to body measurements, not garment measurements.</p>
+  </div>
+
+</div>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

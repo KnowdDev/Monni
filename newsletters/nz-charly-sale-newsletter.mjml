@@ -1,0 +1,378 @@
+<mjml>
+  <mj-head>
+    <mj-title>MONNI — NZ Charly Sale</mj-title>
+    <mj-preview>One of our favourite New Zealand makers is on sale, just as winter settles in. 20% off NZ Charly in store until 28 August.</mj-preview>
+    <mj-raw>
+      <meta name="color-scheme" content="light only" />
+      <meta name="supported-color-schemes" content="light only" />
+      <style type="text/css">
+        :root { color-scheme: light only; supported-color-schemes: light only; }
+      </style>
+    </mj-raw>
+    <mj-font name="Cormorant Garamond" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=Jost:wght@200;300;400;500&amp;display=swap" />
+    <mj-font name="Jost" href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&amp;display=swap" />
+    <mj-attributes>
+      <mj-all font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" color="#5B5347" />
+      <mj-body background-color="#E9E2D5" width="640px" />
+      <mj-section background-color="#F7F2EA" padding="0" />
+      <mj-text font-size="16px" line-height="1.75" color="#5B5347" padding="0" />
+      <mj-button font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-size="12px" letter-spacing="0.18em" text-transform="uppercase" border-radius="0" inner-padding="14px 30px" />
+      <mj-class name="eyebrow" font-size="12px" letter-spacing="0.28em" text-transform="uppercase" color="#B4795A" font-weight="400" />
+      <mj-class name="heading-serif" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="400" color="#2E2A24" line-height="1.15" />
+      <mj-class name="subheading" font-size="14px" letter-spacing="0.04em" color="#5B5347" font-weight="300" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .wordmark-img img, .footer-wordmark-img img {
+        display: block !important;
+        margin: 0 auto !important;
+        border: 0 !important;
+        height: auto !important;
+        max-height: none !important;
+      }
+      .wordmark-img table, .footer-wordmark-img table,
+      .wordmark-img td, .footer-wordmark-img td {
+        line-height: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+      .hero-img img, .section-img img {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 4 / 3 !important;
+        object-fit: cover !important;
+      }
+      .product-img img {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        object-fit: cover !important;
+      }
+      @media only screen and (max-width: 480px) {
+        .mobile-pad > table > tbody > tr > td {
+          padding-left: 28px !important;
+          padding-right: 28px !important;
+        }
+        .heading-serif div { font-size: 28px !important; }
+      }
+    </mj-style>
+    <mj-style>
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_qE6GnM.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_v86GnM.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: italic;
+        font-weight: 300;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3smX5slCNuHLi8bLeY9MK7whWMhyjYrGFEsdtdc62E6zd5rDDOjw.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Jost';
+        font-style: normal;
+        font-weight: 200 400;
+        font-display: swap;
+        src: url('https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/18b8e0e7-c67f-42e5-a08c-f51cb7508e68.woff2') format('woff2');
+      }
+      body, .dm-lock { background-color: #E9E2D5 !important; }
+      .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+      .sec-cream > table > tbody > tr > td > div { background-color: #F7F2EA !important; }
+      .sec-panel, .sec-panel > table, .sec-panel > table > tbody > tr > td,
+      .sec-panel > table > tbody > tr > td > div { background-color: #FBF8F3 !important; }
+      .sec-ink, .sec-ink > table, .sec-ink > table > tbody > tr > td,
+      .sec-ink > table > tbody > tr > td > div { background-color: #2E2A24 !important; }
+      .sec-footer, .sec-footer > table, .sec-footer > table > tbody > tr > td,
+      .sec-footer > table > tbody > tr > td > div { background-color: #3C2A1A !important; }
+      @media (prefers-color-scheme: dark) {
+        body, .dm-lock { background-color: #E9E2D5 !important; color: #5B5347 !important; }
+        .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+        .sec-cream > table > tbody > tr > td > div { background-color: #F7F2EA !important; }
+        .sec-panel, .sec-panel > table, .sec-panel > table > tbody > tr > td,
+        .sec-panel > table > tbody > tr > td > div { background-color: #FBF8F3 !important; }
+        .sec-ink, .sec-ink > table, .sec-ink > table > tbody > tr > td,
+        .sec-ink > table > tbody > tr > td > div { background-color: #2E2A24 !important; }
+        .sec-footer, .sec-footer > table, .sec-footer > table > tbody > tr > td,
+        .sec-footer > table > tbody > tr > td > div { background-color: #3C2A1A !important; }
+        .text-body, .text-body div, .text-body span, .text-body p { color: #5B5347 !important; }
+        .text-heading, .text-heading div, .heading-serif div { color: #2E2A24 !important; }
+        .text-eyebrow, .text-eyebrow div, .eyebrow div { color: #B4795A !important; }
+        .text-ink, .text-ink div { color: #2E2A24 !important; }
+        .text-sale, .text-sale div, .text-sale span { color: #F7F2EA !important; }
+        .text-sale-accent, .text-sale-accent div, .text-sale-accent span { color: #D8B9A6 !important; }
+        .text-footer-muted, .text-footer-muted div, .text-footer-muted a { color: #8a7060 !important; }
+        .dm-img img { opacity: 1 !important; filter: none !important; mix-blend-mode: normal !important; }
+        .btn-outline table td { background-color: #F7F2EA !important; border-color: #2E2A24 !important; }
+        .btn-outline a { color: #2E2A24 !important; background-color: #F7F2EA !important; }
+        .btn-filled table td { background-color: #B4795A !important; border-color: #B4795A !important; }
+        .btn-filled a { color: #ffffff !important; background-color: #B4795A !important; }
+      }
+      [data-ogsc] .sec-cream, [data-ogsb] .sec-cream { background-color: #F7F2EA !important; }
+      [data-ogsc] .sec-panel, [data-ogsb] .sec-panel { background-color: #FBF8F3 !important; }
+      [data-ogsc] .sec-ink, [data-ogsb] .sec-ink { background-color: #2E2A24 !important; }
+      [data-ogsc] .sec-footer, [data-ogsb] .sec-footer { background-color: #3C2A1A !important; }
+      [data-ogsc] .text-body, [data-ogsb] .text-body { color: #5B5347 !important; }
+      [data-ogsc] .text-heading, [data-ogsb] .text-heading { color: #2E2A24 !important; }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#E9E2D5" css-class="dm-lock">
+
+    <!-- Header -->
+    <mj-section background-color="#F7F2EA" padding="56px 40px 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" css-class="text-body" font-size="15px" letter-spacing="0.04em" color="#5B5347" padding="0 0 18px">Tea &amp; Tonic Matakana</mj-text>
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/3a8b249b-16ef-41e4-80c5-4c20d8cc2bf2.png"
+          alt="MONNI"
+          width="153px"
+          height="53px"
+          align="center"
+          padding="0"
+          css-class="dm-img wordmark-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <!-- Hero 4:3 — Everyday Jumper lifestyle from nzcharly.com -->
+    <mj-section padding="0" background-color="#F7F2EA" css-class="sec-cream">
+      <mj-column padding="0">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/hero-everyday-face-4x3.jpg?v=1786344832"
+          alt="NZ Charly Everyday Jumper styled for winter"
+          href="https://teaandtonic.co.nz/collections/vendors?q=NZ%20Charly"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img hero-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <!-- Sale banner -->
+    <mj-section background-color="#2E2A24" padding="22px 20px" css-class="sec-ink">
+      <mj-column>
+        <mj-text
+          align="center"
+          font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+          font-style="italic"
+          font-weight="400"
+          font-size="22px"
+          color="#F7F2EA"
+          letter-spacing="0.02em"
+          padding="0"
+          css-class="text-sale"
+        ><span style="font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-style:normal;font-weight:500;letter-spacing:0.12em;color:#D8B9A6;">20% OFF</span> &nbsp;·&nbsp; NZ Charly</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Intro -->
+    <mj-section background-color="#F7F2EA" padding="44px 40px 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text
+          align="center"
+          font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+          font-style="italic"
+          font-weight="300"
+          font-size="20px"
+          color="#2E2A24"
+          line-height="1.6"
+          padding="0 8px 20px"
+          css-class="text-ink"
+        >One of our favourite New Zealand makers is on sale, just as winter settles in.</mj-text>
+        <mj-text align="center" css-class="text-body" font-size="13px" letter-spacing="0.06em" text-transform="uppercase" padding="0 0 28px">
+          From now until the 28th of August<br />
+          <span style="color:#B4795A;font-weight:400;">In store</span>
+        </mj-text>
+        <mj-button
+          href="https://teaandtonic.co.nz/collections/vendors?q=NZ%20Charly"
+          background-color="#B4795A"
+          color="#ffffff"
+          border="1px solid #B4795A"
+          align="center"
+          css-class="btn-filled"
+        >Shop 20% off NZ Charly</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#DDD3C3" border-width="1px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- About NZ Charly -->
+    <mj-section background-color="#F7F2EA" padding="44px 40px 24px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text mj-class="eyebrow" css-class="text-eyebrow" padding="0 0 14px">This Fortnight</mj-text>
+        <mj-text mj-class="heading-serif" css-class="text-heading" font-size="34px" padding="0 0 4px">NZ Charly</mj-text>
+        <mj-text mj-class="subheading" css-class="text-body" padding="0 0 24px">Seamless knitwear, made in New Zealand</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="0" background-color="#F7F2EA" css-class="sec-cream">
+      <mj-column padding="0">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/section-lifestyle-4x3.jpg?v=1786344381"
+          alt="NZ Charly seamless knitwear — natural fibres"
+          href="https://teaandtonic.co.nz/collections/vendors?q=NZ%20Charly"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img section-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="28px 40px 44px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text css-class="text-body" padding="0 0 18px">
+          Designed and made in New Zealand, NZ Charly creates seamless knitwear in small batches using premium blends of ZQ certified merino, possum and silk.
+        </mj-text>
+        <mj-text css-class="text-body" padding="0 0 24px">
+          The secret is in the fibre. Possum is naturally hollow, much like polar bear fur, making these knits exceptionally warm while remaining surprisingly lightweight. Soft, breathable and made to last for years, they're the kind of pieces you'll reach for all winter.
+        </mj-text>
+        <mj-text css-class="text-body" font-size="15px" padding="0">
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+            <tr><td style="padding:10px 0;border-bottom:1px solid #DDD3C3;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:300;font-size:15px;color:#5B5347;"><span style="color:#B4795A;">—</span>&nbsp;&nbsp;Knitted in batches of no more than 20</td></tr>
+            <tr><td style="padding:10px 0;border-bottom:1px solid #DDD3C3;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:300;font-size:15px;color:#5B5347;"><span style="color:#B4795A;">—</span>&nbsp;&nbsp;ZQ certified merino, possum and silk blend</td></tr>
+            <tr><td style="padding:10px 0;border-bottom:1px solid #DDD3C3;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:300;font-size:15px;color:#5B5347;"><span style="color:#B4795A;">—</span>&nbsp;&nbsp;Exceptionally warm, surprisingly lightweight</td></tr>
+            <tr><td style="padding:10px 0;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:300;font-size:15px;color:#5B5347;"><span style="color:#B4795A;">—</span>&nbsp;&nbsp;A native New Zealand tree planted for every jumper sold</td></tr>
+          </table>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#DDD3C3" border-width="1px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Starter pick -->
+    <mj-section background-color="#F7F2EA" padding="44px 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text css-class="text-ink" padding="0">
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;background-color:#FBF8F3;border:1px solid #DDD3C3;">
+            <tr>
+              <td style="padding:28px 28px 12px;background-color:#FBF8F3;text-align:center;">
+                <p style="margin:0 0 10px;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:400;font-size:12px;letter-spacing:0.28em;text-transform:uppercase;color:#B4795A;">New to the Brand?</p>
+                <p style="margin:0 0 16px;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-weight:400;font-size:26px;line-height:1.15;color:#2E2A24;">The Everyday Jumper &amp; Rib Beanie</p>
+              </td>
+            </tr>
+          </table>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 40px 8px" css-class="sec-cream mobile-pad">
+      <mj-column width="50%" padding="0 6px 0 0">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/everyday-1x1.jpg?v=1786344385"
+          alt="NZ Charly Everyday Jumper"
+          href="https://teaandtonic.co.nz/search?q=NZ+Charly+Everyday"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img product-img"
+        />
+      </mj-column>
+      <mj-column width="50%" padding="0 0 0 6px">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/beanie-1x1.jpg?v=1786344388"
+          alt="NZ Charly Rib Beanie"
+          href="https://teaandtonic.co.nz/search?q=NZ+Charly+Beanie"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img product-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="8px 40px 44px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text css-class="text-ink" padding="0">
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;background-color:#FBF8F3;border:1px solid #DDD3C3;border-top:none;">
+            <tr>
+              <td style="padding:20px 28px 28px;background-color:#FBF8F3;text-align:center;">
+                <p style="margin:0 0 20px;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:300;font-size:16px;line-height:1.75;color:#5B5347;">
+                  If you're discovering NZ Charly for the first time, this is a beautiful place to start — a pairing that carries you through every winter morning.
+                </p>
+                <a href="https://teaandtonic.co.nz/search?q=NZ+Charly+Everyday" style="display:inline-block;font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:500;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#2E2A24;text-decoration:none;border:1px solid #2E2A24;padding:14px 30px;background-color:#FBF8F3;">Shop the Everyday Jumper</a>
+              </td>
+            </tr>
+          </table>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#DDD3C3" border-width="1px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Closing CTA -->
+    <mj-section background-color="#F7F2EA" padding="44px 40px 48px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" css-class="text-body" padding="0 0 28px">
+          With the full range currently available and colours selling through each season, now is the perfect time to choose your favourite.
+        </mj-text>
+        <mj-button
+          href="https://teaandtonic.co.nz/collections/vendors?q=NZ%20Charly"
+          background-color="#B4795A"
+          color="#ffffff"
+          border="1px solid #B4795A"
+          align="center"
+          css-class="btn-filled"
+        >Shop 20% off NZ Charly</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Signature -->
+    <mj-section background-color="#F7F2EA" padding="8px 40px 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text
+          align="center"
+          font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+          font-style="italic"
+          font-weight="300"
+          font-size="20px"
+          color="#2E2A24"
+          padding="0 0 8px"
+          css-class="text-ink"
+        >With warmth,<br />Monni</mj-text>
+        <mj-text align="center" css-class="text-body" font-size="12px" letter-spacing="0.03em" padding="0 0 4px">Tea &amp; Tonic Matakana</mj-text>
+        <mj-text align="center" css-class="text-body" font-size="12px" letter-spacing="0.03em" padding="0">Matakana Village, Aotearoa</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Brand footer -->
+    <mj-section background-color="#3C2A1A" padding="36px 36px" css-class="sec-footer mobile-pad">
+      <mj-column>
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/6224078f-358d-4dde-9744-0a7f34b24931.png"
+          alt="Tea &amp; Tonic"
+          width="189px"
+          height="43px"
+          align="center"
+          padding="0 0 14px"
+          css-class="dm-img footer-wordmark-img"
+        />
+        <mj-text align="center" css-class="text-footer-muted" font-size="11px" color="#8a7060" line-height="1.8" letter-spacing="0.04em" padding="0">
+          <a href="mailto:hello@teaandtonic.co.nz" style="color:#8a7060;text-decoration:none;">hello@teaandtonic.co.nz</a> &nbsp;·&nbsp;
+          <a href="https://www.instagram.com/teaandtonicmatakana/" style="color:#8a7060;text-decoration:none;">Instagram</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>

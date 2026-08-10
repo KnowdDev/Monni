@@ -1,0 +1,43 @@
+{
+  "hero-everyday-4x3.jpg": {
+    "status": "READY",
+    "image": {
+      "url": "https://cdn.shopify.com/s/files/1/2511/3170/files/hero-everyday-face-4x3.jpg?v=1786344832",
+      "width": 1200,
+      "height": 900
+    },
+    "file": "hero-everyday-face-4x3.jpg"
+  },
+  "section-lifestyle-4x3.jpg": {
+    "status": "READY",
+    "image": {
+      "url": "https://cdn.shopify.com/s/files/1/2511/3170/files/section-lifestyle-4x3.jpg?v=1786344381",
+      "width": 1200,
+      "height": 900
+    }
+  },
+  "section-harbour-4x3.jpg": {
+    "status": "READY",
+    "image": {
+      "url": "https://cdn.shopify.com/s/files/1/2511/3170/files/section-harbour-4x3.jpg?v=1786344384",
+      "width": 1200,
+      "height": 900
+    }
+  },
+  "everyday-1x1.jpg": {
+    "status": "READY",
+    "image": {
+      "url": "https://cdn.shopify.com/s/files/1/2511/3170/files/everyday-1x1.jpg?v=1786344385",
+      "width": 1000,
+      "height": 1000
+    }
+  },
+  "beanie-1x1.jpg": {
+    "status": "READY",
+    "image": {
+      "url": "https://cdn.shopify.com/s/files/1/2511/3170/files/beanie-1x1.jpg?v=1786344388",
+      "width": 800,
+      "height": 800
+    }
+  }
+}

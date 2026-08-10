@@ -1,0 +1,62 @@
+{
+  "hero-nelly-4x3.jpg": {
+    "id": "gid://shopify/MediaImage/51369159262379",
+    "status": "READY",
+    "image": {
+      "url": "https://cdn.shopify.com/s/files/1/2511/3170/files/hero-nelly-4x3.jpg?v=1786343823",
+      "width": 1200,
+      "height": 900
+    },
+    "alt": "Wild Earth \u2014 Nelly in studio"
+  },
+  "story-quiet-minds-4x3.jpg": {
+    "id": "gid://shopify/MediaImage/51369159327915",
+    "status": "READY",
+    "image": {
+      "url": "https://cdn.shopify.com/s/files/1/2511/3170/files/story-quiet-minds-4x3.jpg?v=1786343825",
+      "width": 1200,
+      "height": 900
+    },
+    "alt": "Wild Earth Quiet Minds"
+  },
+  "radiance-1x1.jpg": {
+    "id": "gid://shopify/MediaImage/51369159360683",
+    "status": "READY",
+    "image": {
+      "url": "https://cdn.shopify.com/s/files/1/2511/3170/files/radiance-1x1.jpg?v=1786343827",
+      "width": 1000,
+      "height": 1000
+    },
+    "alt": "Amber & Gold Radiance Tea"
+  },
+  "winter-1x1.jpg": {
+    "id": "gid://shopify/MediaImage/51369159393451",
+    "status": "READY",
+    "image": {
+      "url": "https://cdn.shopify.com/s/files/1/2511/3170/files/winter-1x1.jpg?v=1786343829",
+      "width": 800,
+      "height": 800
+    },
+    "alt": "Wild Earth Winter Solstice"
+  },
+  "quiet-1x1.jpg": {
+    "id": "gid://shopify/MediaImage/51369159426219",
+    "status": "READY",
+    "image": {
+      "url": "https://cdn.shopify.com/s/files/1/2511/3170/files/quiet-1x1.jpg?v=1786343831",
+      "width": 800,
+      "height": 800
+    },
+    "alt": "Wild Earth Quiet Minds"
+  },
+  "leather-1x1.jpg": {
+    "id": "gid://shopify/MediaImage/51369159884971",
+    "status": "READY",
+    "image": {
+      "url": "https://cdn.shopify.com/s/files/1/2511/3170/files/leather-1x1.jpg?v=1786343833",
+      "width": 800,
+      "height": 800
+    },
+    "alt": "Wild Earth Leather + Lace"
+  }
+}

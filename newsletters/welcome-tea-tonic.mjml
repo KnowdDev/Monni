@@ -1,0 +1,210 @@
+<mjml>
+  <mj-head>
+    <mj-title>Welcome — Tea &amp; Tonic</mj-title>
+    <mj-preview>We welcome you to a community that believes in things made with care.</mj-preview>
+    <mj-raw>
+      <meta name="color-scheme" content="light only" />
+      <meta name="supported-color-schemes" content="light only" />
+      <style type="text/css">
+        :root { color-scheme: light only; supported-color-schemes: light only; }
+      </style>
+    </mj-raw>
+    <mj-font name="Cormorant Garamond" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Jost:wght@200;300;400;500&amp;display=swap" />
+    <mj-font name="Jost" href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&amp;display=swap" />
+    <mj-attributes>
+      <mj-all font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" color="#2C2420" />
+      <mj-body background-color="#FAFAFA" width="620px" />
+      <mj-section background-color="#FAFAFA" padding="0" />
+      <mj-text font-size="15px" line-height="1.85" color="#2C2420" padding="0" />
+      <mj-button font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-size="12px" letter-spacing="2px" text-transform="uppercase" border-radius="0" inner-padding="14px 36px" />
+      <mj-class name="eyebrow" font-size="11px" letter-spacing="0.22em" text-transform="uppercase" color="#8A7B6E" font-weight="400" />
+      <mj-class name="heading-serif" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="300" color="#2C2420" line-height="1.15" />
+      <mj-class name="signature" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-style="italic" font-weight="300" color="#2C2420" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .hero-portrait img { display: block !important; width: 100% !important; height: auto !important; }
+      .footer-wordmark-img img {
+        display: block !important;
+        margin: 0 auto !important;
+        border: 0 !important;
+        height: auto !important;
+        max-height: none !important;
+      }
+      .footer-wordmark-img table, .footer-wordmark-img td {
+        line-height: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+      .editorial-copy div {
+        max-width: 440px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      .welcome-heading div, .welcome-heading {
+        font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif !important;
+        font-weight: 300 !important;
+      }
+      @media only screen and (max-width: 480px) {
+        .mobile-pad > table > tbody > tr > td {
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+        }
+        .editorial-copy div {
+          max-width: 100% !important;
+        }
+        .welcome-heading div {
+          font-size: 36px !important;
+        }
+      }
+    </mj-style>
+    <mj-style>
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_qE6GnM.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: italic;
+        font-weight: 300;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3smX5slCNuHLi8bLeY9MK7whWMhyjYrGFEsdtdc62E6zd5rDDOjw.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Jost';
+        font-style: normal;
+        font-weight: 200 400;
+        font-display: swap;
+        src: url('https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/18b8e0e7-c67f-42e5-a08c-f51cb7508e68.woff2') format('woff2');
+      }
+      body, .dm-lock { background-color: #FAFAFA !important; }
+      .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+      .sec-cream > table > tbody > tr > td > div { background-color: #FAFAFA !important; }
+      .sec-alt, .sec-alt > table, .sec-alt > table > tbody > tr > td,
+      .sec-alt > table > tbody > tr > td > div { background-color: #F4F3F0 !important; }
+      .sec-footer, .sec-footer > table, .sec-footer > table > tbody > tr > td,
+      .sec-footer > table > tbody > tr > td > div { background-color: #3C2A1A !important; }
+      @media (prefers-color-scheme: dark) {
+        body, .dm-lock { background-color: #FAFAFA !important; color: #2C2420 !important; }
+        .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+        .sec-cream > table > tbody > tr > td > div { background-color: #FAFAFA !important; }
+        .sec-alt, .sec-alt > table, .sec-alt > table > tbody > tr > td,
+        .sec-alt > table > tbody > tr > td > div { background-color: #F4F3F0 !important; }
+        .sec-footer, .sec-footer > table, .sec-footer > table > tbody > tr > td,
+        .sec-footer > table > tbody > tr > td > div { background-color: #3C2A1A !important; }
+        .text-body, .text-body div, .text-body span, .text-body p { color: #2C2420 !important; }
+        .text-heading, .text-heading div { color: #2C2420 !important; }
+        .text-eyebrow, .text-eyebrow div { color: #8A7B6E !important; }
+        .text-signature, .text-signature div { color: #2C2420 !important; }
+        .text-footer, .text-footer div, .text-footer a { color: #E0DCDA !important; }
+        .text-footer-muted, .text-footer-muted div, .text-footer-muted a { color: #8a7060 !important; }
+        .dm-img img { opacity: 1 !important; filter: none !important; mix-blend-mode: normal !important; }
+        .btn-outline table td { background-color: #FAFAFA !important; border-color: #2C2420 !important; }
+        .btn-outline a { color: #2C2420 !important; background-color: #FAFAFA !important; }
+      }
+      [data-ogsc] .sec-cream, [data-ogsb] .sec-cream { background-color: #FAFAFA !important; }
+      [data-ogsc] .sec-alt, [data-ogsb] .sec-alt { background-color: #F4F3F0 !important; }
+      [data-ogsc] .sec-footer, [data-ogsb] .sec-footer { background-color: #3C2A1A !important; }
+      [data-ogsc] .text-body, [data-ogsb] .text-body { color: #2C2420 !important; }
+      [data-ogsc] .text-heading, [data-ogsb] .text-heading { color: #2C2420 !important; }
+      [data-ogsc] .text-footer, [data-ogsb] .text-footer { color: #E0DCDA !important; }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#FAFAFA" css-class="dm-lock">
+
+    <!-- Intro -->
+    <mj-section background-color="#FAFAFA" padding="48px 36px 40px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" css-class="eyebrow text-eyebrow" padding="0 0 18px">Tea &amp; Tonic</mj-text>
+        <mj-text
+          align="center"
+          font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+          font-weight="300"
+          font-size="42px"
+          color="#2C2420"
+          line-height="1.15"
+          padding="0 0 22px"
+          css-class="text-heading welcome-heading"
+        ><span style="font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-weight:300; color:#2C2420;">Welcome</span></mj-text>
+        <mj-text align="center" css-class="text-body editorial-copy" font-size="15px" line-height="1.85" padding="0 8px">
+          We welcome you to a community that believes in things made with care: sustainable, woman-led, and proudly New Zealand made.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Hero portrait -->
+    <mj-section padding="0" background-color="#FAFAFA" css-class="sec-cream">
+      <mj-column padding="0">
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/e0358cc9-1389-4f4b-a678-33fba3b34db6.jpeg"
+          alt="Monique, founder of Tea &amp; Tonic"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img hero-portrait"
+        />
+      </mj-column>
+    </mj-section>
+
+    <!-- Brand story -->
+    <mj-section background-color="#F4F3F0" padding="44px 36px" css-class="sec-alt mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#E0DCDA" border-width="1px" width="40px" padding="0 0 24px" />
+        <mj-text align="center" css-class="text-body editorial-copy" font-size="15px" line-height="1.85" padding="0 8px 28px">
+          Tea &amp; Tonic began with a simple belief: that wellbeing, beauty, and the way we live are all a part of the same ritual. We favour natural materials, slower processes, and the women-led, small-batch makers who share the belief that everything is connected, and that the health of people and planet go hand in hand.
+        </mj-text>
+        <mj-text align="center" css-class="text-body" font-size="15px" line-height="1.85" padding="0 0 20px">
+          Thank you for being here.
+        </mj-text>
+        <mj-text
+          align="center"
+          font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+          font-style="italic"
+          font-weight="300"
+          font-size="22px"
+          color="#2C2420"
+          padding="0"
+          css-class="text-signature"
+        ><span style="font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-style:italic; font-weight:300; color:#2C2420;">Aroha nui, Monique</span></mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- CTA -->
+    <mj-section background-color="#FAFAFA" padding="44px 36px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" css-class="text-body" font-size="15px" line-height="1.85" padding="0 0 28px">
+          A space for holistic health, beauty &amp; home.
+        </mj-text>
+        <mj-button
+          href="https://teaandtonic.co.nz/collections/all"
+          background-color="#FAFAFA"
+          color="#2C2420"
+          border="1px solid #2C2420"
+          align="center"
+          css-class="btn-outline"
+        >Explore the Collections</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Brand footer (compliance footer added automatically by SenderKit) -->
+    <mj-section background-color="#3C2A1A" padding="36px 36px" css-class="sec-footer mobile-pad">
+      <mj-column>
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/6224078f-358d-4dde-9744-0a7f34b24931.png"
+          alt="Tea &amp; Tonic"
+          width="189px"
+          height="43px"
+          align="center"
+          padding="0 0 14px"
+          css-class="dm-img footer-wordmark-img"
+        />
+        <mj-text align="center" css-class="text-footer-muted" font-size="11px" color="#8a7060" line-height="1.8" letter-spacing="0.04em" padding="0">
+          <a href="mailto:hello@teaandtonic.co.nz" style="color:#8a7060;text-decoration:none;">hello@teaandtonic.co.nz</a> &nbsp;·&nbsp; 09 422 9083
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>

@@ -1,0 +1,93 @@
+{%- comment -%}
+  Renders one shop mega menu category column.
+  v2 — Always uses curated sub-links (not Shopify nav grandchildren) to avoid stale admin URLs.
+  Accepts: category_key, category_label, category_url, link_class, heading_class, list_class
+{%- endcomment -%}
+
+{%- liquid
+  assign link_class = link_class | default: 'header__mega-link'
+  assign heading_class = heading_class | default: 'header__mega-heading'
+  assign list_class = list_class | default: 'header__mega-list'
+  assign parent_handle = category_handle | default: category_key
+  if category_key == 'jewellery'
+    assign parent_handle = 'all-jewellery'
+  elsif category_key == 'home'
+    assign parent_handle = 'all-home'
+  elsif category_key == 'gifting'
+    assign parent_handle = 'all-gifting'
+  endif
+  assign parent_collection = collections[parent_handle]
+  if parent_collection != blank
+    assign resolved_category_url = parent_collection.url
+  else
+    assign resolved_category_url = category_url
+  endif
+-%}
+
+<a href="{{ resolved_category_url }}" class="{{ heading_class }}">{{ category_label | escape }}</a>
+
+<ul class="{{ list_class }}" role="list">
+  {%- case category_key -%}
+    {%- when 'wellness' -%}
+      {%- assign sub_links = 'monni-tea:Monni Tea,tea:Tea,aromatherapy:Aromatherapy,sleep|/collections/sleep:Sleep,supplements:Supplements' | split: ',' -%}
+    {%- when 'beauty' -%}
+      {%- comment -%} Live Body collection handle is body-care (title Body). /collections/body 404s. {%- endcomment -%}
+      {%- assign sub_links = 'monni-botanicals:Monni Botanicals,face:Face,body-care|/collections/body-care:Body,hair:Hair,fragrance:Fragrance,mother-and-baby:Mother & Baby' | split: ',' -%}
+    {%- when 'clothing' -%}
+      {%- assign sub_links = 'monni-label:MONNI Label,dresses:Dresses,tops:Tops,pants:Pants,skirts:Skirts,shorts:Shorts,jumpsuits:Jumpsuits,kimonos:Kimonos,loungewear:Loungewear' | split: ',' -%}
+    {%- when 'jewellery' -%}
+      {%- comment -%} Live Bracelets handle is bracelet (singular). /collections/bracelets 404s. {%- endcomment -%}
+      {%- assign sub_links = 'fine-jewellery:Fine jewellery,necklaces:Necklaces,earrings:Earrings,rings:Rings,bracelets:Bracelets' | split: ',' -%}
+    {%- when 'home' -%}
+      {%- comment -%} Candles omitted until assortment is ready. Home Care is live. {%- endcomment -%}
+      {%- assign sub_links = 'monni-art:Monni Art,ceramics:Ceramics,crystals-and-rituals:Crystals & Rituals,homewares:Homewares,home-care:Home Care,teaware:Teaware,pantry:Pantry' | split: ',' -%}
+    {%- when 'gifting' -%}
+      {%- assign sub_links = 'giftboxes:Gift Boxes,pages/bespoke-gifting:Bespoke Gifting,pages/corporate-gifting:Corporate Gifting,cards:Cards,gift-card:Online Gift Card' | split: ',' -%}
+    {%- else -%}
+      {%- assign sub_links = '' | split: ',' -%}
+  {%- endcase -%}
+
+{%- for sub_link in sub_links -%}
+    {%- assign sub_parts = sub_link | split: ':' -%}
+    {%- assign sub_handle = sub_parts[0] -%}
+    {%- assign sub_label = sub_parts[1] -%}
+    {%- assign sub_url = blank -%}
+    {%- comment -%} Optional absolute override: handle|/collections/x:Label {%- endcomment -%}
+    {%- if sub_handle contains '|' -%}
+      {%- assign handle_url = sub_handle | split: '|' -%}
+      {%- assign sub_handle = handle_url[0] -%}
+      {%- assign sub_url = handle_url[1] -%}
+    {%- endif -%}
+    {%- if sub_url == blank -%}
+      {%- if sub_handle contains 'pages/' -%}
+        {%- assign sub_page_handle = sub_handle | remove: 'pages/' -%}
+        {%- assign sub_page = pages[sub_page_handle] -%}
+        {%- if sub_page != blank -%}
+          {%- assign sub_url = sub_page.url -%}
+        {%- else -%}
+          {%- assign sub_url = '/' | append: sub_handle -%}
+        {%- endif -%}
+      {%- else -%}
+        {%- if sub_handle == 'body' -%}
+          {%- assign sub_handle = 'body-care' -%}
+        {%- endif -%}
+        {%- if sub_handle == 'bracelet' -%}
+          {%- assign sub_handle = 'bracelets' -%}
+        {%- endif -%}
+        {%- assign sub_collection = collections[sub_handle] -%}
+        {%- if sub_collection != blank -%}
+          {%- assign sub_url = sub_collection.url -%}
+        {%- else -%}
+          {%- assign sub_url = '/collections/' | append: sub_handle -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
+    {%- if sub_label == 'Bracelets' -%}
+      {%- assign sub_url = '/collections/bracelets' -%}
+    {%- endif -%}
+    <li>
+      <!-- mega-v2 -->
+      <a href="{{ sub_url }}" class="{{ link_class }}" data-mega-v2="1">{{ sub_label | escape }}</a>
+    </li>
+  {%- endfor -%}
+</ul>

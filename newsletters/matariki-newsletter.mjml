@@ -1,0 +1,371 @@
+<mjml>
+  <mj-head>
+    <mj-title>Matariki — Tea &amp; Tonic</mj-title>
+    <mj-preview>Ngā mihi o Matariki — warm greetings of the Māori New Year from Monni at Tea &amp; Tonic Matakana.</mj-preview>
+    <mj-raw>
+      <meta name="color-scheme" content="light only" />
+      <meta name="supported-color-schemes" content="light only" />
+      <style type="text/css">
+        :root { color-scheme: light only; supported-color-schemes: light only; }
+      </style>
+    </mj-raw>
+    <mj-font name="Cormorant Garamond" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=Jost:wght@200;300;400;500&amp;display=swap" />
+    <mj-font name="Jost" href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&amp;display=swap" />
+    <mj-attributes>
+      <mj-all font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" color="#3a3230" />
+      <mj-body background-color="#F4F3F0" width="620px" />
+      <mj-section background-color="#FAFAFA" padding="0" />
+      <mj-text font-size="15px" line-height="1.85" color="#3a3230" padding="0" />
+      <mj-button font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-size="11px" letter-spacing="0.2em" text-transform="uppercase" border-radius="0" inner-padding="14px 36px" />
+      <mj-divider border-color="#E0DCDA" border-width="1px" padding="44px 48px" />
+      <mj-class name="label" font-size="10px" letter-spacing="0.22em" text-transform="uppercase" color="#8a8278" font-weight="400" />
+      <mj-class name="heading-serif" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="400" color="#2C2420" line-height="1.3" />
+      <mj-class name="heading-serif-light" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="300" color="#2C2420" />
+      <mj-class name="gold-on-dark" color="#D4C4A8" />
+      <mj-class name="muted" color="#8a8278" />
+      <mj-class name="label-strong" font-size="10px" letter-spacing="0.18em" text-transform="uppercase" color="#5C554D" font-weight="400" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .wordmark-img img, .matariki-heading-img img, .footer-wordmark-img img {
+        display: block !important;
+        margin: 0 auto !important;
+        border: 0 !important;
+        height: auto !important;
+        max-height: none !important;
+      }
+      .wordmark-img table, .matariki-heading-img table, .footer-wordmark-img table,
+      .wordmark-img td, .matariki-heading-img td, .footer-wordmark-img td {
+        line-height: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+      .matariki-band-stars { letter-spacing: 0.3em !important; color: #8a8278 !important; }
+      .gold-on-dark, .gold-on-dark div { color: #D4C4A8 !important; }
+      .footer-links a { color: #5a4a3a !important; text-decoration: none !important; margin: 0 10px !important; }
+      .label-strong, .label-strong div { color: #5C554D !important; }
+      .inset-box td { padding-left: 28px !important; padding-right: 28px !important; }
+      .hero-portrait img { display: block !important; width: 100% !important; height: auto !important; }
+      @media only screen and (max-width: 480px) {
+        .mobile-pad > table > tbody > tr > td { padding-left: 28px !important; padding-right: 28px !important; }
+        .matariki-heading-img img { width: 200px !important; height: auto !important; max-width: 90% !important; }
+        .stack-col { display: block !important; width: 100% !important; max-width: 100% !important; }
+      }
+    </mj-style>
+    <mj-style>
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_qE6GnM.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_v86GnM.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: italic;
+        font-weight: 300;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/cormorantgaramond/v21/co3smX5slCNuHLi8bLeY9MK7whWMhyjYrGFEsdtdc62E6zd5rDDOjw.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'Jost';
+        font-style: normal;
+        font-weight: 200 400;
+        font-display: swap;
+        src: url('https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/18b8e0e7-c67f-42e5-a08c-f51cb7508e68.woff2') format('woff2');
+      }
+      body, .dm-lock { background-color: #F4F3F0 !important; }
+      .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+      .sec-cream > table > tbody > tr > td > div { background-color: #FAFAFA !important; }
+      .sec-tea, .sec-tea > table, .sec-tea > table > tbody > tr > td,
+      .sec-tea > table > tbody > tr > td > div,
+      .sec-ritual, .sec-ritual > table, .sec-ritual > table > tbody > tr > td { background-color: #F4F3F0 !important; }
+      .sec-quote, .sec-quote > table, .sec-quote > table > tbody > tr > td,
+      .sec-matariki-band, .sec-matariki-band > table, .sec-matariki-band > table > tbody > tr > td,
+      .sec-matariki-band > table > tbody > tr > td > div { background-color: #F0E8E5 !important; }
+      .sec-dark, .sec-dark > table, .sec-dark > table > tbody > tr > td,
+      .sec-dark > table > tbody > tr > td > div { background-color: #2C2420 !important; }
+      .sec-footer, .sec-footer > table, .sec-footer > table > tbody > tr > td,
+      .sec-footer > table > tbody > tr > td > div { background-color: #3C2A1A !important; }
+      @media (prefers-color-scheme: dark) {
+        body, .dm-lock { background-color: #F4F3F0 !important; color: #3a3230 !important; }
+        .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+        .sec-cream > table > tbody > tr > td > div { background-color: #FAFAFA !important; }
+        .sec-tea, .sec-tea > table, .sec-tea > table > tbody > tr > td,
+        .sec-tea > table > tbody > tr > td > div,
+        .sec-ritual, .sec-ritual > table, .sec-ritual > table > tbody > tr > td { background-color: #F4F3F0 !important; }
+        .sec-quote, .sec-quote > table, .sec-quote > table > tbody > tr > td,
+        .sec-matariki-band, .sec-matariki-band > table, .sec-matariki-band > table > tbody > tr > td,
+        .sec-matariki-band > table > tbody > tr > td > div { background-color: #F0E8E5 !important; }
+        .sec-dark, .sec-dark > table, .sec-dark > table > tbody > tr > td,
+        .sec-dark > table > tbody > tr > td > div { background-color: #2C2420 !important; }
+        .sec-footer, .sec-footer > table, .sec-footer > table > tbody > tr > td,
+        .sec-footer > table > tbody > tr > td > div { background-color: #3C2A1A !important; }
+        .text-body, .text-body div, .text-body span, .text-body p { color: #3a3230 !important; }
+        .text-heading, .text-heading div { color: #2C2420 !important; }
+        .text-label, .text-label div, .label div { color: #8a8278 !important; }
+        .label-strong, .label-strong div { color: #5C554D !important; }
+        .text-muted, .text-muted div, .muted div { color: #8a8278 !important; }
+        .text-white, .text-white div { color: #FAFAFA !important; }
+        .text-gold, .text-gold div { color: #D4C4A8 !important; }
+        .matariki-band-stars div { color: #8a8278 !important; }
+        .text-footer, .text-footer div { color: #F4F3F0 !important; }
+        .text-footer-muted, .text-footer-muted div, .text-footer-muted a { color: #8a7060 !important; }
+        .footer-links div, .footer-links a { color: #5a4a3a !important; }
+        .matariki-heading div { color: #2C2420 !important; }
+        .heading-serif div, .heading-serif-light div { color: #2C2420 !important; }
+        .footer-wordmark div { color: #F4F3F0 !important; }
+        .dm-img img { opacity: 1 !important; filter: none !important; mix-blend-mode: normal !important; }
+        .btn-dark table td { background-color: #2C2420 !important; }
+        .btn-dark a { color: #FAFAFA !important; background-color: #2C2420 !important; }
+        .btn-outline table td { background-color: #2C2420 !important; border-color: #D4C4A8 !important; }
+        .btn-outline a { color: #D4C4A8 !important; background-color: #2C2420 !important; }
+      }
+      [data-ogsc] .sec-cream, [data-ogsb] .sec-cream { background-color: #FAFAFA !important; }
+      [data-ogsc] .sec-matariki-band, [data-ogsb] .sec-matariki-band { background-color: #F0E8E5 !important; }
+      [data-ogsc] .sec-dark, [data-ogsb] .sec-dark { background-color: #2C2420 !important; }
+      [data-ogsc] .sec-footer, [data-ogsb] .sec-footer { background-color: #3C2A1A !important; }
+      [data-ogsc] .text-body, [data-ogsb] .text-body { color: #3a3230 !important; }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#F4F3F0" css-class="dm-lock">
+
+    <!-- Header -->
+    <mj-section background-color="#FAFAFA" padding="32px 40px 24px" border-bottom="1px solid #E0DCDA" css-class="sec-cream">
+      <mj-column>
+        <mj-text align="center" css-class="label" font-size="11px" padding="0 0 6px">Tea &amp; Tonic Matakana</mj-text>
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/3a8b249b-16ef-41e4-80c5-4c20d8cc2bf2.png"
+          alt="MONNI"
+          width="153px"
+          height="53px"
+          align="center"
+          padding="0"
+          css-class="dm-img wordmark-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <!-- Hero — 16:9 crop, waist-up, mountain top retained -->
+    <mj-section padding="0" background-color="#FAFAFA" css-class="sec-cream">
+      <mj-column padding="0">
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/7837155c-77fb-498f-8b96-12cae90834bb.jpeg"
+          alt="Monique Jansen, Matakana"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img hero-portrait"
+        />
+      </mj-column>
+    </mj-section>
+
+    <!-- Matariki band -->
+    <mj-section background-color="#F0E8E5" padding="48px 48px 44px" css-class="sec-matariki-band mobile-pad">
+      <mj-column>
+        <mj-text align="center" css-class="matariki-band-stars label" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="300" font-size="13px" color="#8a8278" text-transform="uppercase" padding="0 0 18px">&#10022; &nbsp; Matariki 2026 &nbsp; &#10022;</mj-text>
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/3b97731f-8a7b-4efc-b75c-77bf1475eded.png"
+          alt="Ngā mihi o Matariki"
+          width="240px"
+          height="131px"
+          align="center"
+          padding="0 0 20px"
+          css-class="dm-img matariki-heading-img"
+        />
+        <mj-text align="center" css-class="text-heading" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-style="italic" font-weight="300" font-size="17px" color="#2C2420" letter-spacing="0.04em" padding="0">Warm greetings of Matariki to you, {{first_name}}</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- What is Matariki -->
+    <mj-section background-color="#FAFAFA" padding="48px 48px 0" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text css-class="label" padding="0 0 16px">What is Matariki</mj-text>
+        <mj-text css-class="heading-serif" font-size="26px" padding="0 0 18px">The rising of the Pleiades. The beginning of the M&#257;ori New Year.</mj-text>
+        <mj-text padding="0 0 16px">Matariki is the name given to the cluster of stars known internationally as the Pleiades, and its annual rising on the horizon at dawn marks the beginning of the M&#257;ori New Year. For our t&#299;puna, this was a time of deep significance — a moment to pause between the harvest and the planting, to look upward, and to remember.</mj-text>
+        <mj-text padding="0 0 16px">The nine stars of Matariki each carry their own meaning and domain. Matariki herself governs health, environment, and the wellbeing of people. P&#333;hutukawa connects us to those who have passed. Tupu&#257;nuku and Tupu&#257;rangi govern the food that grows from the earth and falls from the trees. Wait&#299; and Wait&#257; hold the waters — fresh and salt. Waipuna-&#257;-Rangi speaks to rain. Ururangi governs the winds. And Hiwa-i-te-rangi is the wishing star, the one to whom aspirations for the year ahead are offered.</mj-text>
+        <mj-text padding="0">Together they remind us that we are not separate from the natural world — we are woven into it, and the turning of the seasons is a turning within us too.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FAFAFA" padding="0 48px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#E0DCDA" padding="44px 0 0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- From Monni -->
+    <mj-section background-color="#FAFAFA" padding="0 48px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text css-class="label" padding="0 0 16px">From Monni</mj-text>
+        <mj-text css-class="heading-serif" font-size="26px" padding="0 0 18px">A time to remember, give thanks, and look forward.</mj-text>
+        <mj-text padding="0 0 16px">Matariki is one of the times of year that moves me most deeply. As a M&#257;ori woman, as a descendant of Ng&#257;ti Porou and Te Wh&#257;nau a Apanui, this season carries a weight that is both personal and ancestral. It is a moment when I feel most connected to my t&#299;puna, to the land, and to the long thread of whakapapa that holds us all.</mj-text>
+        <mj-text padding="0 0 16px">My ancestors arrived in Aotearoa over a thousand years ago. They were kaitiaki — guardians — of this land, its waters, its seasons, its skies. Matariki was not simply a calendar event for them. It was a practice of care, of remembrance, of gratitude and of hope. It was the time to speak the names of those who had left us in the year that had passed, to release them to the stars, and to plant new intentions for the year ahead.</mj-text>
+        <mj-text padding="0 0 16px">At MONNI, this season is a reminder of why we do what we do. We believe that beauty, wellbeing, and connection to the natural world are not luxuries — they are part of what it means to live well. Matariki asks us to tend to all of it: our people, our land, ourselves.</mj-text>
+        <mj-text padding="0">I am so grateful you are part of this community. Ng&#257; mihi maioha ki a koutou — warm and grateful greetings to you all.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Quote -->
+    <mj-section background-color="#FAFAFA" padding="44px 48px 0" css-class="sec-cream mobile-pad">
+      <mj-column background-color="#F0E8E5" border-left="2px solid #c8b99a" padding="36px 40px" css-class="sec-quote">
+        <mj-text font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-style="italic" font-weight="300" font-size="21px" line-height="1.65" color="#2C2420" padding="0 0 16px">"We are not separate from the natural world. We are woven into it, and the turning of the seasons is a turning within us too."</mj-text>
+        <mj-text css-class="label" font-size="11px" letter-spacing="0.14em" color="#8a8278" padding="0">Monique Jansen &nbsp;·&nbsp; Ng&#257;ti Porou</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Artwork -->
+    <mj-section padding="48px 0 0" background-color="#FAFAFA" css-class="sec-cream">
+      <mj-column padding="0">
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/6c776a05-dc9a-469e-8d7f-2624dda73c34.jpeg"
+          alt="Ng&#257; Maunga Tupuna by Monique Jansen"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img"
+        />
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FAFAFA" padding="28px 48px 0" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text css-class="heading-serif" font-size="20px" letter-spacing="0.04em" padding="0 0 6px">Ng&#257; Maunga Tupuna</mj-text>
+        <mj-text css-class="label" font-size="12px" letter-spacing="0.08em" padding="0 0 18px">Original fine-line artwork &nbsp;·&nbsp; Monique Jansen (Ng&#257;ti Porou)</mj-text>
+        <mj-text font-size="14px" line-height="1.85" padding="0">The ancestral mountains. Ruapehu, Ng&#257;uruhoe and Tongariro rising from the central plateau in the quiet, considered way that only line work can hold.<br /><br />For Ng&#257;ti T&#363;wharetoa, the iwi of this place, these are not simply mountains but living ancestors, carrying whakapapa, identity, and a relationship with the land that stretches back across generations. In 1887, paramount chief Horonuku Te Heuheu T&#363;kino IV gifted the mountain peaks to the people of New Zealand — an extraordinary act of kaitiakitanga that established Tongariro as the first national park in Aotearoa and the fourth in the world. In 1993, it became the first place on earth to receive dual UNESCO World Heritage status, recognised for both its extraordinary natural landscape and its profound cultural significance. A recognition that land and the people connected to it cannot truly be separated.<br /><br />Made using natural plant pigments and Indian ink.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FAFAFA" padding="0 48px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#E0DCDA" padding="44px 0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Giveaway (inset — matches content column width) -->
+    <mj-section background-color="#FAFAFA" padding="0 48px 44px" css-class="sec-cream mobile-pad">
+      <mj-column background-color="#2C2420" padding="40px 36px" css-class="sec-dark">
+        <mj-text align="center" font-size="10px" letter-spacing="0.25em" text-transform="uppercase" color="#D4C4A8" font-weight="400" padding="0 0 16px">Matariki Giveaway</mj-text>
+        <mj-text align="center" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="300" font-size="32px" color="#FAFAFA" letter-spacing="0.06em" line-height="1.2" padding="0 0 18px">Win an A3 print of<br />Ng&#257; Maunga Tupuna</mj-text>
+        <mj-text align="center" font-size="14px" line-height="1.8" color="#D4C4A8" padding="0 0 28px">To celebrate Matariki and to say thank you to this beautiful community, I am gifting one A3 fine-art print of my latest work to one of you. To enter, head to our Instagram.</mj-text>
+        <mj-text align="left" font-size="13px" color="#FAFAFA" line-height="1.8" padding="0 0 8px 4px"><span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;color:#D4C4A8;">1</span> &nbsp;&nbsp; Follow @teaandtonicmatakana and @moniquejansen.art on Instagram</mj-text>
+        <mj-text align="left" font-size="13px" color="#FAFAFA" line-height="1.8" padding="0 0 8px 4px"><span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;color:#D4C4A8;">2</span> &nbsp;&nbsp; Like the Matariki giveaway post</mj-text>
+        <mj-text align="left" font-size="13px" color="#FAFAFA" line-height="1.8" padding="0 0 32px 4px"><span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;color:#D4C4A8;">3</span> &nbsp;&nbsp; Tag someone in the comments who deserves a moment of beauty in their life</mj-text>
+        <mj-button align="center" href="https://www.instagram.com/teaandtonicmatakana/" background-color="#2C2420" color="#D4C4A8" border="1px solid #D4C4A8" inner-padding="13px 32px" css-class="btn-outline">Enter on Instagram</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FAFAFA" padding="0 48px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="#E0DCDA" padding="0 0 44px" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Tea of the Week header -->
+    <mj-section background-color="#F4F3F0" padding="32px 48px 24px" border-top="1px solid #E0DCDA" border-bottom="1px solid #E0DCDA" css-class="sec-tea mobile-pad">
+      <mj-column>
+        <mj-text css-class="label" padding="0 0 10px">Tea of the Week</mj-text>
+        <mj-text css-class="heading-serif-light" font-size="34px" letter-spacing="0.06em" padding="0 0 4px">Amber &amp; Gold</mj-text>
+        <mj-text font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-style="italic" font-size="16px" css-class="muted" padding="0">A Kiss</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Tea image — swap src in Senderkit to change -->
+    <mj-section background-color="#FAFAFA" padding="0" css-class="sec-cream">
+      <mj-column padding="0">
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/B90E072C-AFB3-412E-B3E5-46A2B276F654.jpg?v=1783643768"
+          alt="Amber &amp; Gold — A Kiss Tea"
+          href="https://teaandtonic.co.nz/products/a-kiss-a-tea-by-amber-gold"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img"
+        />
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FAFAFA" padding="32px 48px 0" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text css-class="text-body" font-size="14px" line-height="1.85" padding="0 0 16px">A Kiss blends New Zealand kawakawa with fragrant lemongrass, a warming infusion traditionally valued for its restorative, tonic qualities. Bright and gently spiced, it wraps the senses in comfort, softened further by a stir of fresh ginger, making it a comforting companion through the day or a cosy addition to the colder months.</mj-text>
+        <mj-text font-size="14px" line-height="1.85" padding="0">Kawakawa is a native New Zealand herb long used in traditional M&#257;ori rongo&#257;, grounding this blend in local plant wisdom — and making it a fitting cup for Matariki.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Benefits + How to brew -->
+    <mj-section background-color="#FAFAFA" padding="28px 48px 0" css-class="sec-cream mobile-pad">
+      <mj-column width="50%" css-class="stack-col">
+        <mj-text css-class="label-strong" padding="0 0 10px">Benefits</mj-text>
+        <mj-text font-size="13px" line-height="1.8" color="#3a3230" padding="0 0 4px">– Warms the body during cooler months</mj-text>
+        <mj-text font-size="13px" line-height="1.8" color="#3a3230" padding="0 0 4px">– Supports everyday wellbeing</mj-text>
+        <mj-text font-size="13px" line-height="1.8" color="#3a3230" padding="0 0 4px">– Soothes with gentle spice</mj-text>
+        <mj-text font-size="13px" line-height="1.8" color="#3a3230" padding="0 0 4px">– Uplifts the senses</mj-text>
+        <mj-text font-size="13px" line-height="1.8" color="#3a3230" padding="0 0 16px">– Nourishes as a comforting daily tonic</mj-text>
+      </mj-column>
+      <mj-column width="50%" css-class="stack-col">
+        <mj-text css-class="label-strong" padding="0 0 10px">How to brew</mj-text>
+        <mj-text font-size="13px" line-height="1.8" color="#3a3230" padding="0 0 4px">– Add a heaped teaspoon of herb and a teaspoon of freshly grated ginger per cup</mj-text>
+        <mj-text font-size="13px" line-height="1.8" color="#3a3230" padding="0 0 4px">– Simmer on the stove for five minutes</mj-text>
+        <mj-text font-size="13px" line-height="1.8" color="#3a3230" padding="0 0 4px">– Steep for a further five minutes before serving</mj-text>
+        <mj-text font-size="13px" line-height="1.8" color="#3a3230" padding="0">– Available in 25g, 50g and 100g</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- The Ritual -->
+    <mj-section background-color="#FAFAFA" padding="28px 48px 0" css-class="sec-cream mobile-pad">
+      <mj-column background-color="#F4F3F0" border-left="2px solid #E0DCDA" padding="24px 28px" css-class="inset-box sec-ritual">
+        <mj-text css-class="label-strong" padding="0 0 10px">The Ritual</mj-text>
+        <mj-text font-size="13px" line-height="1.8" font-style="italic" color="#3a3230" padding="0">Bloom the flavour by preheating the teapot with boiling water before use. After brewing, return the spent herbs to the earth — compost, a worm farm, or the garden — and use the cooled leftover tea to nourish your plants.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FAFAFA" padding="20px 48px 0" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text font-size="12px" css-class="muted" line-height="1.7" letter-spacing="0.02em" padding="0">Kawakawa* · Lemongrass* &nbsp;&nbsp;·&nbsp;&nbsp; *Certified Organic &nbsp;&nbsp;·&nbsp;&nbsp; Made in Matakana, Aotearoa, New Zealand</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FAFAFA" padding="32px 48px 0" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-button href="https://teaandtonic.co.nz/collections/tea" background-color="#2C2420" color="#FAFAFA" align="center" css-class="btn-dark">Shop Tea</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Closing -->
+    <mj-section background-color="#FAFAFA" padding="48px 48px 0" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" font-size="14px" line-height="1.8" padding="0 0 24px">Wishing you a meaningful and restorative Matariki. May this season bring rest, remembrance, and renewed intention for the year ahead.</mj-text>
+        <mj-text align="center" font-size="14px" line-height="1.8" padding="0 0 24px">With love and gratitude from Matakana Village.</mj-text>
+        <mj-text align="center" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-style="italic" font-size="22px" color="#2C2420" padding="0">Aroha nui, Monni</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Brand footer (compliance footer added automatically by SenderKit) -->
+    <mj-section background-color="#3C2A1A" padding="36px 48px" css-class="sec-footer mobile-pad">
+      <mj-column>
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/6224078f-358d-4dde-9744-0a7f34b24931.png"
+          alt="Tea &amp; Tonic"
+          width="189px"
+          height="43px"
+          align="center"
+          padding="0 0 12px"
+          css-class="dm-img footer-wordmark-img"
+        />
+        <mj-text align="center" css-class="text-footer-muted" font-size="11px" color="#8a7060" line-height="1.8" letter-spacing="0.04em" padding="0 0 20px">
+          <a href="mailto:hello@teaandtonic.co.nz" style="color:#8a7060;text-decoration:none;">hello@teaandtonic.co.nz</a> &nbsp;·&nbsp; 09 422 9083<br />
+          Sunday to Friday 10.00am – 4.00pm &nbsp;·&nbsp; Saturday 9.00am – 5.00pm
+        </mj-text>
+        <mj-text align="center" css-class="footer-links" font-size="10px" letter-spacing="0.12em" text-transform="uppercase" color="#5a4a3a" padding="0">
+          <a href="https://teaandtonic.co.nz">Shop</a>
+          <a href="https://teaandtonic.co.nz/pages/about">About</a>
+          <a href="https://www.instagram.com/teaandtonicmatakana/">Instagram</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>

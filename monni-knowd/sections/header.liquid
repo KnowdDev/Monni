@@ -282,8 +282,9 @@
     z-index: 101;
     width: 100vw;
     margin-inline: calc(50% - 50vw);
-    overflow-x: hidden;
-    overflow-x: clip;
+    /* Keep overflow visible so the mega panel (absolutely positioned below the bar)
+       stays hoverable — overflow-x: clip/hidden forces overflow-y to auto and breaks Safari hit-testing. */
+    overflow: visible;
   }
 
   .header__shell {
@@ -292,6 +293,7 @@
     border-bottom: 1px solid rgba(229, 224, 220, 0.85);
     box-shadow: 0 0.75rem 2.25rem rgba(61, 61, 61, 0.035);
     backdrop-filter: blur(18px);
+    overflow: visible;
   }
 
   .header__drawer-backdrop,
@@ -459,31 +461,29 @@
     box-shadow: 0 1.5rem 3rem rgba(61, 61, 61, 0.08);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(0.25rem);
     pointer-events: none;
   }
 
   .header[data-mega-ready="true"] .header__mega-panel {
     transition:
       opacity var(--transition-fast),
-      transform var(--transition-normal),
       visibility var(--transition-fast);
   }
 
+  /* Invisible bridge between Shop link and panel — keeps hover alive while moving down */
   .header__mega-panel::before {
     content: '';
     position: absolute;
-    top: -1.25rem;
+    top: -2rem;
     left: 0;
     right: 0;
-    height: 1.25rem;
+    height: 2rem;
   }
 
   .header[data-mega-ready="true"] .header__shell:has(.header__menu-item--mega.is-shop-open) .header__mega-panel {
     display: block;
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
     pointer-events: auto;
   }
 

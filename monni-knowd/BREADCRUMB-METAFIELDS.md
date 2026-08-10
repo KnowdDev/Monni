@@ -65,11 +65,11 @@ Sub-collection handle → parent collection handle:
 
 | Sub-collections | Parent handle | Admin title |
 |-----------------|---------------|-------------|
-| `monni-tea`, `tea`, `aromatherapy`, `supplements` | `wellness` | All Wellness |
+| `monni-tea`, `tea`, `aromatherapy`, `sleep`, `supplements` | `wellness` | All Wellness |
 | `monni-botanicals`, `face`, `body`, `hair`, `fragrance`, `mother-and-baby` | `beauty` | All Beauty |
 | `monni-label`, `dresses`, `tops`, `pants`, `skirts`, `shorts`, `jumpsuits`, `kimonos`, `loungewear` | `clothing` | All Clothing |
 | `fine-jewellery`, `necklaces`, `earrings`, `rings`, `bracelets` | `all-jewellery` | All Jewellery |
-| `monni-art`, `ceramics`, `crystals-and-rituals`, `homewares`, `teaware`, `pantry` | `all-home` | All Home |
+| `monni-art`, `ceramics`, `crystals-and-rituals`, `homewares`, `home-care`, `teaware`, `pantry` | `all-home` | All Home |
 | `giftboxes`, `cards`, `gift-card` | `all-gifting` | All Gifting |
 
 Source of truth for catalogue copy/hierarchy: `monni-knowd/scripts/collections-data.mjs`  

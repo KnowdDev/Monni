@@ -284,7 +284,7 @@
         "type": "textarea",
         "id": "newsletter_popup_description",
         "label": "Description",
-        "default": "Receive new arrivals, store notes, and thoughtful rituals from Monni."
+        "default": "For a quieter inbox join the MONNI community for seasonal stories, new arrivals and quiet inspiration."
       },
       {
         "type": "text",

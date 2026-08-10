@@ -17,6 +17,23 @@
 
 {%- assign is_sold_out = false -%}
 {%- unless product.available -%}{%- assign is_sold_out = true -%}{%- endunless -%}
+{%- assign is_preorder = false -%}
+{%- assign card_vendor_down = product.vendor | downcase -%}
+{%- if card_vendor_down == 'monni label' or product.tags contains 'pre-order' or product.tags contains 'Pre-order' or product.tags contains 'monni-label' -%}
+  {%- assign is_preorder = true -%}
+{%- endif -%}
+{%- unless is_preorder -%}
+  {%- for collection in product.collections -%}
+    {%- if collection.handle == 'monni-label' -%}
+      {%- assign is_preorder = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endunless -%}
+{%- comment -%} Made-to-order / pre-order pieces should not read as sold out on cards. {%- endcomment -%}
+{%- if is_preorder -%}
+  {%- assign is_sold_out = false -%}
+{%- endif -%}
 {%- assign has_secondary = false -%}
 {%- unless is_sold_out -%}
   {%- unless product.media[1] == blank -%}
@@ -28,6 +45,7 @@
   data-product-id="{{ product.id }}"
   {% if has_secondary %}data-has-secondary{% endif %}
   {% if is_sold_out %}data-sold-out{% endif %}
+  {% if is_preorder %}data-preorder{% endif %}
 >
   <div class="card-product__media" style="--card-aspect-ratio: {{ aspect_ratio }};">
     <a href="{{ product.url }}" class="card-product__image-link" aria-label="{{ product.title | escape }}">
@@ -72,14 +90,16 @@
         </div>
       {%- endif -%}
 
-      <!-- Sold out always shown; other badges optional -->
+      <!-- Sold out always shown; pre-order / other badges optional -->
       {%- if is_sold_out -%}
         <div class="card-product__badges">
           <span class="card-product__badge card-product__badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
         </div>
       {%- elsif show_badges -%}
         <div class="card-product__badges">
-          {%- if product.compare_at_price > product.price -%}
+          {%- if is_preorder -%}
+            <span class="card-product__badge card-product__badge--preorder">Pre-order</span>
+          {%- elsif product.compare_at_price > product.price -%}
             <span class="card-product__badge card-product__badge--sale">{{ 'products.product.on_sale' | t }}</span>
           {%- elsif product.tags contains 'new' -%}
             <span class="card-product__badge card-product__badge--new">{{ 'products.product.new' | t }}</span>

@@ -1,7 +1,7 @@
 <section class="newsletter-v2 full-width" data-section-id="{{ section.id }}">
   <div class="newsletter-v2__inner">
     <h2 class="newsletter-v2__title">{{ section.settings.title | default: "Slow down. Stay connected." | escape }}</h2>
-    <p class="newsletter-v2__desc">{{ section.settings.description | default: "Receive new arrivals, store notes, and thoughtful rituals from Monni." | escape }}</p>
+    <p class="newsletter-v2__desc">{{ section.settings.description | default: "For a quieter inbox join the MONNI community for seasonal stories, new arrivals and quiet inspiration." | escape }}</p>
 
     {% form 'customer', class: 'newsletter-v2__form', data-senderkit-newsletter: true %}
       {% if form.posted_successfully? %}
@@ -153,7 +153,7 @@
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "Receive new arrivals, store notes, and thoughtful rituals from Monni."
+      "default": "For a quieter inbox join the MONNI community for seasonal stories, new arrivals and quiet inspiration."
     },
     {
       "type": "text",
