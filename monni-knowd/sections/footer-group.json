@@ -15,9 +15,13 @@
       "type": "footer",
       "settings": {
         "menu_shop": "footer-shop",
+        "shop_heading": "Shop",
         "menu_help": "help-info",
+        "help_heading": "Help",
         "menu_about": "discover",
-        "show_payment_icons": true
+        "about_heading": "About",
+        "show_payment_icons": true,
+        "show_policy_links": true
       }
     }
   },

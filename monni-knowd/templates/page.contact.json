@@ -8,7 +8,7 @@
         "show_store_details": true,
         "store_heading": "Visit Us",
         "store_address": "5A, 2 Matakana Valley Road, Matakana, New Zealand",
-        "store_hours": "Sunday to Friday: 10.00am – 4.00pm\nSaturday: 9.00am – 5.00pm",
+        "store_hours": "Sunday to Friday: 10am – 4pm\nSaturday: 9am – 5pm",
         "show_contact_details": true,
         "contact_heading": "Get in Touch",
         "contact_email": "hello@teaandtonic.co.nz",
@@ -16,7 +16,7 @@
         "show_social": true,
         "social_heading": "Follow Us",
         "padding_top": 96,
-        "padding_bottom": 96
+        "padding_bottom": 100
       }
     }
   },

@@ -52,7 +52,7 @@
         "type": "textarea",
         "id": "store_hours",
         "label": "Store hours",
-        "default": "Sunday to Friday: 10.00am – 4.00pm\nSaturday: 9.00am – 5.00pm"
+        "default": "Sunday to Friday: 10am – 4pm\nSaturday: 9am – 5pm"
       }
     ]
   },

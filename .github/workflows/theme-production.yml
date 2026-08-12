@@ -1,0 +1,48 @@
+name: Theme → Production
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'monni-knowd/**'
+      - '.github/workflows/theme-production.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: theme-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Push theme code to live monni-theme-2026
+    runs-on: ubuntu-latest
+    # Optional: protect with a GitHub Environment named "production"
+    environment: production
+    defaults:
+      run:
+        working-directory: monni-knowd
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Safety check — .shopifyignore present
+        run: |
+          test -f .shopifyignore
+          grep -q 'config/settings_data.json' .shopifyignore
+          grep -q 'templates/index.json' .shopifyignore
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
+
+      - name: Push to production (live)
+        env:
+          SHOPIFY_FLAG_STORE: tea-tonic-matakana.myshopify.com
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          SHOPIFY_FLAG_THEME: '156090564779'
+        run: |
+          shopify theme push \
+            --store "$SHOPIFY_FLAG_STORE" \
+            --theme "$SHOPIFY_FLAG_THEME" \
+            --password "$SHOPIFY_CLI_THEME_TOKEN" \
+            --allow-live \
+            --nodelete

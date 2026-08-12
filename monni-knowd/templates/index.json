@@ -1,32 +1,45 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "split-hero": {
       "type": "homepage-split-hero",
       "settings": {
-        "image_left": "shopify://shop_images/Copy_of_SophieWilliamson0131--000045.jpg",
+        "use_optimized_assets": true,
+        "image_left": "shopify://shop_images/monni-split-hero-left.webp",
+        "label_left": "Gifting",
         "link_left": "/collections/clothing",
-        "label_left": "Clothing",
-        "image_right": "shopify://shop_images/MONNIxLOFOTEN002-13.jpg",
+        "blurb_left": "Thoughtfully chosen pieces to make every moment feel special.",
+        "cta_left": "Explore",
+        "image_right": "shopify://shop_images/monni-split-hero-right.webp",
+        "label_right": "Homewares",
         "link_right": "/collections/all-home",
-        "label_right": "Home"
+        "blurb_right": "Objects that bring warmth, texture, and quiet beauty into your space.",
+        "cta_right": "Explore"
       }
     },
     "opening-statement": {
       "type": "homepage-opening-statement",
       "settings": {
-        "line_1": "It begins with love. For ourselves, for others, and for the world around us.",
-        "line_2": "We are all connected."
+        "line_1": "It begins with love. For ourselves, for others, and for the world around us",
+        "line_2": "We are all connected",
+        "narrow_width": true
       }
     },
     "category-grid": {
       "type": "homepage-category-grid",
-      "settings": {
-        "title": "A collection for the way you live."
-      },
       "blocks": {
         "cat-1": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/01-MM-Relax-B.png",
             "title": "Wellness",
             "description": "Nourishment for the body and mind.",
             "link": "/collections/wellness"
@@ -35,6 +48,7 @@
         "cat-2": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/uLmjOwbg.jpg",
             "title": "Beauty",
             "description": "What we place on our skin matters.",
             "link": "/collections/beauty"
@@ -43,6 +57,7 @@
         "cat-3": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/WbAQa9Tf.jpg",
             "title": "Clothing",
             "description": "Natural fibres. Worn for years, not for a moment.",
             "link": "/collections/clothing"
@@ -51,6 +66,7 @@
         "cat-4": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/S09Szt12.jpg",
             "title": "Jewellery",
             "description": "Pieces to wear daily and treasure over time.",
             "link": "/collections/all-jewellery"
@@ -59,6 +75,7 @@
         "cat-5": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/DSC06893.jpg",
             "title": "Home",
             "description": "Considered and made to be lived with.",
             "link": "/collections/all-home"
@@ -67,7 +84,8 @@
         "cat-6": {
           "type": "category",
           "settings": {
-            "title": "Gifts",
+            "image": "shopify://shop_images/TNT_Shelves.jpg",
+            "title": "Gifting",
             "description": "Chosen with intention. Wrapped with love.",
             "link": "/collections/giftboxes"
           }
@@ -80,39 +98,42 @@
         "cat-4",
         "cat-5",
         "cat-6"
-      ]
+      ],
+      "settings": {
+        "title": "A collection for the way you live"
+      }
     },
     "creations": {
       "type": "homepage-creations",
-      "settings": {
-        "title": "Our Own Creations"
-      },
       "blocks": {
         "creation-1": {
           "type": "creation",
           "settings": {
+            "image": "shopify://shop_images/CK_Fianls__32_of_94.webp",
             "title": "Monni Botanicals",
             "description": "Skincare made in rhythm with the seasons.",
             "cta": "Discover",
-            "link": "/collections/face"
+            "link": "shopify://collections/monni-botanicals"
           }
         },
         "creation-2": {
           "type": "creation",
           "settings": {
+            "image": "shopify://shop_images/612B8205.jpg",
             "title": "Monni Label",
             "description": "Clothing as a form of feeling and self-expression.",
             "cta": "Discover",
-            "link": "/collections/monni-label"
+            "link": "shopify://collections/monni-label"
           }
         },
         "creation-3": {
           "type": "creation",
           "settings": {
+            "image": "shopify://shop_images/monni-art-done.png",
             "title": "Monni Art",
             "description": "Creativity as an act of healing for the artist and the earth.",
             "cta": "Discover",
-            "link": "/collections/monni-art"
+            "link": "shopify://collections/monni-art"
           }
         }
       },
@@ -120,16 +141,22 @@
         "creation-1",
         "creation-2",
         "creation-3"
-      ]
+      ],
+      "settings": {
+        "title": "Our Own Creations"
+      }
     },
     "seasonal": {
       "type": "homepage-seasonal",
       "settings": {
-        "collection": "face",
-        "title": "Monni Botanicals",
-        "subtitle": "Spring harvest skincare, seed to bottle with The Herbologist.",
-        "description": "Calendula and wildflower day and night creams — slowly infused botanical oils and seasonal distillates, handmade in Aotearoa. A quiet ritual for skin as the season turns.",
-        "cta": "Shop skincare",
+        "collection": "monni-botanicals",
+        "image": "shopify://shop_images/winter-trio-straight-final.png",
+        "image_focus_y": 55,
+        "image_rotation": -0.3,
+        "title": "THE AUTUMN TRIO",
+        "subtitle": "",
+        "description": "Seed to bottle skincare made in rhythm with the seasons. Slowly infused, distilled and made by hand. Repairing and preparing as the year turns.",
+        "cta": "DISCOVER",
         "link": "/collections/face"
       }
     },
@@ -141,20 +168,16 @@
         "maker_location": "Vicki Fanning, Matakana",
         "description": "Vicki has been with us since the very beginning, one of our founding suppliers and a ceramist and glass artist of genuine standing. Objects made to be mixed, matched, held and truly lived with at the table.",
         "cta": "Shop Frolic Ceramics",
-        "link": "/collections/frolic-ceramics"
+        "link": "/pages/brands/frolic-ceramics"
       }
     },
     "journal": {
       "type": "homepage-journal",
-      "settings": {
-        "title": "From the Journal",
-        "view_all_label": "Visit the Journal",
-        "view_all_link": "/blogs/journal"
-      },
       "blocks": {
         "post-1": {
           "type": "post",
           "settings": {
+            "image": "shopify://shop_images/00100lPORTRAIT_00100_BURST20200213202512708_COVER.jpg",
             "title": "Navigating Grief",
             "subtitle": "On loss, love and the rituals that hold us.",
             "teaser": "A personal reflection from Monni on finding your way through life's most challenging moments, one quiet act of care at a time.",
@@ -165,6 +188,7 @@
         "post-2": {
           "type": "post",
           "settings": {
+            "image": "shopify://shop_images/CK_Fianls__78_of_3__1.jpg",
             "title": "Motherhood and Making",
             "subtitle": "A conversation with Hannah Jack, founder of Country Kitchen.",
             "teaser": "On raising five children, building something meaningful and the quiet strength that holds it all together.",
@@ -175,6 +199,7 @@
         "post-3": {
           "type": "post",
           "settings": {
+            "image": "shopify://shop_images/Screenshot_2025-04-01_at_1.57.25_pm.png",
             "title": "Flower Essences Explained",
             "subtitle": "The ancient practice of plant healing, gently demystified.",
             "teaser": "What they are, how to use them and why they have been trusted for nearly a century.",
@@ -187,11 +212,20 @@
         "post-1",
         "post-2",
         "post-3"
-      ]
+      ],
+      "settings": {
+        "title": "From the Journal",
+        "view_all_label": "Visit the Journal",
+        "view_all_link": "/blogs/journal"
+      }
     },
     "founder": {
       "type": "homepage-founder",
       "settings": {
+        "background_color": "#d9d0c4",
+        "background_image": "shopify://shop_images/MONNIxLOFOTEN004-027.jpg",
+        "image_focus_y": 23,
+        "background_overlay": 40,
         "quote": "What is the most true and beautiful life you can dream into being?",
         "cta": "About MONNI",
         "link": "/pages/about"

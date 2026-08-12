@@ -42,10 +42,33 @@ class CartDrawer extends HTMLElement {
 
     this.bindEvents();
     this.bindPubSub();
+    this.refreshShippingThreshold();
 
     window.addEventListener('beforeunload', () => {
       if (this.isOpen) this.unlockScroll();
     });
+  }
+
+  /**
+   * Page HTML can stay cached after theme setting updates.
+   * Sync threshold from a fresh Section Rendering API response.
+   */
+  async refreshShippingThreshold() {
+    try {
+      const res = await fetch(CartDrawer.cartUrl('?sections=cart-drawer'));
+      if (!res.ok) return;
+      const data = await res.json();
+      const html = data?.['cart-drawer'] || '';
+      const match = html.match(/data-shipping-threshold="(\d+(?:\.\d+)?)"/);
+      if (!match) return;
+      this.dataset.shippingThreshold = match[1];
+
+      const cartRes = await fetch(CartDrawer.cartUrl('cart.js'));
+      const cart = cartRes.ok ? await cartRes.json() : null;
+      this.updateShippingBar(cart?.total_price || 0);
+    } catch {
+      /* ignore — keep SSR threshold */
+    }
   }
 
   disconnectedCallback() {

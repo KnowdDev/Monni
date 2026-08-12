@@ -1,0 +1,50 @@
+name: Theme → Staging
+
+on:
+  push:
+    branches: [staging]
+    paths:
+      - 'monni-knowd/**'
+      - '.github/workflows/theme-staging.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: theme-staging
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Push theme code to monni-staging
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: monni-knowd
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Safety check — .shopifyignore present
+        run: |
+          test -f .shopifyignore
+          grep -q 'config/settings_data.json' .shopifyignore
+          grep -q 'templates/index.json' .shopifyignore
+
+      - name: Setup Shopify CLI
+        uses: shopify/cli@v1
+        # Falls back to npm install if action unavailable on runner
+        continue-on-error: true
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
+
+      - name: Push to staging theme
+        env:
+          SHOPIFY_FLAG_STORE: tea-tonic-matakana.myshopify.com
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          SHOPIFY_FLAG_THEME: '158178476203'
+        run: |
+          shopify theme push \
+            --store "$SHOPIFY_FLAG_STORE" \
+            --theme "$SHOPIFY_FLAG_THEME" \
+            --password "$SHOPIFY_CLI_THEME_TOKEN" \
+            --nodelete

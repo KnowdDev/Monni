@@ -13,7 +13,7 @@
     "logo_width": 200,
     "contact_email": "hello@teaandtonic.co.nz",
     "contact_phone": "09 422 9083",
-    "store_hours": "Sunday to Friday: 10.00am – 4.00pm\nSaturday: 9.00am – 5.00pm",
+    "store_hours": "Sunday to Friday: 10am – 4pm\nSaturday: 9am – 5pm",
     "type_primary_font": "dm_sans_n4",
     "max_page_width": "90rem",
     "min_page_margin": 20,
@@ -31,7 +31,9 @@
     "input_corner_radius": 4,
     "social_facebook_link": "https://www.facebook.com/teaandtonicmatakana",
     "social_instagram_link": "https://www.instagram.com/teaandtonicmatakana/",
+    "newsletter_popup_description": "For a quieter inbox join the MONNI community for seasonal stories, new arrivals and quiet inspiration.",
+    "senderkit_signup_slug": "monni-edit",
     "senderkit_newsletter_enable": true,
-    "senderkit_signup_slug": "monni-edit"
+    "cart_free_shipping_threshold": 250
   }
 }

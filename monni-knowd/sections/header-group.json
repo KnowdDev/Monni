@@ -16,8 +16,13 @@
       "settings": {
         "announcement_text": "Free Express Shipping Over $250",
         "menu": "main-menu",
-        "show_currency": true,
-        "show_wishlist": true
+        "customer_account_menu": "customer-account-main-menu",
+        "show_wishlist": true,
+        "mega_featured_collection": "ceramics",
+        "mega_featured_caption": "Shop ceramics",
+        "mega_featured_link": "",
+        "mega_shop_link": "",
+        "mega_brands_link": ""
       }
     }
   },

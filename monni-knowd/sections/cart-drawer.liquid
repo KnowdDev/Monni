@@ -1,7 +1,10 @@
+{%- liquid
+  assign free_shipping_threshold = settings.cart_free_shipping_threshold | default: 250
+-%}
 <cart-drawer
   class="cart-drawer"
   data-section-id="{{ section.id }}"
-  data-shipping-threshold="{{ section.settings.free_shipping_threshold }}"
+  data-shipping-threshold="{{ free_shipping_threshold }}"
   role="dialog"
   aria-modal="true"
   aria-label="{{ 'cart.drawer.title' | t | default: 'Your cart' }}"
@@ -90,7 +93,7 @@
       {%- if section.settings.show_free_shipping_bar or section.settings.enable_gift_note -%}
       <div class="cart-drawer__scroll-extras" data-cart-drawer-scroll-extras {% unless cart.item_count > 0 %}hidden{% endunless %}>
         {%- if section.settings.show_free_shipping_bar -%}
-          {%- assign threshold_cents = section.settings.free_shipping_threshold | times: 100 -%}
+          {%- assign threshold_cents = free_shipping_threshold | times: 100 -%}
           {%- assign progress = cart.total_price | times: 100 | divided_by: threshold_cents -%}
           {%- if progress > 100 -%}{%- assign progress = 100 -%}{%- endif -%}
 
@@ -175,8 +178,8 @@
       "type": "number",
       "id": "free_shipping_threshold",
       "label": "Free shipping threshold",
-      "default": 150,
-      "info": "Amount in your store currency"
+      "default": 250,
+      "info": "Amount in your store currency. Overridden by Theme settings → Cart → Free shipping threshold when set."
     },
     {
       "type": "checkbox",

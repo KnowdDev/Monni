@@ -1,0 +1,21 @@
+# Shopify CLI environments for Monni (Tea & Tonic Matakana)
+# https://shopify.dev/docs/storefronts/themes/tools/cli/environments
+#
+# Usage:
+#   cd monni-knowd
+#   shopify theme push -e staging
+#   shopify theme push -e production --allow-live
+#
+# Or via repo scripts:
+#   ./scripts/theme-deploy.sh staging
+#   ./scripts/theme-deploy.sh production
+
+[environments.staging]
+store = "tea-tonic-matakana.myshopify.com"
+theme = "158178476203"
+ignore = ".shopifyignore"
+
+[environments.production]
+store = "tea-tonic-matakana.myshopify.com"
+theme = "156090564779"
+ignore = ".shopifyignore"
