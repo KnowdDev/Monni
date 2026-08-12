@@ -51,7 +51,7 @@
       if senderkit_enabled == nil
         assign senderkit_enabled = true
       endif
-      assign senderkit_slug = settings.senderkit_signup_slug | default: 'monni-shopify-test'
+      assign senderkit_slug = settings.senderkit_signup_slug | default: 'monni-edit'
     %}
     {% if senderkit_enabled and senderkit_slug != blank %}
       <meta name="senderkit-signup-slug" content="{{ senderkit_slug | escape }}">
@@ -84,7 +84,7 @@
       if senderkit_enabled == nil
         assign senderkit_enabled = true
       endif
-      assign senderkit_slug = settings.senderkit_signup_slug | default: 'monni-shopify-test'
+      assign senderkit_slug = settings.senderkit_signup_slug | default: 'monni-edit'
     %}
     {% if senderkit_enabled and senderkit_slug != blank %}
       <script src="{{ 'senderkit-newsletter.js' | asset_url }}" defer></script>

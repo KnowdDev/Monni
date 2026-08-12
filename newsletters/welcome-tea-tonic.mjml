@@ -23,6 +23,7 @@
     </mj-attributes>
     <mj-style inline="inline">
       .hero-portrait img { display: block !important; width: 100% !important; height: auto !important; }
+      .monni-logo-img img,
       .footer-wordmark-img img {
         display: block !important;
         margin: 0 auto !important;
@@ -30,6 +31,7 @@
         height: auto !important;
         max-height: none !important;
       }
+      .monni-logo-img table, .monni-logo-img td,
       .footer-wordmark-img table, .footer-wordmark-img td {
         line-height: 100% !important;
         height: auto !important;
@@ -115,22 +117,51 @@
 
   <mj-body background-color="#FAFAFA" css-class="dm-lock">
 
-    <!-- Intro -->
+    <!-- Brand lockup: Tea and Tonic by MONNI + Welcome -->
     <mj-section background-color="#FAFAFA" padding="48px 36px 40px" css-class="sec-cream mobile-pad">
       <mj-column>
-        <mj-text align="center" css-class="eyebrow text-eyebrow" padding="0 0 18px">Tea &amp; Tonic</mj-text>
+        <mj-text
+          align="center"
+          css-class="eyebrow text-eyebrow"
+          font-size="12px"
+          letter-spacing="0.28em"
+          text-transform="uppercase"
+          color="#8A7B6E"
+          font-weight="400"
+          padding="0 0 10px"
+        >Tea and Tonic</mj-text>
+        <mj-text
+          align="center"
+          font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+          font-style="italic"
+          font-weight="300"
+          font-size="15px"
+          color="#8A7B6E"
+          padding="0 0 18px"
+          css-class="text-eyebrow"
+        ><span style="font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-style:italic; font-weight:300; color:#8A7B6E;">by</span></mj-text>
+        <mj-image
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/monni-type-logo-email-transparent.png?v=1786517272"
+          alt="MONNI"
+          width="220px"
+          align="center"
+          padding="0 0 32px"
+          css-class="dm-img monni-logo-img"
+        />
         <mj-text
           align="center"
           font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
           font-weight="300"
           font-size="42px"
+          letter-spacing="0.08em"
+          text-transform="uppercase"
           color="#2C2420"
           line-height="1.15"
           padding="0 0 22px"
           css-class="text-heading welcome-heading"
-        ><span style="font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-weight:300; color:#2C2420;">Welcome</span></mj-text>
+        ><span style="font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-weight:300; letter-spacing:0.08em; text-transform:uppercase; color:#2C2420;">Welcome</span></mj-text>
         <mj-text align="center" css-class="text-body editorial-copy" font-size="15px" line-height="1.85" padding="0 8px">
-          We welcome you to a community that believes in things made with care: sustainable, woman-led, and proudly New Zealand made.
+          We welcome you to a community that believes in things made with care. We champion women-founded and led, sustainable businesses across New Zealand and Australia.
         </mj-text>
       </mj-column>
     </mj-section>
@@ -151,9 +182,10 @@
     <!-- Brand story -->
     <mj-section background-color="#F4F3F0" padding="44px 36px" css-class="sec-alt mobile-pad">
       <mj-column>
+        <mj-text align="center" css-class="eyebrow text-eyebrow" padding="0 0 22px">Monique, founder</mj-text>
         <mj-divider border-color="#E0DCDA" border-width="1px" width="40px" padding="0 0 24px" />
         <mj-text align="center" css-class="text-body editorial-copy" font-size="15px" line-height="1.85" padding="0 8px 28px">
-          Tea &amp; Tonic began with a simple belief: that wellbeing, beauty, and the way we live are all a part of the same ritual. We favour natural materials, slower processes, and the women-led, small-batch makers who share the belief that everything is connected, and that the health of people and planet go hand in hand.
+          Tea &amp; Tonic began with a simple belief: that wellbeing, beauty, and the way we live are all part of the same ritual. We favour natural materials, slower processes, and small-batch makers who share our belief that people and planet are deeply connected.
         </mj-text>
         <mj-text align="center" css-class="text-body" font-size="15px" line-height="1.85" padding="0 0 20px">
           Thank you for being here.
@@ -167,7 +199,7 @@
           color="#2C2420"
           padding="0"
           css-class="text-signature"
-        ><span style="font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-style:italic; font-weight:300; color:#2C2420;">Aroha nui, Monique</span></mj-text>
+        ><span style="font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-style:italic; font-weight:300; color:#2C2420;">Aroha nui, Monni</span></mj-text>
       </mj-column>
     </mj-section>
 
@@ -178,7 +210,7 @@
           A space for holistic health, beauty &amp; home.
         </mj-text>
         <mj-button
-          href="https://teaandtonic.co.nz/collections/all"
+          href="https://teaandtonic.co.nz/"
           background-color="#FAFAFA"
           color="#2C2420"
           border="1px solid #2C2420"
@@ -192,14 +224,16 @@
     <mj-section background-color="#3C2A1A" padding="36px 36px" css-class="sec-footer mobile-pad">
       <mj-column>
         <mj-image
-          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/6224078f-358d-4dde-9744-0a7f34b24931.png"
-          alt="Tea &amp; Tonic"
-          width="189px"
-          height="43px"
+          src="https://cdn.shopify.com/s/files/1/2511/3170/files/monni-type-logo-email-320-white.png?v=1786516973"
+          alt="MONNI"
+          width="140px"
           align="center"
-          padding="0 0 14px"
+          padding="0 0 16px"
           css-class="dm-img footer-wordmark-img"
         />
+        <mj-text align="center" css-class="text-footer" font-size="12px" color="#E0DCDA" letter-spacing="0.12em" text-transform="uppercase" padding="0 0 12px">
+          Tea &amp; Tonic
+        </mj-text>
         <mj-text align="center" css-class="text-footer-muted" font-size="11px" color="#8a7060" line-height="1.8" letter-spacing="0.04em" padding="0">
           <a href="mailto:hello@teaandtonic.co.nz" style="color:#8a7060;text-decoration:none;">hello@teaandtonic.co.nz</a> &nbsp;·&nbsp; 09 422 9083
         </mj-text>

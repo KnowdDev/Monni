@@ -72,12 +72,12 @@ Prefix `sk_live_07f864da…`. Fresh key created: **Monni Shopify Sync** (`contac
 
 ---
 
-## Flip to production (after sign-off)
+## Flip to production (done 2026-08-12)
 
-1. Create SenderKit signup form bound to audience `97a558a5-31ba-4cdc-88b5-c4bf2f202a16`.
-2. Theme setting **SenderKit signup form slug** → that production slug (Theme settings → SenderKit newsletter).
-3. Vercel env `SENDERKIT_AUDIENCE_ID` → `97a558a5-31ba-4cdc-88b5-c4bf2f202a16` and redeploy `monni-shopify-senderkit-sync`.
-4. Push/publish theme to main.
+1. ~~Create SenderKit signup form~~ → slug **`monni-edit`** → audience `97a558a5-…` (the Monni edit)
+2. ~~Theme setting~~ → live `senderkit_signup_slug` = `monni-edit`
+3. ~~Vercel env~~ → `SENDERKIT_AUDIENCE_ID=97a558a5-…` + redeployed `monni-shopify-senderkit-sync`
+4. Welcome automation active on **the Monni edit** with updated welcome template
 
 ---
 

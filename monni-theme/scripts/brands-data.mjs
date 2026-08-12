@@ -18,7 +18,7 @@ export const brands = [
     name: 'Alexandra Beauty',
     tagline: 'Simple, clean and quietly devoted to natural radiance, Alexandra Beauty offers skincare as an act of protection and love.',
     vendor_match: 'Alexandra',
-    collection_handle: '',
+    collection_handle: 'alexandra',
     published: true,
     paragraphs: [
       'The name Alexandra carries the meaning of protection, and that intention is woven into everything this brand makes.',
@@ -32,7 +32,7 @@ export const brands = [
     name: 'Amber & Gold',
     tagline: 'Earthy, nurturing and genuinely devoted, Amber & Gold is crafted with intent.',
     vendor_match: 'Amber & Gold',
-    collection_handle: '',
+    collection_handle: 'amber-and-gold',
     published: true,
     paragraphs: [
       'Amber & Gold was created with reverence, for the body, for the earth and for the synergy between the two.',
@@ -90,7 +90,7 @@ export const brands = [
     name: 'Chakra',
     tagline: 'Earthy, intentional and softly spiritual, Chakra offers ancient practices made accessible for a modern life that needs them.',
     vendor_match: 'Chakra',
-    collection_handle: '',
+    collection_handle: 'chakra',
     published: true,
     paragraphs: [
       'Palo santo from Peru, sage from the high desert, crystals drawn from the earth in Madagascar, Morocco, Brazil, Africa and Pakistan. Chakra sources ritual objects from places where these materials have been gathered and used for centuries.',
@@ -132,7 +132,7 @@ export const brands = [
     name: 'CoSkin',
     tagline: 'Honest, purposeful and rooted in genuine understanding, CoSkin offers simple, everyday support for the skin we live in.',
     vendor_match: 'CoSkin',
-    collection_handle: '',
+    collection_handle: 'coskin',
     published: true,
     paragraphs: [
       'CoSkin began not in a laboratory but in a family, founded by Dr Alistair and Stephanie Lane after their son reacted adversely to everyday household products. That experience led them to plant oils, aromatherapy and natural formulation, and from that personal search something genuinely useful was built.',
@@ -201,7 +201,7 @@ export const brands = [
     name: 'Hyoumankind',
     tagline: 'Restorative, considered and made with real care, Hyoumankind brings intention to one of our most essential and most undervalued rituals.',
     vendor_match: 'Hyoumankind',
-    collection_handle: '',
+    collection_handle: 'hyoumankind',
     published: true,
     paragraphs: [
       'Hyoumankind began in the home of founder Steph Wyborn. Steph spent over a decade trying to solve a problem that affects so many of us: how to actually sleep well.',
@@ -299,7 +299,7 @@ export const brands = [
     name: 'Live Wild',
     tagline: 'Grounded in ancestral nutritional wisdom and formulated for the demands of modern life, Live Wild is a return to what the body has always known how to use.',
     vendor_match: 'Live Wild',
-    collection_handle: '',
+    collection_handle: 'live-wild',
     published: true,
     paragraphs: [
       'Amber Rose grew up foraging from her mother\'s organic garden in New Zealand, raised by a chef father and a mother who was honoured by the Queen for her services to heritage seed saving and regenerative agriculture. Food as medicine, food as story, food as connection to the land has been her life\'s work.',
@@ -383,7 +383,7 @@ export const brands = [
     name: 'Monarc Jewellery',
     tagline: 'Refined, conscious and quietly heirloom, Monarc Jewellery is adornment with lasting meaning, made to be worn, loved and one day passed on.',
     vendor_match: 'Monarc Jewellery',
-    collection_handle: 'monarc-jewellery',
+    collection_handle: 'monarc',
     published: true,
     paragraphs: [
       'Ella Drake grew up in Mount Maunganui and came to jewellery through an unexpected path, an international modelling career across Europe where she noticed that while fashion changed with every season, the jewellery people wore did not. That observation, and a deep discomfort with the untraceable origins of mined diamonds, led her to found Monarc in 2017 from a workspace in London\'s Hatton Garden.',
@@ -429,7 +429,7 @@ export const brands = [
     name: 'MONNI Art',
     tagline: 'Rooted in whakapapa and expressed through beauty, Monique Jansen\'s art is a reminder that creativity can be an act of healing, for the artist and for the earth, and that our creativity and our making can exist in true harmony with the natural world.',
     vendor_match: 'Monique Jansen Art',
-    collection_handle: 'monni-art',
+    collection_handle: 'monni-art-brand',
     published: true,
     paragraphs: [
       'Monique Jansen is an artist of Dutch and Māori descent who has been making, painting and creating for as long as she can remember. Commissioned for her first artwork at seventeen, creating has been the thread running through her entire life, shaped by a deep love for nature and an evolving relationship with the land of her ancestors.',
@@ -443,7 +443,7 @@ export const brands = [
     name: 'MotherMade',
     tagline: 'Earthy, modern and quietly powerful, MotherMade brings ancient plant wisdom into the rhythms of contemporary wellbeing with honesty and grace.',
     vendor_match: 'Mother Made Mushrooms',
-    collection_handle: 'mothermade',
+    collection_handle: 'mother-made',
     published: true,
     paragraphs: [
       'MotherMade signals something, a departure from the era of man-made additives and synthetic shortcuts, and a return to the earth for remedies that have been trusted long before modern wellness made them fashionable.',
@@ -563,7 +563,7 @@ export const brands = [
     name: 'Storm & India',
     tagline: 'Joyful, nourishing and carrying the best kind of family legacy, Storm & India brings beauty and genuine care to the everyday ritual of the cup.',
     vendor_match: 'Storm & India',
-    collection_handle: '',
+    collection_handle: 'storm-india',
     published: true,
     paragraphs: [
       'Storm and India Bellamy grew up on their family\'s organic farm in Tasmania, with a mother, Dooley, who understood the nourishing power of a well-made cup. She spent years travelling the world studying the art of tea blending, growing her own herbs and keeping notebooks of recipes and blends she discovered along the way. That inheritance is present in everything Storm and India create.',
@@ -620,7 +620,7 @@ export const brands = [
     name: 'Tahi',
     tagline: 'Earthy, purposeful and woven into the whenua, Tahi offers a daily ritual of belonging, skincare as a form of quiet connection to the land and to oneself.',
     vendor_match: 'Tahi',
-    collection_handle: 'tahi',
+    collection_handle: 'tahi-skincare',
     published: true,
     paragraphs: [
       'Tahi begins from a single, grounding belief, that we are part of nature, not separate from it. Its guiding ethos, Kotahi Tātou, we are one, shapes everything it makes.',
@@ -675,7 +675,7 @@ export const brands = [
     name: 'Wild Earth',
     tagline: 'Grounded, sensory and quietly wild, Wild Earth offers fragrance as daily ritual, made to awaken your wild soul.',
     vendor_match: 'Wild Earth',
-    collection_handle: '',
+    collection_handle: 'wild-earth',
     published: true,
     paragraphs: [
       'Wild Earth began after the birth of Nelly\'s first son, when she found herself searching for fragrance that matched a slower, more conscious way of living. What she found instead was a choice that felt impossible, beautiful natural scents that faded within the hour, or conventional perfumes built from synthetic ingredients she no longer wanted near her skin.',

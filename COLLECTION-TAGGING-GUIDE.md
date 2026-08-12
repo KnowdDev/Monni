@@ -183,9 +183,10 @@ Keep using tags — that is the system of record for smart collections:
 | Tag `Aromatherapy` | Lands in Aromatherapy |
 | Tag `Body` | Lands in Body |
 | Tag `Face` | Lands in Face |
-| Tag `hair` | Lands in Hair |
+| Tag `Hair` (or legacy `hair`) | Lands in Hair |
 | Tag `Mother & Baby` | Lands in Mother & Baby |
-| Tag `sleep` | Lands in Sleep |
+| Tag `Sleep` (or legacy `sleep`) | Lands in Sleep |
+| Tag `Gift Boxes` (or legacy `gift box`) | Lands in Gift Boxes |
 | Tag `Wellness` + add to `All Wellness` (manual) | Parent wellness grid |
 | Product type / title cues | Mapping script can infer tags on sync |
 

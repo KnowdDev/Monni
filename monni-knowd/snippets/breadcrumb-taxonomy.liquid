@@ -15,7 +15,7 @@
 
 {%- liquid
   assign excluded_handles = 'new-arrivals,sale,bestsellers,gift-guide' | split: ','
-  assign subcollection_handles = 'monni-tea,tea,aromatherapy,sleep,supplements,monni-botanicals,face,body,body-care,hair,fragrance,mother-and-baby,monni-label,dresses,tops,pants,skirts,shorts,jumpsuits,kimonos,loungewear,fine-jewellery,necklaces,earrings,rings,bracelets,bracelet,monni-art,ceramics,crystals-and-rituals,homewares,home-care,teaware,pantry,giftboxes,cards,gift-card' | split: ','
+  assign subcollection_handles = 'monni-tea,tea,aromatherapy,sleep,supplements,monni-botanicals,face,body,body-care,hair,fragrance,mother-and-baby,monni-label,dresses,tops,pants,skirts,shorts,jumpsuits,kimonos,loungewear,accessories,fine-jewellery,necklaces,earrings,rings,bracelets,bracelet,monni-art,ceramics,ceramics-shop,crystals-and-rituals,homewares,home-care,teaware,pantry,giftboxes,cards,gift-card' | split: ','
   assign home_label = 'general.breadcrumbs.home' | t
   assign breadcrumb_parent = blank
   assign breadcrumb_primary = blank
@@ -99,11 +99,11 @@
         assign breadcrumb_parent = collections['wellness']
       when 'monni-botanicals', 'face', 'body', 'body-care', 'hair', 'fragrance', 'mother-and-baby'
         assign breadcrumb_parent = collections['beauty']
-      when 'monni-label', 'dresses', 'tops', 'pants', 'skirts', 'shorts', 'jumpsuits', 'kimonos', 'loungewear'
+      when 'monni-label', 'dresses', 'tops', 'pants', 'skirts', 'shorts', 'jumpsuits', 'kimonos', 'loungewear', 'accessories'
         assign breadcrumb_parent = collections['clothing']
       when 'fine-jewellery', 'necklaces', 'earrings', 'rings', 'bracelets', 'bracelet'
         assign breadcrumb_parent = collections['all-jewellery']
-      when 'monni-art', 'ceramics', 'crystals-and-rituals', 'homewares', 'home-care', 'teaware', 'pantry'
+      when 'monni-art', 'ceramics', 'ceramics-shop', 'crystals-and-rituals', 'homewares', 'home-care', 'teaware', 'pantry'
         assign breadcrumb_parent = collections['all-home']
       when 'giftboxes', 'cards', 'gift-card'
         assign breadcrumb_parent = collections['all-gifting']

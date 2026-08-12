@@ -134,7 +134,7 @@ const SMART_TAGS = {
   aromatherapy: ['Aromatherapy', 'Essential Oil'],
   sleep: ['sleep', 'Sleep'],
   supplements: ['Supplements', 'Supplement'],
-  giftboxes: ['gift box', 'Gift Box'],
+  giftboxes: ['Gift Boxes', 'gift box', 'Gift Box'],
   cards: ['Card', 'Greeting Card'],
   'monni-art': ['Art', 'Print'],
   homewares: ['Homewares', 'Home', 'Candle', 'Diffuser', 'Book'],

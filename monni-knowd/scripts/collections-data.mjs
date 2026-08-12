@@ -403,7 +403,7 @@ export const collections = [
     ],
   },
   {
-    handle: 'ceramics',
+    handle: 'ceramics-shop',
     title: 'Ceramics',
     parent: 'home',
     nav_label: 'Ceramics',
