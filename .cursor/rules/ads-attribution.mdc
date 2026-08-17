@@ -1,0 +1,41 @@
+---
+description: MONNI ads attribution contract — PostHog funnel, Shopify UTMs, Google Ads suffixes
+alwaysApply: true
+---
+
+# MONNI ads attribution (locked before spend)
+
+Triad for every bi-weekly sprint: **Google Ads spend · Shopify order UTMs · PostHog funnel**.
+
+## Environment
+
+- Website: `https://teaandtonic.co.nz` (Shopify `tea-tonic-matakana.myshopify.com`)
+- PostHog EU project `250395` (TeaAndTonic) via One `one_creds posthog` → `https://eu.posthog.com`
+- Google Ads customer `4234565043` (display name still Tea & Tonic Matakana) via Make MCP `make-monni`
+- Make connection `10474039` · Raw tool `s5966760_monni_google_ads_raw`
+
+## Funnel event names (do not rename)
+
+`$pageview` → `Product Viewed` → `Added to Cart` → `Checkout Started` → `Purchase`
+
+- Theme: `snippets/posthog.liquid` + `assets/posthog-shopify.js`
+- Purchase: Shopify Customer Events pixel `pixels/posthog-checkout.js` (must be installed in Admin)
+- Autocapture is off. Do not add a second storefront PostHog pixel.
+
+## Attribution
+
+First-touch `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `gclid`, `gbraid`, `wbraid`, `landing_page`, `ph_distinct_id` are written to **cart attributes** so Shopify orders carry the same tags as PostHog.
+
+Identify on **email** (not Shopify customer id) so checkout Purchase joins browse.
+
+## Google Ads tracking templates (required on every campaign)
+
+Search / Shopping final URL suffix:
+
+`utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={adgroupid}&utm_term={keyword}`
+
+PMax:
+
+`utm_source=google&utm_medium=performance_max&utm_campaign={campaignid}`
+
+Ignore Google’s self-reported conversions when they diverge from Shopify UTM revenue. Shopify landing_site + cart attributes are ground truth.

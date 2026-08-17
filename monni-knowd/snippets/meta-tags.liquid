@@ -6,7 +6,8 @@
   assign og_title = page_title | default: shop.name
   assign og_url = canonical_url | default: request.origin
   assign og_type = 'website'
-  assign og_description = page_description | default: shop.description | default: shop.name
+  assign meta_description = page_description | default: shop.description | default: shop.name
+  assign seo_title_custom = false
 
   if request.page_type == 'product'
     assign og_type = 'product'
@@ -15,11 +16,79 @@
   elsif request.page_type == 'password'
     assign og_url = request.origin
   endif
-%}
+-%}
+
+{%- if request.page_type == 'collection' -%}
+  {%- liquid
+    assign seo_title = collection.metafields.monni.seo_title.value | default: collection.metafields.monni.seo_title | default: collection.seo.title
+    assign seo_desc = collection.metafields.monni.seo_description.value | default: collection.metafields.monni.seo_description | default: collection.seo.description
+  -%}
+  {%- if collection.handle == 'fragrance' and seo_title == blank -%}
+    {%- assign seo_title = 'Botanical Fragrance | Natural Perfume | MONNI' -%}
+  {%- endif -%}
+  {%- if collection.handle == 'fragrance' and seo_desc == blank -%}
+    {%- assign seo_desc = 'Shop botanical perfumes and oils at MONNI. Fragrance from independent perfumers working with raw plant materials, worn softly and remembered long after.' -%}
+  {%- endif -%}
+  {%- if collection.handle == 'clothing' and seo_title == blank -%}
+    {%- assign seo_title = 'Natural Fibre Clothing | Silk, Linen, Cotton | MONNI' -%}
+  {%- endif -%}
+  {%- if collection.handle == 'clothing' and seo_desc == blank -%}
+    {%- assign seo_desc = 'Shop silk, linen, cotton and merino clothing at MONNI. Natural fibres chosen long before slow fashion became a conversation, led by MONNI Label.' -%}
+  {%- endif -%}
+  {%- if seo_title == blank -%}
+    {%- assign seo_title = collection.title | append: ' | MONNI' -%}
+  {%- endif -%}
+  {%- if seo_desc == blank -%}
+    {%- assign collection_top = collection.metafields.monni.top_line.value | default: collection.metafields.monni.top_line -%}
+    {%- capture collection_bottom -%}
+      {{ collection.metafields.monni.bottom_intro | metafield_tag }}
+    {%- endcapture -%}
+    {%- assign collection_bottom = collection_bottom | replace: '</p>', ' ' | strip_html | strip | replace: '  ', ' ' -%}
+    {%- assign seo_desc = collection_top | append: ' ' | append: collection_bottom | strip | replace: '—', ', ' | replace: '–', ', ' | truncate: 158 -%}
+  {%- endif -%}
+  {%- assign page_title = seo_title -%}
+  {%- assign og_title = seo_title -%}
+  {%- assign meta_description = seo_desc -%}
+  {%- assign seo_title_custom = true -%}
+{%- elsif request.page_type == 'metaobject' or template.name == 'metaobject' -%}
+  {%- liquid
+    assign brand_name = metaobject.name.value | default: metaobject.name | default: metaobject.display_name
+    assign seo_title = metaobject.seo_title.value | default: metaobject.seo_title
+    assign seo_desc = metaobject.seo_description.value | default: metaobject.seo_description
+    assign brand_tagline = metaobject.tagline.value | default: metaobject.tagline
+  -%}
+  {%- if seo_title == blank and brand_name != blank -%}
+    {%- assign seo_title = brand_name | append: ' | MONNI' -%}
+  {%- endif -%}
+  {%- if seo_desc == blank and brand_tagline != blank -%}
+    {%- assign seo_desc = brand_tagline | append: ' Shop at MONNI, Matakana.' | replace: '—', ', ' | replace: '–', ', ' | truncate: 158 -%}
+  {%- endif -%}
+  {%- if seo_desc == blank -%}
+    {%- capture brand_body -%}
+      {{ metaobject.description | metafield_tag }}
+    {%- endcapture -%}
+    {%- assign seo_desc = brand_body | strip_html | strip | replace: '—', ', ' | replace: '–', ', ' | truncate: 158 -%}
+  {%- endif -%}
+  {%- if seo_title != blank -%}
+    {%- assign page_title = seo_title -%}
+    {%- assign og_title = seo_title -%}
+    {%- assign seo_title_custom = true -%}
+  {%- endif -%}
+  {%- if seo_desc != blank -%}
+    {%- assign meta_description = seo_desc -%}
+  {%- endif -%}
+{%- elsif request.page_type == 'page' and page.handle == 'brands' -%}
+  {%- assign page_title = 'Shop by Brand | Independent Makers | MONNI' -%}
+  {%- assign og_title = page_title -%}
+  {%- assign meta_description = 'Discover the makers behind MONNI. Independent brands chosen for quality, integrity and the rituals of everyday wellbeing. Shop by brand in Matakana, NZ.' -%}
+  {%- assign seo_title_custom = true -%}
+{%- endif -%}
+
+{%- assign og_description = meta_description | replace: '—', ', ' | replace: '–', ', ' -%}
 
 <meta
   property="og:site_name"
-  content="{{ shop.name }}"
+  content="MONNI"
 >
 <meta
   property="og:url"
@@ -101,11 +170,20 @@
   >
 {%- endif -%}
 
+{%- liquid
+  assign hide_shop_suffix = seo_title_custom
+  if page_title contains 'MONNI'
+    assign hide_shop_suffix = true
+  endif
+  if page_title contains shop.name
+    assign hide_shop_suffix = true
+  endif
+-%}
 <title>
   {{ page_title }}
-  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-  {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-  {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {%- if current_tags %} | tagged {{ current_tags | join: ', ' }}{% endif -%}
+  {%- if current_page != 1 %} | Page {{ current_page }}{% endif -%}
+  {%- unless hide_shop_suffix %} | {{ shop.name }}{% endunless -%}
 </title>
 
 <link
@@ -113,10 +191,11 @@
   href="{{ canonical_url }}"
 >
 
-{% if page_description %}
+{% comment %} seo-titles-2026-08-17 {% endcomment %}
+{% if meta_description != blank %}
   <meta
     name="description"
-    content="{{ page_description | escape }}"
+    content="{{ meta_description | escape }}"
   >
 {% elsif shop.description %}
   <meta

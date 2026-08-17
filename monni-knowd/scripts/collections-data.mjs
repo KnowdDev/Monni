@@ -22,7 +22,7 @@ export const collections = [
     sort_order: 0,
     top_line: 'Wellbeing begins within.',
     bottom_paragraphs: [
-      'At MONNI, it is approached through nourishment, daily rhythm, and a deep respect for the connection between body, mind, and the natural world.',
+      'At MONNI, wellbeing is approached through nourishment, daily rhythm, and a deep respect for the connection between body, mind, and the natural world.',
       'Our wellness collection brings together herbal teas, aromatherapy, and natural supplements, all selected to support everyday wellbeing in a grounded and holistic way. We are drawn to makers who understand plants, who work slowly, and who believe that the way something is made matters as much as what it does.',
     ],
   },
@@ -35,7 +35,7 @@ export const collections = [
     top_line: 'A ritual made entirely for you.',
     bottom_paragraphs: [
       'Monni Tea is a carefully curated dispensary of certified organic single leaf herbs and botanicals, each chosen for their therapeutic qualities and their ability to support the body and mind in a genuine and meaningful way.',
-      'Single leaf teas are available to shop online, allowing you to blend and create at home. For those who visit us in store, our team will create a custom blend to your specific needs, intentions and taste. A quiet and considered ritual, made entirely for you.',
+      'Single leaf teas are available to shop online, allowing you to blend and create at home. For those who visit us in store, our team will create a custom blend to your specific needs, intentions and taste. A considered ritual, made entirely for you.',
     ],
   },
   {
@@ -48,7 +48,7 @@ export const collections = [
     smart_tag: 'tea',
     top_line: 'An act of nourishment, repeated daily.',
     bottom_paragraphs: [
-      'Our collection spans herbal infusions and restorative blends, everyday drinking teas and single origin teas, chosen for their quality, their provenance and the quiet ritual of brewing and drinking. Whether you are drawn to something grounding and earthy, uplifting and bright, or deeply calming, there is a cup here for the moment you are in.',
+      'Our collection spans herbal infusions and restorative blends, everyday drinking teas and single origin teas, chosen for their quality, their provenance and the unhurried ritual of brewing and drinking. Whether you are drawn to something grounding and earthy, uplifting and bright, or deeply calming, there is a cup here for the moment you are in.',
     ],
   },
   {
@@ -71,10 +71,10 @@ export const collections = [
     sort_order: 4,
     // Live smart-collection rule (Shopify TAG match is case-sensitive)
     smart_tag: 'sleep',
-    top_line: 'A quieter end to the day.',
+    top_line: 'Rest, restored to its rightful place.',
     bottom_paragraphs: [
-      'Our sleep collection gathers the rituals that help the body soften into rest — supportive pillows, calming teas, night-time supplements, and a gentle sleep spray for the pillow and the air.',
-      'Chosen for genuine quality and a slower approach to winding down, these are pieces for evenings that ask for less stimulation and more care.',
+      'Sleep is where the body repairs, and where so much of daily wellbeing gently begins.',
+      'Our sleep collection brings together calming teas, supplements, herbs and pillow mists, pillows for home and travel, and silk eye masks, chosen to ease the transition into rest. We favour formulations from makers who understand the nervous system and the slow, natural rhythms that lead the body toward genuine rest.',
     ],
   },
   {
@@ -216,7 +216,7 @@ export const collections = [
     sort_order: 2,
     top_line: 'Made for the body, not the trend.',
     bottom_paragraphs: [
-      'Our collection brings together fluid silhouettes cut on the bias, wrap forms that settle softly at the waist, and longer lengths that graze the ankle with quiet intention.',
+      'Our collection brings together fluid silhouettes cut on the bias, wrap forms that settle softly at the waist, and longer lengths that graze the ankle with effortless intention.',
       'Made mostly from silk, these pieces are not built around trends but around the body, the way it moves, breathes, and wants to feel at ease, in colours drawn from the natural world.',
     ],
   },
@@ -228,7 +228,7 @@ export const collections = [
     sort_order: 3,
     top_line: 'The pieces that anchor the wardrobe.',
     bottom_paragraphs: [
-      'Our tops are shaped for real layering: bias-cut camisoles that sit beneath a kimono or stand alone, relaxed shirts that tuck or drape, soft fitted merinos to keep the body\'s warmth, wraps that tie loosely and hold their form through a long day.',
+      'Our tops are shaped for real layering: bias-cut camisoles that sit beneath a kimono or stand alone, relaxed shirts that tuck or drape, soft fitted merinos to keep the body\'s warmth, wraps that tie loosely and hold their form through the day.',
       'Cut in natural fibres that soften with wear, these are the pieces that anchor the wardrobe.',
     ],
   },
@@ -249,7 +249,7 @@ export const collections = [
     parent: 'clothing',
     nav_label: 'Skirts',
     sort_order: 5,
-    top_line: 'Designed to move beautifully through your day.',
+    top_line: 'Designed to move with ease through your day.',
     bottom_paragraphs: [
       'A skirt changes the way a day feels, unhurried, feminine, and quietly considered.',
       'Our collection offers a small and deliberate selection of bias-cut and wrap styles in natural fibres, designed to move beautifully and pair effortlessly with everything else in the MONNI wardrobe.',
@@ -261,7 +261,7 @@ export const collections = [
     parent: 'clothing',
     nav_label: 'Shorts',
     sort_order: 6,
-    top_line: 'Small in number, considered in every detail.',
+    top_line: 'Small, considered in detail.',
     bottom_paragraphs: [
       'Our shorts are cut in silk and linen, a boxy shape for relaxed everyday wear, and a softly frilled style that sits somewhere between a short and a skirt. Easy, effortless, and made for the warmer hours.',
     ],
@@ -286,7 +286,7 @@ export const collections = [
     sort_order: 8,
     top_line: 'The most versatile thing in a considered wardrobe.',
     bottom_paragraphs: [
-      'Inspired by the Japanese tradition of layered, considered dressing, our kimonos are long enough to wear as a coat, light enough to carry in a bag, and beautifully made in silk and linen that move with the body.',
+      'Inspired by the Japanese tradition of layered, considered dressing, our kimonos are long enough to wear as a coat, light enough to carry in a bag, and beautifully finished in silk and linen that move with the body.',
       'Worn open over a slip dress, wrapped loosely at home, or pulled over a swimsuit at the beach, they adapt effortlessly.',
     ],
   },
@@ -299,7 +299,7 @@ export const collections = [
     top_line: 'For the hours that belong entirely to you.',
     bottom_paragraphs: [
       'Our loungewear collection moves away from the idea that comfort and beauty are in tension, soft robes and relaxed essentials made to be worn at home with genuine pleasure.',
-      'Rest deserves the same intention as everything else. Garments made in fabrics that feel kind against the skin.',
+      'Rest deserves the same intention as everything else. Garments cut in fabrics that feel kind against the skin.',
     ],
   },
 
@@ -315,7 +315,7 @@ export const collections = [
       'We are proud to stock the work of three exceptional New Zealand makers, each bringing a distinct voice and philosophy to what it means to wear something beautiful.',
       'Charlotte Penman is inspired by nature, 20th century icons, antiquity jewels and the dreamy beauty of Balearic coastlines, her pieces carry a bohemian yet timeless sophistication, designed to be worn as amulet, keepsake or quiet armour for the everyday.',
       'Lisa Webb works from her Matakana studio, drawing on the wild coastlines, shifting light and untamed landscapes of the Tawharanui Peninsula, her work balancing the delicate and the bold.',
-      'Monarc, founded by Ella Drake, is made from 100% recycled precious metals and aboveground diamonds and gemstones, refined, conscious, and quietly heirloom.',
+      'Monarc, founded by Ella Drake, is made from 100% recycled precious metals and aboveground diamonds and gemstones, refined, conscious, and built to become heirloom.',
     ],
   },
   {
@@ -326,8 +326,8 @@ export const collections = [
     sort_order: 1,
     top_line: 'Not simply accessories. Future heirlooms.',
     bottom_paragraphs: [
-      'Fine jewellery is chosen for those moments that ask for something more enduring, a piece to mark an occasion, carry a meaning, or simply wear as a quiet daily luxury.',
-      'Handcrafted in precious metals with carefully sourced gemstones, each piece is made with the kind of intention that outlasts the moment of purchase.',
+      'Fine jewellery is chosen for those moments that ask for something more enduring, a piece to mark an occasion, carry a meaning, or simply wear as an everyday luxury.',
+      'Handcrafted in precious metals with carefully sourced gemstones, each piece carries the kind of intention that outlasts the moment of purchase.',
     ],
   },
   {
@@ -338,7 +338,7 @@ export const collections = [
     sort_order: 2,
     top_line: 'Close to the body. Close to the heart.',
     bottom_paragraphs: [
-      'Our collection spans fine chains and pearl strands that carry the warmth of the Pacific, gemstone pendants in precious metals with stones gathered from across the world, and clean contemporary forms in recycled gold and silver made to be worn every day and kept forever.',
+      'Our collection spans fine chains and pearl strands that carry the warmth of the Pacific, gemstone pendants in precious metals with stones gathered from across the world, and clean contemporary forms in recycled gold and silver designed to be worn every day and kept forever.',
       'Choose one that means something to you, and it will mean something to the people who notice it.',
     ],
   },
@@ -352,7 +352,7 @@ export const collections = [
     bottom_paragraphs: [
       'Our earring collection spans delicate studs and fine gold forms, gemstone drops, sculptural hoops and huggies in recycled precious metals, and pearl forms that carry the softness of the ocean.',
       'Some are for every day, small enough to forget you are wearing them, beautiful enough that you won\'t want to. Others are for the moments that ask for a little more presence.',
-      'Each pair is made to be worn closely and kept for a long time.',
+      'Each pair is crafted to be worn closely and kept for a long time.',
     ],
   },
   {
@@ -375,7 +375,7 @@ export const collections = [
     sort_order: 5,
     top_line: 'Considered. Felt with every gesture.',
     bottom_paragraphs: [
-      'Our bracelet collection offers pearl strands, delicate gold and gemstone forms, and fluid pieces in recycled precious metals with the quiet weight of something genuinely made.',
+      'Our bracelet collection offers pearl strands, delicate gold and gemstone forms, and fluid pieces in recycled precious metals with the weight of something built to last.',
       'Pieces for layering or wearing alone, for gifting or keeping. Each one chosen because it will still feel relevant years from now.',
     ],
   },
@@ -443,7 +443,7 @@ export const collections = [
     top_line: 'The everyday made beautiful.',
     bottom_paragraphs: [
       'Our homewares collection brings together candles, textiles, baskets, and glassware chosen for natural materials, honest making, and the way they settle into a space without demanding attention.',
-      'Objects that quietly earn their keep.',
+      'Objects that earn their keep, season after season.',
     ],
   },
   {
@@ -456,7 +456,7 @@ export const collections = [
     smart_tag: 'home care',
     top_line: 'Care for the spaces that hold you.',
     bottom_paragraphs: [
-      'Our home care collection brings together natural cleaning and everyday essentials chosen for what they leave out as much as what they do — gentle on skin, kind to surfaces, and made without the harsh chemistry that so often fills the air at home.',
+      'Our home care collection brings together natural cleaning and everyday essentials chosen for what they leave out as much as what they do, gentle on skin, kind to surfaces, and made without the harsh chemistry that so often fills the air at home.',
       'Hand washes, refills, and multipurpose sprays from makers who favour plant-based ingredients and refillable rituals, supporting a cleaner home that still feels calm to live in.',
     ],
   },

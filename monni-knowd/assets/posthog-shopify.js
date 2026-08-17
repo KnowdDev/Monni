@@ -1,67 +1,71 @@
 /**
- * PostHog Shopify behavioural tracking.
- * Subscribes to the theme's existing pub/sub + DOM custom events and forwards
- * them to PostHog as named events with rich properties.
+ * PostHog surgical funnel + first-touch ads attribution.
  *
- * Depends on: window.posthog (loaded via snippets/posthog.liquid)
- *             pubsub.js (subscribe/publish globals) — optional, gracefully degrades
+ * Funnel (must match pixels/posthog-checkout.js and ads sprint queries):
+ *   Product Viewed · Added to Cart · Checkout Started
+ * Purchase is Customer Events only (checkout / thank-you cannot run theme JS).
  *
- * Events captured:
- *   product_added_to_cart  — from `cart:added` CustomEvent (product.js)
- *   cart_updated           — from `cart-update` pub/sub (cart-drawer.js)
- *   cart_error             — from `cart-error` pub/sub (cart-drawer.js)
- *   wishlist_updated       — from `wishlist:updated` CustomEvent (wishlist.js)
- *   newsletter_subscribed  — from newsletter form submit (popup + footer)
- *   search_performed       — from search form submit
- *   variant_changed        — from variant selector change on product pages
- *   checkout_started       — from checkout button click / navigation to /checkout
- *   cart_viewed            — when cart drawer opens or /cart is visited
+ * Attribution: persist utm_* / gclid / gbraid / wbraid first-touch onto cart
+ * attributes so Shopify order note_attributes join PostHog + Google Ads.
  */
 (function () {
   'use strict';
 
-  if (!window.posthog || typeof window.posthog.capture !== 'function') return;
+  var ATTR_KEYS = [
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+    'utm_content',
+    'utm_term',
+    'gclid',
+    'gbraid',
+    'wbraid',
+    'gad_source',
+    'landing_page',
+    'ph_distinct_id'
+  ];
 
-  // Respect Do Not Track (mirrors snippet guard for safety)
-  var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-  if (dnt === '1' || dnt === 'yes') return;
-
-  var posthog = window.posthog;
-
-  // ─── Helpers ────────────────────────────────────────────────────────────
-  function safeCapture(event, properties) {
-    try {
-      posthog.capture(event, properties || {});
-    } catch (e) {
-      // Never let analytics break the storefront
+  function phReady(fn) {
+    if (window.posthog && typeof window.posthog.capture === 'function') {
+      fn(window.posthog);
+      return;
     }
+    var n = 0;
+    var t = setInterval(function () {
+      n += 1;
+      if (window.posthog && typeof window.posthog.capture === 'function') {
+        clearInterval(t);
+        fn(window.posthog);
+      } else if (n > 40) {
+        clearInterval(t);
+      }
+    }, 250);
   }
 
-  // Shopify cart.js returns prices in cents (integer). Convert to dollars.
+  function safeCapture(event, properties) {
+    try {
+      if (!window.posthog || typeof window.posthog.capture !== 'function') return;
+      window.posthog.capture(event, properties || {});
+    } catch (e) {}
+  }
+
   function centsToDollars(cents) {
     if (typeof cents !== 'number') return null;
     return (cents / 100).toFixed(2);
   }
 
-  // Normalise a cart.js cart object into PostHog-friendly properties
   function cartProps(cart) {
     if (!cart || typeof cart !== 'object') return {};
     return {
       cart_id: cart.token || cart.id,
       cart_item_count: cart.item_count,
       cart_total: centsToDollars(cart.total_price),
-      cart_total_price_cents: cart.total_price,
       cart_currency: cart.currency,
-      cart_items_subtotal: centsToDollars(cart.items_subtotal_price),
       cart_item_ids: (cart.items || []).map(function (i) { return i.product_id; }),
-      cart_item_handles: (cart.items || []).map(function (i) { return i.handle; }),
-      cart_item_count_unique: (cart.items || []).length,
-      cart_has_gift_card: (cart.items || []).some(function (i) { return i.gift_card; }),
-      cart_attributes: cart.attributes ? Object.keys(cart.attributes) : []
+      cart_item_handles: (cart.items || []).map(function (i) { return i.handle; })
     };
   }
 
-  // Normalise a single cart line item (from cart/add.js response or cart:added detail)
   function lineItemProps(item) {
     if (!item || typeof item !== 'object') return {};
     return {
@@ -74,173 +78,114 @@
       product_vendor: item.vendor,
       quantity: item.quantity,
       price: centsToDollars(item.price),
-      price_cents: item.price,
-      line_price: centsToDollars(item.line_price),
-      requires_shipping: item.requires_shipping,
-      taxable: item.taxable,
-      gift_card: item.gift_card
+      line_price: centsToDollars(item.line_price)
     };
   }
 
-  // ─── 1. Product added to cart (DOM CustomEvent from product.js) ─────────
-  document.addEventListener('cart:added', function (event) {
-    var detail = event.detail || {};
-    var data = detail.data || {};
-    // cart/add.js returns the added line item
-    safeCapture('product_added_to_cart', Object.assign(
-      { source: 'product_form' },
-      lineItemProps(data)
-    ));
-  });
-
-  // ─── 2. Cart updated (pub/sub from cart-drawer.js) ──────────────────────
-  if (typeof subscribe === 'function') {
-    subscribe('cart-update', function (payload) {
-      var cart = payload && payload.cart;
-      safeCapture('cart_updated', cartProps(cart));
+  function readUrlAttribution() {
+    var params = new URLSearchParams(window.location.search);
+    var out = {};
+    ATTR_KEYS.forEach(function (k) {
+      if (k === 'ph_distinct_id' || k === 'landing_page') return;
+      var v = params.get(k);
+      if (v) out[k] = v;
     });
-
-    // ─── 3. Cart error (pub/sub from cart-drawer.js) ──────────────────────
-    subscribe('cart-error', function (payload) {
-      safeCapture('cart_error', {
-        error: payload && payload.error ? String(payload.error) : 'unknown',
-        source: 'cart_drawer'
-      });
-    });
+    if (out.gclid || out.gbraid || (out.utm_source && String(out.utm_source).toLowerCase() === 'google')) {
+      out.landing_page = window.location.pathname;
+    }
+    return out;
   }
 
-  // ─── 4. Wishlist updated (DOM CustomEvent from wishlist.js) ─────────────
-  document.addEventListener('wishlist:updated', function (event) {
-    var detail = event.detail || {};
-    safeCapture('wishlist_updated', {
-      wishlist_count: detail.count,
-      source: 'wishlist_toggle'
+  function firstTouchFrom(cart, urlBits, distinctId) {
+    var existing = (cart && cart.attributes) || {};
+    var next = {};
+    ATTR_KEYS.forEach(function (k) {
+      if (existing[k]) return;
+      if (k === 'ph_distinct_id' && distinctId) next[k] = distinctId;
+      else if (urlBits[k]) next[k] = urlBits[k];
     });
-  });
+    return next;
+  }
 
-  // ─── 5. Newsletter subscribed (any newsletter form submit) ─────────────
-  // Covers popup form + footer form + standalone newsletter pages.
-  document.addEventListener('submit', function (event) {
-    var form = event.target;
-    if (!(form instanceof HTMLFormElement)) return;
-    var isNewsletter =
-      form.classList.contains('newsletter-popup__form') ||
-      form.classList.contains('footer__newsletter-form') ||
-      form.classList.contains('newsletter-form') ||
-      (form.action && form.action.indexOf('subscribe') > -1) ||
-      (form.querySelector && form.querySelector('input[type="email"]') && form.action && form.action.indexOf('contact') > -1);
-    if (!isNewsletter) return;
-    var source = 'unknown';
-    if (form.classList.contains('newsletter-popup__form') || form.closest('.newsletter-popup')) {
-      source = 'popup';
-    } else if (form.closest('footer') || form.classList.contains('footer__newsletter-form')) {
-      source = 'footer';
-    } else if (form.closest('.newsletter-page')) {
-      source = 'newsletter_page';
+  function syncCartAttribution(posthog) {
+    var distinctId = posthog.get_distinct_id ? posthog.get_distinct_id() : null;
+    var urlBits = readUrlAttribution();
+    if (Object.keys(urlBits).length) posthog.register_once(urlBits);
+    fetch('/cart.js', { credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (cart) {
+        if (!cart) return;
+        var patch = firstTouchFrom(cart, urlBits, distinctId);
+        if (!Object.keys(patch).length) return;
+        return fetch('/cart/update.js', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+          body: JSON.stringify({ attributes: patch })
+        });
+      })
+      .catch(function () {});
+  }
+
+  phReady(function (posthog) {
+    var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+    if (dnt === '1' || dnt === 'yes') return;
+
+    syncCartAttribution(posthog);
+
+    var lastAddKey = '';
+    function captureAddToCart(item, source) {
+      var key = String(item.variant_id || item.product_id || '') + ':' + String(item.quantity || 1);
+      var now = Date.now();
+      if (lastAddKey === key + ':' + Math.floor(now / 2000)) return;
+      lastAddKey = key + ':' + Math.floor(now / 2000);
+      safeCapture('Added to Cart', Object.assign({ source: source }, lineItemProps(item)));
+      syncCartAttribution(posthog);
     }
-    var emailInput = form.querySelector('input[type="email"]');
-    safeCapture('newsletter_subscribed', {
-      source: source,
-      form_id: form.id || null,
-      has_email: !!(emailInput && emailInput.value)
-    });
-  }, true); // capture phase — fires before any handler might redirect
 
-  // ─── 6. Search performed (search page form + brands-directory search) ───
-  document.addEventListener('submit', function (event) {
-    var form = event.target;
-    if (!(form instanceof HTMLFormElement)) return;
-    var isSearchForm =
-      form.classList.contains('search-page__form') ||
-      form.getAttribute('role') === 'search' ||
-      (form.action && form.action.indexOf('/search') > -1);
-    if (!isSearchForm) return;
-    var queryInput = form.querySelector('input[name="q"], input[type="search"]');
-    safeCapture('search_performed', {
-      query: queryInput ? queryInput.value : null,
-      query_length: queryInput ? queryInput.value.length : 0,
-      form_class: form.className
+    document.addEventListener('cart:added', function (event) {
+      var detail = event.detail || {};
+      captureAddToCart(detail.data || {}, 'product_form');
     });
-  }, true);
 
-  // ─── 7. Variant changed (product page radio/selector change) ───────────
-  // Uses event delegation on the variant selector container.
-  document.addEventListener('change', function (event) {
-    var target = event.target;
-    if (!(target instanceof Element)) return;
-    var selector = target.closest('[data-variant-selector]');
-    if (!selector) return;
-    var variantIdInput = selector.querySelector('[data-variant-id]');
-    var productPage = target.closest('[data-product-page], .product-page');
-    var productTitleEl = productPage ? productPage.querySelector('[data-product-title], .product-page__title, h1') : null;
-    safeCapture('variant_changed', {
-      variant_id: variantIdInput ? variantIdInput.value : null,
-      option_name: target.name,
-      option_value: target.value,
-      product_id: productPage ? productPage.dataset.productId : null,
-      product_title: productTitleEl ? productTitleEl.textContent.trim() : null,
-      source: 'variant_selector'
-    });
-  });
+    var originalFetch = window.fetch;
+    if (typeof originalFetch === 'function') {
+      window.fetch = function () {
+        var args = arguments;
+        var input = args[0];
+        var url = typeof input === 'string' ? input : (input && input.url) || '';
+        return originalFetch.apply(this, args).then(function (response) {
+          if (url.indexOf('/cart/add') !== -1 && response && response.ok) {
+            try {
+              var clone = response.clone();
+              clone.json().then(function (data) {
+                if (data && data.product_id) captureAddToCart(data, 'cart_add_js');
+              }).catch(function () {});
+            } catch (e) {}
+          }
+          return response;
+        });
+      };
+    }
 
-  // ─── 8. Checkout started (checkout button click + /checkout navigation) ─
-  document.addEventListener('click', function (event) {
-    var target = event.target;
-    if (!(target instanceof Element)) return;
-    var checkoutEl = target.closest('[name="checkout"], a[href*="/checkout"], button[data-checkout]');
-    if (!checkoutEl) return;
-    // Fetch current cart to enrich the event
-    safeCapture('checkout_started', {
-      source: 'checkout_button',
-      button_label: checkoutEl.textContent ? checkoutEl.textContent.trim() : null
-    });
-    // Best-effort cart snapshot
-    try {
+    document.addEventListener('click', function (event) {
+      var target = event.target;
+      if (!(target instanceof Element)) return;
+      var checkoutEl = target.closest('[name="checkout"], a[href*="/checkout"], button[data-checkout]');
+      if (!checkoutEl) return;
       fetch('/cart.js', { credentials: 'same-origin' })
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (cart) {
-          if (cart) safeCapture('checkout_started_cart', cartProps(cart));
+          safeCapture('Checkout Started', Object.assign({ source: 'checkout_button' }, cartProps(cart)));
         })
-        .catch(function () {});
-    } catch (e) {}
-  });
-
-  // ─── 9. Cart viewed (cart drawer open + /cart page) ─────────────────────
-  // Cart drawer: detect via the custom element or a class toggle.
-  var cartDrawer = document.querySelector('cart-drawer, .cart-drawer, [data-cart-drawer]');
-  if (cartDrawer && typeof MutationObserver !== 'undefined') {
-    var observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (m) {
-        if (m.attributeName !== 'open' && m.attributeName !== 'class') return;
-        var isOpen = cartDrawer.hasAttribute('open') ||
-                     cartDrawer.classList.contains('is-open') ||
-                     cartDrawer.classList.contains('open');
-        if (isOpen && !cartDrawer.dataset.phCartViewed) {
-          cartDrawer.dataset.phCartViewed = '1';
-          safeCapture('cart_viewed', { source: 'cart_drawer' });
-        } else if (!isOpen) {
-          delete cartDrawer.dataset.phCartViewed;
-        }
-      });
+        .catch(function () {
+          safeCapture('Checkout Started', { source: 'checkout_button' });
+        });
+      syncCartAttribution(posthog);
     });
-    observer.observe(cartDrawer, { attributes: true, attributeFilter: ['open', 'class'] });
-  }
 
-  // /cart page view — fired on load when page type is cart
-  if (window.location.pathname === '/cart') {
-    safeCapture('cart_viewed', { source: 'cart_page' });
-  }
-
-  // ─── 10. Cart drawer opened via header cart link (fallback) ─────────────
-  document.addEventListener('click', function (event) {
-    var target = event.target;
-    if (!(target instanceof Element)) return;
-    var cartLink = target.closest('a[href*="/cart"], [data-cart-link], [aria-controls*="cart"]');
-    if (cartLink && !cartLink.matches('[name="checkout"]')) {
-      safeCapture('cart_link_clicked', {
-        link_href: cartLink.getAttribute('href'),
-        link_text: cartLink.textContent ? cartLink.textContent.trim() : null
-      });
+    if (window.location.pathname === '/cart') {
+      safeCapture('cart_viewed', { source: 'cart_page' });
     }
   });
 })();

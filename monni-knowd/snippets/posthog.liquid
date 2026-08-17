@@ -1,14 +1,15 @@
 {%- comment -%}
-  PostHog analytics — Shopify-aware integration.
+  PostHog analytics — surgical Shopify + ads attribution.
   Docs: https://posthog.com/docs/libraries/shopify
 
-  Wires:
-  - posthog-js loader (EU host)
-  - Shopify context as super properties (shop, currency, page type, template)
-  - Customer identify + person properties (when logged in)
-  - Rich $pageview event (product / collection / search / cart / page context)
-  - Privacy: respects navigator.doNotTrack; disabled in Shopify theme editor (request.design_mode)
-  - Behavioural events live in assets/posthog-shopify.js (subscribes to pub/sub + DOM events)
+  Funnel events (stable names for bi-weekly ads sprints):
+    $pageview · Product Viewed · Added to Cart · Checkout Started · Purchase
+  Purchase + checkout-domain Checkout Started come from pixels/posthog-checkout.js
+  (Shopify Customer Events). Theme JS cannot run on thank-you.
+
+  Attribution: first-touch utm_* / gclid / gbraid persisted as PostHog super
+  properties here, then written onto Shopify cart attributes so order note
+  attributes match PostHog + Ads.
 
   To disable: remove the {% render 'posthog' %} line from layout/theme.liquid.
 {%- endcomment -%}
@@ -42,19 +43,36 @@
     posthog.init('phc_AAJHNqhULC9nsSjFNwWcXb2YBoPBHAEymLofatPXJogg', {
       api_host: 'https://eu.i.posthog.com',
       defaults: '2026-05-30',
-      capture_pageview: false, // we fire a richer $pageview below
-      capture_pageleave: true, // autocapture rageclicks/leaves
+      capture_pageview: false,
+      capture_pageleave: true,
+      autocapture: false,
       session_recording: {
-        maskAllInputs: true, // privacy: never record form field values
-        blockSelector: '.ph-block' // opt-out per-element via class
+        maskAllInputs: true,
+        blockSelector: '.ph-block'
       },
       loaded: function (posthog) {
-        // Stable super properties (persisted in localStorage, sent with every event)
         posthog.register(shopContext);
 
-        // Identify logged-in customers + set person properties
-        {%- if customer -%}
-        posthog.identify('{{ customer.id | default: customer.email }}', {
+        // First-touch ads attribution (URL params → super properties).
+        // Cart attributes are synced by assets/posthog-shopify.js so Shopify
+        // orders keep the same UTMs / gclid for Ads vs PostHog vs Shopify truth.
+        (function persistFirstTouch() {
+          var params = new URLSearchParams(window.location.search);
+          var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'gbraid', 'wbraid', 'gad_source'];
+          var once = {};
+          for (var i = 0; i < keys.length; i++) {
+            var v = params.get(keys[i]);
+            if (v) once[keys[i]] = v;
+          }
+          if (params.get('gclid') || params.get('gbraid') || (params.get('utm_source') && params.get('utm_source').toLowerCase() === 'google')) {
+            once.landing_page = window.location.pathname;
+            once.landing_url = window.location.href.split('#')[0];
+          }
+          if (Object.keys(once).length) posthog.register_once(once);
+        })();
+
+        {%- if customer and customer.email != blank -%}
+        posthog.identify({{ customer.email | json }}, {
           email: {{ customer.email | json }},
           first_name: {{ customer.first_name | json }},
           last_name: {{ customer.last_name | json }},
@@ -140,6 +158,21 @@
         {%- endcase -%}
 
         posthog.capture('$pageview', pageProps);
+
+        {%- if request.page_type == 'product' -%}
+        posthog.capture('Product Viewed', {
+          product_id: pageProps.product_id,
+          product_handle: pageProps.product_handle,
+          product_title: pageProps.product_title,
+          product_type: pageProps.product_type,
+          product_vendor: pageProps.product_vendor,
+          product_price: pageProps.product_price,
+          variant_id: pageProps.variant_id,
+          variant_title: pageProps.variant_title,
+          variant_price: pageProps.variant_price,
+          collection_handles: pageProps.collection_handles
+        });
+        {%- endif -%}
       }
     });
   })();
