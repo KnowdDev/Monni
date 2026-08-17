@@ -158,6 +158,8 @@ export const collections = [
     parent: 'beauty',
     nav_label: 'Fragrance',
     sort_order: 5,
+    // Live smart-collection rule (Shopify TAG match is case-sensitive)
+    smart_tag: 'Fragrance',
     top_line: 'Worn softly. Remembered long after.',
     bottom_paragraphs: [
       'Scent is a way of arriving somewhere, fully present, grounded, and yourself.',
@@ -186,6 +188,8 @@ export const collections = [
     parent: 'clothing',
     nav_label: 'All Clothing',
     sort_order: 0,
+    // Live smart-collection rule (Shopify TAG match is case-sensitive)
+    smart_tag: 'clothing',
     top_line: 'An extension of the way we live, move, and feel.',
     bottom_paragraphs: [
       'Since our founding, we have been committed to 100% natural fibres, silk, linen, cotton, and merino, long before slow fashion became a conversation.',
@@ -390,11 +394,14 @@ export const collections = [
     ],
   },
   {
-    handle: 'monni-art',
+    // Live category collection handle is `art` (nav previously pointed at ghost `monni-art`)
+    handle: 'art',
     title: 'Monni Art',
     parent: 'home',
     nav_label: 'Monni Art',
     sort_order: 1,
+    // Matches existing Art-tagged products
+    smart_tag: 'Art',
     top_line: 'Original works drawn from the land of Aotearoa.',
     bottom_paragraphs: [
       'The work of Monique Jansen (Ngati Porou) is rooted in whakapapa and a close relationship with the natural world, created using natural pigments sustainably foraged from native plants and Indian ink applied with brushes and calligraphy tools.',
@@ -538,4 +545,5 @@ export const legacyHandleMap = {
   bracelet: 'bracelets',
   giftboxes: 'all-gifting',
   'sacred-rituals': 'crystals-and-rituals',
+  'monni-art': 'art',
 };

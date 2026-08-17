@@ -32,6 +32,7 @@ templates/policy.liquid
 # Page templates (About, Brands, Shop, Contact, Wishlist, Gifting, Size Guide)
 templates/page.about.json
 templates/page.brands.json
+templates/page.makers.json
 templates/page.shop.json
 templates/page.contact.json
 templates/page.wishlist.json

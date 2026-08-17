@@ -1,3 +1,4 @@
+{%- comment -%} brands-dir-cache-bust-2026-08-13 {%- endcomment -%}
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
   <head>
@@ -56,6 +57,9 @@
     {% if senderkit_enabled and senderkit_slug != blank %}
       <meta name="senderkit-signup-slug" content="{{ senderkit_slug | escape }}">
     {% endif %}
+
+    {% # PostHog analytics %}
+    {% render 'posthog' %}
   </head>
 
   <body>
