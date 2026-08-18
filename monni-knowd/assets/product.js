@@ -270,6 +270,7 @@ class ProductPage {
     if (button) {
       const textEl = button.querySelector('[data-add-to-cart-text]');
       button.disabled = !available;
+      button.dataset.available = available ? 'true' : 'false';
       if (textEl) textEl.textContent = available ? addLabel : soldOutLabel;
     }
 
@@ -455,14 +456,12 @@ class ProductForm {
     if (!this.form) return;
 
     this.addToCartButton = this.form.querySelector('[data-add-to-cart]');
-    this.variantSelector = this.form.querySelector('[data-variant-selector]');
     
     this.init();
   }
 
   init() {
     this.form.addEventListener('submit', this.handleSubmit.bind(this));
-    this.updateAddToCartState();
   }
 
   async handleSubmit(e) {
@@ -472,11 +471,15 @@ class ProductForm {
 
     const formData = new FormData(this.form);
     const submitButton = this.addToCartButton;
-    const originalText = submitButton.textContent;
+    const textEl = submitButton.querySelector('[data-add-to-cart-text]');
+    const originalText = (textEl?.textContent || submitButton.textContent || 'Add to cart').trim();
+    const setButtonText = (text) => {
+      if (textEl) textEl.textContent = text;
+      else submitButton.textContent = text;
+    };
 
-    // Show loading state
     submitButton.disabled = true;
-    submitButton.textContent = 'Adding...';
+    setButtonText('Adding...');
 
     try {
       const cartAddUrl = (() => {
@@ -497,44 +500,30 @@ class ProductForm {
       const data = await response.json();
 
       if (response.ok) {
-        // Success - update button text temporarily
-        submitButton.textContent = 'Added!';
-        
-        // Emit event for cart drawer to listen to
+        setButtonText('Added!');
+
         document.dispatchEvent(new CustomEvent('cart:added', {
           detail: { data }
         }));
 
-        // Reset button after delay
         setTimeout(() => {
-          submitButton.disabled = false;
-          submitButton.textContent = originalText;
+          const available = submitButton.dataset.available !== 'false';
+          submitButton.disabled = !available;
+          setButtonText(
+            available
+              ? (submitButton.dataset.addLabel || originalText)
+              : (submitButton.dataset.soldOutLabel || 'Sold out')
+          );
         }, 2000);
       } else {
         throw new Error(data.description || 'Could not add to cart');
       }
     } catch (error) {
       submitButton.disabled = false;
-      submitButton.textContent = originalText;
+      setButtonText(originalText);
       submitButton.setAttribute('aria-invalid', 'true');
       submitButton.dataset.cartError = error?.message || 'Could not add to cart. Please try again.';
     }
-  }
-
-  updateAddToCartState() {
-    if (!this.variantSelector) return;
-
-    const inputs = this.variantSelector.querySelectorAll('input[type="radio"]');
-    inputs.forEach(input => {
-      input.addEventListener('change', () => {
-        // Check if selected variant is available
-        // This would typically involve checking the variant data
-        // For now, we'll keep the button enabled
-        if (this.addToCartButton) {
-          this.addToCartButton.disabled = false;
-        }
-      });
-    });
   }
 }
 
