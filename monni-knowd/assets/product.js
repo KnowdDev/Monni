@@ -11,10 +11,23 @@ class ProductPage {
     this.productId = this.productPage.dataset.productId;
     this.sectionId = this.productPage.dataset.sectionId;
     this.productUrl = this.productPage.dataset.url;
+    this.moneyFormat = this.productPage.dataset.moneyFormat || window.Shopify?.money_format || '${{amount}}';
+    this.variants = this.parseVariants();
 
     this.initGallery();
     this.initVariantSelector();
     this.initQuantitySelector();
+  }
+
+  parseVariants() {
+    const script = this.productPage.querySelector('script[data-product-variants]');
+    const raw = script?.textContent || this.productPage.dataset.productVariants || '[]';
+    try {
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      return [];
+    }
   }
 
   // Gallery functionality
@@ -136,83 +149,194 @@ class ProductPage {
 
     const inputs = variantSelector.querySelectorAll('.product-page__variant-input');
     const swatches = variantSelector.querySelectorAll('.product-page__variant-swatch');
-    const variantIdInput = this.productPage.querySelector('[data-variant-id]');
 
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       input.addEventListener('change', () => {
-        // Update swatch visuals
-        const optionName = input.name;
-        const selectedValue = input.value;
-
-        swatches.forEach(swatch => {
-          if (swatch.dataset.value === selectedValue) {
-            swatch.classList.add('is-selected');
-          } else {
-            swatch.classList.remove('is-selected');
-          }
+        const fieldset = input.closest('fieldset');
+        fieldset?.querySelectorAll('.product-page__variant-swatch').forEach((swatch) => {
+          swatch.classList.toggle('is-selected', swatch.dataset.value === input.value);
         });
 
-        // Update variant ID based on selected options
-        this.updateVariantId();
-        this.updateVariantUrl();
+        this.applyVariant(this.getSelectedVariant());
       });
     });
 
-    // Swatch click
-    swatches.forEach(swatch => {
+    swatches.forEach((swatch) => {
       swatch.addEventListener('click', () => {
         const input = document.getElementById(swatch.htmlFor);
-        if (input) {
+        if (input && !input.checked) {
           input.checked = true;
-          input.dispatchEvent(new Event('change'));
+          input.dispatchEvent(new Event('change', { bubbles: true }));
         }
       });
     });
   }
 
   getSelectedVariant() {
-    const variants = JSON.parse(this.productPage.dataset.productVariants || '[]');
+    const variantSelector = this.productPage.querySelector('[data-variant-selector]');
+    if (variantSelector) {
+      const selectedValues = Array.from(
+        variantSelector.querySelectorAll('.product-page__variant-input:checked')
+      ).map((input) => input.value);
+
+      if (selectedValues.length) {
+        const match = this.variants.find((variant) => {
+          const options = variant.options || [];
+          return selectedValues.every((value, index) => String(options[index]) === String(value));
+        });
+        if (match) return match;
+        return null;
+      }
+    }
+
     const variantIdInput = this.productPage.querySelector('[data-variant-id]');
     if (variantIdInput?.value) {
-      const byId = variants.find((variant) => String(variant.id) === String(variantIdInput.value));
-      if (byId) return byId;
+      return this.variants.find((variant) => String(variant.id) === String(variantIdInput.value)) || null;
     }
 
-    const variantSelector = this.productPage.querySelector('[data-variant-selector]');
-    if (!variantSelector) return variants[0] || null;
-
-    const selectedOptions = {};
-    const inputs = variantSelector.querySelectorAll('.product-page__variant-input:checked');
-    inputs.forEach((input) => {
-      selectedOptions[input.name] = input.value;
-    });
-
-    return (
-      variants.find((variant) =>
-        Object.keys(selectedOptions).every((option) => variant.options.includes(selectedOptions[option]))
-      ) || null
-    );
+    return this.variants[0] || null;
   }
 
-  updateVariantId() {
-    const matchingVariant = this.getSelectedVariant();
-
-    const variantIdInput = this.productPage.querySelector('[data-variant-id]');
-    if (variantIdInput && matchingVariant) {
-      variantIdInput.value = matchingVariant.id;
-    }
-
+  applyVariant(variant) {
+    this.updateVariantId(variant);
+    this.updatePrice(variant);
+    this.updateAvailability(variant);
+    this.updateVariantUrl(variant);
+    this.updateGallery(variant);
     if (this.updateQuantityForVariant) {
       this.updateQuantityForVariant();
     }
   }
 
-  updateVariantUrl() {
-    const formData = new FormData(this.productPage.querySelector('form[data-product-form]'));
-    const params = new URLSearchParams(formData).toString();
-    const url = `${this.productUrl}?${params}`;
+  updateVariantId(variant) {
+    const variantIdInput = this.productPage.querySelector('[data-variant-id]');
+    if (!variantIdInput) return;
+    variantIdInput.value = variant ? variant.id : '';
+  }
 
-    window.history.replaceState({}, '', url);
+  updatePrice(variant) {
+    const wrapper = this.productPage.querySelector('[data-price-wrapper]');
+    if (!wrapper) return;
+
+    wrapper.replaceChildren();
+    if (!variant) return;
+
+    const price = Number(variant.price) || 0;
+    const compareAt = Number(variant.compare_at_price) || 0;
+    const onSale = compareAt > price;
+    const priceText = variant.price_formatted || this.formatMoney(price);
+    const compareText = variant.compare_at_price_formatted || this.formatMoney(compareAt);
+
+    if (onSale) {
+      wrapper.appendChild(
+        this.createPriceSpan('product-page__price--compare', 'comparePrice', 'Regular price', compareText)
+      );
+      wrapper.appendChild(
+        this.createPriceSpan('product-page__price--sale', 'salePrice', 'Sale price', priceText)
+      );
+    } else {
+      wrapper.appendChild(
+        this.createPriceSpan('product-page__price--regular', 'regularPrice', 'Regular price', priceText)
+      );
+    }
+
+    if (!variant.available) {
+      const soldOut = document.createElement('span');
+      soldOut.className = 'product-page__price--sold-out';
+      soldOut.textContent = 'Sold out';
+      wrapper.appendChild(soldOut);
+    }
+  }
+
+  createPriceSpan(className, datasetKey, hiddenLabel, text) {
+    const span = document.createElement('span');
+    span.className = className;
+    span.dataset[datasetKey] = '';
+
+    const hidden = document.createElement('span');
+    hidden.className = 'visually-hidden';
+    hidden.textContent = hiddenLabel;
+    span.appendChild(hidden);
+    span.appendChild(document.createTextNode(` ${text}`));
+    return span;
+  }
+
+  updateAvailability(variant) {
+    const button = this.productPage.querySelector('[data-add-to-cart]');
+    const available = Boolean(variant?.available);
+    const addLabel = button?.dataset.addLabel || 'Add to cart';
+    const soldOutLabel = button?.dataset.soldOutLabel || 'Sold out';
+
+    if (button) {
+      const textEl = button.querySelector('[data-add-to-cart-text]');
+      button.disabled = !available;
+      button.dataset.available = available ? 'true' : 'false';
+      if (textEl) textEl.textContent = available ? addLabel : soldOutLabel;
+    }
+
+    const backInStock = this.productPage.querySelector('[data-back-in-stock]');
+    if (backInStock) backInStock.hidden = available;
+
+    const bodyInput = this.productPage.querySelector('[data-back-in-stock-body]');
+    if (bodyInput && variant) {
+      const title = bodyInput.dataset.backInStockTitle || '';
+      const variantTitle = (variant.options || []).filter(Boolean).join(' / ') || 'Default';
+      bodyInput.value = `Back in stock request for: ${title} - Variant: ${variantTitle}`;
+    }
+  }
+
+  updateGallery(variant) {
+    if (!variant?.featured_media_id) return;
+    const gallery = this.productPage.querySelector('media-gallery');
+    if (!gallery) return;
+
+    const slides = gallery.querySelectorAll('.media-gallery__slide');
+    const index = Array.from(slides).findIndex(
+      (slide) => String(slide.dataset.mediaId) === String(variant.featured_media_id)
+    );
+    if (index < 0) return;
+
+    this.setActiveSlide(
+      index,
+      slides,
+      gallery.querySelectorAll('.media-gallery__thumb'),
+      gallery.querySelectorAll('.media-gallery__dot')
+    );
+  }
+
+  updateVariantUrl(variant) {
+    if (this.productPage.dataset.updateUrl !== 'true' || !variant || !this.productUrl) return;
+
+    const url = new URL(this.productUrl, window.location.origin);
+    url.searchParams.set('variant', String(variant.id));
+    window.history.replaceState({}, '', `${url.pathname}${url.search}`);
+  }
+
+  formatMoney(cents) {
+    if (cents == null || cents === '') return '';
+    const value = Number(cents);
+    if (Number.isNaN(value)) return '';
+
+    if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
+      return Shopify.formatMoney(value, this.moneyFormat);
+    }
+
+    const abs = Math.abs(value) / 100;
+    const formatted = abs.toFixed(2);
+    const [whole, fraction] = formatted.split('.');
+    const withSeparators = Number(whole).toLocaleString('en-NZ');
+    const replacements = {
+      amount: `${withSeparators}.${fraction}`,
+      amount_no_decimals: withSeparators,
+      amount_with_comma_separator: `${whole.replace(/\B(?=(\d{3})+(?!\d))/g, '.')},${fraction}`,
+      amount_no_decimals_with_comma_separator: whole.replace(/\B(?=(\d{3})+(?!\d))/g, '.'),
+      amount_with_apostrophe_separator: `${whole.replace(/\B(?=(\d{3})+(?!\d))/g, "'")}.${fraction}`,
+    };
+    const placeholder = (this.moneyFormat || '${{amount}}').replace(
+      /\{\{\s*(\w+)\s*\}\}/,
+      (_, key) => replacements[key] || formatted
+    );
+    return value < 0 ? `-${placeholder}` : placeholder;
   }
 
   // Quantity selector — select (1–max) with +/- buttons
@@ -320,11 +444,6 @@ class ProductPage {
       updateButtons();
     });
 
-    const variantSelector = this.productPage.querySelector('[data-variant-selector]');
-    if (variantSelector) {
-      variantSelector.addEventListener('change', () => this.updateQuantityForVariant());
-    }
-
     this.updateQuantityForVariant();
   }
 
@@ -337,14 +456,12 @@ class ProductForm {
     if (!this.form) return;
 
     this.addToCartButton = this.form.querySelector('[data-add-to-cart]');
-    this.variantSelector = this.form.querySelector('[data-variant-selector]');
     
     this.init();
   }
 
   init() {
     this.form.addEventListener('submit', this.handleSubmit.bind(this));
-    this.updateAddToCartState();
   }
 
   async handleSubmit(e) {
@@ -354,11 +471,15 @@ class ProductForm {
 
     const formData = new FormData(this.form);
     const submitButton = this.addToCartButton;
-    const originalText = submitButton.textContent;
+    const textEl = submitButton.querySelector('[data-add-to-cart-text]');
+    const originalText = (textEl?.textContent || submitButton.textContent || 'Add to cart').trim();
+    const setButtonText = (text) => {
+      if (textEl) textEl.textContent = text;
+      else submitButton.textContent = text;
+    };
 
-    // Show loading state
     submitButton.disabled = true;
-    submitButton.textContent = 'Adding...';
+    setButtonText('Adding...');
 
     try {
       const cartAddUrl = (() => {
@@ -379,44 +500,30 @@ class ProductForm {
       const data = await response.json();
 
       if (response.ok) {
-        // Success - update button text temporarily
-        submitButton.textContent = 'Added!';
-        
-        // Emit event for cart drawer to listen to
+        setButtonText('Added!');
+
         document.dispatchEvent(new CustomEvent('cart:added', {
           detail: { data }
         }));
 
-        // Reset button after delay
         setTimeout(() => {
-          submitButton.disabled = false;
-          submitButton.textContent = originalText;
+          const available = submitButton.dataset.available !== 'false';
+          submitButton.disabled = !available;
+          setButtonText(
+            available
+              ? (submitButton.dataset.addLabel || originalText)
+              : (submitButton.dataset.soldOutLabel || 'Sold out')
+          );
         }, 2000);
       } else {
         throw new Error(data.description || 'Could not add to cart');
       }
     } catch (error) {
       submitButton.disabled = false;
-      submitButton.textContent = originalText;
+      setButtonText(originalText);
       submitButton.setAttribute('aria-invalid', 'true');
       submitButton.dataset.cartError = error?.message || 'Could not add to cart. Please try again.';
     }
-  }
-
-  updateAddToCartState() {
-    if (!this.variantSelector) return;
-
-    const inputs = this.variantSelector.querySelectorAll('input[type="radio"]');
-    inputs.forEach(input => {
-      input.addEventListener('change', () => {
-        // Check if selected variant is available
-        // This would typically involve checking the variant data
-        // For now, we'll keep the button enabled
-        if (this.addToCartButton) {
-          this.addToCartButton.disabled = false;
-        }
-      });
-    });
   }
 }
 
