@@ -59,7 +59,26 @@
   {%- assign is_jewellery = true -%}
 {%- endif -%}
 
-<product-page class="product-page" data-section-id="{{ section.id }}" data-product-id="{{ product.id }}" data-product-variants="{{ product.variants | json | escape }}" data-product-type="{{ product_type }}" data-update-url="true" data-url="{{ product.url }}">
+<product-page class="product-page" data-section-id="{{ section.id }}" data-product-id="{{ product.id }}" data-product-type="{{ product_type }}" data-update-url="true" data-url="{{ product.url }}" data-money-format="{{ shop.money_format | escape }}">
+  <script type="application/json" data-product-variants>
+    [
+      {%- for variant in product.variants -%}
+        {
+          "id": {{ variant.id | json }},
+          "available": {{ variant.available | json }},
+          "price": {{ variant.price | json }},
+          "compare_at_price": {{ variant.compare_at_price | json }},
+          "price_formatted": {{ variant.price | money | strip_html | json }},
+          "compare_at_price_formatted": {{ variant.compare_at_price | money | strip_html | json }},
+          "options": {{ variant.options | json }},
+          "featured_media_id": {{ variant.featured_media.id | json }},
+          "inventory_management": {{ variant.inventory_management | json }},
+          "inventory_policy": {{ variant.inventory_policy | json }},
+          "inventory_quantity": {{ variant.inventory_quantity | json }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  </script>
   <div class="product-page__layout">
     <!-- Gallery -->
     <div class="product-page__gallery">
@@ -238,7 +257,7 @@
 
           <!-- Add to Cart Button -->
           <div class="product-page__actions">
-            <button type="submit" name="add" class="product-page__add-to-cart btn btn--primary"{% unless current_variant.available %} disabled{% endunless %} data-add-to-cart{% if is_monni_label %} data-preorder{% endif %}>
+            <button type="submit" name="add" class="product-page__add-to-cart btn btn--primary"{% unless current_variant.available %} disabled{% endunless %} data-add-to-cart data-add-label="{% if is_monni_label %}Pre-order{% else %}Add to cart{% endif %}" data-sold-out-label="Sold out"{% if is_monni_label %} data-preorder{% endif %}>
               <span data-add-to-cart-text>
                 {%- if current_variant.available -%}
                   {%- if is_monni_label -%}
@@ -271,39 +290,37 @@
       </product-form>
 
       <!-- Back in Stock Notification -->
-      {%- unless current_variant.available -%}
-        {%- if section.settings.show_back_in_stock -%}
-          <div class="product-page__back-in-stock">
-            <h3 class="product-page__back-in-stock-title">Notify me when back in stock</h3>
-            <p class="product-page__back-in-stock-description">Enter your email and we'll notify you when this item is available again.</p>
-            {%- form 'contact', class: 'product-page__back-in-stock-form' -%}
-              {%- if form.posted_successfully? -%}
-                <div class="product-page__back-in-stock-success">
-                  Thanks! We'll notify you when this item is back in stock.
+      {%- if section.settings.show_back_in_stock -%}
+        <div class="product-page__back-in-stock" data-back-in-stock {% if current_variant.available %}hidden{% endif %}>
+          <h3 class="product-page__back-in-stock-title">Notify me when back in stock</h3>
+          <p class="product-page__back-in-stock-description">Enter your email and we'll notify you when this item is available again.</p>
+          {%- form 'contact', class: 'product-page__back-in-stock-form' -%}
+            {%- if form.posted_successfully? -%}
+              <div class="product-page__back-in-stock-success">
+                Thanks! We'll notify you when this item is back in stock.
+              </div>
+            {%- else -%}
+              <div class="product-page__back-in-stock-inputs">
+                <input type="email" 
+                       name="contact[email]" 
+                       id="BackInStockEmail-{{ section.id }}" 
+                       class="product-page__back-in-stock-email" 
+                       placeholder="Enter your email" 
+                       required
+                       aria-label="Email address">
+                <input type="hidden" name="contact[body]" data-back-in-stock-body data-back-in-stock-title="{{ product.title | escape }}" value="Back in stock request for: {{ product.title }} - Variant: {{ current_variant.title | default: 'Default' }} (SKU: {{ current_variant.sku | default: 'N/A' }})">
+                <input type="hidden" name="contact[subject]" value="Back in Stock Request: {{ product.title }}">
+                <button type="submit" class="product-page__back-in-stock-submit btn btn--primary">Notify me</button>
+              </div>
+              {%- if form.errors -%}
+                <div class="product-page__back-in-stock-error">
+                  Please enter a valid email address.
                 </div>
-              {%- else -%}
-                <div class="product-page__back-in-stock-inputs">
-                  <input type="email" 
-                         name="contact[email]" 
-                         id="BackInStockEmail-{{ section.id }}" 
-                         class="product-page__back-in-stock-email" 
-                         placeholder="Enter your email" 
-                         required
-                         aria-label="Email address">
-                  <input type="hidden" name="contact[body]" value="Back in stock request for: {{ product.title }} - Variant: {{ current_variant.title | default: 'Default' }} (SKU: {{ current_variant.sku | default: 'N/A' }})">
-                  <input type="hidden" name="contact[subject]" value="Back in Stock Request: {{ product.title }}">
-                  <button type="submit" class="product-page__back-in-stock-submit btn btn--primary">Notify me</button>
-                </div>
-                {%- if form.errors -%}
-                  <div class="product-page__back-in-stock-error">
-                    Please enter a valid email address.
-                  </div>
-                {%- endif -%}
               {%- endif -%}
-            {%- endform -%}
-          </div>
-        {%- endif -%}
-      {%- endunless -%}
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+      {%- endif -%}
 
       <!-- Maker Highlight -->
       {%- if product.metafields.custom.maker.value != blank -%}
