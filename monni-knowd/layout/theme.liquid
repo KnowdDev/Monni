@@ -58,12 +58,10 @@
     {% if senderkit_enabled and senderkit_slug != blank %}
       <meta name="senderkit-signup-slug" content="{{ senderkit_slug | escape }}">
     {% endif %}
-
-    {% # PostHog — in head; heavy modules disabled (no recorder/surveys/dead-clicks) %}
-    {% render 'posthog' %}
   </head>
 
-  <body>
+  <body class="template-{{ template.name | handle }}{% if template.suffix %} template-{{ template.name | handle }}-{{ template.suffix | handle }}{% endif %}">
+    {% render 'attribution-bootstrap' %}
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     {% sections 'header-group' %}
@@ -79,6 +77,9 @@
     {% if template.name == 'index' and settings.newsletter_popup_enable %}
       {% render 'newsletter-popup' %}
     {% endif %}
+
+    {% # PostHog — after window.load; recorder/surveys/decide disabled %}
+    {% render 'posthog' %}
 
     <script src="{{ 'constants.js' | asset_url }}" defer></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer></script>

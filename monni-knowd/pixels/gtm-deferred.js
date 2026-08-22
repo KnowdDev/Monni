@@ -1,16 +1,20 @@
 /**
- * Deferred GTM / Google Ads pixel — paste into Shopify Admin.
+ * Deferred Google tag — paste into Shopify Admin as a CUSTOM pixel.
  *
- * Admin → Settings → Customer events → Add custom pixel → Connect
- * FIRST disconnect the "Google & YouTube" app pixel to avoid duplicate gtag loads.
+ * Admin → Settings → Customer events → Add custom pixel
+ * Name: GTM deferred
+ * Permissions: Marketing + Analytics → Connect
  *
- * Tag IDs: AW-16826543864, GT-5RFWJ4S9
+ * Keep Google & YouTube app CONVERSION MEASUREMENT OFF (feeds stay; no duplicate gtag).
+ *
+ * Tag: Tea & Tonic Matakana
+ * IDs: AW-16826543864, GT-TQT9B5FH
  */
 (function () {
   var loaded = false;
   var loading = false;
   var waiters = [];
-  var ids = ['AW-16826543864', 'GT-5RFWJ4S9'];
+  var ids = ['AW-16826543864', 'GT-TQT9B5FH'];
 
   function runGtag(fn) {
     if (loaded && window.gtag) fn();
@@ -97,6 +101,17 @@
           price: v.price.amount,
           quantity: line.quantity
         }]
+      });
+    });
+  });
+
+  analytics.subscribe('checkout_started', function (event) {
+    ensureGtag();
+    var checkout = event.data && event.data.checkout;
+    runGtag(function () {
+      gtag('event', 'begin_checkout', {
+        currency: checkout && checkout.currencyCode,
+        value: checkout && checkout.totalPrice && checkout.totalPrice.amount
       });
     });
   });

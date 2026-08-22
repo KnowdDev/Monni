@@ -7,6 +7,11 @@
  *
  * Attribution: persist utm_* / gclid / gbraid / wbraid first-touch onto cart
  * attributes so Shopify order note_attributes join PostHog + Google Ads.
+ *
+ * Full SDK may load late (idle/interaction). This file:
+ *   - syncs cart attrs immediately via attribution-bootstrap
+ *   - queues ATC / Checkout Started until PostHog is ready
+ *   - forces SDK load on cart/checkout interactions
  */
 (function () {
   'use strict';
@@ -25,6 +30,13 @@
     'ph_distinct_id'
   ];
 
+  var queue = [];
+
+  function ensureSdk() {
+    if (window.posthog && typeof window.posthog.capture === 'function') return;
+    if (typeof window.__monniLoadPostHog === 'function') window.__monniLoadPostHog();
+  }
+
   function phReady(fn) {
     if (window.posthog && typeof window.posthog.capture === 'function') {
       fn(window.posthog);
@@ -39,7 +51,7 @@
       if (window.posthog && typeof window.posthog.capture === 'function') {
         clearInterval(t);
         fn(window.posthog);
-      } else if (n > 40) {
+      } else if (n > 80) {
         clearInterval(t);
       }
     }, 250);
@@ -47,9 +59,22 @@
 
   function safeCapture(event, properties) {
     try {
-      if (!window.posthog || typeof window.posthog.capture !== 'function') return;
-      window.posthog.capture(event, properties || {});
+      if (window.posthog && typeof window.posthog.capture === 'function') {
+        window.posthog.capture(event, properties || {});
+        return;
+      }
+      queue.push({ event: event, properties: properties || {} });
+      ensureSdk();
     } catch (e) {}
+  }
+
+  function flushQueue(posthog) {
+    while (queue.length) {
+      var item = queue.shift();
+      try {
+        posthog.capture(item.event, item.properties);
+      } catch (e) {}
+    }
   }
 
   function centsToDollars(cents) {
@@ -99,6 +124,15 @@
     return out;
   }
 
+  function bootstrapAttribution() {
+    if (window.__monniAttribution) return window.__monniAttribution;
+    try {
+      return JSON.parse(sessionStorage.getItem('monni_attribution') || '{}');
+    } catch (e) {
+      return {};
+    }
+  }
+
   function firstTouchFrom(cart, urlBits, distinctId) {
     var existing = (cart && cart.attributes) || {};
     var next = {};
@@ -110,10 +144,7 @@
     return next;
   }
 
-  function syncCartAttribution(posthog) {
-    var distinctId = posthog.get_distinct_id ? posthog.get_distinct_id() : null;
-    var urlBits = readUrlAttribution();
-    if (Object.keys(urlBits).length) posthog.register_once(urlBits);
+  function patchCartAttributes(urlBits, distinctId) {
     fetch('/cart.js', { credentials: 'same-origin' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (cart) {
@@ -130,65 +161,79 @@
       .catch(function () {});
   }
 
+  function syncCartAttribution(posthog) {
+    var distinctId = posthog && posthog.get_distinct_id ? posthog.get_distinct_id() : null;
+    var urlBits = readUrlAttribution();
+    var bootstrap = bootstrapAttribution();
+    var merged = Object.assign({}, bootstrap, urlBits);
+    if (posthog && Object.keys(urlBits).length) posthog.register_once(urlBits);
+    patchCartAttributes(merged, distinctId || merged.ph_distinct_id);
+  }
+
+  /* Cart attrs immediately — no SDK required */
+  syncCartAttribution(null);
+
+  /* Wire funnel listeners early; captures queue until SDK ready */
+  var lastAddKey = '';
+  function captureAddToCart(item, source) {
+    var key = String(item.variant_id || item.product_id || '') + ':' + String(item.quantity || 1);
+    var now = Date.now();
+    if (lastAddKey === key + ':' + Math.floor(now / 2000)) return;
+    lastAddKey = key + ':' + Math.floor(now / 2000);
+    safeCapture('Added to Cart', Object.assign({ source: source }, lineItemProps(item)));
+    syncCartAttribution(window.posthog || null);
+  }
+
+  document.addEventListener('cart:added', function (event) {
+    var detail = event.detail || {};
+    captureAddToCart(detail.data || {}, 'product_form');
+  });
+
+  var originalFetch = window.fetch;
+  if (typeof originalFetch === 'function') {
+    window.fetch = function () {
+      var args = arguments;
+      var input = args[0];
+      var url = typeof input === 'string' ? input : (input && input.url) || '';
+      return originalFetch.apply(this, args).then(function (response) {
+        if (url.indexOf('/cart/add') !== -1 && response && response.ok) {
+          try {
+            var clone = response.clone();
+            clone.json().then(function (data) {
+              if (data && data.product_id) captureAddToCart(data, 'cart_add_js');
+            }).catch(function () {});
+          } catch (e) {}
+        }
+        return response;
+      });
+    };
+  }
+
+  document.addEventListener('click', function (event) {
+    var target = event.target;
+    if (!(target instanceof Element)) return;
+    var checkoutEl = target.closest('[name="checkout"], a[href*="/checkout"], button[data-checkout]');
+    if (!checkoutEl) return;
+    ensureSdk();
+    fetch('/cart.js', { credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (cart) {
+        safeCapture('Checkout Started', Object.assign({ source: 'checkout_button' }, cartProps(cart)));
+      })
+      .catch(function () {
+        safeCapture('Checkout Started', { source: 'checkout_button' });
+      });
+    syncCartAttribution(window.posthog || null);
+  });
+
+  if (window.location.pathname === '/cart') {
+    safeCapture('cart_viewed', { source: 'cart_page' });
+  }
+
   phReady(function (posthog) {
     var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
     if (dnt === '1' || dnt === 'yes') return;
-
+    flushQueue(posthog);
     syncCartAttribution(posthog);
-
-    var lastAddKey = '';
-    function captureAddToCart(item, source) {
-      var key = String(item.variant_id || item.product_id || '') + ':' + String(item.quantity || 1);
-      var now = Date.now();
-      if (lastAddKey === key + ':' + Math.floor(now / 2000)) return;
-      lastAddKey = key + ':' + Math.floor(now / 2000);
-      safeCapture('Added to Cart', Object.assign({ source: source }, lineItemProps(item)));
-      syncCartAttribution(posthog);
-    }
-
-    document.addEventListener('cart:added', function (event) {
-      var detail = event.detail || {};
-      captureAddToCart(detail.data || {}, 'product_form');
-    });
-
-    var originalFetch = window.fetch;
-    if (typeof originalFetch === 'function') {
-      window.fetch = function () {
-        var args = arguments;
-        var input = args[0];
-        var url = typeof input === 'string' ? input : (input && input.url) || '';
-        return originalFetch.apply(this, args).then(function (response) {
-          if (url.indexOf('/cart/add') !== -1 && response && response.ok) {
-            try {
-              var clone = response.clone();
-              clone.json().then(function (data) {
-                if (data && data.product_id) captureAddToCart(data, 'cart_add_js');
-              }).catch(function () {});
-            } catch (e) {}
-          }
-          return response;
-        });
-      };
-    }
-
-    document.addEventListener('click', function (event) {
-      var target = event.target;
-      if (!(target instanceof Element)) return;
-      var checkoutEl = target.closest('[name="checkout"], a[href*="/checkout"], button[data-checkout]');
-      if (!checkoutEl) return;
-      fetch('/cart.js', { credentials: 'same-origin' })
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (cart) {
-          safeCapture('Checkout Started', Object.assign({ source: 'checkout_button' }, cartProps(cart)));
-        })
-        .catch(function () {
-          safeCapture('Checkout Started', { source: 'checkout_button' });
-        });
-      syncCartAttribution(posthog);
-    });
-
-    if (window.location.pathname === '/cart') {
-      safeCapture('cart_viewed', { source: 'cart_page' });
-    }
   });
 })();

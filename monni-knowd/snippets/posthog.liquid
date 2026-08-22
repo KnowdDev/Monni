@@ -1,17 +1,13 @@
 {%- comment -%}
-  PostHog analytics — surgical Shopify + ads attribution.
-  Docs: https://posthog.com/docs/libraries/shopify
+  PostHog — surgical for PageSpeed + ads funnel.
 
-  Funnel events (stable names for bi-weekly ads sprints):
-    $pageview · Product Viewed · Added to Cart · Checkout Started · Purchase
-  Purchase + checkout-domain Checkout Started come from pixels/posthog-checkout.js
-  (Shopify Customer Events). Theme JS cannot run on thank-you.
+  Strategy:
+  1. Immediate sendBeacon $pageview (and Product Viewed on PDP) — no array.js
+  2. Full SDK only after idle / first interaction / cart-checkout need
+  3. Same distinct_id as attribution-bootstrap so events + cart attrs join
 
-  Attribution: first-touch utm_* / gclid / gbraid persisted as PostHog super
-  properties here, then written onto Shopify cart attributes so order note
-  attributes match PostHog + Ads.
-
-  To disable: remove the {% render 'posthog' %} line from layout/theme.liquid.
+  Funnel: $pageview · Product Viewed · Added to Cart · Checkout Started · Purchase
+  Purchase = pixels/posthog-checkout.js (Customer Events)
 {%- endcomment -%}
 {%- liquid
   assign ph_dnt = false
@@ -22,14 +18,16 @@
 {%- unless ph_dnt -%}
 <script>
   (function () {
-    // Respect Do Not Track (NZ Privacy Act 2020 / AU Privacy Act 1988)
     var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
     if (dnt === '1' || dnt === 'yes') return;
+    if (window.__phLoadScheduled) return;
+    window.__phLoadScheduled = true;
 
-    // PostHog loader
-    !function(t,e){var o,n,p,r;e.__SV||(window.posthog&&window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}p||((p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",p.onerror=function(){p=null},(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r));var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group identify setPersonProperties setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroups onFeatureFlags addFeatureFlagsHandler onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    var API_KEY = 'phc_AAJHNqhULC9nsSjFNwWcXb2YBoPBHAEymLofatPXJogg';
+    var API_HOST = 'https://eu.i.posthog.com';
+    var IS_HOME = {% if template.name == 'index' %}true{% else %}false{% endif %};
+    var IS_PRODUCT = {% if request.page_type == 'product' %}true{% else %}false{% endif %};
 
-    // Shopify context (Liquid → JS). Stable across pages → super properties.
     var shopContext = {
       shopify_shop_id: '{{ shop.id }}',
       shopify_shop_domain: '{{ shop.permanent_domain }}',
@@ -40,140 +38,219 @@
       shopify_template_name: '{{ template.name }}'
     };
 
-    posthog.init('phc_AAJHNqhULC9nsSjFNwWcXb2YBoPBHAEymLofatPXJogg', {
-      api_host: 'https://eu.i.posthog.com',
-      defaults: '2026-05-30',
-      capture_pageview: false,
-      capture_pageleave: true,
-      autocapture: false,
-      disable_session_recording: true,
-      disable_surveys: true,
-      capture_dead_clicks: false,
-      loaded: function (posthog) {
-        posthog.register(shopContext);
+    function getDistinctId() {
+      var attr = window.__monniAttribution || {};
+      if (attr.ph_distinct_id) return attr.ph_distinct_id;
+      try {
+        var stored = JSON.parse(sessionStorage.getItem('monni_attribution') || '{}');
+        if (stored.ph_distinct_id) return stored.ph_distinct_id;
+      } catch (e) {}
+      var id = 'ph_' + Math.random().toString(36).slice(2, 12) + Date.now().toString(36);
+      try {
+        var s = JSON.parse(sessionStorage.getItem('monni_attribution') || '{}');
+        s.ph_distinct_id = id;
+        sessionStorage.setItem('monni_attribution', JSON.stringify(s));
+      } catch (e2) {}
+      return id;
+    }
 
-        // First-touch ads attribution (URL params → super properties).
-        // Cart attributes are synced by assets/posthog-shopify.js so Shopify
-        // orders keep the same UTMs / gclid for Ads vs PostHog vs Shopify truth.
-        (function persistFirstTouch() {
-          var params = new URLSearchParams(window.location.search);
-          var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'gbraid', 'wbraid', 'gad_source'];
-          var once = {};
-          for (var i = 0; i < keys.length; i++) {
-            var v = params.get(keys[i]);
-            if (v) once[keys[i]] = v;
-          }
-          if (params.get('gclid') || params.get('gbraid') || (params.get('utm_source') && params.get('utm_source').toLowerCase() === 'google')) {
-            once.landing_page = window.location.pathname;
-            once.landing_url = window.location.href.split('#')[0];
-          }
-          if (Object.keys(once).length) posthog.register_once(once);
-        })();
-
-        {%- if customer and customer.email != blank -%}
-        posthog.identify({{ customer.email | json }}, {
-          email: {{ customer.email | json }},
-          first_name: {{ customer.first_name | json }},
-          last_name: {{ customer.last_name | json }},
-          orders_count: {{ customer.orders_count | default: 0 }},
-          total_spent: {{ customer.total_spent | default: 0 | money_without_currency | json }},
-          accepts_marketing: {{ customer.accepts_marketing | json }},
-          tags: {{ customer.tags | json }},
-          shopify_customer_id: '{{ customer.id }}'
-        });
-        {%- endif -%}
-
-        // Rich $pageview with page-specific properties
-        var pageProps = {
-          path: window.location.pathname,
-          url: window.location.href,
-          referrer: document.referrer
-        };
-
-        {%- case request.page_type -%}
-          {%- when 'product' -%}
-            pageProps.product_id = '{{ product.id }}';
-            pageProps.product_handle = {{ product.handle | json }};
-            pageProps.product_title = {{ product.title | json }};
-            pageProps.product_type = {{ product.type | json }};
-            pageProps.product_vendor = {{ product.vendor | json }};
-            pageProps.product_price = {{ product.price | money_without_currency | json }};
-            pageProps.product_compare_at_price = {{ product.compare_at_price | money_without_currency | json }};
-            pageProps.product_available = {{ product.available | json }};
-            pageProps.product_tags = {{ product.tags | json }};
-            {%- if product.selected_or_first_available_variant -%}
-              {%- assign ph_v = product.selected_or_first_available_variant -%}
-              pageProps.variant_id = '{{ ph_v.id }}';
-              pageProps.variant_title = {{ ph_v.title | json }};
-              pageProps.variant_price = {{ ph_v.price | money_without_currency | json }};
-              pageProps.variant_available = {{ ph_v.available | json }};
-            {%- endif -%}
-            {%- if product.collections.size > 0 -%}
-              pageProps.collection_handles = {{ product.collections | map: 'handle' | json }};
-            {%- endif -%}
-
-          {%- when 'collection' -%}
-            pageProps.collection_id = '{{ collection.id }}';
-            pageProps.collection_handle = {{ collection.handle | json }};
-            pageProps.collection_title = {{ collection.title | json }};
-            pageProps.collection_products_count = {{ collection.products_count | default: collection.products.size }};
-            {%- if collection.sort_by -%}
-              pageProps.collection_sort_by = {{ collection.sort_by | json }};
-            {%- endif -%}
-
-          {%- when 'list-collections' -%}
-            pageProps.list_collections_count = {{ collections.size }};
-
-          {%- when 'search' -%}
-            pageProps.search_performed = {{ search.performed | json }};
-            {%- if search.performed -%}
-              pageProps.search_terms = {{ search.terms | json }};
-              pageProps.search_results_count = {{ search.results_count }};
-              pageProps.search_result_types = {{ search.results | map: 'object_type' | uniq | json }};
-            {%- endif -%}
-
-          {%- when 'cart' -%}
-            pageProps.cart_item_count = {{ cart.item_count }};
-            pageProps.cart_total = {{ cart.total_price | money_without_currency | json }};
-            pageProps.cart_item_ids = {{ cart.items | map: 'product_id' | json }};
-
-          {%- when 'page' -%}
-            pageProps.page_handle = {{ page.handle | json }};
-            pageProps.page_title = {{ page.title | json }};
-            pageProps.page_template = {{ template.suffix | json }};
-
-          {%- when 'blog' -%}
-            pageProps.blog_handle = {{ blog.handle | json }};
-            pageProps.blog_title = {{ blog.title | json }};
-
-          {%- when 'article' -%}
-            pageProps.article_handle = {{ article.handle | json }};
-            pageProps.article_title = {{ article.title | json }};
-            pageProps.article_author = {{ article.author | json }};
-            pageProps.article_tags = {{ article.tags | json }};
-
-          {%- when 'customers/login', 'customers/register', 'customers/account' -%}
-            pageProps.customer_authenticated = {{ customer.id != blank }};
-        {%- endcase -%}
-
-        posthog.capture('$pageview', pageProps);
-
-        {%- if request.page_type == 'product' -%}
-        posthog.capture('Product Viewed', {
-          product_id: pageProps.product_id,
-          product_handle: pageProps.product_handle,
-          product_title: pageProps.product_title,
-          product_type: pageProps.product_type,
-          product_vendor: pageProps.product_vendor,
-          product_price: pageProps.product_price,
-          variant_id: pageProps.variant_id,
-          variant_title: pageProps.variant_title,
-          variant_price: pageProps.variant_price,
-          collection_handles: pageProps.collection_handles
-        });
-        {%- endif -%}
+    function readUrlOnce() {
+      var params = new URLSearchParams(window.location.search);
+      var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'gbraid', 'wbraid', 'gad_source'];
+      var once = {};
+      for (var i = 0; i < keys.length; i++) {
+        var v = params.get(keys[i]);
+        if (v) once[keys[i]] = v;
       }
-    });
+      if (params.get('gclid') || params.get('gbraid') || (params.get('utm_source') && params.get('utm_source').toLowerCase() === 'google')) {
+        once.landing_page = window.location.pathname;
+        once.landing_url = window.location.href.split('#')[0];
+      }
+      return once;
+    }
+
+    function pageProps() {
+      var props = {
+        path: window.location.pathname,
+        url: window.location.href,
+        referrer: document.referrer,
+        $current_url: window.location.href,
+        $pathname: window.location.pathname,
+        $host: window.location.host,
+        $referrer: document.referrer,
+        title: document.title
+      };
+      for (var k in shopContext) {
+        if (Object.prototype.hasOwnProperty.call(shopContext, k)) props[k] = shopContext[k];
+      }
+      var once = readUrlOnce();
+      for (var u in once) {
+        if (Object.prototype.hasOwnProperty.call(once, u)) props[u] = once[u];
+      }
+      {%- case request.page_type -%}
+        {%- when 'product' -%}
+          props.product_id = '{{ product.id }}';
+          props.product_handle = {{ product.handle | json }};
+          props.product_title = {{ product.title | json }};
+          props.product_type = {{ product.type | json }};
+          props.product_vendor = {{ product.vendor | json }};
+          props.product_price = {{ product.price | money_without_currency | json }};
+          props.product_compare_at_price = {{ product.compare_at_price | money_without_currency | json }};
+          props.product_available = {{ product.available | json }};
+          props.product_tags = {{ product.tags | json }};
+          {%- if product.selected_or_first_available_variant -%}
+            {%- assign ph_v = product.selected_or_first_available_variant -%}
+            props.variant_id = '{{ ph_v.id }}';
+            props.variant_title = {{ ph_v.title | json }};
+            props.variant_price = {{ ph_v.price | money_without_currency | json }};
+            props.variant_available = {{ ph_v.available | json }};
+          {%- endif -%}
+          {%- if product.collections.size > 0 -%}
+            props.collection_handles = {{ product.collections | map: 'handle' | json }};
+          {%- endif -%}
+        {%- when 'collection' -%}
+          props.collection_id = '{{ collection.id }}';
+          props.collection_handle = {{ collection.handle | json }};
+          props.collection_title = {{ collection.title | json }};
+          props.collection_products_count = {{ collection.products_count | default: collection.products.size }};
+        {%- when 'search' -%}
+          props.search_performed = {{ search.performed | json }};
+          {%- if search.performed -%}
+            props.search_terms = {{ search.terms | json }};
+            props.search_results_count = {{ search.results_count }};
+          {%- endif -%}
+        {%- when 'cart' -%}
+          props.cart_item_count = {{ cart.item_count }};
+          props.cart_total = {{ cart.total_price | money_without_currency | json }};
+        {%- when 'page' -%}
+          props.page_handle = {{ page.handle | json }};
+          props.page_title = {{ page.title | json }};
+        {%- when 'blog' -%}
+          props.blog_handle = {{ blog.handle | json }};
+        {%- when 'article' -%}
+          props.article_handle = {{ article.handle | json }};
+          props.article_title = {{ article.title | json }};
+      {%- endcase -%}
+      return props;
+    }
+
+    /* Immediate analytics without loading ~80KiB array.js */
+    function beaconCapture(event, properties) {
+      try {
+        var body = JSON.stringify({
+          api_key: API_KEY,
+          event: event,
+          properties: Object.assign({
+            distinct_id: getDistinctId(),
+            $lib: 'monni-beacon',
+            $lib_version: '1.0.0'
+          }, properties || {}),
+          timestamp: new Date().toISOString()
+        });
+        var url = API_HOST + '/i/v0/e/';
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }));
+        } else {
+          fetch(url, { method: 'POST', body: body, keepalive: true, mode: 'no-cors', headers: { 'Content-Type': 'application/json' } }).catch(function () {});
+        }
+      } catch (e) {}
+    }
+
+    function fireImmediateAnalytics() {
+      var props = pageProps();
+      beaconCapture('$pageview', props);
+      if (IS_PRODUCT) {
+        beaconCapture('Product Viewed', {
+          product_id: props.product_id,
+          product_handle: props.product_handle,
+          product_title: props.product_title,
+          product_type: props.product_type,
+          product_vendor: props.product_vendor,
+          product_price: props.product_price,
+          variant_id: props.variant_id,
+          variant_title: props.variant_title,
+          variant_price: props.variant_price,
+          collection_handles: props.collection_handles
+        });
+      }
+    }
+
+    fireImmediateAnalytics();
+
+    function bootPostHog() {
+      if (window.__phBooted) return;
+      window.__phBooted = true;
+
+      !function(t,e){var o,n,p,r;e.__SV||(window.posthog&&window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}p||((p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",p.onerror=function(){p=null},(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r));var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group identify setPersonProperties setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroups onFeatureFlags addFeatureFlagsHandler onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+      posthog.init(API_KEY, {
+        api_host: API_HOST,
+        capture_pageview: false,
+        capture_pageleave: true,
+        autocapture: false,
+        advanced_disable_decide: true,
+        disable_session_recording: true,
+        disable_surveys: true,
+        capture_dead_clicks: false,
+        capture_performance: false,
+        disable_external_dependency_fetching: true,
+        bootstrap: { distinctID: getDistinctId() },
+        loaded: function (posthog) {
+          posthog.register(shopContext);
+          var once = readUrlOnce();
+          if (Object.keys(once).length) posthog.register_once(once);
+
+          {%- if customer and customer.email != blank -%}
+          posthog.identify({{ customer.email | json }}, {
+            email: {{ customer.email | json }},
+            first_name: {{ customer.first_name | json }},
+            last_name: {{ customer.last_name | json }},
+            orders_count: {{ customer.orders_count | default: 0 }},
+            total_spent: {{ customer.total_spent | default: 0 | money_without_currency | json }},
+            accepts_marketing: {{ customer.accepts_marketing | json }},
+            tags: {{ customer.tags | json }},
+            shopify_customer_id: '{{ customer.id }}'
+          });
+          {%- endif -%}
+
+          /* Pageview already sent via beacon — do not double-fire */
+          document.dispatchEvent(new CustomEvent('posthog:ready', { detail: { posthog: posthog } }));
+        }
+      });
+    }
+
+    window.__monniLoadPostHog = bootPostHog;
+
+    function scheduleSdk() {
+      var fired = false;
+      function go() {
+        if (fired) return;
+        fired = true;
+        bootPostHog();
+      }
+
+      ['scroll', 'click', 'keydown', 'touchstart', 'pointerdown'].forEach(function (evt) {
+        window.addEventListener(evt, go, { once: true, passive: true });
+      });
+
+      /* Homepage: interaction-only — beacon already sent $pageview for bounces.
+         Avoids ~80KiB array.js during Lighthouse / first-paint window.
+         Other pages: idle fallback so PDP ATC listeners attach without a scroll. */
+      if (!IS_HOME) {
+        var idleTimeout = 3500;
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(go, { timeout: idleTimeout });
+        } else {
+          setTimeout(go, idleTimeout);
+        }
+      }
+    }
+
+    if (document.readyState === 'complete') {
+      scheduleSdk();
+    } else {
+      window.addEventListener('load', scheduleSdk, { once: true });
+    }
   })();
 </script>
 {%- endunless -%}

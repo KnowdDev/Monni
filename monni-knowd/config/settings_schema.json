@@ -30,6 +30,12 @@
         "id": "logo_monni",
         "label": "MONNI logo (future migration)",
         "info": "Upload the MONNI logo here for the official rebrand. The storefront header and footer continue to use the Tea & Tonic logo above until migration is announced."
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "32×32 px recommended. Falls back to logo, then theme default."
       }
     ]
   },

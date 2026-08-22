@@ -1,0 +1,79 @@
+{%- comment -%}
+  Lightweight first-touch attribution — no PostHog SDK.
+  Persists UTMs / gclid to sessionStorage + Shopify cart attributes so orders
+  match PostHog + Google Ads without loading array.js on the homepage critical path.
+{%- endcomment -%}
+<script>
+  (function () {
+    var KEYS = [
+      'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+      'gclid', 'gbraid', 'wbraid', 'gad_source', 'landing_page', 'ph_distinct_id'
+    ];
+    var STORAGE_KEY = 'monni_attribution';
+
+    function readUrlBits() {
+      var params = new URLSearchParams(window.location.search);
+      var out = {};
+      KEYS.forEach(function (k) {
+        if (k === 'ph_distinct_id' || k === 'landing_page') return;
+        var v = params.get(k);
+        if (v) out[k] = v;
+      });
+      if (out.gclid || out.gbraid || (out.utm_source && String(out.utm_source).toLowerCase() === 'google')) {
+        out.landing_page = window.location.pathname;
+      }
+      return out;
+    }
+
+    function getStore() {
+      try {
+        return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}');
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveStore(data) {
+      try {
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      } catch (e) {}
+    }
+
+    var existing = getStore();
+    var urlBits = readUrlBits();
+    var merged = Object.assign({}, urlBits, existing);
+    if (!merged.ph_distinct_id) {
+      /* Stable id shared with PostHog beacon + SDK bootstrap.distinctID */
+      merged.ph_distinct_id = 'ph_' + Math.random().toString(36).slice(2, 12) + Date.now().toString(36);
+    }
+    saveStore(merged);
+    window.__monniAttribution = merged;
+
+    function patchCart() {
+      fetch('/cart.js', { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (cart) {
+          if (!cart) return;
+          var attrs = cart.attributes || {};
+          var patch = {};
+          KEYS.forEach(function (k) {
+            if (!attrs[k] && merged[k]) patch[k] = merged[k];
+          });
+          if (!Object.keys(patch).length) return;
+          return fetch('/cart/update.js', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+            body: JSON.stringify({ attributes: patch })
+          });
+        })
+        .catch(function () {});
+    }
+
+    if (document.readyState === 'complete') {
+      patchCart();
+    } else {
+      window.addEventListener('load', patchCart, { once: true });
+    }
+  })();
+</script>

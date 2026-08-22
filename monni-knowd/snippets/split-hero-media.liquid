@@ -36,7 +36,7 @@
     width="{{ img_width }}"
     height="{{ img_height }}"
     class="split-hero__image"
-    decoding="{% if is_lcp %}sync{% else %}async{% endif %}"
+    decoding="async"
     {% if is_lcp %}
       loading="eager"
       fetchpriority="high"
@@ -69,7 +69,7 @@
       width="{{ img_width }}"
       height="{{ img_height }}"
       class="split-hero__image"
-      decoding="{% if is_lcp %}sync{% else %}async{% endif %}"
+      decoding="async"
       {% if is_lcp %}
         loading="eager"
         fetchpriority="high"
