@@ -58,9 +58,6 @@
     {% if senderkit_enabled and senderkit_slug != blank %}
       <meta name="senderkit-signup-slug" content="{{ senderkit_slug | escape }}">
     {% endif %}
-
-    {% # PostHog analytics %}
-    {% render 'posthog' %}
   </head>
 
   <body>
@@ -80,10 +77,15 @@
       {% render 'newsletter-popup' %}
     {% endif %}
 
+    {% # PostHog — deferred after LCP; not in <head> to avoid blocking hero paint %}
+    {% render 'posthog' %}
+
     <script src="{{ 'constants.js' | asset_url }}" defer></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer></script>
     <script src="{{ 'header.js' | asset_url }}" defer></script>
-    <script src="{{ 'posthog-shopify.js' | asset_url }}" defer></script>
+    {% unless template.name == 'index' %}
+      <script src="{{ 'posthog-shopify.js' | asset_url }}" defer></script>
+    {% endunless %}
 
     {% liquid
       assign senderkit_enabled = settings.senderkit_newsletter_enable
@@ -106,6 +108,7 @@
           document.body.appendChild(s);
         }
         function loadIdleScripts() {
+          loadDeferredScript({{ 'posthog-shopify.js' | asset_url | json }});
           loadDeferredScript({{ 'newsletter-popup.js' | asset_url | json }});
           loadDeferredScript({{ 'animations.js' | asset_url | json }});
         }

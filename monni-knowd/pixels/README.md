@@ -1,11 +1,13 @@
-# PostHog Checkout pixel — install once (required before ads)
+# Customer Events pixels
+
+## PostHog Checkout (required before ads)
 
 Theme PostHog covers browse → **Product Viewed** → **Added to Cart** → **Checkout Started**.
 This custom Customer Events pixel covers **Purchase** on Shopify thank-you.
 
 Checkout / thank-you **cannot** run theme JS. Without this pixel, PostHog will never see sales.
 
-## Install (Admin only)
+### Install (Admin only)
 
 1. Open [Customer events](https://admin.shopify.com/store/tea-tonic-matakana/settings/customer_events)
 2. **Add custom pixel** → name it exactly: `PostHog Checkout`
@@ -14,6 +16,29 @@ Checkout / thank-you **cannot** run theme JS. Without this pixel, PostHog will n
 5. Connect / Save
 
 Do **not** add a second full-storefront PostHog pixel. Theme snippet already loads PostHog on `teaandtonic.co.nz`.
+
+## Remove Mailchimp (Aug 2026)
+
+Mailchimp is not in theme code — disconnect the app pixel, then uninstall the app:
+
+```bash
+node scripts/remove-mailchimp-pixel.mjs
+```
+
+Newsletter signups use SenderKit (`senderkit-newsletter.js`), not Mailchimp.
+
+## Deferred Google + Meta pixels (PageSpeed)
+
+Disconnect the **Google & YouTube** and **Facebook & Instagram** app pixels first, then add custom pixels:
+
+| Pixel file | Replaces | Est. savings |
+|---|---|---|
+| `gtm-deferred.js` | Google & YouTube app pixel | ~223 KiB unused JS + 244ms main-thread |
+| `meta-deferred.js` | Facebook & Instagram app pixel | ~40 KiB unused JS + 122ms main-thread |
+
+```bash
+node scripts/optimize-tracking-pixels.mjs --print-deferred-code
+```
 
 ## Funnel (locked names)
 
