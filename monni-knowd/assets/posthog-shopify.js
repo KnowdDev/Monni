@@ -30,6 +30,9 @@
       fn(window.posthog);
       return;
     }
+    document.addEventListener('posthog:ready', function (e) {
+      if (e.detail && e.detail.posthog) fn(e.detail.posthog);
+    }, { once: true });
     var n = 0;
     var t = setInterval(function () {
       n += 1;
