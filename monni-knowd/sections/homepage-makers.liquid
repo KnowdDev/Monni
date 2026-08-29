@@ -35,10 +35,19 @@
       {% if section.settings.description != blank %}
         <p class="makers__desc">{{ section.settings.description | escape }}</p>
       {% endif %}
-      {% if section.settings.cta != blank %}
-        <a href="{{ section.settings.link | default: '#' }}" class="makers__cta">
-          {{ section.settings.cta | escape }}
-        </a>
+      {% if section.settings.cta != blank or section.settings.cta_secondary != blank %}
+        <div class="makers__ctas">
+          {% if section.settings.cta != blank %}
+            <a href="{{ section.settings.link | default: '#' }}" class="makers__cta">
+              {{ section.settings.cta | escape }}
+            </a>
+          {% endif %}
+          {% if section.settings.cta_secondary != blank %}
+            <a href="{{ section.settings.link_secondary | default: '#' }}" class="makers__cta makers__cta--secondary">
+              {{ section.settings.cta_secondary | escape }}
+            </a>
+          {% endif %}
+        </div>
       {% endif %}
     </div>
   </div>
@@ -133,6 +142,13 @@
     max-width: 42ch;
   }
 
+  .makers__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    align-items: center;
+  }
+
   .makers__cta {
     font-family: var(--font-body--family);
     font-size: var(--text-cta);
@@ -144,12 +160,27 @@
     border: 1px solid var(--color-border);
     padding: 0.65rem 1.6rem;
     display: inline-block;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   }
 
   .makers__cta:hover {
     background-color: var(--color-foreground);
     color: var(--color-background-alt);
+  }
+
+  .makers__cta--secondary {
+    border-color: transparent;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    text-decoration: underline;
+    text-underline-offset: 0.35em;
+    text-decoration-thickness: 1px;
+  }
+
+  .makers__cta--secondary:hover {
+    background-color: transparent;
+    color: var(--color-foreground);
+    border-color: transparent;
   }
 {% endstyle %}
 
@@ -191,13 +222,24 @@
     {
       "type": "text",
       "id": "cta",
-      "label": "CTA",
+      "label": "Primary CTA",
       "default": "Shop Wild Earth"
     },
     {
       "type": "url",
       "id": "link",
-      "label": "Link"
+      "label": "Primary link"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary",
+      "label": "Secondary CTA",
+      "default": "Read the Journal"
+    },
+    {
+      "type": "url",
+      "id": "link_secondary",
+      "label": "Secondary link"
     }
   ],
   "presets": [

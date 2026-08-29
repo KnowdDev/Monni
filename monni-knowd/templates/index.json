@@ -168,7 +168,9 @@
         "maker_location": "Nelly, Gisborne",
         "description": "Nelly founded Wild Earth in Gisborne, a handmade perfume studio where every bottle begins as a plant. Completely natural fragrance, made slowly, to feel like something you've always carried.",
         "cta": "Shop Wild Earth",
-        "link": "/pages/brands/wild-earth"
+        "link": "/collections/wild-earth",
+        "cta_secondary": "Read the Journal",
+        "link_secondary": "/blogs/journal/in-the-studio-with-nelly-wild-earth-perfume"
       }
     },
     "journal": {
