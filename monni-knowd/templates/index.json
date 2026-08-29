@@ -163,12 +163,12 @@
     "makers": {
       "type": "homepage-makers",
       "settings": {
-        "eyebrow": "From the Makers",
-        "maker_name": "Frolic Ceramics",
-        "maker_location": "Vicki Fanning, Matakana",
-        "description": "Vicki has been with us since the very beginning, one of our founding suppliers and a ceramist and glass artist of genuine standing. Objects made to be mixed, matched, held and truly lived with at the table.",
-        "cta": "Shop Frolic Ceramics",
-        "link": "/pages/brands/frolic-ceramics"
+        "eyebrow": "Maker of the Month",
+        "maker_name": "Wild Earth Perfume",
+        "maker_location": "Nelly, Gisborne",
+        "description": "Nelly founded Wild Earth in Gisborne, a handmade perfume studio where every bottle begins as a plant. Completely natural fragrance, made slowly, to feel like something you've always carried.",
+        "cta": "Shop Wild Earth",
+        "link": "/pages/brands/wild-earth"
       }
     },
     "journal": {

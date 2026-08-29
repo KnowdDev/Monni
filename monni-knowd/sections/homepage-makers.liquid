@@ -15,19 +15,19 @@
         %}
       {% else %}
         <img
-          src="{{ 'frolic-ceramics-720.webp' | asset_url }}"
+          src="{{ 'wild-earth-nelly-720.webp' | asset_url }}"
           alt="{{ section.settings.maker_name | escape }}"
           loading="lazy"
           decoding="async"
           width="720"
-          height="880"
+          height="828"
           class="makers__image"
         >
       {% endif %}
     </div>
 
     <div class="makers__text">
-      <span class="makers__eyebrow">{{ section.settings.eyebrow | default: "From the Makers" | escape }}</span>
+      <span class="makers__eyebrow">{{ section.settings.eyebrow | default: "Maker of the Month" | escape }}</span>
       <h2 class="makers__name">{{ section.settings.maker_name | escape }}</h2>
       {% if section.settings.maker_location != blank %}
         <p class="makers__location">{{ section.settings.maker_location | escape }}</p>
@@ -168,31 +168,31 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "From the Makers"
+      "default": "Maker of the Month"
     },
     {
       "type": "text",
       "id": "maker_name",
       "label": "Maker name",
-      "default": "Frolic Ceramics"
+      "default": "Wild Earth Perfume"
     },
     {
       "type": "text",
       "id": "maker_location",
       "label": "Maker location",
-      "default": "Vicki Fanning, Matakana"
+      "default": "Nelly, Gisborne"
     },
     {
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "Vicki has been with us since the very beginning, one of our founding suppliers and a ceramist and glass artist of genuine standing. Objects made to be mixed, matched, held and truly lived with at the table."
+      "default": "Nelly founded Wild Earth in Gisborne, a handmade perfume studio where every bottle begins as a plant. Completely natural fragrance, made slowly, to feel like something you've always carried."
     },
     {
       "type": "text",
       "id": "cta",
       "label": "CTA",
-      "default": "Shop Frolic Ceramics"
+      "default": "Shop Wild Earth"
     },
     {
       "type": "url",
