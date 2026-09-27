@@ -33,6 +33,35 @@ Or rely on GitHub Actions once `SHOPIFY_CLI_THEME_TOKEN` is set:
 - Never push `config/settings_data.json` or JSON page templates casually — they hold merchant content.
 - Prefer Liquid/schema/asset changes; let the theme editor own homepage/About/Contact content.
 
+## When Git and live Shopify disagree
+
+Production can drift ahead of `origin/main` (manual `theme push`, editor hotfixes, deploys from uncommitted local). **The live storefront is what customers see; Git must be updated to match before you merge or deploy again.**
+
+```bash
+# 1) Report drift (read-only)
+./scripts/theme-audit-live-vs-git.sh
+
+# 2) Copy LIVE code into monni-knowd/ (never pulls settings_data / page JSON)
+./scripts/theme-reconcile-from-live.sh --dry-run
+./scripts/theme-reconcile-from-live.sh
+
+# 3) Re-audit — LOCAL vs LIVE should be 0
+./scripts/theme-audit-live-vs-git.sh
+
+# 4) Commit on `staging`, PR to `main` (records truth in GitHub; CI may re-push same code)
+# 5) New features: branch from updated staging → push staging theme → QA → merge → production
+```
+
+**Never** `git checkout -- monni-knowd` blindly to “clean up” — that drops live fixes. **Never** push production from a dirty tree without reconciling first.
+
+Optional WIP safety net before reconcile:
+
+```bash
+git checkout -b backup/wip-$(date +%Y%m%d)
+git add -A && git commit -m "WIP backup before live reconcile"
+git checkout main
+```
+
 ## One-time GitHub setup
 
 1. Create a Theme Access password (or Admin API token with `write_themes`).

@@ -50,6 +50,20 @@
     background-color: var(--color-border-light, #F0EBE7);
   }
 
+  .split-hero__image--desktop-only {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .split-hero__image--desktop-only {
+      display: block;
+    }
+
+    .split-hero__image--below-fold-mobile {
+      display: none;
+    }
+  }
+
   .split-hero__overlay {
     position: absolute;
     inset: 0;

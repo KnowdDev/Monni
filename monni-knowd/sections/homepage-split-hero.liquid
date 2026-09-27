@@ -50,6 +50,7 @@
         asset_filename: 'monni-hero-right.webp',
         alt: '',
         lcp: false,
+        lazy_below_mobile: true,
         width: 720,
         height: 899
       %}
@@ -57,19 +58,33 @@
       {% render 'split-hero-media',
         image: section.settings.image_right,
         alt: '',
-        lcp: false
+        lcp: false,
+        lazy_below_mobile: true
       %}
     {% else %}
+      <img
+        src="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=400&h=500&fit=crop&q=80"
+        srcset="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=400&h=500&fit=crop&q=80 400w, https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=800&h=1000&fit=crop&q=80 800w"
+        sizes="100vw"
+        alt="Home"
+        loading="lazy"
+        fetchpriority="low"
+        decoding="async"
+        width="800"
+        height="1000"
+        class="split-hero__image split-hero__image--below-fold-mobile"
+      >
       <img
         src="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=800&h=1000&fit=crop&q=80"
         srcset="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=400&h=500&fit=crop&q=80 400w, https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=800&h=1000&fit=crop&q=80 800w"
         sizes="50vw"
         alt="Home"
-        loading="lazy"
+        loading="eager"
+        fetchpriority="low"
         decoding="async"
         width="800"
         height="1000"
-        class="split-hero__image"
+        class="split-hero__image split-hero__image--desktop-only"
       >
     {% endif %}
     <div class="split-hero__overlay"></div>
@@ -135,6 +150,20 @@
     object-fit: cover;
     background-color: var(--color-border-light, #F0EBE7);
     transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .split-hero__image--desktop-only {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .split-hero__image--desktop-only {
+      display: block;
+    }
+
+    .split-hero__image--below-fold-mobile {
+      display: none;
+    }
   }
 
   .split-hero__panel:hover .split-hero__image,

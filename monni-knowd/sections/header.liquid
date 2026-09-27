@@ -144,8 +144,8 @@
           </a>
         </nav>
 
-        <a href="{{ routes.cart_url }}" class="header__mobile-cart" data-cart-toggle>
-          Cart (<span data-cart-count>{{ cart.item_count }}</span>)
+        <a href="{{ routes.cart_url }}" class="header__mobile-cart" data-cart-toggle aria-label="Cart, {{ cart.item_count }} items">
+          <span class="header__mobile-cart-text">Cart (<span data-cart-count>{{ cart.item_count }}</span>)</span>
         </a>
       </div>
     </div>
@@ -681,12 +681,19 @@
 
   .header__mobile-cart {
     display: none;
+    align-items: center;
+    flex-shrink: 0;
+    white-space: nowrap;
     font-size: 0.875rem;
     font-weight: 400;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-foreground-light);
     transition: color var(--transition-fast);
+  }
+
+  .header__mobile-cart-text {
+    white-space: nowrap;
   }
 
   .header__mobile-cart:hover {
@@ -1162,8 +1169,14 @@
 
     .header__mobile-cart {
       display: inline-flex;
+      flex-shrink: 0;
+      white-space: nowrap;
       font-size: 0.6875rem;
       letter-spacing: 0.12em;
+    }
+
+    .header__side--end {
+      flex-shrink: 0;
     }
 
     .header__menu-toggle-label {
@@ -1215,6 +1228,16 @@
     .header__drawer-panel {
       width: 100%;
       padding-inline: clamp(1.15rem, 5vw, 1.55rem);
+    }
+
+    .header__logo-img {
+      max-width: min(var(--header-logo-width), 8.5rem);
+      max-height: 2.35rem;
+    }
+
+    .header__mobile-cart,
+    .header__menu-toggle-label {
+      letter-spacing: 0.1em;
     }
   }
 

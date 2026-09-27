@@ -11,17 +11,7 @@
 >
   {% if founder_image != blank %}
     <div class="founder__media" aria-hidden="true">
-      {% render 'responsive-img',
-        image: founder_image,
-        alt: '',
-        class: 'founder__image',
-        sizes: '100vw',
-        widths: '480,720,960,1280',
-        default_width: 720,
-        width: founder_image.width | default: 1280,
-        height: founder_image.height | default: 720,
-        loading: 'lazy'
-      %}
+      {% render 'responsive-img', image: founder_image, alt: '', class: 'founder__image', sizes: '100vw', widths: '480,720,960,1280', default_width: 720, width: founder_image.width, default: 720, height: founder_image.height, loading: 'lazy' %}
       <div class="founder__overlay"></div>
     </div>
   {% endif %}
@@ -195,3 +185,26 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'responsive-img',
+            image: founder_image,
+            alt: '',
+            class: 'founder__image',
+            sizes: '100vw',
+            widths: '480,720,960,1280',
+            default_width: 720,
+            width: founder_image.width | default: 1280,
+            height: founder_image.height | default: 720,
+            loading: 'lazy'
+          %}
+  to: "{% render 'responsive-img', image: founder_image, alt: '', class: 'founder__image',
+    sizes: '100vw', widths: '480,720,960,1280', default_width: 720, width: founder_image.width,
+    default: 720, height: founder_image.height, loading: 'lazy' %}"
+  position: 624..862
+{% endcomment %}

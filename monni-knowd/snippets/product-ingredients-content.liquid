@@ -1,0 +1,21 @@
+{%- comment -%}
+  Ingredients for fragrance/beauty accordions.
+  Prefer product.metafields.product.ingredients; otherwise extract the paragraph
+  after the "Ingredients" heading in the product description (Wild Earth etc.).
+{%- endcomment -%}
+{%- liquid
+  assign ingredients_text = product.metafields.product.ingredients
+  if ingredients_text == blank and product.description != blank
+    assign ingredients_marker = 'Ingredients</span></strong></p>'
+    if product.description contains ingredients_marker
+      assign after_ingredients = product.description | split: ingredients_marker | last
+      assign ingredients_para = after_ingredients | split: '</p>' | first
+      assign ingredients_text = ingredients_para | strip_html | strip
+    endif
+  endif
+-%}
+{%- if ingredients_text != blank -%}
+  <p>{{ ingredients_text }}</p>
+{%- else -%}
+  <p>Full ingredient list available on packaging.</p>
+{%- endif -%}

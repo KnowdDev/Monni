@@ -3,15 +3,21 @@
   @param image {Image} — Shopify image picker (fallback)
   @param asset_filename {string} — theme asset WebP (preferred for LCP)
   @param alt {string}
-  @param lcp {boolean} — true for the first visible panel (preload + eager)
+  @param lcp {boolean} — true for the first visible panel (preload + eager + high priority)
+  @param lazy_below_mobile {boolean} — true for right panel: lazy on mobile, eager on desktop
   @param width {number}
   @param height {number}
 {% endcomment %}
 {% liquid
   assign is_lcp = lcp | default: false
+  assign lazy_below_mobile = lazy_below_mobile | default: false
   assign img_width = width | default: 720
   assign img_height = height | default: 899
   assign hero_sizes = '(max-width: 767px) 100vw, 50vw'
+  assign use_split_loading = false
+  if lazy_below_mobile and is_lcp == false
+    assign use_split_loading = true
+  endif
 %}
 
 {% if asset_filename != blank %}
@@ -25,39 +31,67 @@
       assign hero_src = asset_filename | asset_url
     endif
   %}
-  <img
-    src="{{ hero_src }}"
-    srcset="
-      {{ hero_src_480 }} 480w,
-      {{ hero_src_720 }} 720w
-    "
-    sizes="{{ hero_sizes }}"
-    alt="{{ alt | escape }}"
-    width="{{ img_width }}"
-    height="{{ img_height }}"
-    class="split-hero__image"
-    decoding="async"
-    {% if is_lcp %}
-      loading="eager"
-      fetchpriority="high"
-    {% else %}
+  {% if use_split_loading %}
+    <img
+      src="{{ hero_src_480 }}"
+      srcset="
+        {{ hero_src_480 }} 480w,
+        {{ hero_src_720 }} 720w
+      "
+      sizes="{{ hero_sizes }}"
+      alt="{{ alt | escape }}"
+      width="{{ img_width }}"
+      height="{{ img_height }}"
+      class="split-hero__image split-hero__image--below-fold-mobile"
+      decoding="async"
       loading="lazy"
       fetchpriority="low"
-    {% endif %}
-  >
+    >
+    <img
+      src="{{ hero_src }}"
+      srcset="
+        {{ hero_src_480 }} 480w,
+        {{ hero_src_720 }} 720w
+      "
+      sizes="{{ hero_sizes }}"
+      alt="{{ alt | escape }}"
+      width="{{ img_width }}"
+      height="{{ img_height }}"
+      class="split-hero__image split-hero__image--desktop-only"
+      decoding="async"
+      loading="eager"
+      fetchpriority="low"
+    >
+  {% else %}
+    <img
+      src="{{ hero_src }}"
+      srcset="
+        {{ hero_src_480 }} 480w,
+        {{ hero_src_720 }} 720w
+      "
+      sizes="{{ hero_sizes }}"
+      alt="{{ alt | escape }}"
+      width="{{ img_width }}"
+      height="{{ img_height }}"
+      class="split-hero__image"
+      decoding="async"
+      {% if is_lcp %}
+        loading="eager"
+        fetchpriority="high"
+      {% else %}
+        loading="eager"
+        fetchpriority="low"
+      {% endif %}
+    >
+  {% endif %}
 {% else %}
   {% liquid
     assign mobile_src = image | image_url: width: 480, format: 'webp'
+    assign desktop_src = image | image_url: width: 720, format: 'webp'
     assign img_width = image.width | default: img_width
     assign img_height = image.height | default: img_height
   %}
-  <picture>
-    <source
-      type="image/webp"
-      media="(min-width: 768px)"
-      srcset="{{ image | image_url: width: 720, format: 'webp' }} 720w"
-      sizes="50vw"
-    >
+  {% if use_split_loading %}
     <img
       src="{{ mobile_src }}"
       srcset="
@@ -68,15 +102,54 @@
       alt="{{ alt | escape }}"
       width="{{ img_width }}"
       height="{{ img_height }}"
-      class="split-hero__image"
+      class="split-hero__image split-hero__image--below-fold-mobile"
       decoding="async"
-      {% if is_lcp %}
-        loading="eager"
-        fetchpriority="high"
-      {% else %}
-        loading="lazy"
-        fetchpriority="low"
-      {% endif %}
+      loading="lazy"
+      fetchpriority="low"
     >
-  </picture>
+    <img
+      src="{{ desktop_src }}"
+      srcset="
+        {{ image | image_url: width: 480, format: 'webp' }} 480w,
+        {{ image | image_url: width: 720, format: 'webp' }} 720w
+      "
+      sizes="50vw"
+      alt="{{ alt | escape }}"
+      width="{{ img_width }}"
+      height="{{ img_height }}"
+      class="split-hero__image split-hero__image--desktop-only"
+      decoding="async"
+      loading="eager"
+      fetchpriority="low"
+    >
+  {% else %}
+    <picture>
+      <source
+        type="image/webp"
+        media="(min-width: 768px)"
+        srcset="{{ image | image_url: width: 720, format: 'webp' }} 720w"
+        sizes="50vw"
+      >
+      <img
+        src="{{ mobile_src }}"
+        srcset="
+          {{ image | image_url: width: 480, format: 'webp' }} 480w,
+          {{ image | image_url: width: 720, format: 'webp' }} 720w
+        "
+        sizes="100vw"
+        alt="{{ alt | escape }}"
+        width="{{ img_width }}"
+        height="{{ img_height }}"
+        class="split-hero__image"
+        decoding="async"
+        {% if is_lcp %}
+          loading="eager"
+          fetchpriority="high"
+        {% else %}
+          loading="eager"
+          fetchpriority="low"
+        {% endif %}
+      >
+    </picture>
+  {% endif %}
 {% endif %}
