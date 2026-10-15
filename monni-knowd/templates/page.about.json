@@ -6,7 +6,7 @@
         "value-row-1": {
           "type": "value_row",
           "settings": {
-            "title": "Sustainability & Self Love",
+            "title": "Sustainability & Self-love",
             "body": "<p>Like our ancestors, we believe human wellbeing and the wellbeing of the planet are deeply interconnected. By caring for people and place, we practice kaitiakitanga, a philosophy of guardianship and reciprocal care for the natural world. We favour natural materials, slower processes, small-batch production, and makers who create with integrity and care.</p><p>Self-love is self-care. The greatest thing we can offer those around us is our own wholeness. MONNI supports daily rituals, and helps create sacred spaces within everyday life, encouraging acts of care, connection, and presence for yourself and those you love.</p>",
             "image": "shopify://shop_images/black_and_white_image_of_a_women_in_white_shirt.webp",
             "image_position": "left"
@@ -43,7 +43,7 @@
         "gallery_image_2": "shopify://shop_images/Untitled_design_-_2021-09-12T132435.899_720x_8f5cb950-3dab-4cd6-a4c3-c5e27bb2850b.webp",
         "gallery_image_3": "shopify://shop_images/Untitled_design_-_2021-09-12T132648.770_720x_5bbf73d6-c793-4805-949b-0bad2736a5ea.webp",
         "offer_heading": "What We Offer",
-        "offer_body": "<p>MONNI offers a carefully curated selection of natural fibre clothing, jewellery, ceramics, crystals, natural beauty, tea, books, homewares, art, perfume, candles, and sustainable gifts. Alongside holistic wellbeing treatments in-store, including Reiki and energy healing, all offered by our skilled and caring team, each sharing MONNI's commitment to holistic wellbeing.</p><p>Each piece within the store is chosen with intention, favouring natural materials, thoughtful craftsmanship, timeless design, and brands that align with a more conscious and considered way of living.</p><p>Many of the makers and brands within MONNI are women-led, artist-created, locally made, or small-batch produced, reflecting a slower and more intentional approach to both consumption and creation.</p>",
+        "offer_body": "<p>MONNI offers a carefully curated selection of natural fibre clothing, jewellery, ceramics, crystals, natural beauty, tea, books, homewares, art, perfume, candles, and sustainable gifts, alongside holistic wellbeing treatments in-store, including Reiki and energy healing, all offered by our skilled and caring team, each sharing MONNI's commitment to holistic wellbeing.</p><p>Each piece within the store is chosen with intention, favouring natural materials, thoughtful craftsmanship, timeless design, and brands that align with a more conscious and considered way of living.</p><p>Many of the makers and brands within MONNI are women-led, artist-created, locally made, or small-batch produced, reflecting a slower and more intentional approach to both consumption and creation.</p>",
         "creations_heading": "Our Own Creations",
         "creations_body": "<p>MONNI is also home to Monni Label, Monni's New Zealand-made clothing line crafted from natural fibres, alongside Monni's original artwork and prints created using botanical plant inks.</p><p>Monni Botanicals is a seasonal skincare line born from a deep collaboration with The Herbalologist, crafted from organically grown botanicals harvested in rhythm with the seasons and moon cycles, slowly infused and thoughtfully made into small-batch, seed-to-bottle formulations. Currently available in store, Monni Botanicals is growing quietly and in its own time.</p><p>Together, these offerings reflect the same philosophy: simplicity, beauty, ritual, care, and connection to the natural world.</p>",
         "creations_image": "shopify://shop_images/MONNIxLOFOTEN002-13.jpg",
@@ -57,7 +57,7 @@
         "founder_body": "<p>I am descended from Ruawaipu, Ngāti Porou, and Te Whānau a Apanui. My ancestors arrived in Aotearoa over a thousand years ago and served as careful guardians of the land for many generations.</p><p>They understood the sacred connection between people and the natural world, believing that our physical and spiritual wellbeing depends upon our relationship with the whenua. To honour and continue that legacy is a responsibility I carry deeply. It guides every part of my life and my work.</p><p>I am human, as are you. I am energy, as are you, and so is everything that exists within our infinite universe. We reflect one another and learn from each other on this journey. We are all connected.</p><p>It is my belief that we are all here to walk each other home.</p><p>At our core, each of us longs for love, acceptance, and belonging. We all know what it feels like to feel unseen, not enough, or disconnected from who we truly are.</p><p>Yet here we are, living, breathing, and feeling within these miraculous bodies. Even when life feels difficult, this life itself is a gift.</p><p>My own path towards self-love and acceptance was shaped by a moment in time when I realised the feelings, thoughts, and beliefs I held about myself were the opposite of love. We all carry wounds and experiences that shape us in different ways, but it is not the pain that defines us. It is how we choose to meet ourselves now, in this moment, and in every moment moving forward.</p><p>As we learn to love and accept ourselves more deeply, we begin to love and accept others more fully too, because at our essence, we are all connected. Self-love is not a solitary act. It is an invitation to recognise our shared humanity.</p><p>Let go of the 'shoulds', the labels, and the conditioning. Deep down, you already know what is true for you. Trust that knowing.</p><p>Never stop imagining what is possible.</p><p>What is the most true and beautiful life you can dream into being?</p><p>More than a store, MONNI is a space for ritual, creativity, wellbeing, and conscious living. We look forward to welcoming you into our world and sharing a little tea with you.</p>",
         "founder_signoff": "Aroha nui, Monni and the MONNI team",
         "show_visit": true,
-        "visit_heading": "Visit us instore",
+        "visit_heading": "Visit us in-store",
         "visit_address": "5A, 2 Matakana Valley Road, Matakana, New Zealand",
         "visit_phone": "Tel. 09 422 9083",
         "visit_hours": "<p>Sunday to Friday: 10am – 4pm<br>Saturday: 9am – 5pm</p>",
@@ -74,7 +74,7 @@
         "products_to_show": 4,
         "show_view_all": true,
         "view_all_label": "View all",
-        "view_all_link": "shopify://collections/newest-products",
+        "view_all_link": "shopify://collections/monni-art",
         "empty_message": "Products will appear here once added to the collection."
       }
     }

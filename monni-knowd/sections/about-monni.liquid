@@ -188,7 +188,8 @@
         {% endif %}
         {% if section.settings.visit_phone != blank %}
           <p class="about-monni__visit-line">
-            <a href="tel:{{ section.settings.visit_phone | replace: ' ', '' }}">{{ section.settings.visit_phone }}</a>
+            {%- assign about_phone_href = section.settings.visit_phone | remove: 'Tel.' | replace: ' ', '' -%}
+            <a href="tel:{{ about_phone_href }}">{{ section.settings.visit_phone }}</a>
           </p>
         {% endif %}
         {% if section.settings.visit_hours != blank %}
@@ -547,7 +548,7 @@
       "type": "text",
       "id": "visit_heading",
       "label": "Visit heading",
-      "default": "Visit us instore"
+      "default": "Visit us in-store"
     },
     {
       "type": "text",

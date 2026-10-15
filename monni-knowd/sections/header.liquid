@@ -43,8 +43,8 @@
           endfor
         endif
 
-        if header_journal_url == blank
-          assign header_journal_url = '/blogs/news'
+        if header_journal_url == blank or header_journal_url == '/blogs/news'
+          assign header_journal_url = '/blogs/journal'
         endif
 
         if section.settings.menu != blank
@@ -60,6 +60,10 @@
               assign header_shop_url = menu_link.url
             endif
           endfor
+        endif
+
+        if header_journal_url == blank or header_journal_url == '/blogs/news'
+          assign header_journal_url = '/blogs/journal'
         endif
       -%}
 

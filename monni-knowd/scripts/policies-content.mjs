@@ -265,56 +265,80 @@ export const TERMS_OF_SERVICE = `
 `.trim();
 
 export const REFUND_POLICY = `
-<p><em>Last updated: May 2026</em></p>
+<p>Every piece at Tea &amp; Tonic is chosen with care, and we want you to love what you receive. As a small business, we keep our policy simple, so please choose carefully and get in touch if you'd like help with sizing or product advice before ordering.</p>
 
-<p>All products are carefully selected and packed with care. If for any reason you are unhappy with your purchase, please contact us within five working days of receiving your order.</p>
+<h2>How it works</h2>
+<ol>
+  <li>Tap Start a return at the bottom of any page or in your order confirmation email, or email <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a>. Please get in touch within 7 days of delivery.</li>
+  <li>We'll reply with next steps.</li>
+  <li>Please send your item back within 7 days of hearing from us.</li>
+</ol>
 
-<p>We must be notified of your intention to return an item within five working days of delivery, and the returned item must be received by us within seven working days of delivery.</p>
+<h2>Store credit</h2>
+<p>We don't offer refunds for change of mind, but you can return eligible items for store credit to the value you paid. Items must be unused and unworn, in their original condition, with tags and packaging.</p>
 
-<p>Please contact us at <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a> before returning any item.</p>
-
-<p>These timeframes apply to our standard returns process and do not limit any rights you may have under the Consumer Guarantees Act 1993.</p>
-
-<h2>Faulty or Incorrect Items</h2>
-<p>If you receive a faulty item or an item different from what you ordered, please contact us within five working days of receiving your order at <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a>.</p>
-<p>Once the item has been returned and assessed, we will arrange a repair, replacement, store credit, or refund in accordance with the New Zealand Consumer Guarantees Act 1993.</p>
-<p>Ayson and Anastasia Limited trading as Tea &amp; Tonic will reimburse reasonable return shipping costs for faulty or incorrectly supplied items and will cover the cost of shipping any replacement item back to you.</p>
-
-<h2>Transit Damage</h2>
-<p>If your order arrives damaged in transit, please notify us immediately so we can lodge a claim with the delivery provider. All transit damage claims must be made within five working days of delivery.</p>
-
-<h2>Change of Mind</h2>
-<p>We may, at our discretion, offer an exchange or store credit for change of mind returns that meet the following criteria. Proof of purchase is required for all returns and exchanges. Please note that original shipping costs are non-refundable.</p>
-<p>To be eligible for an exchange or store credit, items must be:</p>
+<h2>Good to know</h2>
 <ul>
-  <li>Unused</li>
-  <li>Unworn</li>
-  <li>Unwashed</li>
-  <li>In original condition</li>
-  <li>Returned with all labels, tags and packaging intact and in immaculate condition</li>
+  <li>Your store credit is emailed to you as a code you can use online or in our Matakana shop. It's valid for 3 years.</li>
+  <li>We'll issue it within 3 working days of receiving and checking your item.</li>
+  <li>It covers what you paid for the item, including any discount. It doesn't include the original shipping cost.</li>
+  <li>Made-to-order clothing can be returned for store credit too, as long as it's unworn with the tags attached.</li>
 </ul>
-<p>Return shipping costs for change of mind returns are the responsibility of the customer.</p>
 
-<h2>Sale Items</h2>
-<p>All sale items are final and cannot be returned, exchanged, or refunded unless deemed faulty under the Consumer Guarantees Act 1993.</p>
+<h2>Received a gift?</h2>
+<p>You can return it for store credit in your own name. Just ask the person who gave it to you for the order number, or email us with their name and we'll find the order.</p>
 
-<h2>Lost Parcels</h2>
-<p>All orders are sent with tracked courier services. If your parcel does not arrive, please contact us at <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a> and we will investigate with our courier provider as a matter of priority. We are committed to ensuring every customer receives the order they have paid for and will work to resolve any lost parcel situation promptly.</p>
+<h2>Cancelling an order</h2>
+<p>If you change your mind before your order is dispatched, email us and we'll cancel it for a full refund. Made-to-order clothing can't be cancelled once we've started making it.</p>
 
-<h2>Stock Availability + Special Orders</h2>
-<p>If an item you have ordered is unavailable, we will contact you within three working days.</p>
-<p>If a particular item or size is out of stock online, special orders may be available depending on supplier availability. For special order enquiries, please contact <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a>.</p>
+<h2>Faulty or incorrect items</h2>
+<p>If something arrives faulty or isn't what you ordered, we'll make it right. Let us know as soon as you notice, with a photo, and we'll repair, replace or refund it in line with the Consumer Guarantees Act 1993. We'll email you a prepaid return label and cover the cost of sending a replacement. Refunds go back to your original payment method, including Afterpay.</p>
 
-<h2>International Orders</h2>
-<p>For international orders, please contact us at <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a> to discuss return options. International returns are handled on a case by case basis and we will do our best to find a fair resolution.</p>
+<h2>What counts as faulty?</h2>
+<p>A fault is a problem with how the item was made, or something that fails much sooner than it reasonably should. These aren't faults:</p>
+<ul>
+  <li>normal wear and tear</li>
+  <li>plated jewellery gently fading over time</li>
+  <li>damage from not following the care instructions</li>
+  <li>natural variation in handmade pieces</li>
+</ul>
 
-<h2>Return Address</h2>
+<h2>Skincare and sensitive skin</h2>
+<p>We recommend a patch test before using a new product. A reaction to an ingredient isn't usually a fault, but please get in touch and we'll do our best to help.</p>
+
+<h2>Transit damage</h2>
+<p>If your order arrives damaged, please let us know within 7 days of delivery with a photo.</p>
+<p>Good to know: please keep the item and its packaging until we've sorted it out. The courier needs them for the claim.</p>
+
+<h2>Not eligible for store credit (unless faulty)</h2>
+<ul>
+  <li>earrings and socks, for hygiene reasons</li>
+  <li>jewellery that has been resized or altered, and made-to-order jewellery</li>
+  <li>opened or used face, body and hair care, fragrance, aromatherapy, sleep products, supplements, Mother &amp; Baby products, tea, home care, ritual items such as sage and incense, and honey and other pantry items</li>
+  <li>gift boxes and ritual sets once any item has been opened, because sets can't be split</li>
+  <li>sale items, gift cards, original artwork, commissions, and bespoke or corporate gifting orders</li>
+</ul>
+
+<h2>Handmade and natural pieces</h2>
+<p>Ceramics, crystals, knitwear and artwork are handmade or natural, so each one varies slightly. That's part of their beauty, not a fault.</p>
+
+<h2>Christmas returns</h2>
+<p>On orders placed from 1 November, you can let us know about store credit returns until 10 January. Then send your item back within 7 days of hearing from us.</p>
+
+<h2>Return postage</h2>
+<p>Return postage is at your cost unless the item is faulty or incorrect. Please pack items carefully and use a tracked service, as we can't take responsibility for parcels lost or damaged on their way back to us.</p>
+
+<h2>Lost parcels</h2>
+<p>All orders are sent with tracking. If your parcel doesn't arrive, email us and we'll investigate with the courier as a priority.</p>
+
+<h2>Australian orders</h2>
+<p>This policy applies to Australian orders too. Return postage from Australia is at your cost unless the item is faulty or incorrect.</p>
+
+<h2>Return address</h2>
 <p>
-  Ayson and Anastasia Limited trading as Tea &amp; Tonic, operating as MONNI<br>
-  Shop 5A, 2 Matakana Valley Road<br>
-  RD5, Matakana 0985<br>
-  New Zealand<br>
-  <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a><br>
-  09 422 9083
+  Tea &amp; Tonic, Shop 5A, 2 Matakana Valley Road, RD5, Matakana 0985<br>
+  <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a> | 09 422 9083
 </p>
+
+<p>This policy doesn't affect your rights under the Consumer Guarantees Act 1993 or the Fair Trading Act 1986.</p>
 `.trim();
