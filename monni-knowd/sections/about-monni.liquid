@@ -16,6 +16,9 @@
       {% if section.settings.hero_title != blank %}
         <p class="about-monni__tagline">{{ section.settings.hero_title }}</p>
       {% endif %}
+      {% if section.settings.hero_subtitle != blank %}
+        <p class="about-monni__hero-sub">{{ section.settings.hero_subtitle }}</p>
+      {% endif %}
     </header>
 
     <article class="about-monni__block about-monni__block--center">
@@ -72,6 +75,11 @@
         <h2 class="about-monni__heading">{{ section.settings.offer_heading }}</h2>
       {% endif %}
       <div class="about-monni__richtext">{{ section.settings.offer_body }}</div>
+      {% if section.settings.offer_button_label != blank and section.settings.offer_button_link != blank %}
+        <p class="about-monni__cta">
+          <a class="about-monni__text-link" href="{{ section.settings.offer_button_link }}">{{ section.settings.offer_button_label }}</a>
+        </p>
+      {% endif %}
     </article>
 
     <article class="about-monni__row about-monni__row--media-right">
@@ -174,7 +182,7 @@
       {% endif %}
       <div class="about-monni__richtext">{{ section.settings.founder_body }}</div>
       {% if section.settings.founder_signoff != blank %}
-        <p class="about-monni__signoff">{{ section.settings.founder_signoff }}</p>
+        <p class="about-monni__signoff">{{ section.settings.founder_signoff | newline_to_br }}</p>
       {% endif %}
     </article>
 
@@ -195,6 +203,23 @@
         {% if section.settings.visit_hours != blank %}
           <div class="about-monni__richtext about-monni__visit-hours">{{ section.settings.visit_hours }}</div>
         {% endif %}
+      </article>
+    {% endif %}
+
+    {% if section.settings.shop_heading != blank %}
+      <article class="about-monni__block about-monni__block--center">
+        <h2 class="about-monni__heading">{{ section.settings.shop_heading }}</h2>
+        <div class="about-monni__shop-links">
+          {% if section.settings.shop_link_1_label != blank and section.settings.shop_link_1_url != blank %}
+            <a class="about-monni__text-link" href="{{ section.settings.shop_link_1_url }}">{{ section.settings.shop_link_1_label }}</a>
+          {% endif %}
+          {% if section.settings.shop_link_2_label != blank and section.settings.shop_link_2_url != blank %}
+            <a class="about-monni__text-link" href="{{ section.settings.shop_link_2_url }}">{{ section.settings.shop_link_2_label }}</a>
+          {% endif %}
+          {% if section.settings.shop_link_3_label != blank and section.settings.shop_link_3_url != blank %}
+            <a class="about-monni__text-link" href="{{ section.settings.shop_link_3_url }}">{{ section.settings.shop_link_3_label }}</a>
+          {% endif %}
+        </div>
       </article>
     {% endif %}
   </div>
@@ -238,6 +263,39 @@
     line-height: 1.35;
     letter-spacing: 0.01em;
     color: var(--color-foreground);
+  }
+
+  .about-monni__hero-sub {
+    margin: 1rem auto 0;
+    max-width: 36ch;
+    font-size: clamp(1rem, 2.2vw, 1.15rem);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-foreground);
+  }
+
+  .about-monni__cta {
+    margin: var(--spacing-lg) 0 0;
+  }
+
+  .about-monni__text-link {
+    color: inherit;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 0.28em;
+  }
+
+  .about-monni__text-link:hover {
+    opacity: 0.7;
+  }
+
+  .about-monni__shop-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem 2.25rem;
   }
 
   .about-monni__heading {
@@ -430,7 +488,12 @@
       "type": "textarea",
       "id": "hero_title",
       "label": "Tagline",
-      "default": "A place to pause. A place to reconnect. A place to feel inspired by beauty, nature, and thoughtful living."
+      "default": "A place to pause. A place to reconnect. A place to feel inspired."
+    },
+    {
+      "type": "text",
+      "id": "hero_subtitle",
+      "label": "Subtitle"
     },
     {
       "type": "text",
@@ -468,6 +531,16 @@
       "type": "richtext",
       "id": "offer_body",
       "label": "Offer content"
+    },
+    {
+      "type": "text",
+      "id": "offer_button_label",
+      "label": "Offer button label"
+    },
+    {
+      "type": "url",
+      "id": "offer_button_link",
+      "label": "Offer button link"
     },
     {
       "type": "text",
@@ -529,10 +602,10 @@
       "label": "Founder content"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "founder_signoff",
       "label": "Founder signoff",
-      "default": "Aroha nui, Monni and the MONNI team"
+      "default": "Aroha nui,\nMonni and the Tea & Tonic team"
     },
     {
       "type": "header",
@@ -567,6 +640,45 @@
       "id": "visit_hours",
       "label": "Opening hours",
       "default": "<p>Sunday to Friday: 10am – 4pm<br>Saturday: 9am – 5pm</p>"
+    },
+    {
+      "type": "header",
+      "content": "Shop our creations"
+    },
+    {
+      "type": "text",
+      "id": "shop_heading",
+      "label": "Shop heading"
+    },
+    {
+      "type": "text",
+      "id": "shop_link_1_label",
+      "label": "Shop link 1 label"
+    },
+    {
+      "type": "url",
+      "id": "shop_link_1_url",
+      "label": "Shop link 1"
+    },
+    {
+      "type": "text",
+      "id": "shop_link_2_label",
+      "label": "Shop link 2 label"
+    },
+    {
+      "type": "url",
+      "id": "shop_link_2_url",
+      "label": "Shop link 2"
+    },
+    {
+      "type": "text",
+      "id": "shop_link_3_label",
+      "label": "Shop link 3 label"
+    },
+    {
+      "type": "url",
+      "id": "shop_link_3_url",
+      "label": "Shop link 3"
     },
     {
       "type": "range",
