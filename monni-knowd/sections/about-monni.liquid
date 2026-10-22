@@ -248,7 +248,9 @@
   }
 
   .about-monni__eyebrow {
+    font-family: var(--font-heading--family);
     font-size: 0.875rem;
+    font-weight: 400;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     margin: 0 0 var(--spacing-sm);
@@ -258,6 +260,7 @@
   .about-monni__tagline {
     margin: 0 auto;
     max-width: 34ch;
+    font-family: var(--font-heading--family);
     font-size: clamp(1.35rem, 4vw, 2rem);
     font-weight: 300;
     line-height: 1.35;
@@ -268,8 +271,10 @@
   .about-monni__hero-sub {
     margin: 1rem auto 0;
     max-width: 36ch;
+    font-family: var(--font-heading--family);
     font-size: clamp(1rem, 2.2vw, 1.15rem);
-    font-weight: 400;
+    font-weight: 300;
+    font-style: italic;
     line-height: 1.5;
     color: var(--color-foreground);
   }
@@ -302,20 +307,21 @@
     margin: 0 0 clamp(1rem, 3vw, 1.5rem);
     font-size: clamp(1.5rem, 3.5vw, 2.25rem);
     line-height: 1.15;
-    font-weight: 350;
+    font-weight: 300;
     color: var(--color-foreground);
   }
 
   .about-monni__subheading {
     margin: 0 0 0.75rem;
     font-size: clamp(1.1rem, 2.8vw, 1.35rem);
-    font-weight: 500;
+    font-weight: 300;
     letter-spacing: 0.02em;
     color: var(--color-foreground);
   }
 
   .about-monni__richtext :is(p, ul, ol) {
     margin: 0 0 var(--spacing-md);
+    font-weight: 200;
     color: var(--color-foreground);
     line-height: 1.75;
     letter-spacing: 0.01em;

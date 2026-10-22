@@ -5,29 +5,58 @@
 
 {%- liquid
   assign policy_handle = request.path | split: '/' | last
-  assign policy_display_title = policy.title
+  assign policy_display_title = 'Policy'
+  assign policy_body = blank
+
+  comment
+    When this section is rendered from theme.liquid (Shopify ignores
+    templates/policy.liquid), the global `policy` object has no body.
+    Pull content from shop.*_policy / shop.policies instead.
+  endcomment
 
   case policy_handle
     when 'privacy-policy'
       assign policy_display_title = 'Privacy Policy'
+      assign policy_body = shop.privacy_policy.body
     when 'terms-of-service'
       assign policy_display_title = 'Terms & Conditions'
+      assign policy_body = shop.terms_of_service.body
     when 'refund-policy'
-      assign policy_display_title = 'Returns & Store Credit'
+      assign policy_display_title = 'Returns Policy'
+      assign policy_body = shop.refund_policy.body
     when 'shipping-policy'
       assign policy_display_title = 'Shipping'
+      assign policy_body = shop.shipping_policy.body
+    when 'contact-information'
+      assign policy_display_title = 'Contact'
+      if shop.contact_information
+        assign policy_body = shop.contact_information.body
+      endif
   endcase
+
+  if policy_body == blank
+    for shop_policy in shop.policies
+      assign shop_policy_handle = shop_policy.url | split: '/' | last
+      if shop_policy_handle == policy_handle
+        if policy_display_title == 'Policy'
+          assign policy_display_title = shop_policy.title
+        endif
+        assign policy_body = shop_policy.body
+        break
+      endif
+    endfor
+  endif
 -%}
 
 <section class="policy section--padding" data-section-id="{{ section.id }}" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
   <div class="policy__inner container">
     <header class="policy__header">
-      <p class="policy__eyebrow">Ayson and Anastasia Limited trading as Tea &amp; Tonic, operating as MONNI</p>
+      <p class="policy__eyebrow">Ayson and Anastasia Limited trading as Tea &amp; Tonic</p>
       <h1 class="policy__title">{{ policy_display_title }}</h1>
     </header>
 
     <div class="policy__content rte">
-      {{ policy.body }}
+      {{ policy_body }}
     </div>
   </div>
 </section>
@@ -73,6 +102,7 @@
     max-width: 74ch;
     margin: 0 auto;
     font-size: 1.03rem;
+    font-weight: 200;
     line-height: 1.85;
     letter-spacing: 0.01em;
     color: var(--color-foreground);
@@ -84,7 +114,7 @@
 
   .policy__content :is(h2, h3, h4) {
     color: var(--color-foreground);
-    font-weight: 350;
+    font-weight: 300;
     letter-spacing: 0.005em;
   }
 
