@@ -290,7 +290,7 @@
         "type": "textarea",
         "id": "newsletter_popup_description",
         "label": "Description",
-        "default": "For a quieter inbox join the MONNI community for seasonal stories, new arrivals and quiet inspiration."
+        "default": "For a quieter inbox join the Tea & Tonic community for seasonal stories, new arrivals and quiet inspiration."
       },
       {
         "type": "text",
