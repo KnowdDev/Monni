@@ -27,8 +27,8 @@
         "value-row-2"
       ],
       "settings": {
-        "hero_eyebrow": "",
-        "hero_title": "A place to pause. A place to reconnect. A place to feel inspired.",
+        "hero_eyebrow": "Our Story",
+        "hero_title": "Holistic Health, Beauty & Home",
         "story_heading": "Our Story",
         "story_body": "<p>Tea & Tonic began in 2017, founded by dear friends Monni and Aysha. It started with a simple wish: to create a calm, meaningful space devoted to wellbeing, filled with teas, tonics and the small rituals that bring us back to ourselves.</p><p>Along the way, we noticed something. So many of the products we loved most were made by women. Herbalists, jewellers, perfumers, artists and makers, often handmaking from home, weaving love into every creation.</p><p>Today, Tea & Tonic exists to champion these women. We look for integrity in ingredients and materials, honesty in how things are made, and a story worth telling.</p>",
         "gallery_image_1": "shopify://shop_images/Untitled_design_-_2021-09-12T132325.234_720x_1f9bb888-de2f-49de-aef7-4c04cf0ec412.webp",
@@ -55,7 +55,7 @@
         "visit_hours": "<p>Sunday to Friday: 10am – 4pm<br>Saturday: 9am – 5pm</p>",
         "padding_top": 36,
         "padding_bottom": 64,
-        "hero_subtitle": "Championing women-founded and led sustainable businesses.",
+        "hero_subtitle": "A place to pause and reconnect. We champion women-founded and led businesses that care for people and the planet.",
         "offer_button_label": "Book a treatment",
         "offer_button_link": "/blogs/journal/meet-the-tea-tonic-practitioners",
         "shop_heading": "Shop our own creations",

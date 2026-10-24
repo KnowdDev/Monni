@@ -14,11 +14,12 @@
         <p class="about-monni__eyebrow">{{ section.settings.hero_eyebrow }}</p>
       {% endif %}
       {% if section.settings.hero_title != blank %}
-        <p class="about-monni__tagline">{{ section.settings.hero_title }}</p>
+        <h1 class="about-monni__tagline">{{ section.settings.hero_title }}</h1>
       {% endif %}
       {% if section.settings.hero_subtitle != blank %}
         <p class="about-monni__hero-sub">{{ section.settings.hero_subtitle }}</p>
       {% endif %}
+      <div class="about-monni__divider" aria-hidden="true"></div>
     </header>
 
     <article class="about-monni__block about-monni__block--center">
@@ -248,35 +249,42 @@
   }
 
   .about-monni__eyebrow {
-    font-family: var(--font-heading--family);
-    font-size: 0.875rem;
+    font-family: var(--font-body--family);
+    font-size: 0.72rem;
     font-weight: 400;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    margin: 0 0 var(--spacing-sm);
+    margin: 0 0 0.85rem;
     color: var(--color-foreground-muted);
   }
 
   .about-monni__tagline {
     margin: 0 auto;
-    max-width: 34ch;
+    max-width: 16em;
     font-family: var(--font-heading--family);
-    font-size: clamp(1.35rem, 4vw, 2rem);
+    font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 300;
-    line-height: 1.35;
+    line-height: 1.15;
     letter-spacing: 0.01em;
     color: var(--color-foreground);
   }
 
   .about-monni__hero-sub {
     margin: 1rem auto 0;
-    max-width: 36ch;
+    max-width: 34rem;
     font-family: var(--font-heading--family);
-    font-size: clamp(1rem, 2.2vw, 1.15rem);
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
     font-weight: 300;
-    font-style: italic;
-    line-height: 1.5;
-    color: var(--color-foreground);
+    line-height: 1.55;
+    color: var(--color-foreground-light);
+  }
+
+  .about-monni__divider {
+    width: 3.25rem;
+    height: 1px;
+    margin: 1.75rem auto 0;
+    background: var(--color-foreground);
+    opacity: 0.28;
   }
 
   .about-monni__cta {
@@ -488,18 +496,19 @@
       "type": "text",
       "id": "hero_eyebrow",
       "label": "Eyebrow",
-      "default": "ABOUT MONNI"
+      "default": "Our Story"
     },
     {
       "type": "textarea",
       "id": "hero_title",
       "label": "Tagline",
-      "default": "A place to pause. A place to reconnect. A place to feel inspired."
+      "default": "Holistic Health, Beauty & Home"
     },
     {
       "type": "text",
       "id": "hero_subtitle",
-      "label": "Subtitle"
+      "label": "Subtitle",
+      "default": "A place to pause and reconnect. We champion women-founded and led businesses that care for people and the planet."
     },
     {
       "type": "text",
