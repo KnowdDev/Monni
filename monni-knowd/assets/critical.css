@@ -1483,12 +1483,34 @@ a.breadcrumb__link:focus-visible {
   }
 }
 
+.collection-page__eyebrow {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-body--family);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-foreground-muted);
+}
+
 .collection-page__title {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 300;
   letter-spacing: 0.01em;
   margin-bottom: var(--spacing-md);
   color: var(--color-foreground);
+}
+
+.collection-page__intro {
+  max-width: 36rem;
+  margin: 0 auto 1.75rem;
+  font-family: var(--font-heading--family);
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--color-foreground-light);
 }
 
 .collection-page__topline {

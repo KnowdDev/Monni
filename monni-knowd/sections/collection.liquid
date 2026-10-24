@@ -21,18 +21,33 @@
   <!-- Collection Header -->
   <header class="collection-page__header">
     <!-- Breadcrumb -->
-    {%- if section.settings.show_breadcrumb -%}
+    {%- if section.settings.show_breadcrumb and collection.handle != 'all' -%}
       {%- render 'breadcrumb-taxonomy', nav_class: 'collection-page__breadcrumb', collection: collection -%}
     {%- endif -%}
 
     <!-- Title -->
     {%- capture collection_display_title -%}{%- render 'monni-line-label', text: collection.title -%}{%- endcapture -%}
-    <h1 class="collection-page__title">{{ collection_display_title | strip }}</h1>
+    {%- assign collection_display_title = collection_display_title | strip -%}
+    {%- assign collection_eyebrow = blank -%}
+    {%- assign collection_intro = blank -%}
+    {%- if collection.handle == 'all' -%}
+      {%- assign collection_display_title = 'Shop All' -%}
+      {%- assign collection_eyebrow = 'The Collection' -%}
+      {%- assign collection_intro = 'Considered pieces for slow living, from botanical skincare and loose-leaf tea to jewellery, art and clothing. For your body, your home and the people you hold close.' -%}
+    {%- endif -%}
+    {%- if collection_eyebrow != blank -%}
+      <p class="collection-page__eyebrow">{{ collection_eyebrow }}</p>
+    {%- endif -%}
+    <h1 class="collection-page__title">{{ collection_display_title }}</h1>
 
-    {%- assign top_line = collection.metafields.monni.top_line.value | default: collection.metafields.monni.top_line -%}
-    {%- if top_line != blank and section.settings.show_top_line -%}
-      {%- capture top_line_label -%}{%- render 'monni-line-label', text: top_line -%}{%- endcapture -%}
-      <p class="collection-page__topline">{{ top_line_label | strip | escape }}</p>
+    {%- if collection_intro != blank -%}
+      <p class="collection-page__intro">{{ collection_intro }}</p>
+    {%- else -%}
+      {%- assign top_line = collection.metafields.monni.top_line.value | default: collection.metafields.monni.top_line -%}
+      {%- if top_line != blank and section.settings.show_top_line -%}
+        {%- capture top_line_label -%}{%- render 'monni-line-label', text: top_line -%}{%- endcapture -%}
+        <p class="collection-page__topline">{{ top_line_label | strip | escape }}</p>
+      {%- endif -%}
     {%- endif -%}
 
     <!-- Product Count -->
