@@ -103,6 +103,52 @@
   {%- assign og_title = page_title -%}
   {%- assign meta_description = 'Discover the makers behind MONNI. Independent brands chosen for quality, integrity and the rituals of everyday wellbeing. Shop by brand in Matakana, NZ.' -%}
   {%- assign seo_title_custom = true -%}
+{%- elsif request.page_type == 'page' -%}
+  {%- liquid
+    case page.handle
+      when 'corporate-gifting'
+        assign page_title = 'Corporate Gifting | Tea & Tonic Matakana'
+        assign meta_description = 'Thoughtful corporate gifts from Matakana. Natural wellbeing, beauty and home gifts, beautifully wrapped and delivered across New Zealand.'
+        assign og_title = page_title
+        assign seo_title_custom = true
+      when 'contact'
+        assign page_title = 'Contact | Tea & Tonic Matakana'
+        assign meta_description = 'Contact Tea & Tonic in Matakana Village. Visit us at 2 Matakana Valley Road, call 09 422 9083 or email hello@teaandtonic.co.nz.'
+        assign og_title = page_title
+        assign seo_title_custom = true
+      when 'shop'
+        assign page_title = 'Shop Beauty, Clothing & Gifts | Tea & Tonic Matakana'
+        assign meta_description = 'Shop natural beauty, clothing, jewellery, tea, ceramics, art and gifts at Tea & Tonic, with many women-led and NZ-made brands. Free shipping over $250.'
+        assign og_title = page_title
+        assign seo_title_custom = true
+    endcase
+  -%}
+{%- elsif request.page_type == 'policy' -%}
+  {%- liquid
+    assign policy_handle = request.path | split: '/' | last
+    case policy_handle
+      when 'shipping-policy'
+        assign page_title = 'Shipping & Delivery | Tea & Tonic Matakana'
+        assign meta_description = 'Shipping, delivery and Click + Collect at Tea & Tonic Matakana. Free NZ shipping over $250. Most parcels arrive in two to five working days.'
+        assign og_title = page_title
+        assign seo_title_custom = true
+      when 'refund-policy'
+        assign page_title = 'Returns Policy | Tea & Tonic Matakana'
+        assign meta_description = 'Returns, exchanges and store credit at Tea & Tonic. Timeframes, change of mind rules and your rights under the Consumer Guarantees Act.'
+        assign og_title = page_title
+        assign seo_title_custom = true
+      when 'privacy-policy'
+        assign page_title = 'Privacy Policy | Tea & Tonic Matakana'
+        assign meta_description = 'How Tea & Tonic collects, uses and protects your personal information when you shop online or in our Matakana store.'
+        assign og_title = page_title
+        assign seo_title_custom = true
+      when 'terms-of-service'
+        assign page_title = 'Terms & Conditions | Tea & Tonic Matakana'
+        assign meta_description = 'Terms and conditions for shopping at Tea & Tonic Matakana, covering orders, pricing, shipping, product care and use of our website.'
+        assign og_title = page_title
+        assign seo_title_custom = true
+    endcase
+  -%}
 {%- endif -%}
 
 {%- assign og_description = meta_description | replace: '—', ', ' | replace: '–', ', ' -%}
