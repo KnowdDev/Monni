@@ -258,8 +258,11 @@
         <mj-text css-class="text-body" padding="0 0 24px">
           It's fragrance made for people who want to feel grounded in a chaotic world — for nature, slowness and ritual, but just as much for fun, playfulness and joy. Every note is connected back to the earth it came from, which is exactly the kind of philosophy we love to bring into the store.
         </mj-text>
-        <mj-text css-class="link-cta text-ink" padding="0">
+        <mj-text css-class="link-cta text-ink" padding="0 0 16px">
           <a href="https://teaandtonic.co.nz/collections/wild-earth">Explore the Wild Earth collection →</a>
+        </mj-text>
+        <mj-text css-class="link-cta text-ink" padding="0">
+          <a href="https://teaandtonic.co.nz/blogs/journal/in-the-studio-with-nelly-wild-earth-perfume">Read the full interview in the Journal →</a>
         </mj-text>
       </mj-column>
     </mj-section>
@@ -378,7 +381,7 @@
     <mj-section background-color="#F7F2EA" padding="44px 40px 48px" css-class="sec-cream mobile-pad">
       <mj-column>
         <mj-text align="center" css-class="text-body" padding="0 0 28px">
-          Available now in store and online, in 10ml, 30ml and 50ml. Not sure where to start? Pop in and we'll help you find your scent, or try the Discovery Set to sample the whole range at home.
+          Available now in store and online, in 10ml, 30ml and 50ml. Not sure where to start? Pop in and we'll help you find your scent.
         </mj-text>
         <mj-button
           href="https://teaandtonic.co.nz/collections/wild-earth"

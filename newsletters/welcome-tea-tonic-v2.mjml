@@ -1,0 +1,337 @@
+<mjml>
+  <mj-head>
+    <mj-title>Welcome — MONNI</mj-title>
+    <mj-preview>We welcome you to a community that believes in things made with care.</mj-preview>
+    <mj-raw>
+      <meta name="color-scheme" content="light only" />
+      <meta name="supported-color-schemes" content="light only" />
+      <style type="text/css">
+        :root { color-scheme: light only; supported-color-schemes: light only; }
+        /*
+          One family name per static face — email clients often ignore font-weight
+          and would otherwise render Regular for Light when Google Fonts also loads.
+        */
+        @font-face {
+          font-family: 'CormorantLight';
+          font-style: normal;
+          font-weight: 300;
+          font-display: swap;
+          src: url('https://cdn.shopify.com/s/files/1/2511/3170/files/cormorant-light-300.ttf?v=1786530676') format('truetype');
+        }
+        @font-face {
+          font-family: 'CormorantLightItalic';
+          font-style: italic;
+          font-weight: 300;
+          font-display: swap;
+          src: url('https://cdn.shopify.com/s/files/1/2511/3170/files/cormorant-light-italic-300.ttf?v=1786530687') format('truetype');
+        }
+        @font-face {
+          font-family: 'CormorantItalic';
+          font-style: italic;
+          font-weight: 400;
+          font-display: swap;
+          src: url('https://cdn.shopify.com/s/files/1/2511/3170/files/cormorant-italic-400.ttf?v=1786530691') format('truetype');
+        }
+        @font-face {
+          font-family: 'CormorantMedium';
+          font-style: normal;
+          font-weight: 500;
+          font-display: swap;
+          src: url('https://cdn.shopify.com/s/files/1/2511/3170/files/cormorant-medium-500.ttf?v=1786530683') format('truetype');
+        }
+      </style>
+    </mj-raw>
+    <!-- Jost only via Google — Cormorant is self-hosted static TTFs above -->
+    <mj-font name="Jost" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&amp;display=swap" />
+    <mj-attributes>
+      <mj-all font-family="'CormorantLight', Georgia, 'Times New Roman', serif" font-weight="300" color="#2B2822" />
+      <mj-body background-color="#DCD6C7" width="560px" />
+      <mj-section padding="0" />
+      <mj-text padding="0" font-weight="300" />
+      <mj-button
+        font-family="'Jost', 'Helvetica Neue', Arial, sans-serif"
+        font-weight="400"
+        font-size="12px"
+        letter-spacing="0.22em"
+        text-transform="uppercase"
+        border-radius="0"
+        inner-padding="16px 38px"
+      />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .hero-portrait img {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+      }
+      .cg-light div, .cg-light, .cg-light span {
+        font-family: 'CormorantLight', Georgia, 'Times New Roman', serif !important;
+        font-weight: 300 !important;
+        font-style: normal !important;
+        font-synthesis: none !important;
+        -webkit-font-smoothing: antialiased !important;
+      }
+      .cg-medium div, .cg-medium, .cg-medium span {
+        font-family: 'CormorantMedium', Georgia, 'Times New Roman', serif !important;
+        font-weight: 500 !important;
+        font-style: normal !important;
+        font-synthesis: none !important;
+      }
+      .cg-light-italic div, .cg-light-italic, .cg-light-italic span {
+        font-family: 'CormorantLightItalic', Georgia, 'Times New Roman', serif !important;
+        font-weight: 300 !important;
+        font-style: italic !important;
+        font-synthesis: none !important;
+        -webkit-font-smoothing: antialiased !important;
+      }
+      .cg-italic div, .cg-italic, .cg-italic span {
+        font-family: 'CormorantItalic', Georgia, 'Times New Roman', serif !important;
+        font-weight: 400 !important;
+        font-style: italic !important;
+        font-synthesis: none !important;
+      }
+      .lede-narrow div {
+        max-width: 380px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      .story-narrow div {
+        max-width: 400px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      @media only screen and (max-width: 480px) {
+        .mobile-pad > table > tbody > tr > td {
+          padding-left: 28px !important;
+          padding-right: 28px !important;
+        }
+        .eyebrow-main div { font-size: 28px !important; }
+        .wordmark div { font-size: 32px !important; }
+        .welcome-title div { font-size: 30px !important; }
+      }
+    </mj-style>
+    <mj-style>
+      body, .dm-lock { background-color: #DCD6C7 !important; }
+      .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+      .sec-cream > table > tbody > tr > td > div { background-color: #F7F2EA !important; }
+      .sec-foot, .sec-foot > table, .sec-foot > table > tbody > tr > td,
+      .sec-foot > table > tbody > tr > td > div { background-color: #EFE7D9 !important; }
+      .sec-caption, .sec-caption > table, .sec-caption > table > tbody > tr > td,
+      .sec-caption > table > tbody > tr > td > div { background-color: #2B2822 !important; }
+      @media (prefers-color-scheme: dark) {
+        body, .dm-lock { background-color: #DCD6C7 !important; color: #2B2822 !important; }
+        .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+        .sec-cream > table > tbody > tr > td > div { background-color: #F7F2EA !important; }
+        .sec-foot, .sec-foot > table, .sec-foot > table > tbody > tr > td,
+        .sec-foot > table > tbody > tr > td > div { background-color: #EFE7D9 !important; }
+        .text-ink, .text-ink div, .text-ink span { color: #2B2822 !important; }
+        .text-gold, .text-gold div, .text-gold span { color: #B99457 !important; }
+        .text-caption, .text-caption div { color: #F7F2EA !important; }
+        .text-foot, .text-foot div { color: #55503F !important; }
+        .text-muted, .text-muted div { color: #948d76 !important; }
+        .dm-img img { opacity: 1 !important; filter: none !important; mix-blend-mode: normal !important; }
+        .btn-ink table td { background-color: #2B2822 !important; }
+        .btn-ink a { color: #F7F2EA !important; background-color: #2B2822 !important; }
+      }
+      [data-ogsc] .sec-cream, [data-ogsb] .sec-cream { background-color: #F7F2EA !important; }
+      [data-ogsc] .sec-foot, [data-ogsb] .sec-foot { background-color: #EFE7D9 !important; }
+      [data-ogsc] .text-ink, [data-ogsb] .text-ink { color: #2B2822 !important; }
+      [data-ogsc] .text-gold, [data-ogsb] .text-gold { color: #B99457 !important; }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#DCD6C7" css-class="dm-lock">
+
+    <!-- Lockup: Medium face (own family — no weight collision) -->
+    <mj-section background-color="#F7F2EA" padding="52px 40px 8px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text
+          align="center"
+          font-family="'CormorantMedium', Georgia, 'Times New Roman', serif"
+          font-weight="500"
+          font-size="34px"
+          letter-spacing="0.08em"
+          text-transform="uppercase"
+          color="#2B2822"
+          line-height="1.2"
+          padding="0"
+          css-class="text-ink cg-medium eyebrow-main"
+        ><span style="font-family:'CormorantMedium', Georgia, 'Times New Roman', serif; font-weight:500; font-style:normal; letter-spacing:0.08em; text-transform:uppercase; color:#2B2822;">Tea &amp; Tonic</span></mj-text>
+        <mj-text
+          align="center"
+          font-family="'CormorantLightItalic', Georgia, 'Times New Roman', serif"
+          font-style="italic"
+          font-weight="300"
+          font-size="17px"
+          color="#B99457"
+          padding="10px 0"
+          css-class="text-gold cg-light-italic"
+        ><span style="font-family:'CormorantLightItalic', Georgia, 'Times New Roman', serif; font-style:italic; font-weight:300; color:#B99457;">by</span></mj-text>
+        <mj-text
+          align="center"
+          font-family="'CormorantMedium', Georgia, 'Times New Roman', serif"
+          font-weight="500"
+          font-size="40px"
+          letter-spacing="0.14em"
+          color="#2B2822"
+          line-height="1.15"
+          padding="0"
+          css-class="text-ink cg-medium wordmark"
+        ><span style="font-family:'CormorantMedium', Georgia, 'Times New Roman', serif; font-weight:500; font-style:normal; letter-spacing:0.14em; color:#2B2822;">MONNI</span></mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="30px 40px 0" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-color="rgba(43,40,34,0.15)" border-width="1px" width="220px" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <!-- Welcome: Light Italic face — thinner than lockup -->
+    <mj-section background-color="#F7F2EA" padding="34px 44px 0" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text
+          align="center"
+          font-family="'CormorantLightItalic', Georgia, 'Times New Roman', serif"
+          font-style="italic"
+          font-weight="300"
+          font-size="34px"
+          color="#2B2822"
+          padding="0 0 22px"
+          css-class="text-ink cg-light-italic welcome-title"
+        ><span style="font-family:'CormorantLightItalic', Georgia, 'Times New Roman', serif; font-style:italic; font-weight:300; color:#2B2822;">Welcome</span></mj-text>
+        <mj-text
+          align="center"
+          font-family="'CormorantLight', Georgia, 'Times New Roman', serif"
+          font-weight="300"
+          font-size="18px"
+          line-height="1.72"
+          color="#2B2822"
+          padding="0"
+          css-class="text-ink cg-light lede-narrow"
+        ><span style="font-family:'CormorantLight', Georgia, 'Times New Roman', serif; font-weight:300; font-style:normal; color:#2B2822;">We welcome you to a community that believes in things made with care. We champion women-founded and led, sustainable businesses across New Zealand and Australia.</span></mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="40px 0 0" css-class="sec-cream">
+      <mj-column padding="0">
+        <mj-image
+          src="https://pub-ad1ae2d4dd2545039ecde7acbcdcac8f.r2.dev/assets/5530889b-e2b5-436d-a4bd-c2f9ccdf8ff6/e0358cc9-1389-4f4b-a678-33fba3b34db6.jpeg"
+          alt="Monique, founder of Tea &amp; Tonic"
+          padding="0"
+          fluid-on-mobile="true"
+          css-class="dm-img hero-portrait"
+        />
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#2B2822" padding="14px 20px" css-class="sec-caption">
+      <mj-column>
+        <mj-text
+          align="center"
+          font-family="'Jost', 'Helvetica Neue', Arial, sans-serif"
+          font-weight="400"
+          font-size="11px"
+          letter-spacing="0.22em"
+          text-transform="uppercase"
+          color="#F7F2EA"
+          padding="0"
+          css-class="text-caption"
+        ><span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight:400; letter-spacing:0.22em; text-transform:uppercase; color:#F7F2EA;">Monique, Founder</span></mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Story: Light face, centered -->
+    <mj-section background-color="#F7F2EA" padding="38px 44px 6px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text
+          align="center"
+          font-family="'CormorantLight', Georgia, 'Times New Roman', serif"
+          font-weight="300"
+          font-size="18px"
+          line-height="1.78"
+          color="#2B2822"
+          padding="0 0 22px"
+          css-class="text-ink cg-light story-narrow"
+        ><span style="font-family:'CormorantLight', Georgia, 'Times New Roman', serif; font-weight:300; font-style:normal; color:#2B2822;">Tea &amp; Tonic began with a simple belief, that wellbeing, beauty, and the way we live are all part of the same ritual.</span></mj-text>
+        <mj-text
+          align="center"
+          font-family="'CormorantLight', Georgia, 'Times New Roman', serif"
+          font-weight="300"
+          font-size="18px"
+          line-height="1.78"
+          color="#2B2822"
+          padding="0 0 22px"
+          css-class="text-ink cg-light story-narrow"
+        ><span style="font-family:'CormorantLight', Georgia, 'Times New Roman', serif; font-weight:300; font-style:normal; color:#2B2822;">We favour natural materials, slower processes, and small batch makers who share our belief that people and planet are deeply connected.</span></mj-text>
+        <mj-text
+          align="center"
+          font-family="'CormorantLight', Georgia, 'Times New Roman', serif"
+          font-weight="300"
+          font-size="18px"
+          line-height="1.78"
+          color="#2B2822"
+          padding="0"
+          css-class="text-ink cg-light story-narrow"
+        ><span style="font-family:'CormorantLight', Georgia, 'Times New Roman', serif; font-weight:300; font-style:normal; color:#2B2822;">Thank you for being here.</span></mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Sign-off: Light Italic gold -->
+    <mj-section background-color="#F7F2EA" padding="28px 40px 6px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text
+          align="center"
+          font-family="'CormorantLightItalic', Georgia, 'Times New Roman', serif"
+          font-style="italic"
+          font-weight="300"
+          font-size="30px"
+          color="#B99457"
+          padding="0"
+          css-class="text-gold cg-light-italic"
+        ><span style="font-family:'CormorantLightItalic', Georgia, 'Times New Roman', serif; font-style:italic; font-weight:300; color:#B99457;">Aroha nui, Monni</span></mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="38px 40px 46px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-button
+          href="https://teaandtonic.co.nz/"
+          background-color="#2B2822"
+          color="#F7F2EA"
+          align="center"
+          font-family="'Jost', 'Helvetica Neue', Arial, sans-serif"
+          font-weight="400"
+          css-class="btn-ink"
+        >Explore Monni</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#EFE7D9" padding="30px 40px 40px" css-class="sec-foot mobile-pad">
+      <mj-column>
+        <mj-text
+          align="center"
+          font-family="'Jost', 'Helvetica Neue', Arial, sans-serif"
+          font-weight="400"
+          font-size="11px"
+          letter-spacing="0.24em"
+          text-transform="uppercase"
+          color="#55503F"
+          padding="0"
+          css-class="text-foot"
+        ><span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight:400; letter-spacing:0.24em; text-transform:uppercase; color:#55503F;">Holistic health, beauty &amp; home.</span></mj-text>
+        <mj-text
+          align="center"
+          font-family="'Jost', 'Helvetica Neue', Arial, sans-serif"
+          font-weight="400"
+          font-size="10px"
+          letter-spacing="0.2em"
+          text-transform="uppercase"
+          color="#948d76"
+          padding="16px 0 0"
+          css-class="text-muted"
+        ><span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight:400; letter-spacing:0.2em; text-transform:uppercase; color:#948d76;">Matakana Village · Aotearoa New Zealand</span></mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>
