@@ -35,9 +35,9 @@ export const collectionSeo = {
       'Shop herbal tea, aromatherapy and natural supplements at MONNI. Wellness chosen for nourishment, daily rhythm and a deep respect for body, mind and nature.',
   },
   'monni-tea': {
-    title: 'Monni Tea | Organic Single Leaf Herbs | MONNI',
+    title: 'MONNI Tea | Organic Single Leaf Herbs | MONNI',
     description:
-      'Monni Tea is a certified organic dispensary of single leaf herbs and botanicals. Blend at home, or visit us in Matakana for a custom blend made for you.',
+      'MONNI Tea is a certified organic dispensary of single leaf herbs and botanicals. Blend at home, or visit us in Matakana for a custom blend made for you.',
   },
   tea: {
     title: 'Herbal Tea and Restorative Blends | MONNI',
@@ -62,12 +62,12 @@ export const collectionSeo = {
   beauty: {
     title: 'Natural Beauty | Low-Tox Skincare and Body | MONNI',
     description:
-      'Shop natural, low-tox beauty at MONNI, including Monni Botanicals. Skincare, body, hair, fragrance and mother and baby care chosen for integrity and efficacy.',
+      'Shop natural, low-tox beauty at MONNI, including MONNI Botanicals. Skincare, body, hair, fragrance and mother and baby care chosen for integrity and efficacy.',
   },
   'monni-botanicals': {
-    title: 'Monni Botanicals | Seed-to-Bottle Skincare NZ | MONNI',
+    title: 'MONNI Botanicals | Seed-to-Bottle Skincare NZ | MONNI',
     description:
-      'Monni Botanicals is seasonal seed-to-bottle skincare made slowly in Aotearoa. Kawakawa, manuka and horopito, hand-crafted in small batches by The Herbologist.',
+      'MONNI Botanicals is seasonal seed-to-bottle skincare made slowly in Aotearoa. Kawakawa, manuka and horopito, hand-crafted in small batches by The Herbologist.',
   },
   face: {
     title: 'Botanical Face Care | Natural Skincare | MONNI',
@@ -299,7 +299,7 @@ const brandDescriptionOverride = {
   'monarc-jewellery':
     'Monarc Jewellery at MONNI. Recycled precious metals and aboveground diamonds, B Corp certified NZ pieces made to be worn, loved and passed on.',
   'monni-botanicals':
-    'Monni Botanicals is seed-to-bottle seasonal skincare, made slowly in Aotearoa with kawakawa, manuka and horopito. Shop the range at MONNI, Matakana.',
+    'MONNI Botanicals is seed-to-bottle seasonal skincare, made slowly in Aotearoa with kawakawa, manuka and horopito. Shop the range at MONNI, Matakana.',
   'monni-label':
     'MONNI Label is natural fibre clothing designed by Monique Jansen in Aotearoa. Silk, linen, cotton and merino pieces made to be worn for years, not a moment.',
   'monni-art':

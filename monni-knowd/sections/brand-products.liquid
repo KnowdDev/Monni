@@ -24,7 +24,9 @@
     <section class="brand-products" data-section-id="{{ section.id }}">
       <div class="brand-products__inner">
         <h2 class="brand-products__title">
-          {{ section.settings.title | replace: '[brand]', brand.name.value | default: brand.name }}
+          {%- assign brand_name = brand.name.value | default: brand.name -%}
+          {%- capture brand_name_label -%}{%- render 'monni-line-label', text: brand_name -%}{%- endcapture -%}
+          {{ section.settings.title | replace: '[brand]', brand_name_label | strip }}
         </h2>
 
         <div class="brand-products__grid">

@@ -61,9 +61,9 @@
               continue
             endunless
 
-            assign brand_name = brand.name.value | default: brand.name
+            assign brand_name = brand.name.value | default: brand.name | replace: 'Monni Tea', 'MONNI Tea' | replace: 'Monni Botanicals', 'MONNI Botanicals' | replace: 'Monni Label', 'MONNI Label' | replace: 'Monni Art', 'MONNI Art'
             assign brand_url = brand.system.url | default: brand.url
-            assign tagline = brand.tagline.value | default: brand.tagline
+            assign tagline = brand.tagline.value | default: brand.tagline | replace: 'Monni Tea', 'MONNI Tea' | replace: 'Monni Botanicals', 'MONNI Botanicals' | replace: 'Monni Label', 'MONNI Label' | replace: 'Monni Art', 'MONNI Art'
             assign collection_handle = brand.collection_handle.value | default: brand.collection_handle
             assign shop_collection = collections[collection_handle]
             assign first_letter = brand_name | strip | slice: 0 | upcase

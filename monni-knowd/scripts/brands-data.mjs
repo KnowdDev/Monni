@@ -394,13 +394,13 @@ export const brands = [
   },
   {
     handle: 'monni-botanicals',
-    name: 'Monni Botanicals',
-    tagline: 'Grounded, considered and deeply connected to the land that sustains it, Monni Botanicals is an invitation to tend the skin the way we tend the earth, with patience, presence and love.',
-    vendor_match: 'Monni Botanicals',
+    name: 'MONNI Botanicals',
+    tagline: 'Grounded, considered and deeply connected to the land that sustains it, MONNI Botanicals is an invitation to tend the skin the way we tend the earth, with patience, presence and love.',
+    vendor_match: 'MONNI Botanicals',
     collection_handle: 'monni-botanicals',
     published: true,
     paragraphs: [
-      'Monni Botanicals is a seed-to-bottle skincare line born from a deep collaboration between MONNI and The Herbologist, Hannah Jack, a maker whose knowledge of plants and their properties was passed down from her mother. The family farm in Kaukapakapa, north of Auckland, is home to over a hundred medicinal herbs and plants grown using organic and biodynamic practices.',
+      'MONNI Botanicals is a seed-to-bottle skincare line born from a deep collaboration between MONNI and The Herbologist, Hannah Jack, a maker whose knowledge of plants and their properties was passed down from her mother. The family farm in Kaukapakapa, north of Auckland, is home to over a hundred medicinal herbs and plants grown using organic and biodynamic practices.',
       'Hannah believes that what we put on our skin in the depths of winter should be entirely different from what we use in the height of summer, and that the energy and intention brought to the making of skincare is felt in the product itself. It is this philosophy that shapes every formulation, plants harvested at their seasonal peak, slowly infused into organic oils, combined with hand-crafted distillates to create skincare made with the intention and energy of the season, alive with the essence of the time and place it was made.',
       'At the heart of the range is the seasonal trio, a limited edition collection released at the beginning of each new season. What grows in a season becomes what nourishes the skin into the next, each trio carrying what the skin needs as the year turns.',
       'Native plants such as kawakawa, mānuka and horopito sit alongside calendula and seasonal wildflowers, and where plants are foraged or wild-harvested, this is done with care and respect, following Rongoā Māori principles, the traditional Māori system of healing grounded in a deep and reciprocal relationship between people, plants and the natural world.',

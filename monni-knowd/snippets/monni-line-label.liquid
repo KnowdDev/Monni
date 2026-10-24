@@ -1,0 +1,5 @@
+{%- comment -%}
+  Public names for Monni's lines. Pass `text`.
+  Personal references stay "Monni". The lines are MONNI Art, MONNI Label, MONNI Botanicals, MONNI Tea.
+{%- endcomment -%}
+{{- text | replace: 'Monni Tea', 'MONNI Tea' | replace: 'Monni Botanicals', 'MONNI Botanicals' | replace: 'Monni Label', 'MONNI Label' | replace: 'Monni Art', 'MONNI Art' -}}

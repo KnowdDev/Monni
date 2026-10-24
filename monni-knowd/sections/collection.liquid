@@ -26,11 +26,13 @@
     {%- endif -%}
 
     <!-- Title -->
-    <h1 class="collection-page__title">{{ collection.title }}</h1>
+    {%- capture collection_display_title -%}{%- render 'monni-line-label', text: collection.title -%}{%- endcapture -%}
+    <h1 class="collection-page__title">{{ collection_display_title | strip }}</h1>
 
     {%- assign top_line = collection.metafields.monni.top_line.value | default: collection.metafields.monni.top_line -%}
     {%- if top_line != blank and section.settings.show_top_line -%}
-      <p class="collection-page__topline">{{ top_line | escape }}</p>
+      {%- capture top_line_label -%}{%- render 'monni-line-label', text: top_line -%}{%- endcapture -%}
+      <p class="collection-page__topline">{{ top_line_label | strip | escape }}</p>
     {%- endif -%}
 
     <!-- Product Count -->
@@ -217,7 +219,8 @@
   {%- if bottom_intro != blank and section.settings.show_bottom_intro -%}
     <section class="collection-page__bottom-intro">
       <div class="collection-page__bottom-intro-content rte">
-        {{ bottom_intro | metafield_tag }}
+        {%- capture bottom_intro_html -%}{{ bottom_intro | metafield_tag }}{%- endcapture -%}
+        {%- render 'monni-line-label', text: bottom_intro_html -%}
       </div>
     </section>
   {%- endif -%}

@@ -110,7 +110,7 @@
           "type": "creation",
           "settings": {
             "image": "shopify://shop_images/CK_Fianls__32_of_94.webp",
-            "title": "Monni Botanicals",
+            "title": "MONNI Botanicals",
             "description": "Skincare made in rhythm with the seasons.",
             "cta": "Discover",
             "link": "shopify://collections/monni-botanicals"
@@ -120,7 +120,7 @@
           "type": "creation",
           "settings": {
             "image": "shopify://shop_images/612B8205.jpg",
-            "title": "Monni Label",
+            "title": "MONNI Label",
             "description": "Clothing as a form of feeling and self-expression.",
             "cta": "Discover",
             "link": "shopify://collections/monni-label"
@@ -130,7 +130,7 @@
           "type": "creation",
           "settings": {
             "image": "shopify://shop_images/monni-art-done.png",
-            "title": "Monni Art",
+            "title": "MONNI Art",
             "description": "Creativity as an act of healing for the artist and the earth.",
             "cta": "Discover",
             "link": "shopify://collections/monni-art"
@@ -144,20 +144,6 @@
       ],
       "settings": {
         "title": "Our Own Creations"
-      }
-    },
-    "seasonal": {
-      "type": "homepage-seasonal",
-      "settings": {
-        "collection": "monni-botanicals",
-        "image": "shopify://shop_images/winter-trio-straight-final.png",
-        "image_focus_y": 55,
-        "image_rotation": -0.3,
-        "title": "THE AUTUMN TRIO",
-        "subtitle": "",
-        "description": "Seed to bottle skincare made in rhythm with the seasons. Slowly infused, distilled and made by hand. Repairing and preparing as the year turns.",
-        "cta": "DISCOVER",
-        "link": "/collections/face"
       }
     },
     "makers": {
@@ -229,7 +215,7 @@
         "image_focus_y": 23,
         "background_overlay": 40,
         "quote": "What is the most true and beautiful life you can dream into being?",
-        "cta": "About MONNI",
+        "cta": "About Monni",
         "link": "/pages/about"
       }
     }
@@ -239,7 +225,6 @@
     "opening-statement",
     "category-grid",
     "creations",
-    "seasonal",
     "makers",
     "journal",
     "founder"

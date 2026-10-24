@@ -12,10 +12,14 @@
         <p class="brand-profile__eyebrow">
           <a href="/pages/brands">{{ section.settings.eyebrow | default: 'Our Brands' }}</a>
         </p>
-        <h1 class="brand-profile__title">{{ brand.name.value | default: brand.name }}</h1>
+        {%- assign brand_name = brand.name.value | default: brand.name -%}
+        {%- capture brand_name_label -%}{%- render 'monni-line-label', text: brand_name -%}{%- endcapture -%}
+        {%- assign brand_name_label = brand_name_label | strip -%}
+        <h1 class="brand-profile__title">{{ brand_name_label }}</h1>
         {%- assign tagline = brand.tagline.value | default: brand.tagline -%}
         {%- if tagline != blank -%}
-          <p class="brand-profile__tagline">{{ tagline | escape }}</p>
+          {%- capture tagline_label -%}{%- render 'monni-line-label', text: tagline -%}{%- endcapture -%}
+          <p class="brand-profile__tagline">{{ tagline_label | strip | escape }}</p>
         {%- endif -%}
       </header>
 
@@ -29,14 +33,15 @@
               loading: 'eager',
               widths: '640, 960, 1200, 1400',
               sizes: '(min-width: 900px) 52rem, 100vw',
-              alt: brand.name.value | default: brand.name
+              alt: brand_name_label
           }}
         </div>
       {%- endif -%}
 
       {%- if brand.description != blank -%}
         <article class="brand-profile__body rte">
-          {{ brand.description | metafield_tag }}
+          {%- capture brand_body -%}{{ brand.description | metafield_tag }}{%- endcapture -%}
+          {%- render 'monni-line-label', text: brand_body -%}
         </article>
       {%- endif -%}
 
@@ -47,7 +52,7 @@
       {%- if shop_collection != blank and shop_collection.products_count > 0 -%}
         <div class="brand-profile__cta-wrap">
           <a href="{{ shop_collection.url }}" class="brand-profile__cta">
-            {{ section.settings.shop_cta_label | replace: '[brand]', brand.name.value | default: brand.name }}
+            {{ section.settings.shop_cta_label | replace: '[brand]', brand_name_label }}
           </a>
         </div>
       {%- endif -%}

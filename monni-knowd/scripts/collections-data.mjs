@@ -28,13 +28,13 @@ export const collections = [
   },
   {
     handle: 'monni-tea',
-    title: 'Monni Tea',
+    title: 'MONNI Tea',
     parent: 'wellness',
-    nav_label: 'Monni Tea',
+    nav_label: 'MONNI Tea',
     sort_order: 1,
     top_line: 'A ritual made entirely for you.',
     bottom_paragraphs: [
-      'Monni Tea is a carefully curated dispensary of certified organic single leaf herbs and botanicals, each chosen for their therapeutic qualities and their ability to support the body and mind in a genuine and meaningful way.',
+      'MONNI Tea is a carefully curated dispensary of certified organic single leaf herbs and botanicals, each chosen for their therapeutic qualities and their ability to support the body and mind in a genuine and meaningful way.',
       'Single leaf teas are available to shop online, allowing you to blend and create at home. For those who visit us in store, our team will create a custom blend to your specific needs, intentions and taste. A considered ritual, made entirely for you.',
     ],
   },
@@ -100,19 +100,19 @@ export const collections = [
     top_line: 'What we place on our skin matters.',
     bottom_paragraphs: [
       'At MONNI, we recognise skin as the body\'s largest organ and are deeply mindful of the products we bring into daily life and the ingredients absorbed through everyday care and ritual.',
-      'Our beauty collection is curated with a focus on natural, low-tox, spray-free, and organic ingredients wherever possible, including our own Monni Botanicals line, bringing together products that genuinely support wellbeing, nourishment, and conscious living.',
+      'Our beauty collection is curated with a focus on natural, low-tox, spray-free, and organic ingredients wherever possible, including our own MONNI Botanicals line, bringing together products that genuinely support wellbeing, nourishment, and conscious living.',
       'From skincare and body care to hair, fragrance, and a tender collection for mother and baby, each product is selected for its integrity, its efficacy, and its alignment with a slower, more considered approach to beauty.',
     ],
   },
   {
     handle: 'monni-botanicals',
-    title: 'Monni Botanicals',
+    title: 'MONNI Botanicals',
     parent: 'beauty',
-    nav_label: 'Monni Botanicals',
+    nav_label: 'MONNI Botanicals',
     sort_order: 1,
     top_line: 'Seed-to-bottle seasonal skincare, made slowly.',
     bottom_paragraphs: [
-      'Monni Botanicals is a skincare line rooted in seasonality, plant knowledge, and thoughtful craft. Made slowly and with intention by The Herbologist in Aotearoa New Zealand, each product is inspired by a deep respect for the land and the native botanicals it sustains, kawakawa, manuka, and horopito alongside seasonal flowers and herbs.',
+      'MONNI Botanicals is a skincare line rooted in seasonality, plant knowledge, and thoughtful craft. Made slowly and with intention by The Herbologist in Aotearoa New Zealand, each product is inspired by a deep respect for the land and the native botanicals it sustains, kawakawa, manuka, and horopito alongside seasonal flowers and herbs.',
       'Hand-crafted in small batches that naturally vary in scent and colour, reflecting the season in which they were made.',
     ],
   },
@@ -396,9 +396,9 @@ export const collections = [
   {
     // Live category collection handle is `art` (nav previously pointed at ghost `monni-art`)
     handle: 'art',
-    title: 'Monni Art',
+    title: 'MONNI Art',
     parent: 'home',
-    nav_label: 'Monni Art',
+    nav_label: 'MONNI Art',
     sort_order: 1,
     // Matches existing Art-tagged products
     smart_tag: 'Art',

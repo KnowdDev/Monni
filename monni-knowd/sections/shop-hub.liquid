@@ -109,7 +109,7 @@
         {%- if brands.size > 0 -%}
           <div class="shop-hub__brands-row">
             {%- for brand in brands limit: section.settings.brands_limit -%}
-              {%- assign brand_name = brand.name.value | default: brand.name -%}
+              {%- assign brand_name = brand.name.value | default: brand.name | replace: 'Monni Tea', 'MONNI Tea' | replace: 'Monni Botanicals', 'MONNI Botanicals' | replace: 'Monni Label', 'MONNI Label' | replace: 'Monni Art', 'MONNI Art' -%}
               {%- assign brand_url = brand.system.url | default: brand.url -%}
               {%- if brand_url == blank -%}
                 {%- assign brand_url = '/pages/brands/' | append: brand.handle -%}

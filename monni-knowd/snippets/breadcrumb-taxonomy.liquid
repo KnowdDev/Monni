@@ -84,7 +84,10 @@
       assign breadcrumb_parent = breadcrumb_primary.metafields.custom.parent_collection.value
     endif
   elsif collection != blank
-    assign breadcrumb_current_title = collection.title
+    capture breadcrumb_current_title
+      render 'monni-line-label', text: collection.title
+    endcapture
+    assign breadcrumb_current_title = breadcrumb_current_title | strip
     assign breadcrumb_primary = collection
     assign breadcrumb_parent = collection.metafields.custom.parent_collection.value
   endif
@@ -118,6 +121,21 @@
   if breadcrumb_parent != blank and breadcrumb_primary != blank
     assign breadcrumb_collapsible = true
   endif
+
+  assign breadcrumb_primary_title = blank
+  assign breadcrumb_parent_title = blank
+  if breadcrumb_primary != blank
+    capture breadcrumb_primary_title
+      render 'monni-line-label', text: breadcrumb_primary.title
+    endcapture
+    assign breadcrumb_primary_title = breadcrumb_primary_title | strip
+  endif
+  if breadcrumb_parent != blank
+    capture breadcrumb_parent_title
+      render 'monni-line-label', text: breadcrumb_parent.title
+    endcapture
+    assign breadcrumb_parent_title = breadcrumb_parent_title | strip
+  endif
 -%}
 
 <nav
@@ -140,9 +158,9 @@
         <a
           href="{{ breadcrumb_parent.url }}"
           class="breadcrumb__link"
-          title="{{ breadcrumb_parent.title | escape }}"
+          title="{{ breadcrumb_parent_title | escape }}"
         >
-          {{- breadcrumb_parent.title -}}
+          {{- breadcrumb_parent_title -}}
         </a>
       </li>
     {%- endif -%}
@@ -153,16 +171,16 @@
           <a
             href="{{ breadcrumb_primary.url }}"
             class="breadcrumb__link"
-            title="{{ breadcrumb_primary.title | escape }}"
+            title="{{ breadcrumb_primary_title | escape }}"
           >
-            {{- breadcrumb_primary.title -}}
+            {{- breadcrumb_primary_title -}}
           </a>
         {%- else -%}
           <span
             class="breadcrumb__link breadcrumb__link--current"
-            title="{{ breadcrumb_primary.title | escape }}"
+            title="{{ breadcrumb_primary_title | escape }}"
           >
-            {{- breadcrumb_primary.title -}}
+            {{- breadcrumb_primary_title -}}
           </span>
         {%- endif -%}
       </li>
@@ -177,11 +195,11 @@
     { "@type": "ListItem", "position": {{ position }}, "name": {{ home_label | json }}, "item": {{ shop.url | json }} }
     {%- if breadcrumb_parent != blank -%}
       {%- assign position = position | plus: 1 -%}
-      , { "@type": "ListItem", "position": {{ position }}, "name": {{ breadcrumb_parent.title | json }}, "item": {{ shop.url | append: breadcrumb_parent.url | json }} }
+      , { "@type": "ListItem", "position": {{ position }}, "name": {{ breadcrumb_parent_title | json }}, "item": {{ shop.url | append: breadcrumb_parent.url | json }} }
     {%- endif -%}
     {%- if product != blank and breadcrumb_primary != blank -%}
       {%- assign position = position | plus: 1 -%}
-      , { "@type": "ListItem", "position": {{ position }}, "name": {{ breadcrumb_primary.title | json }}, "item": {{ shop.url | append: breadcrumb_primary.url | json }} }
+      , { "@type": "ListItem", "position": {{ position }}, "name": {{ breadcrumb_primary_title | json }}, "item": {{ shop.url | append: breadcrumb_primary.url | json }} }
     {%- endif -%}
     {%- assign position = position | plus: 1 -%}
     , { "@type": "ListItem", "position": {{ position }}, "name": {{ breadcrumb_current_title | json }} }
