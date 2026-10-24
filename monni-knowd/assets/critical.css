@@ -2625,12 +2625,33 @@ a.breadcrumb__link:focus-visible {
   margin-bottom: var(--spacing-xxl);
 }
 
+.blog-page__eyebrow {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-body--family);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-foreground-muted);
+}
+
 .blog-page__title {
   font-family: var(--font-heading--family);
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 300;
   letter-spacing: 0.02em;
   color: var(--color-foreground);
+}
+
+.blog-page__intro {
+  max-width: 34rem;
+  margin: 1rem auto 0;
+  font-family: var(--font-heading--family);
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  line-height: 1.55;
+  color: var(--color-foreground-light);
 }
 
 .blog-page__grid {

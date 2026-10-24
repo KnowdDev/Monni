@@ -13,7 +13,13 @@
 <section class="blog-page">
   <div class="container">
     <header class="blog-page__header">
-      <h1 class="blog-page__title">{{ blog.title }}</h1>
+      {%- if blog.handle == 'journal' -%}
+        <p class="blog-page__eyebrow">Stories &amp; Rituals</p>
+        <h1 class="blog-page__title">The Journal</h1>
+        <p class="blog-page__intro">Pour a cup and stay a while. Stories from our makers, seasonal rituals and gentle reflections on living well.</p>
+      {%- else -%}
+        <h1 class="blog-page__title">{{ blog.title }}</h1>
+      {%- endif -%}
     </header>
 
     <div class="blog-page__grid">
