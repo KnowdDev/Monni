@@ -19,6 +19,9 @@
 
     {%- assign visible_count = 0 -%}
     {%- for brand in brands -%}
+      {%- assign brand_handle = brand.system.handle | default: brand.handle -%}
+      {%- assign brand_prefix = brand_handle | slice: 0, 6 -%}
+      {%- if brand_prefix == 'brand-' -%}{%- continue -%}{%- endif -%}
       {%- comment -%} Explicit == false: Liquid | default treats boolean false as empty. {%- endcomment -%}
       {%- assign is_published = true -%}
       {%- if brand.published.value == false -%}
@@ -60,6 +63,12 @@
             unless is_published or show_unpublished
               continue
             endunless
+
+            assign brand_handle = brand.system.handle | default: brand.handle
+            assign brand_prefix = brand_handle | slice: 0, 6
+            if brand_prefix == 'brand-'
+              continue
+            endif
 
             assign brand_name = brand.name.value | default: brand.name | replace: 'Monni Tea', 'MONNI Tea' | replace: 'Monni Botanicals', 'MONNI Botanicals' | replace: 'Monni Label', 'MONNI Label' | replace: 'Monni Art', 'MONNI Art'
             assign brand_url = brand.system.url | default: brand.url
