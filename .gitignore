@@ -13,6 +13,11 @@ monni-theme/assets/senderkit-assets/
 # Local agent / scrape caches
 .firecrawl/
 newsletters/.firecrawl/
+.eyes/
+tmp/
+
+# Local MCP config (contains API keys)
+.cursor/mcp.json
 
 # Ephemeral script outputs (may contain customer PII)
 scripts/.tmp*

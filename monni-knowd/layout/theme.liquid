@@ -80,7 +80,16 @@
     {% sections 'header-group' %}
 
     <main id="main-content" tabindex="-1">
-      {{ content_for_layout }}
+      {%- comment -%}
+        Shopify ignores templates/policy.liquid and always renders default
+        shopify-policy chrome. Intercept here so our policy section controls
+        headings (e.g. Returns Policy) and legal eyebrow copy.
+      {%- endcomment -%}
+      {%- if request.page_type == 'policy' -%}
+        {% section 'policy' %}
+      {%- else -%}
+        {{ content_for_layout }}
+      {%- endif -%}
     </main>
 
     {% sections 'footer-group' %}

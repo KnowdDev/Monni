@@ -376,7 +376,7 @@
             <details class="product-page__accordion-item">
               <summary class="product-page__accordion-summary">Ingredients</summary>
               <div class="product-page__accordion-content">
-                <p>{{ product.metafields.product.ingredients | default: 'Full ingredient list available on packaging.' }}</p>
+                {% render 'product-ingredients-content', product: product %}
               </div>
             </details>
           {%- endif -%}
