@@ -220,9 +220,13 @@
   }
 
   .brands-directory__intro {
-    font-weight: 200;
+    max-width: 34rem;
+    margin: 0 auto;
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    font-weight: 300;
     color: var(--color-foreground-light);
-    line-height: 1.7;
+    line-height: 1.55;
   }
 
   .brands-directory__toolbar {
@@ -370,13 +374,13 @@
       "type": "text",
       "id": "title",
       "label": "Title",
-      "default": "Our Brands"
+      "default": "The Makers"
     },
     {
       "type": "richtext",
       "id": "intro",
       "label": "Introduction",
-      "default": "<p>Discover the makers and houses behind MONNI. Each brand is chosen with intention for quality, integrity, and the rituals of everyday wellbeing.</p>"
+      "default": "<p>Behind every piece is a maker who creates with heart, cares for the earth and makes with intention.</p>"
     },
     {
       "type": "text",
