@@ -206,7 +206,7 @@
         <mj-text align="center" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="300" font-size="32px" line-height="1.2" color="#2C2420" padding="0 0 12px" css-class="text-heading">10% off your first order</mj-text>
         <mj-text align="center" css-class="text-body" font-size="15px" line-height="1.85" padding="0 0 18px">Use this code once, at checkout. It is for you.</mj-text>
         <mj-button
-          href="https://teaandtonic.co.nz/?discount=WELCOME10&amp;utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=welcome"
+          href="https://teaandtonic.co.nz/?discount=TEATONIC10&amp;utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=welcome"
           background-color="#F4F3F0"
           color="#2C2420"
           border="1px solid #2C2420"
@@ -214,7 +214,7 @@
           font-size="14px"
           letter-spacing="0.22em"
           css-class="btn-outline"
-        >WELCOME10</mj-button>
+        >TEATONIC10</mj-button>
       </mj-column>
     </mj-section>
 
@@ -224,7 +224,7 @@
           A space for holistic health, beauty &amp; home.
         </mj-text>
         <mj-button
-          href="https://teaandtonic.co.nz/?discount=WELCOME10&amp;utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=welcome"
+          href="https://teaandtonic.co.nz/?discount=TEATONIC10&amp;utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=welcome"
           background-color="#FAFAFA"
           color="#2C2420"
           border="1px solid #2C2420"
