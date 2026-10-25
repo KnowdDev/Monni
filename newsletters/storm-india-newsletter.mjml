@@ -1,0 +1,235 @@
+<mjml>
+  <mj-head>
+    <mj-title>New in: Storm + India</mj-title>
+    <mj-preview>Organic matcha and all four cotton tea bag blends, just landed in store.</mj-preview>
+    <mj-raw>
+      <meta name="color-scheme" content="light only" />
+      <meta name="supported-color-schemes" content="light only" />
+      <style type="text/css">
+        :root { color-scheme: light only; supported-color-schemes: light only; }
+        @font-face {
+          font-family: 'CormorantLight';
+          font-style: normal;
+          font-weight: 300;
+          font-display: swap;
+          src: url('https://cdn.shopify.com/s/files/1/2511/3170/files/cormorant-light-300.ttf?v=1786530676') format('truetype');
+        }
+        @font-face {
+          font-family: 'CormorantLightItalic';
+          font-style: italic;
+          font-weight: 300;
+          font-display: swap;
+          src: url('https://cdn.shopify.com/s/files/1/2511/3170/files/cormorant-light-italic-300.ttf?v=1786530687') format('truetype');
+        }
+        @font-face {
+          font-family: 'CormorantMedium';
+          font-style: normal;
+          font-weight: 500;
+          font-display: swap;
+          src: url('https://cdn.shopify.com/s/files/1/2511/3170/files/cormorant-medium-500.ttf?v=1786530683') format('truetype');
+        }
+      </style>
+    </mj-raw>
+    <mj-font name="Jost" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&amp;display=swap" />
+    <mj-attributes>
+      <mj-all font-family="'CormorantLight', Georgia, 'Times New Roman', serif" color="#2E2A24" />
+      <mj-body background-color="#E9E2D5" width="600px" />
+      <mj-section background-color="#F7F2EA" padding="0" />
+      <mj-text padding="0" color="#2E2A24" />
+      <mj-image padding="0" />
+      <mj-button
+        font-family="'Jost', 'Helvetica Neue', Arial, sans-serif"
+        font-weight="500"
+        font-size="12px"
+        letter-spacing="0.18em"
+        text-transform="uppercase"
+        border-radius="0"
+        inner-padding="15px 38px"
+      />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .cg-light div, .cg-light { font-family: 'CormorantLight', Georgia, 'Times New Roman', serif !important; font-weight: 300 !important; font-style: normal !important; }
+      .cg-medium div, .cg-medium { font-family: 'CormorantMedium', Georgia, 'Times New Roman', serif !important; font-weight: 500 !important; font-style: normal !important; }
+      .cg-italic div, .cg-italic { font-family: 'CormorantLightItalic', Georgia, 'Times New Roman', serif !important; font-weight: 300 !important; font-style: italic !important; }
+      .jost div, .jost { font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif !important; }
+      .product-img img { display: block !important; width: 100% !important; height: auto !important; }
+      @media only screen and (max-width: 480px) {
+        .mobile-pad > table > tbody > tr > td { padding-left: 22px !important; padding-right: 22px !important; }
+        .wordmark div { font-size: 28px !important; letter-spacing: 0.18em !important; }
+        .headline div { font-size: 30px !important; }
+      }
+    </mj-style>
+    <mj-style>
+      body, .dm-lock { background-color: #E9E2D5 !important; }
+      .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+      .sec-cream > table > tbody > tr > td > div { background-color: #F7F2EA !important; }
+      @media (prefers-color-scheme: dark) {
+        body, .dm-lock { background-color: #E9E2D5 !important; color: #2E2A24 !important; }
+        .sec-cream, .sec-cream > table, .sec-cream > table > tbody > tr > td,
+        .sec-cream > table > tbody > tr > td > div { background-color: #F7F2EA !important; }
+        .text-ink, .text-ink div { color: #2E2A24 !important; }
+        .text-muted, .text-muted div { color: #5B5347 !important; }
+        .text-blush, .text-blush div { color: #C2A0A0 !important; }
+        .product-img img { opacity: 1 !important; filter: none !important; }
+        .btn-outline table td { background-color: #F7F2EA !important; }
+        .btn-outline a { color: #2E2A24 !important; background-color: #F7F2EA !important; border: 1px solid #2E2A24 !important; }
+        .btn-blush table td { background-color: #C2A0A0 !important; }
+        .btn-blush a { color: #ffffff !important; background-color: #C2A0A0 !important; }
+      }
+      [data-ogsc] .sec-cream, [data-ogsb] .sec-cream { background-color: #F7F2EA !important; }
+      [data-ogsc] .text-ink, [data-ogsb] .text-ink { color: #2E2A24 !important; }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#E9E2D5" css-class="dm-lock">
+    <mj-section background-color="#F7F2EA" padding="44px 24px 30px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" font-size="34px" letter-spacing="0.3em" color="#2E2A24" padding="0" css-class="text-ink cg-medium wordmark">
+          <span style="font-family:'CormorantMedium', Georgia, serif; font-weight:500; letter-spacing:0.3em; color:#2E2A24;">Tea &amp; Tonic</span>
+        </mj-text>
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-size="13px" letter-spacing="0.08em" color="#5B5347" padding="12px 0 0" css-class="text-muted jost">
+          <span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; letter-spacing:0.08em; color:#5B5347;">Holistic Health, Beauty, Home</span>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 24px" css-class="sec-cream">
+      <mj-column>
+        <mj-image css-class="product-img" src="https://cdn.shopify.com/s/files/1/2511/3170/t/61/assets/email-storm-india-hero.jpg" alt="A bowl of Storm + India matcha" width="552" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="40px 36px 8px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-size="12px" letter-spacing="0.28em" text-transform="uppercase" color="#C2A0A0" padding="0 0 14px" css-class="text-blush jost">
+          <span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; letter-spacing:0.28em; text-transform:uppercase; color:#C2A0A0;">Just landed</span>
+        </mj-text>
+        <mj-text align="center" font-size="34px" line-height="1.2" color="#2E2A24" padding="0 0 16px" css-class="text-ink cg-medium headline">
+          <span style="font-family:'CormorantMedium', Georgia, serif; font-weight:500; color:#2E2A24;">Storm + India</span>
+        </mj-text>
+        <mj-text align="center" font-size="21px" line-height="1.5" color="#2E2A24" padding="0 0 16px" css-class="text-ink cg-italic">
+          <span style="font-family:'CormorantLightItalic', Georgia, serif; font-style:italic; font-weight:300; color:#2E2A24;">A cup for every part of the day.</span>
+        </mj-text>
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" font-size="16px" line-height="1.75" color="#5B5347" padding="0 0 26px" css-class="text-muted jost">
+          <span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight:300; color:#5B5347;">Our Storm + India order has arrived: their organic matcha, and all four of their plastic-free cotton tea bag blends. Come and stock up in store, or shop online.</span>
+        </mj-text>
+        <mj-button href="https://teaandtonic.co.nz/collections/storm-india?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=hero" background-color="#F7F2EA" color="#2E2A24" border="1px solid #2E2A24" css-class="btn-outline">Shop Storm + India</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="40px 24px 6px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" font-size="26px" color="#2E2A24" padding="0 0 6px" css-class="text-ink cg-medium">
+          <span style="font-family:'CormorantMedium', Georgia, serif; font-weight:500; color:#2E2A24;">The cotton tea bags</span>
+        </mj-text>
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" font-size="14px" color="#5B5347" padding="0 0 8px" css-class="text-muted jost">
+          <span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight:300; color:#5B5347;">Hand-stitched, plastic-free, certified organic</span>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="12px 18px 8px" css-class="sec-cream">
+      <mj-column width="50%" padding="0 6px 22px">
+        <mj-image css-class="product-img" href="https://teaandtonic.co.nz/products/detoxmorningdailywellnesstea-21muslinteabags3900?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=morning" src="https://cdn.shopify.com/s/files/1/2511/3170/t/61/assets/email-storm-india-morning.jpg" alt="Storm + India Detox Morning" />
+        <mj-text align="center" font-size="20px" color="#2E2A24" padding="12px 0 0" css-class="text-ink cg-medium">
+          <span style="font-family:'CormorantMedium', Georgia, serif; color:#2E2A24;">Detox Morning</span>
+        </mj-text>
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" font-size="14px" line-height="1.6" color="#5B5347" padding="4px 4px 0" css-class="text-muted jost">
+          <span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight:300; color:#5B5347;">Organic green tea.</span>
+        </mj-text>
+      </mj-column>
+      <mj-column width="50%" padding="0 6px 22px">
+        <mj-image css-class="product-img" href="https://teaandtonic.co.nz/products/detoxafternoondailywellnesstea-21muslinteabags?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=afternoon" src="https://cdn.shopify.com/s/files/1/2511/3170/t/61/assets/email-storm-india-afternoon.jpg" alt="Storm + India Detox Afternoon" />
+        <mj-text align="center" font-size="20px" color="#2E2A24" padding="12px 0 0" css-class="text-ink cg-medium">
+          <span style="font-family:'CormorantMedium', Georgia, serif; color:#2E2A24;">Detox Afternoon</span>
+        </mj-text>
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" font-size="14px" line-height="1.6" color="#5B5347" padding="4px 4px 0" css-class="text-muted jost">
+          <span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight:300; color:#5B5347;">Black tea, rooibos, pu&rsquo;erh, strawberry and a hint of vanilla.</span>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 18px 8px" css-class="sec-cream">
+      <mj-column width="50%" padding="0 6px 22px">
+        <mj-image css-class="product-img" href="https://teaandtonic.co.nz/products/detoxeveningdailywellnesstea-21muslinteabags?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=evening" src="https://cdn.shopify.com/s/files/1/2511/3170/t/61/assets/email-storm-india-evening.jpg" alt="Storm + India Detox Evening" />
+        <mj-text align="center" font-size="20px" color="#2E2A24" padding="12px 0 0" css-class="text-ink cg-medium">
+          <span style="font-family:'CormorantMedium', Georgia, serif; color:#2E2A24;">Detox Evening</span>
+        </mj-text>
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" font-size="14px" line-height="1.6" color="#5B5347" padding="4px 4px 0" css-class="text-muted jost">
+          <span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight:300; color:#5B5347;">Organic chamomile.</span>
+        </mj-text>
+      </mj-column>
+      <mj-column width="50%" padding="0 6px 22px">
+        <mj-image css-class="product-img" href="https://teaandtonic.co.nz/products/turmericandginger?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=turmeric" src="https://cdn.shopify.com/s/files/1/2511/3170/files/S-I-box-front_Turmeric-Ginger--1.jpg?v=1785563706" alt="Storm + India Turmeric and Ginger" />
+        <mj-text align="center" font-size="20px" color="#2E2A24" padding="12px 0 0" css-class="text-ink cg-medium">
+          <span style="font-family:'CormorantMedium', Georgia, serif; color:#2E2A24;">Turmeric + Ginger</span>
+        </mj-text>
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" font-size="14px" line-height="1.6" color="#5B5347" padding="4px 4px 0" css-class="text-muted jost">
+          <span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight:300; color:#5B5347;">Organic tea blended with turmeric and ginger.</span>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="14px 36px 8px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-image css-class="product-img" href="https://teaandtonic.co.nz/products/0af7b240-ab70-11e8-eddc-889464599db6?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=matcha" src="https://cdn.shopify.com/s/files/1/2511/3170/files/IMG_1636-Photoroom.jpg?v=1785563712" alt="Storm + India Zen Matcha" width="280" padding="0 0 18px" />
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-size="12px" letter-spacing="0.28em" text-transform="uppercase" color="#C2A0A0" padding="0 0 12px" css-class="text-blush jost">
+          <span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; letter-spacing:0.28em; text-transform:uppercase; color:#C2A0A0;">And the matcha</span>
+        </mj-text>
+        <mj-text align="center" font-size="26px" color="#2E2A24" padding="0 0 12px" css-class="text-ink cg-medium">
+          <span style="font-family:'CormorantMedium', Georgia, serif; font-weight:500; color:#2E2A24;">Zen Matcha</span>
+        </mj-text>
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" font-size="16px" line-height="1.75" color="#5B5347" padding="0 0 24px" css-class="text-muted jost">
+          <span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight:300; color:#5B5347;">Certified organic, ceremonial-grade matcha from the foothills of Uji, Japan. Whisk it, add your milk of choice, and serve hot or iced.</span>
+        </mj-text>
+        <mj-button href="https://teaandtonic.co.nz/products/0af7b240-ab70-11e8-eddc-889464599db6?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=matcha-button" background-color="#C2A0A0" color="#ffffff" border="1px solid #C2A0A0" css-class="btn-blush">Shop the matcha</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="44px 36px 0" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-width="1px" border-color="#DDD3C3" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="8px 20px" css-class="sec-cream">
+      <mj-column width="25%">
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-size="12px" letter-spacing="0.14em" text-transform="uppercase" color="#2E2A24" padding="12px 0" css-class="text-ink jost">
+          <a href="https://teaandtonic.co.nz/collections/new-website-featured?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=nav-new" style="color:#2E2A24; text-decoration:none; font-family:'Jost', Arial, sans-serif; letter-spacing:0.14em; text-transform:uppercase;">New In</a>
+        </mj-text>
+      </mj-column>
+      <mj-column width="25%">
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-size="12px" letter-spacing="0.14em" text-transform="uppercase" color="#2E2A24" padding="12px 0" css-class="text-ink jost">
+          <a href="https://teaandtonic.co.nz/collections/tea?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=nav-tea" style="color:#2E2A24; text-decoration:none; font-family:'Jost', Arial, sans-serif; letter-spacing:0.14em; text-transform:uppercase;">Tea</a>
+        </mj-text>
+      </mj-column>
+      <mj-column width="25%">
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-size="12px" letter-spacing="0.14em" text-transform="uppercase" color="#2E2A24" padding="12px 0" css-class="text-ink jost">
+          <a href="https://teaandtonic.co.nz/products/gift-card?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=nav-gift" style="color:#2E2A24; text-decoration:none; font-family:'Jost', Arial, sans-serif; letter-spacing:0.14em; text-transform:uppercase;">Gift Voucher</a>
+        </mj-text>
+      </mj-column>
+      <mj-column width="25%">
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-size="12px" letter-spacing="0.14em" text-transform="uppercase" color="#2E2A24" padding="12px 0" css-class="text-ink jost">
+          <a href="https://teaandtonic.co.nz/pages/contact?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=nav-visit" style="color:#2E2A24; text-decoration:none; font-family:'Jost', Arial, sans-serif; letter-spacing:0.14em; text-transform:uppercase;">Visit Us</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="0 36px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-divider border-width="1px" border-color="#DDD3C3" padding="0" />
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#F7F2EA" padding="32px 36px 44px" css-class="sec-cream mobile-pad">
+      <mj-column>
+        <mj-text align="center" font-size="20px" line-height="1.4" color="#2E2A24" padding="0 0 10px" css-class="text-ink cg-italic">
+          <span style="font-family:'CormorantLightItalic', Georgia, serif; font-style:italic; font-weight:300; color:#2E2A24;">With warmth,<br/>Monni, Amber &amp; Lisa</span>
+        </mj-text>
+        <mj-text align="center" font-family="'Jost', 'Helvetica Neue', Arial, sans-serif" font-weight="300" font-size="12px" line-height="1.8" color="#5B5347" padding="0" css-class="text-muted jost">
+          <span style="font-family:'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight:300; color:#5B5347;">Tea &amp; Tonic · Shop 5A, Matakana Village<br/>Sunday to Friday: 10am – 4pm<br/>Saturday: 9am – 5pm<br/><a href="https://www.instagram.com/teaandtonicmatakana/" style="color:#5B5347; text-decoration:none;">Instagram</a> &nbsp;·&nbsp; <a href="https://www.facebook.com/teaandtonicmatakana" style="color:#5B5347; text-decoration:none;">Facebook</a></span>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
