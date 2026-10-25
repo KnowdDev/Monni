@@ -11,7 +11,7 @@
     {% form 'customer', class: 'newsletter__form', data-senderkit-newsletter: true %}
       {% if form.posted_successfully? %}
         <p class="newsletter__message newsletter__message--success" role="status">
-          {{ section.settings.success_message | default: 'Thank you for subscribing.' }}
+          {{ section.settings.success_message | default: 'Thank you. Your 10% welcome code is on its way.' }}
         </p>
       {% elsif form.errors %}
         <p class="newsletter__message newsletter__message--error" role="alert">
@@ -263,7 +263,7 @@
       "type": "text",
       "id": "success_message",
       "label": "Success message",
-      "default": "Thank you for subscribing."
+      "default": "Thank you. Your 10% welcome code is on its way."
     }
   ],
   "presets": [

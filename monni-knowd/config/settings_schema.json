@@ -290,7 +290,7 @@
         "type": "textarea",
         "id": "newsletter_popup_description",
         "label": "Description",
-        "default": "For a quieter inbox join the Tea & Tonic community for seasonal stories, new arrivals and quiet inspiration."
+        "default": "Join the Tea & Tonic community for seasonal stories, new arrivals and quiet inspiration, and enjoy 10% off your first order."
       },
       {
         "type": "text",
@@ -308,7 +308,7 @@
         "type": "text",
         "id": "newsletter_popup_success",
         "label": "Success message",
-        "default": "Thank you for subscribing."
+        "default": "Thank you. Your 10% welcome code is on its way."
       }
     ]
   },

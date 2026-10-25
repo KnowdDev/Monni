@@ -46,13 +46,13 @@
         </p>
 
         <p class="newsletter-popup__desc">
-          {{ settings.newsletter_popup_description | default: 'For a quieter inbox join the Tea & Tonic community for seasonal stories, new arrivals and quiet inspiration.' | escape }}
+          {{ settings.newsletter_popup_description | default: 'Join the Tea & Tonic community for seasonal stories, new arrivals and quiet inspiration, and enjoy 10% off your first order.' | escape }}
         </p>
 
         {% form 'customer', class: 'newsletter-popup__form', id: 'newsletter-popup-form', data-senderkit-newsletter: true %}
           {% if form.posted_successfully? %}
             <p class="newsletter-popup__success" role="status">
-              {{ settings.newsletter_popup_success | default: 'Thank you for subscribing.' | escape }}
+              {{ settings.newsletter_popup_success | default: 'Thank you. Your 10% welcome code is on its way.' | escape }}
             </p>
           {% else %}
             <input type="hidden" name="contact[tags]" value="newsletter">

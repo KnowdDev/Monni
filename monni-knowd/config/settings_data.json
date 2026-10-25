@@ -31,7 +31,8 @@
     "input_corner_radius": 4,
     "social_facebook_link": "https://www.facebook.com/teaandtonicmatakana",
     "social_instagram_link": "https://www.instagram.com/teaandtonicmatakana/",
-    "newsletter_popup_description": "For a quieter inbox join the Tea & Tonic community for seasonal stories, new arrivals and quiet inspiration.",
+    "newsletter_popup_description": "Join the Tea & Tonic community for seasonal stories, new arrivals and quiet inspiration, and enjoy 10% off your first order.",
+    "newsletter_popup_success": "Thank you. Your 10% welcome code is on its way.",
     "senderkit_signup_slug": "monni-edit",
     "senderkit_newsletter_enable": true,
     "cart_free_shipping_threshold": 250

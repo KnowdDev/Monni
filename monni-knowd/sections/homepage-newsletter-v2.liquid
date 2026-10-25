@@ -1,11 +1,11 @@
 <section class="newsletter-v2 full-width" data-section-id="{{ section.id }}">
   <div class="newsletter-v2__inner">
     <h2 class="newsletter-v2__title">{{ section.settings.title | default: "Slow down. Stay connected." | escape }}</h2>
-    <p class="newsletter-v2__desc">{{ section.settings.description | default: "For a quieter inbox join the Tea & Tonic community for seasonal stories, new arrivals and quiet inspiration." | escape }}</p>
+    <p class="newsletter-v2__desc">{{ section.settings.description | default: "Join the Tea & Tonic community for seasonal stories, new arrivals and quiet inspiration, and enjoy 10% off your first order." | escape }}</p>
 
     {% form 'customer', class: 'newsletter-v2__form', data-senderkit-newsletter: true %}
       {% if form.posted_successfully? %}
-        <p class="newsletter-v2__success">{{ section.settings.success_message | default: "Thank you for subscribing." }}</p>
+        <p class="newsletter-v2__success">{{ section.settings.success_message | default: "Thank you. Your 10% welcome code is on its way." }}</p>
       {% else %}
         <input type="hidden" name="contact[tags]" value="newsletter">
         <input type="hidden" name="contact[accepts_marketing]" value="true">
@@ -153,7 +153,7 @@
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "For a quieter inbox join the Tea & Tonic community for seasonal stories, new arrivals and quiet inspiration."
+      "default": "Join the Tea & Tonic community for seasonal stories, new arrivals and quiet inspiration, and enjoy 10% off your first order."
     },
     {
       "type": "text",
@@ -171,7 +171,7 @@
       "type": "text",
       "id": "success_message",
       "label": "Success message",
-      "default": "Thank you for subscribing."
+      "default": "Thank you. Your 10% welcome code is on its way."
     }
   ],
   "presets": [

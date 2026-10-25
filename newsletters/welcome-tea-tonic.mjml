@@ -1,7 +1,7 @@
 <mjml>
   <mj-head>
     <mj-title>Welcome — Tea &amp; Tonic</mj-title>
-    <mj-preview>We welcome you to a community that believes in things made with care.</mj-preview>
+    <mj-preview>Welcome. Enjoy 10% off your first order with the code inside.</mj-preview>
     <mj-raw>
       <meta name="color-scheme" content="light only" />
       <meta name="supported-color-schemes" content="light only" />
@@ -117,7 +117,6 @@
 
   <mj-body background-color="#FAFAFA" css-class="dm-lock">
 
-    <!-- Brand lockup: Tea and Tonic by MONNI + Welcome -->
     <mj-section background-color="#FAFAFA" padding="48px 36px 40px" css-class="sec-cream mobile-pad">
       <mj-column>
         <mj-text
@@ -166,7 +165,6 @@
       </mj-column>
     </mj-section>
 
-    <!-- Hero portrait -->
     <mj-section padding="0" background-color="#FAFAFA" css-class="sec-cream">
       <mj-column padding="0">
         <mj-image
@@ -179,7 +177,6 @@
       </mj-column>
     </mj-section>
 
-    <!-- Brand story -->
     <mj-section background-color="#F4F3F0" padding="44px 36px" css-class="sec-alt mobile-pad">
       <mj-column>
         <mj-text align="center" css-class="eyebrow text-eyebrow" padding="0 0 22px">Monique, founder</mj-text>
@@ -203,24 +200,40 @@
       </mj-column>
     </mj-section>
 
-    <!-- CTA -->
-    <mj-section background-color="#FAFAFA" padding="44px 36px" css-class="sec-cream mobile-pad">
+    <mj-section background-color="#F4F3F0" padding="8px 36px 44px" css-class="sec-alt mobile-pad">
+      <mj-column>
+        <mj-text align="center" css-class="eyebrow text-eyebrow" font-size="11px" letter-spacing="0.22em" text-transform="uppercase" color="#8A7B6E" font-weight="400" padding="0 0 12px">A welcome gift</mj-text>
+        <mj-text align="center" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="300" font-size="32px" line-height="1.2" color="#2C2420" padding="0 0 12px" css-class="text-heading">10% off your first order</mj-text>
+        <mj-text align="center" css-class="text-body" font-size="15px" line-height="1.85" padding="0 0 18px">Use this code once, at checkout. It is for you.</mj-text>
+        <mj-button
+          href="https://teaandtonic.co.nz/?discount=WELCOME10&amp;utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=welcome"
+          background-color="#F4F3F0"
+          color="#2C2420"
+          border="1px solid #2C2420"
+          align="center"
+          font-size="14px"
+          letter-spacing="0.22em"
+          css-class="btn-outline"
+        >WELCOME10</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FAFAFA" padding="36px 36px 44px" css-class="sec-cream mobile-pad">
       <mj-column>
         <mj-text align="center" css-class="text-body" font-size="15px" line-height="1.85" padding="0 0 28px">
           A space for holistic health, beauty &amp; home.
         </mj-text>
         <mj-button
-          href="https://teaandtonic.co.nz/"
+          href="https://teaandtonic.co.nz/?discount=WELCOME10&amp;utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=welcome"
           background-color="#FAFAFA"
           color="#2C2420"
           border="1px solid #2C2420"
           align="center"
           css-class="btn-outline"
-        >Explore the Collections</mj-button>
+        >Shop with 10% off</mj-button>
       </mj-column>
     </mj-section>
 
-    <!-- Brand footer (compliance footer added automatically by SenderKit) -->
     <mj-section background-color="#3C2A1A" padding="36px 36px" css-class="sec-footer mobile-pad">
       <mj-column>
         <mj-image

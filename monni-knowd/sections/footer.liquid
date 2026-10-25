@@ -73,10 +73,10 @@
 
       <div class="footer__newsletter">
       <h3 class="footer__newsletter-title">Slow down. Stay connected.</h3>
-      <p class="footer__newsletter-desc">For a quieter inbox join the Tea &amp; Tonic community for seasonal stories, new arrivals and quiet inspiration.</p>
+      <p class="footer__newsletter-desc">Join the Tea &amp; Tonic community for seasonal stories, new arrivals and quiet inspiration, and enjoy 10% off your first order.</p>
       {% form 'customer', class: 'footer__newsletter-form', data-senderkit-newsletter: true %}
         {% if form.posted_successfully? %}
-          <p class="footer__newsletter-success">Thank you for subscribing.</p>
+          <p class="footer__newsletter-success">Thank you. Your 10% welcome code is on its way.</p>
         {% else %}
           <input type="hidden" name="contact[tags]" value="newsletter">
           <input type="hidden" name="contact[accepts_marketing]" value="true">
