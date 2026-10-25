@@ -160,7 +160,7 @@
         </mj-text>
       </mj-column>
       <mj-column width="50%" padding="0 6px 22px">
-        <mj-image css-class="product-img" href="https://teaandtonic.co.nz/products/turmericandginger?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=turmeric" src="https://cdn.shopify.com/s/files/1/2511/3170/files/S-I-box-front_Turmeric-Ginger--1.jpg?v=1785563706" alt="Storm + India Turmeric and Ginger" />
+        <mj-image css-class="product-img" href="https://teaandtonic.co.nz/products/turmericandginger?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=storm-india&amp;utm_content=turmeric" src="https://cdn.shopify.com/s/files/1/2511/3170/t/61/assets/email-storm-india-turmeric.jpg" alt="Storm + India Turmeric and Ginger" />
         <mj-text align="center" font-size="20px" color="#2E2A24" padding="12px 0 0" css-class="text-ink cg-medium">
           <span style="font-family:'CormorantMedium', Georgia, serif; color:#2E2A24;">Turmeric + Ginger</span>
         </mj-text>
