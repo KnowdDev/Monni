@@ -12,9 +12,9 @@
     "main": {
       "type": "brands-directory",
       "settings": {
-        "eyebrow": "Shop by Brand",
-        "title": "The Makers",
-        "intro": "<p>Behind every piece is a maker who creates with heart, cares for the earth and makes with intention.</p>",
+        "eyebrow": "",
+        "title": "Our Brands",
+        "intro": "<p>Behind every brand is a maker who creates with heart, cares for the earth and works with intention.</p>",
         "search_placeholder": "Search brands",
         "card_cta": "Discover the brand",
         "no_results_message": "No brands match your search.",

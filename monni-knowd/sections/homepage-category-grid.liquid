@@ -56,71 +56,64 @@
 
 {% style %}
   .category-grid {
+    --hp-gutter: clamp(1.25rem, 4vw, 3.5rem);
     background-color: var(--color-background);
-    padding: clamp(2.5rem, 8vw, 4rem) 0;
-  }
-
-  @media (min-width: 1024px) {
-    .category-grid {
-      padding: clamp(4rem, 10vw, 7rem) 0;
-    }
+    padding: clamp(2.5rem, 5vw, 4.5rem) 0 0;
   }
 
   .category-grid__inner {
-    max-width: var(--page-width);
+    max-width: 105rem;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 var(--hp-gutter);
   }
 
   .category-grid__title {
-    font-family: var(--font-heading--family);
-    font-size: clamp(0.875rem, 1.25vw, 1rem);
+    font-family: var(--font-body--family);
+    font-size: 0.76rem;
     font-weight: 400;
-    text-align: center;
+    text-align: left;
     color: var(--color-foreground);
-    margin: 0 0 clamp(1.75rem, 5vw, 2.5rem);
+    margin: 0 0 1.1rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    text-wrap: balance;
-  }
-
-  @media (min-width: 1024px) {
-    .category-grid__title {
-      margin-bottom: clamp(3rem, 6vw, 5rem);
-    }
   }
 
   .category-grid__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: clamp(0.65rem, 2.5vw, 1rem);
-    row-gap: clamp(1.25rem, 4vw, 1.75rem);
+    gap: 24px 12px;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 561px) {
     .category-grid__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      column-gap: clamp(1rem, 2vw, 1.5rem);
-      row-gap: clamp(1.5rem, 3vw, 2.5rem);
+      gap: 28px 16px;
+    }
+  }
+
+  @media (min-width: 901px) {
+    .category-grid__grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 16px;
     }
   }
 
   .category-grid__item {
     display: block;
+    min-width: 0;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .category-grid__item:hover {
-    transform: translateY(-4px);
   }
 
   .category-grid__image-wrap {
     position: relative;
-    aspect-ratio: 1 / 1.15;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     background-color: var(--color-border-light);
+  }
+
+  @media (min-width: 561px) {
+    .category-grid__image-wrap { aspect-ratio: 3 / 4; }
   }
 
   .category-grid__image,
@@ -128,11 +121,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
     transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .category-grid__item:hover .category-grid__image {
-    transform: scale(1.04);
+  @media (hover: hover) {
+    .category-grid__item:hover .category-grid__image { transform: scale(1.04); }
   }
 
   .category-grid__fallback {
@@ -140,47 +134,33 @@
   }
 
   .category-grid__text {
-    padding-top: 0.75rem;
+    padding-top: 0.7rem;
     text-align: left;
   }
 
   .category-grid__label {
-    font-family: var(--font-heading--family);
-    font-size: clamp(0.8125rem, 2.8vw, 0.9375rem);
+    font-family: var(--font-body--family);
+    font-size: 0.7rem;
     font-weight: 400;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-foreground);
-    margin: 0 0 0.35rem;
+    margin: 0;
   }
 
   .category-grid__desc {
     font-family: var(--font-body--family);
-    font-size: clamp(0.8125rem, 2.6vw, 0.9375rem);
-    font-weight: 200;
+    font-size: 0.8rem;
+    font-weight: 300;
     color: var(--color-foreground-light);
-    margin: 0;
-    line-height: 1.55;
-    letter-spacing: 0.02em;
+    margin: 0.25rem 0 0;
+    line-height: 1.45;
+    letter-spacing: 0;
     max-width: none;
   }
 
-  @media (min-width: 1024px) {
-    .category-grid__text {
-      padding-top: 1.1rem;
-      text-align: center;
-    }
-
-    .category-grid__label {
-      letter-spacing: 0.18em;
-      margin-bottom: 0.4rem;
-    }
-
-    .category-grid__desc {
-      line-height: 1.65;
-      max-width: 28ch;
-      margin-inline: auto;
-    }
+  @media (min-width: 561px) {
+    .category-grid__desc { font-size: 0.82rem; }
   }
 {% endstyle %}
 

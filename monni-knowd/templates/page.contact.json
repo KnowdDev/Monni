@@ -3,8 +3,8 @@
     "main": {
       "type": "contact",
       "settings": {
-        "heading": "Get in Touch",
-        "subheading": "We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+        "heading": "Contact",
+        "subheading": "We'd love to hear from you. We reply within 1–2 working days.",
         "show_store_details": true,
         "store_heading": "Visit Us",
         "store_address": "5A, 2 Matakana Valley Road, Matakana, New Zealand",
@@ -13,7 +13,7 @@
         "contact_heading": "Get in Touch",
         "contact_email": "hello@teaandtonic.co.nz",
         "contact_phone": "09 422 9083",
-        "show_social": true,
+        "show_social": false,
         "social_heading": "Follow Us",
         "padding_top": 96,
         "padding_bottom": 100

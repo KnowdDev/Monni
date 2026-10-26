@@ -1,6 +1,7 @@
 <section
   class="split-hero full-width"
   data-section-id="{{ section.id }}"
+  data-tone="{{ section.settings.text_tone | default: 'light' }}"
 >
   <a
     href="{{ section.settings.link_left | default: '/collections/clothing' }}"
@@ -37,6 +38,7 @@
       >
     {% endif %}
     <div class="split-hero__overlay"></div>
+    <span class="split-hero__doorway">{{ section.settings.label_left | default: 'Beauty' | escape }}</span>
   </a>
 
   <a
@@ -88,41 +90,55 @@
       >
     {% endif %}
     <div class="split-hero__overlay"></div>
+    <span class="split-hero__doorway">{{ section.settings.label_right | default: 'Jewellery' | escape }}</span>
   </a>
 
   <div class="split-hero__text">
-    <h1 class="split-hero__title">Holistic Health, Beauty, Home</h1>
-    <p class="split-hero__tagline">A place to pause. A place to reconnect.</p>
+    <h1 class="split-hero__title">{{ section.settings.headline | default: 'Holistic Health, Beauty & Home' | escape }}</h1>
+    <a class="split-hero__shop" href="{{ section.settings.headline_link | default: '/collections/all' }}">{{ section.settings.headline_cta | default: 'Shop the collection' | escape }}</a>
   </div>
 </section>
 
 {% style %}
   .split-hero {
+    --hero-ink: #faf8f4;
+    --hero-shade: 34, 30, 26;
     display: grid;
-    grid-template-columns: 1fr;
-    min-height: 100vh;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
     position: relative;
     overflow: hidden;
+    min-height: 0;
+    background: var(--color-background);
+  }
+
+  .split-hero[data-tone="dark"] {
+    --hero-ink: #2f2f2f;
+    --hero-shade: 245, 244, 241;
   }
 
   @media (min-width: 768px) {
     .split-hero {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
   }
 
   .split-hero__panel {
     position: relative;
     overflow: hidden;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    min-height: 50vh;
+    display: block;
+    aspect-ratio: 1 / 1;
+    min-height: 0;
+    text-decoration: none;
+    color: inherit;
   }
 
   @media (min-width: 768px) {
+    .split-hero__panel + .split-hero__panel { margin-left: -1px; }
+
     .split-hero__panel {
-      min-height: auto;
+      aspect-ratio: auto;
+      height: min(62.5vw, 880px, max(34rem, calc(100svh - 2.5rem)));
     }
   }
 
@@ -166,17 +182,11 @@
     }
   }
 
-  .split-hero__panel:hover .split-hero__image,
-  .split-hero__panel:hover .split-hero picture img,
-  .split-hero__panel:hover .split-hero__fallback {
-    transform: scale(1.03);
-  }
-
-  @media (max-width: 767px) {
+  @media (hover: hover) and (min-width: 768px) {
     .split-hero__panel:hover .split-hero__image,
-    .split-hero__panel:hover .split-hero picture img,
+    .split-hero__panel:hover picture img,
     .split-hero__panel:hover .split-hero__fallback {
-      transform: none;
+      transform: scale(1.03);
     }
   }
 
@@ -194,52 +204,113 @@
       linear-gradient(200deg, var(--color-border-light) 0%, var(--color-accent-light) 40%, var(--color-background) 100%);
   }
 
+  /* Soft shade behind the floating header (top) and the headline (bottom) so the
+     type reads on any photograph, without visibly darkening the picture. */
   .split-hero__overlay {
+    --shade-top: linear-gradient(to bottom, rgba(var(--hero-shade), 0.42) 0, rgba(var(--hero-shade), 0) 9.5rem);
+    --shade-bottom: linear-gradient(to top, rgba(var(--hero-shade), 0.5) 0, rgba(var(--hero-shade), 0) 55%);
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.02) 40%, rgba(0,0,0,0.15) 100%);
-    transition: background 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    background: rgba(var(--hero-shade), 0.06);
+  }
+
+  /* Phone: header floats over the first photo, headline sits on the second. */
+  .split-hero__panel--left .split-hero__overlay {
+    background: var(--shade-top), rgba(var(--hero-shade), 0.06);
+  }
+
+  .split-hero__panel--right .split-hero__overlay {
+    background: var(--shade-bottom), rgba(var(--hero-shade), 0.06);
+  }
+
+  @media (min-width: 768px) {
+    .split-hero__overlay,
+    .split-hero__panel--left .split-hero__overlay,
+    .split-hero__panel--right .split-hero__overlay {
+      background: var(--shade-top), var(--shade-bottom), rgba(var(--hero-shade), 0.06);
+    }
+  }
+
+  .split-hero__doorway {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-heading--family);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--hero-ink);
+    text-shadow: 0 0 18px rgba(var(--hero-shade), 0.55);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  @media (min-width: 768px) {
+    .split-hero__doorway {
+      font-size: 0.92rem;
+    }
   }
 
   .split-hero__text {
     position: absolute;
-    bottom: 0;
     left: 0;
     right: 0;
+    bottom: 0;
     z-index: 3;
     text-align: center;
-    padding: 2.5rem 1.5rem 3.5rem;
+    padding: 0 1.5rem 2.5rem;
     pointer-events: none;
+  }
+
+  @media (min-width: 768px) {
+    .split-hero__text {
+      padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    }
   }
 
   .split-hero__title {
     font-family: var(--font-heading--family);
-    font-size: clamp(1.2rem, 2.4vw, 1.75rem);
-    font-weight: 300;
-    letter-spacing: 0.14em;
-    color: #FFFFFF;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
-    margin: 0 0 0.65rem;
-    line-height: 1.3;
+    font-size: clamp(2rem, 8vw, 2.6rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--hero-ink);
+    text-shadow: 0 1px 24px rgba(var(--hero-shade), 0.35);
+    margin: 0 auto 1.15rem;
+    line-height: 1.1;
+    text-wrap: balance;
+    max-width: 14ch;
   }
 
-  .split-hero__tagline {
-    font-family: var(--font-heading--family);
-    font-size: clamp(0.875rem, 1.15vw, 0.9375rem);
-    font-weight: 200;
-    letter-spacing: 0.12em;
-    color: rgba(255, 255, 255, 0.9);
-    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.25);
-    margin: 0;
-    line-height: 1.6;
+  @media (min-width: 768px) {
+    .split-hero__title {
+      font-size: clamp(1.6rem, 3.4vw, 3rem);
+      max-width: none;
+      white-space: nowrap;
+    }
+  }
+
+  .split-hero__shop {
+    pointer-events: auto;
+    font-family: var(--font-body--family);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--hero-ink);
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 1px;
   }
 
   @media (prefers-reduced-motion: reduce) {
     .split-hero__image,
     .split-hero__fallback,
-    .split-hero__overlay {
+    .split-hero picture img {
       transition: none;
     }
   }
@@ -314,6 +385,34 @@
       "id": "cta_right",
       "label": "Right CTA",
       "default": "Explore"
+    },
+    {
+      "type": "select",
+      "id": "text_tone",
+      "label": "Text over the photos",
+      "info": "Light text suits dark or mid-tone photographs; choose Dark text if both hero photos are pale. The header follows this setting.",
+      "options": [
+        { "value": "light", "label": "Light text" },
+        { "value": "dark", "label": "Dark text" }
+      ],
+      "default": "light"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Holistic Health, Beauty & Home"
+    },
+    {
+      "type": "text",
+      "id": "headline_cta",
+      "label": "Headline link label",
+      "default": "Shop the collection"
+    },
+    {
+      "type": "url",
+      "id": "headline_link",
+      "label": "Headline link"
     }
   ],
   "presets": [

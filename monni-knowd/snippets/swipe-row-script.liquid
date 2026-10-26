@@ -1,0 +1,33 @@
+{%- comment -%}
+  Next-arrow behaviour for horizontally swipeable rows on the homepage.
+  Markup: [data-swipe-row] > [data-swipe-scroller] + button[data-swipe-next]
+  Rendered once per section; initialises each row only once.
+{%- endcomment -%}
+<script>
+  (function () {
+    if (window.__monniSwipeRows) { window.__monniSwipeRows(); return; }
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function init() {
+      document.querySelectorAll('[data-swipe-row]').forEach(function (row) {
+        if (row.__swipeReady) return;
+        var sc = row.querySelector('[data-swipe-scroller]');
+        var btn = row.querySelector('[data-swipe-next]');
+        if (!sc || !btn) return;
+        row.__swipeReady = true;
+        function check() {
+          btn.classList.toggle('is-done', sc.scrollLeft + sc.clientWidth >= sc.scrollWidth - 4);
+        }
+        btn.addEventListener('click', function () {
+          var first = sc.firstElementChild;
+          var step = first ? first.getBoundingClientRect().width + 12 : sc.clientWidth * 0.8;
+          sc.scrollBy({ left: step, behavior: reduce ? 'auto' : 'smooth' });
+        });
+        sc.addEventListener('scroll', check, { passive: true });
+        window.addEventListener('resize', check);
+        check();
+      });
+    }
+    window.__monniSwipeRows = init;
+    init();
+  })();
+</script>

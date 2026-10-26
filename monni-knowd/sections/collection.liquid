@@ -31,10 +31,23 @@
     {%- assign collection_eyebrow = blank -%}
     {%- assign collection_intro = blank -%}
     {%- if collection.handle == 'all' -%}
-      {%- assign collection_display_title = 'Shop All' -%}
-      {%- assign collection_eyebrow = 'The Collection' -%}
-      {%- assign collection_intro = 'Considered pieces for slow living, from botanical skincare and loose-leaf tea to jewellery, art and clothing. For your body, your home and the people you hold close.' -%}
+      {%- assign collection_display_title = 'The Collection' -%}
+      {%- assign collection_intro = 'Considered pieces for slow living.' -%}
     {%- endif -%}
+    {%- case collection.handle -%}
+      {%- when 'wellness' -%}
+        {%- assign collection_intro = 'Nourishment for the body and mind.' -%}
+      {%- when 'beauty' -%}
+        {%- assign collection_intro = 'What we place on our skin matters.' -%}
+      {%- when 'clothing' -%}
+        {%- assign collection_intro = 'Natural fibres. Worn for years, not for a moment.' -%}
+      {%- when 'all-jewellery' or 'jewellery' -%}
+        {%- assign collection_intro = 'Pieces to wear daily and treasure over time.' -%}
+      {%- when 'all-home' or 'home' or 'homewares' -%}
+        {%- assign collection_intro = 'Made to be lived with.' -%}
+      {%- when 'all-gifting' or 'gifting' -%}
+        {%- assign collection_intro = 'Chosen with intention. Wrapped with love.' -%}
+    {%- endcase -%}
     {%- if collection_eyebrow != blank -%}
       <p class="collection-page__eyebrow">{{ collection_eyebrow }}</p>
     {%- endif -%}

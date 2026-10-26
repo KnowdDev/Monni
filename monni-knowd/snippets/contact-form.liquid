@@ -17,29 +17,28 @@
   {% endif %}
 
   <div class="contact__field">
-    <label for="contact-name" class="contact__label">
-      {{ 'contact.form.name' | t }}
-    </label>
-    <input 
-      type="text" 
-      name="contact[name]" 
-      id="contact-name" 
+    <label for="contact-name" class="visually-hidden">{{ 'contact.form.name' | t }}</label>
+    <input
+      type="text"
+      name="contact[name]"
+      id="contact-name"
       class="contact__input"
+      placeholder="NAME"
       {% if form.name %}value="{{ form.name }}"{% endif %}
       required
       aria-required="true"
+      autocomplete="name"
     >
   </div>
 
   <div class="contact__field">
-    <label for="contact-email" class="contact__label">
-      {{ 'contact.form.email' | t }}
-    </label>
-    <input 
-      type="email" 
-      name="contact[email]" 
-      id="contact-email" 
+    <label for="contact-email" class="visually-hidden">{{ 'contact.form.email' | t }}</label>
+    <input
+      type="email"
+      name="contact[email]"
+      id="contact-email"
       class="contact__input"
+      placeholder="EMAIL"
       {% if form.email %}value="{{ form.email }}"{% endif %}
       required
       aria-required="true"
@@ -50,35 +49,32 @@
   </div>
 
   <div class="contact__field">
-    <label for="contact-phone" class="contact__label">
-      {{ 'contact.form.phone' | t }}
-    </label>
-    <input 
-      type="tel" 
-      name="contact[phone]" 
-      id="contact-phone" 
+    <label for="contact-order" class="visually-hidden">Order number (optional)</label>
+    <input
+      type="text"
+      name="contact[Order number]"
+      id="contact-order"
       class="contact__input"
-      {% if form.phone %}value="{{ form.phone }}"{% endif %}
-      pattern="[0-9\-\+\.]*"
-      autocomplete="tel"
+      placeholder="ORDER NUMBER (OPTIONAL)"
+      {% if form['Order number'] %}value="{{ form['Order number'] }}"{% endif %}
+      autocomplete="off"
     >
   </div>
 
   <div class="contact__field">
-    <label for="contact-message" class="contact__label">
-      {{ 'contact.form.message' | t }}
-    </label>
-    <textarea 
-      name="contact[body]" 
-      id="contact-message" 
+    <label for="contact-message" class="visually-hidden">{{ 'contact.form.message' | t }}</label>
+    <textarea
+      name="contact[body]"
+      id="contact-message"
       class="contact__textarea"
-      rows="5"
+      rows="4"
+      placeholder="MESSAGE"
       required
       aria-required="true"
     >{% if form.body %}{{ form.body }}{% endif %}</textarea>
   </div>
 
   <button type="submit" class="contact__button button">
-    {{ 'contact.form.send' | t }}
+    Send
   </button>
 {% endform %}

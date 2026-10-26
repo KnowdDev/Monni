@@ -1,225 +1,225 @@
 <section class="journal full-width" data-section-id="{{ section.id }}">
   <div class="journal__inner">
-    {% if section.settings.title != blank %}
-      <h2 class="journal__title">{{ section.settings.title }}</h2>
-    {% endif %}
-
-    <div class="journal__grid">
-      {% for block in section.blocks %}
-        <article class="journal__item" {{ block.shopify_attributes }}>
-          <a href="{{ block.settings.link | default: '#' }}" class="journal__image-wrap">
-            {% if block.settings.image %}
-              {% render 'responsive-img',
-                image: block.settings.image,
-                alt: block.settings.title,
-                class: 'journal__image',
-                sizes: '(max-width: 767px) 100vw, 33vw',
-                widths: '200,280,360,480',
-                default_width: 280,
-                width: 600,
-                height: 780,
-                loading: 'lazy'
-              %}
-            {% else %}
-              {% assign unsplash_journal_ids = "photo-1506905924436-d08fb31a2003,photo-1503454537195-1dcabb73ffb9,photo-1466692476868-aef1dfb1e735" | split: "," %}
-              <img
-                src="https://images.unsplash.com/{{ unsplash_journal_ids[forloop.index0] }}?w=600&h=780&fit=crop&q=80"
-                srcset="
-                  https://images.unsplash.com/{{ unsplash_journal_ids[forloop.index0] }}?w=300&h=390&fit=crop&q=80 300w,
-                  https://images.unsplash.com/{{ unsplash_journal_ids[forloop.index0] }}?w=600&h=780&fit=crop&q=80 600w,
-                  https://images.unsplash.com/{{ unsplash_journal_ids[forloop.index0] }}?w=900&h=1170&fit=crop&q=80 900w
-                "
-                sizes="(max-width: 767px) 100vw, 33vw"
-                alt="{{ block.settings.title | escape }}"
-                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                width="600"
-                height="780"
-                class="journal__image"
-              >
-            {% endif %}
-          </a>
-          <div class="journal__text">
-            <h3 class="journal__item-title">
-              <a href="{{ block.settings.link | default: '#' }}">{{ block.settings.title | escape }}</a>
-            </h3>
-            {% if block.settings.subtitle != blank %}
-              <p class="journal__subtitle">{{ block.settings.subtitle | escape }}</p>
-            {% endif %}
-            {% if block.settings.teaser != blank %}
-              <p class="journal__teaser">{{ block.settings.teaser | escape }}</p>
-            {% endif %}
-            <a href="{{ block.settings.link | default: '#' }}" class="journal__read">
-              {{ block.settings.cta | default: "Read" | escape }}
-            </a>
-          </div>
-        </article>
-      {% endfor %}
+    <div class="journal__head">
+      {% if section.settings.title != blank %}
+        <h2 class="journal__title">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.view_all_link != blank and section.settings.view_all_label != blank %}
+        <a href="{{ section.settings.view_all_link }}" class="journal__view-all">{{ section.settings.view_all_label | escape }}</a>
+      {% endif %}
     </div>
 
-    {% if section.settings.view_all_link != blank and section.settings.view_all_label != blank %}
-      <div class="journal__footer">
-        <a href="{{ section.settings.view_all_link }}" class="journal__view-all">
-          {{ section.settings.view_all_label | escape }}
-        </a>
+    <div class="journal__slider" data-swipe-row>
+      <div class="journal__grid" data-swipe-scroller>
+        {% for block in section.blocks %}
+          {%- liquid
+            assign post_article = block.settings.article
+            assign post_title = block.settings.title | default: post_article.title
+            assign post_link = block.settings.link | default: post_article.url | default: '#'
+            assign post_image = block.settings.image | default: post_article.image
+            assign post_teaser = block.settings.teaser
+            if post_teaser == blank and post_article != blank
+              assign post_teaser = post_article.excerpt_or_content | strip_html | strip_newlines | truncatewords: 16
+            endif
+          -%}
+          <article class="journal__item" {{ block.shopify_attributes }}>
+            <a href="{{ post_link }}" class="journal__image-wrap" tabindex="-1" aria-hidden="true">
+              {% if post_image %}
+                {% render 'responsive-img',
+                  image: post_image,
+                  alt: post_title,
+                  class: 'journal__image',
+                  sizes: '(max-width: 767px) 220px, 33vw',
+                  widths: '220,320,440,640,880',
+                  default_width: 440,
+                  width: 880,
+                  height: 660,
+                  loading: 'lazy'
+                %}
+              {% else %}
+                {% assign unsplash_journal_ids = "photo-1506905924436-d08fb31a2003,photo-1503454537195-1dcabb73ffb9,photo-1466692476868-aef1dfb1e735" | split: "," %}
+                <img
+                  src="https://images.unsplash.com/{{ unsplash_journal_ids[forloop.index0] }}?w=880&h=660&fit=crop&q=80"
+                  alt=""
+                  loading="lazy"
+                  width="880"
+                  height="660"
+                  class="journal__image"
+                >
+              {% endif %}
+            </a>
+            <div class="journal__text">
+              <h3 class="journal__item-title">
+                <a href="{{ post_link }}">{{ post_title | escape }}</a>
+              </h3>
+              {% if block.settings.subtitle != blank %}
+                <p class="journal__subtitle">{{ block.settings.subtitle | escape }}</p>
+              {% endif %}
+              {% if post_teaser != blank %}
+                <p class="journal__teaser">{{ post_teaser | escape }}</p>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
       </div>
-    {% endif %}
+      <button class="swipe-arrow" type="button" aria-label="Next" data-swipe-next>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9,4 17,12 9,20" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      </button>
+    </div>
   </div>
 </section>
+{% render 'swipe-row-script' %}
 
 {% style %}
   .journal {
-    background-color: var(--color-background-alt);
-    padding: clamp(4rem, 10vw, 7rem) 0;
+    min-width: 0;
+    max-width: 100%;
+    --hp-gutter: clamp(1.25rem, 4vw, 3.5rem);
+    background-color: var(--color-background);
+    padding: clamp(2.5rem, 5vw, 4.5rem) 0 clamp(2.5rem, 5vw, 4.5rem);
   }
 
   .journal__inner {
-    max-width: var(--page-width);
+    max-width: 105rem;
     margin: 0 auto;
-    padding: 0 1.5rem;
+  }
+
+  .journal__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0 var(--hp-gutter);
+    margin-bottom: 1.1rem;
   }
 
   .journal__title {
-    font-family: var(--font-heading--family);
-    font-size: clamp(0.875rem, 1.25vw, 1rem);
+    font-family: var(--font-body--family);
+    font-size: 0.76rem;
     font-weight: 400;
-    text-align: center;
+    text-align: left;
     color: var(--color-foreground);
-    margin: 0 0 clamp(3rem, 6vw, 5rem);
+    margin: 0;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    text-wrap: balance;
   }
 
+  .journal__view-all {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 1px;
+    color: var(--color-foreground);
+    white-space: nowrap;
+  }
+
+  .journal__slider {
+    position: relative;
+    --arrow-top: 82px;
+  }
+
+  /* Phone: swipeable cards. */
   .journal__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(1.5rem, 3vw, 2.5rem);
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 0 var(--hp-gutter) 4px;
+    scroll-padding-left: var(--hp-gutter);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
-  @media (min-width: 768px) {
-    .journal__grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
+  .journal__grid::-webkit-scrollbar { display: none; }
 
   .journal__item {
-    display: flex;
-    flex-direction: column;
+    flex: 0 0 220px;
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  /* Tablet / desktop: three across. */
+  @media (min-width: 768px) {
+    .journal__grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      overflow: visible;
+    }
+
+    .journal__item { flex: none; }
+    .journal .swipe-arrow { display: none; }
   }
 
   .journal__image-wrap {
     display: block;
     position: relative;
-    aspect-ratio: 1 / 1.15;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     background-color: var(--color-border-light);
-    margin-bottom: 1.1rem;
     text-decoration: none;
   }
 
   .journal__image,
   .journal__fallback {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
     transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .journal__image-wrap:hover .journal__image {
-    transform: scale(1.04);
+  @media (hover: hover) {
+    .journal__image-wrap:hover .journal__image { transform: scale(1.04); }
   }
 
-  .journal__fallback {
-    background: linear-gradient(135deg, var(--color-accent-light), var(--color-border-light));
-  }
-
-  .journal__text {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
+  .journal__text { padding-top: 10px; }
 
   .journal__item-title {
     font-family: var(--font-heading--family);
-    font-size: clamp(0.85rem, 1.4vw, 1.05rem);
-    font-weight: 300;
-    margin: 0 0 0.35rem;
-    letter-spacing: 0.03em;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0;
+    margin: 0 0 4px;
+  }
+
+  @media (min-width: 768px) {
+    .journal__item-title { font-size: clamp(1.25rem, 1.8vw, 1.45rem); margin-top: 4px; }
   }
 
   .journal__item-title a {
     color: var(--color-foreground);
     text-decoration: none;
-    transition: color 0.2s ease;
   }
 
-  .journal__item-title a:hover {
-    color: var(--color-foreground-light);
-  }
+  .journal__item-title a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 
   .journal__subtitle {
     font-family: var(--font-heading--family);
-    font-size: clamp(0.875rem, 1.05vw, 0.9375rem);
-    font-weight: 300;
+    font-size: 0.95rem;
     font-style: italic;
     color: var(--color-foreground-light);
-    margin: 0 0 0.8rem;
-    line-height: 1.5;
-    letter-spacing: 0.02em;
+    margin: 0 0 0.4rem;
+    line-height: 1.4;
   }
 
   .journal__teaser {
     font-family: var(--font-body--family);
-    font-size: clamp(0.875rem, 1.05vw, 0.9375rem);
-    font-weight: 200;
+    font-size: 0.8rem;
+    font-weight: 300;
     color: var(--color-foreground-light);
-    line-height: 1.7;
-    margin: 0 0 1.2rem;
-    flex: 1;
+    line-height: 1.45;
+    margin: 0;
   }
 
-  .journal__read {
-    font-family: var(--font-body--family);
-    font-size: var(--text-cta);
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-foreground);
-    text-decoration: none;
-    border: 1px solid var(--color-border);
-    padding: 0.5rem 1.2rem;
-    display: inline-block;
-    align-self: flex-start;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  .journal__read:hover {
-    background-color: var(--color-foreground);
-    color: var(--color-background-alt);
-  }
-
-  .journal__footer {
-    text-align: center;
-    margin-top: clamp(2.5rem, 5vw, 4rem);
-  }
-
-  .journal__view-all {
-    font-family: var(--font-body--family);
-    font-size: var(--text-cta);
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-foreground);
-    text-decoration: none;
-    border: 1px solid var(--color-border);
-    padding: 0.65rem 1.6rem;
-    display: inline-block;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  .journal__view-all:hover {
-    background-color: var(--color-foreground);
-    color: var(--color-background-alt);
+  @media (min-width: 768px) {
+    .journal__teaser { font-size: 0.88rem; line-height: 1.5; }
   }
 {% endstyle %}
 
@@ -239,7 +239,7 @@
       "type": "text",
       "id": "view_all_label",
       "label": "View all label",
-      "default": "Visit the Journal"
+      "default": "Read more"
     },
     {
       "type": "url",
@@ -253,38 +253,35 @@
       "name": "Post",
       "settings": [
         {
+          "type": "article",
+          "id": "article",
+          "label": "Journal article",
+          "info": "Pick an article to use its photo, link and opening lines. Anything you type below overrides it."
+        },
+        {
           "type": "image_picker",
           "id": "image",
-          "label": "Image"
+          "label": "Image (optional override)"
         },
         {
           "type": "text",
           "id": "title",
-          "label": "Title",
-          "default": "Navigating Grief"
+          "label": "Title (optional override)"
         },
         {
           "type": "textarea",
           "id": "subtitle",
-          "label": "Subtitle",
-          "default": "On loss, love and the rituals that hold us."
+          "label": "Subtitle (optional)"
         },
         {
           "type": "textarea",
           "id": "teaser",
-          "label": "Teaser",
-          "default": "A personal reflection from Monni on finding your way through life's most challenging moments, one quiet act of care at a time."
-        },
-        {
-          "type": "text",
-          "id": "cta",
-          "label": "CTA",
-          "default": "Read"
+          "label": "Short description (optional override)"
         },
         {
           "type": "url",
           "id": "link",
-          "label": "Link"
+          "label": "Link (optional override)"
         }
       ]
     }

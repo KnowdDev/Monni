@@ -1,97 +1,223 @@
 {% liquid
-  assign collection_handle = section.settings.collection | default: 'all'
-  assign collection_obj = collections[collection_handle]
-  assign limit = section.settings.products_to_show | default: 4
+  assign limit = section.settings.products_to_show | default: 8
+  assign month = 'now' | date: '%m' | plus: 0
+  assign day = 'now' | date: '%d' | plus: 0
+  assign is_christmas = false
+  if section.settings.seasonal_edit
+    if month == 11 or month == 12 and day <= 25
+      assign is_christmas = true
+    endif
+  endif
+  if section.settings.preview_christmas_edit
+    assign is_christmas = true
+  endif
+
+  assign row_products = blank
+  assign row_collection = blank
+
+  if is_christmas
+    assign row_title = 'The Christmas Edit'
+    assign row_label = 'Shop gifts'
+    if section.settings.edit_products.size > 0
+      assign row_products = section.settings.edit_products
+    else
+      assign row_collection = collections['the-christmas-edit']
+      if row_collection == blank or row_collection.products_count == 0
+        assign row_collection = collections['christmas']
+      endif
+      if row_collection == blank or row_collection.products_count == 0
+        assign row_collection = collections['all-gifting']
+      endif
+      assign row_products = row_collection.products
+    endif
+    assign row_link = collections['the-christmas-edit'].url
+    if row_link == blank
+      assign row_link = '/collections/all-gifting'
+    endif
+  else
+    assign row_title = section.settings.title | default: 'Best sellers'
+    assign row_label = section.settings.view_all_label | default: 'Shop all'
+    assign row_link = section.settings.view_all_link | default: '/collections/all'
+    assign row_collection = section.settings.collection
+    if row_collection == blank or row_collection.products_count == 0
+      assign row_collection = collections['best-sellers']
+    endif
+    if row_collection == blank or row_collection.products_count == 0
+      assign row_collection = collections['bestsellers']
+    endif
+    if row_collection == blank or row_collection.products_count == 0
+      assign row_collection = collections['all']
+    endif
+    assign row_products = row_collection.products
+  endif
 %}
 
-<section class="featured-products" data-section-id="{{ section.id }}" data-animate>
-  {% if section.settings.title != blank %}
-    <h2 class="featured-products__title">{{ section.settings.title | escape }}</h2>
-  {% endif %}
-
-  {% if section.settings.subtitle != blank %}
-    <p class="featured-products__subtitle">{{ section.settings.subtitle | escape }}</p>
-  {% endif %}
-
-  {% if collection_obj != blank and collection_obj.products.size > 0 %}
-    <div class="featured-products__grid">
-      {% for product in collection_obj.products limit: limit %}
-        {%- render 'card-product',
-          card_product: product,
-          aspect_ratio: '3/4',
-          show_quick_add: false,
-          show_wishlist: false,
-          show_badges: true,
-          first_eager: false
-        -%}
-      {% endfor %}
-    </div>
-
-    {% if section.settings.show_view_all and section.settings.view_all_link != blank %}
-      <div class="featured-products__footer">
-        <a href="{{ section.settings.view_all_link }}" class="featured-products__link">
-          {{ section.settings.view_all_label | escape }}
-        </a>
-      </div>
+<section class="featured-products full-width" id="best" data-section-id="{{ section.id }}">
+  <div class="featured-products__head">
+    <h2 class="featured-products__title">{{ row_title | escape }}</h2>
+    {% if section.settings.show_view_all and row_link != blank %}
+      <a href="{{ row_link }}" class="featured-products__link">{{ row_label | escape }}</a>
     {% endif %}
+  </div>
+
+  {% if row_products != blank and row_products.size > 0 %}
+    <div class="featured-products__slider">
+      <div class="featured-products__scroller">
+        <div class="featured-products__track">
+          {% for product in row_products limit: limit %}
+            {%- render 'card-product',
+              card_product: product,
+              aspect_ratio: '3/4',
+              show_quick_add: false,
+              show_wishlist: false,
+              show_badges: false,
+              first_eager: false
+            -%}
+          {% endfor %}
+        </div>
+      </div>
+      <button class="featured-products__arrow" type="button" aria-label="Next">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9,4 17,12 9,20" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      </button>
+    </div>
   {% else %}
     <p class="featured-products__empty">{{ section.settings.empty_message | escape }}</p>
   {% endif %}
 </section>
 
+<script>
+  (function () {
+    var root = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (!root) return;
+    var scroller = root.querySelector('.featured-products__scroller');
+    var button = root.querySelector('.featured-products__arrow');
+    var first = root.querySelector('.featured-products__track > *');
+    if (!scroller || !button) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function check() {
+      button.classList.toggle('is-done', scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 4);
+    }
+    button.addEventListener('click', function () {
+      var step = first ? first.getBoundingClientRect().width + 16 : scroller.clientWidth * 0.8;
+      scroller.scrollBy({ left: step, behavior: reduce ? 'auto' : 'smooth' });
+    });
+    scroller.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
+    check();
+  })();
+</script>
+
 {% stylesheet %}
   .featured-products {
-    padding: var(--spacing-xxl) 0;
+    width: 100%;
+    min-width: 0;
+    --card-w: 150px;
+    --hp-gutter: clamp(1.25rem, 4vw, 3.5rem);
+    padding: clamp(2.5rem, 5vw, 4.5rem) 0 0;
+    max-width: 105rem;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 600px) {
+    .featured-products { --card-w: clamp(180px, 22vw, 280px); }
+  }
+
+  .featured-products__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin: 0 0 1.1rem;
+    padding: 0 var(--hp-gutter);
   }
 
   .featured-products__title {
-    text-align: center;
-    margin-bottom: var(--spacing-xs);
-    font-weight: 300;
-  }
-
-  .featured-products__subtitle {
-    text-align: center;
-    font-size: 1rem;
-    color: var(--color-foreground-muted);
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .featured-products__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-md);
-  }
-
-  @media (min-width: 768px) {
-    .featured-products__grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--spacing-lg);
-    }
-  }
-
-  .featured-products__footer {
-    margin-top: var(--spacing-xl);
-    text-align: center;
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 0.76rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: left;
   }
 
   .featured-products__link {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.875rem 2rem;
-    font-size: var(--text-cta);
-    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    border: 1px solid var(--color-foreground);
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 1px;
     color: var(--color-foreground);
-    background-color: transparent;
-    transition: all var(--transition-normal);
+    white-space: nowrap;
   }
 
-  .featured-products__link:hover {
-    background-color: var(--color-foreground);
-    color: var(--color-background);
+  .featured-products__slider {
+    position: relative;
   }
+
+  .featured-products__scroller {
+    overflow-x: auto;
+    padding: 0 var(--hp-gutter) 0.5rem;
+    scroll-padding-left: var(--hp-gutter);
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .featured-products__scroller::-webkit-scrollbar { display: none; }
+
+  .featured-products__track {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+  }
+
+  @media (min-width: 600px) {
+    .featured-products__track { gap: 16px; }
+  }
+
+  .featured-products__track > * {
+    width: var(--card-w);
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
+
+  /* Arrow sits in the right gutter on desktop, over the peeking card on phones. */
+  .featured-products__arrow {
+    position: absolute;
+    right: 2px;
+    top: calc(var(--card-w) * 2 / 3);
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(245, 244, 241, 0.72);
+    color: var(--color-foreground);
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  @media (min-width: 900px) {
+    .featured-products__arrow {
+      right: max(0px, calc(var(--hp-gutter) - 44px));
+      width: 40px;
+      height: 40px;
+      padding: 8px;
+      background: transparent;
+    }
+  }
+
+  .featured-products__arrow:focus-visible {
+    outline: 1px solid var(--color-foreground);
+    outline-offset: 2px;
+  }
+
+  .featured-products__arrow svg { width: 100%; height: 100%; display: block; }
+  .featured-products__arrow.is-done { opacity: 0; pointer-events: none; }
 
   .featured-products__empty {
     text-align: center;
@@ -119,18 +245,38 @@
       "default": "New pieces we are loving"
     },
     {
+      "type": "checkbox",
+      "id": "seasonal_edit",
+      "label": "Switch to The Christmas Edit from 1 November to 25 December",
+      "default": false
+    },
+    {
+      "type": "product_list",
+      "id": "edit_products",
+      "label": "The Christmas Edit products",
+      "info": "Hand-pick the products for the Christmas Edit. If empty, the row uses the 'the-christmas-edit' collection, then 'christmas', then 'all-gifting'.",
+      "limit": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "preview_christmas_edit",
+      "label": "Preview The Christmas Edit now (ignores the date)",
+      "info": "For review only. Untick before launch so the row follows the 1 Nov - 25 Dec dates.",
+      "default": false
+    },
+    {
       "type": "collection",
       "id": "collection",
-      "label": "Collection"
+      "label": "Best sellers collection"
     },
     {
       "type": "range",
       "id": "products_to_show",
       "min": 2,
-      "max": 8,
+      "max": 12,
       "step": 2,
       "label": "Products to show",
-      "default": 4
+      "default": 8
     },
     {
       "type": "checkbox",

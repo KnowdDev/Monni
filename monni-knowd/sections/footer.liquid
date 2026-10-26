@@ -1,406 +1,190 @@
 <footer class="footer full-width" data-section-id="{{ section.id }}">
   <div class="footer__inner">
-    <div class="footer__grid">
-      <div class="footer__column footer__column--brand">
-        {% if settings.logo != blank %}
-          <a href="{{ routes.root_url }}" class="footer__logo-link" aria-label="{{ shop.name | escape }}">
-            <img
-              src="{{ settings.logo | image_url: width: 240 }}"
-              alt="{{ shop.name | escape }}"
-              width="{{ settings.logo_width }}"
-              height="{{ settings.logo_width | divided_by: settings.logo.aspect_ratio | round }}"
-              class="footer__logo-img"
-              loading="lazy"
-            >
-          </a>
-        {% else %}
-          <h2 class="footer__logo-text">{{ shop.name | escape }}</h2>
-        {% endif %}
-        <p class="footer__tagline">Holistic health, beauty &amp; home.<br>Matakana Village, Aotearoa.</p>
-        <div class="footer__contact">
-          <p>5A, 2 Matakana Valley Road, Matakana, New Zealand</p>
+    <div class="footer__cols">
+      <div>
+        <p class="footer__heading">Customer Care</p>
+        <ul class="footer__menu">
+          <li><a href="/pages/contact">Contact</a></li>
+          <li><a href="/policies/shipping-policy">Shipping + Delivery</a></li>
+          <li><a href="/policies/refund-policy">Returns</a></li>
+          {%- if pages['start-a-return'] != blank and pages['start-a-return'].content != blank -%}
+            <li><a href="/pages/start-a-return">Start a Return</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+      <div>
+        <p class="footer__heading">Info</p>
+        <ul class="footer__menu">
+          <li><a href="/pages/brands">Brands</a></li>
+          <li><a href="/blogs/journal">Journal</a></li>
+          <li><a href="/pages/about">About</a></li>
+          <li><a href="/collections/gift-card">Gift Card</a></li>
+          <li><a href="/pages/size-guide">Size Guide</a></li>
+          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/policies/terms-of-service">Terms + Conditions</a></li>
+        </ul>
+      </div>
+      <div class="footer__store">
+        <p class="footer__heading">Our Store</p>
+        <p>In the heart of Matakana Village,<br>Aotearoa New Zealand.</p>
+        <p>5A, 2 Matakana Valley Road<br>Matakana 0985</p>
+        <p>
+          Store hours:<br>
           {% if settings.store_hours != blank %}
-            <p>{{ settings.store_hours | newline_to_br }}</p>
+            {{ settings.store_hours | newline_to_br }}
+          {% else %}
+            Sunday – Friday | 10am – 4pm<br>Saturday | 9am – 5pm
           {% endif %}
-          <p>
-            <a href="mailto:{{ settings.contact_email | default: 'hello@teaandtonic.co.nz' }}">{{ settings.contact_email | default: 'hello@teaandtonic.co.nz' }}</a>
-            {% assign footer_phone = settings.contact_phone | default: '09 422 9083' %}
-            | <a href="tel:{{ footer_phone | replace: ' ', '' }}">Tel. {{ footer_phone }}</a>
-          </p>
-        </div>
+        </p>
+        <p><a class="footer__visit" href="https://maps.google.com/?q=5A+2+Matakana+Valley+Road+Matakana" target="_blank" rel="noopener">Visit us</a></p>
+        <p>
+          <a href="mailto:{{ settings.contact_email | default: 'hello@teaandtonic.co.nz' }}">{{ settings.contact_email | default: 'hello@teaandtonic.co.nz' }}</a><br>
+          {% assign footer_phone = settings.contact_phone | default: '09 422 9083' %}
+          <a href="tel:{{ footer_phone | replace: ' ', '' }}">{{ footer_phone }}</a>
+        </p>
       </div>
-
-      <div class="footer__menu-wrap">
-        <div class="footer__column">
-          <h3 class="footer__heading">Explore</h3>
-          <nav class="footer__nav" aria-label="Explore">
-            <ul class="footer__menu">
-              <li><a href="/collections/all">Shop</a></li>
-              <li><a href="/pages/brands">Brands</a></li>
-              <li><a href="/blogs/journal">Journal</a></li>
-              <li><a href="/pages/about">About</a></li>
-            </ul>
-          </nav>
-        </div>
-
-        <div class="footer__column">
-          <h3 class="footer__heading">Help</h3>
-          <nav class="footer__nav" aria-label="Help">
-            <ul class="footer__menu">
-              <li><a href="/pages/size-guide">Size Guide</a></li>
-              <li><a href="/policies/shipping-policy">Shipping</a></li>
-              <li><a href="/policies/refund-policy">Returns Policy</a></li>
-              <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
-              <li><a href="/policies/terms-of-service">Terms &amp; Conditions</a></li>
-            </ul>
-          </nav>
-        </div>
-
-        <div class="footer__column">
-          <h3 class="footer__heading">Follow</h3>
-          <nav class="footer__nav" aria-label="Social">
-            <ul class="footer__menu">
-              {% if settings.social_instagram_link != blank %}
-                <li><a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener">Instagram</a></li>
-              {% endif %}
-              {% if settings.social_facebook_link != blank %}
-                <li><a href="{{ settings.social_facebook_link }}" target="_blank" rel="noopener">Facebook</a></li>
-              {% endif %}
-            </ul>
-          </nav>
-        </div>
-      </div>
-
-      <div class="footer__newsletter">
-      <h3 class="footer__newsletter-title">Slow down. Stay connected.</h3>
-      <p class="footer__newsletter-desc">Join the Tea &amp; Tonic community for seasonal stories, new arrivals and quiet inspiration, and enjoy 10% off your first order.</p>
-      {% form 'customer', class: 'footer__newsletter-form', data-senderkit-newsletter: true %}
-        {% if form.posted_successfully? %}
-          <p class="footer__newsletter-success">Thank you. Your 10% welcome code is on its way.</p>
-        {% else %}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <input type="hidden" name="contact[accepts_marketing]" value="true">
-          <div class="footer__newsletter-fields">
-            <input
-              type="email"
-              name="contact[email]"
-              class="footer__newsletter-input"
-              placeholder="Your email address"
-              aria-label="Your email address"
-              required
-              autocomplete="email"
-              autocapitalize="off"
-            >
-            <button type="submit" class="footer__newsletter-button">Subscribe</button>
-          </div>
-          {% if form.errors %}
-            <p class="footer__newsletter-error">{{ form.errors.messages['email'] }}</p>
+      <div>
+        <p class="footer__heading">Subscribe to our newsletter for 10% off your first order.</p>
+        {% form 'customer', class: 'footer__form' %}
+          {% if form.posted_successfully? %}
+            <p class="footer__success">Thank you. Your 10% welcome code is on its way.</p>
+          {% else %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input type="hidden" name="contact[accepts_marketing]" value="true">
+            <div class="footer__field">
+              <label class="visually-hidden" for="FooterEmail">Email address</label>
+              <input id="FooterEmail" type="email" name="contact[email]" placeholder="EMAIL ADDRESS" required autocomplete="email" autocapitalize="off">
+              <button type="submit">Join us</button>
+            </div>
+            {% if form.errors %}
+              <p class="footer__error">{{ form.errors.messages['email'] }}</p>
+            {% endif %}
           {% endif %}
-        {% endif %}
-      {% endform %}
-    </div>
-    </div>
-
-    <div class="footer__bottom">
-      <div class="footer__legal">
-        <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}. All rights reserved.</p>
+        {% endform %}
+        <p class="footer__social">
+          {% if settings.social_instagram_link != blank %}
+            <a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener">Instagram</a>
+          {% endif %}
+          {% if settings.social_instagram_link != blank and settings.social_facebook_link != blank %}
+            <span aria-hidden="true"> &nbsp;.&nbsp; </span>
+          {% endif %}
+          {% if settings.social_facebook_link != blank %}
+            <a href="{{ settings.social_facebook_link }}" target="_blank" rel="noopener">Facebook</a>
+          {% endif %}
+        </p>
       </div>
+    </div>
+    <div class="footer__base">
+      <p>Free NZ shipping over $250 · We ship to NZ &amp; Australia</p>
+      <p>&copy; {{ 'now' | date: '%Y' }} Ayson and Anastasia Limited trading as Tea &amp; Tonic. Site by Knowd Digital.</p>
     </div>
   </div>
 </footer>
 
 {% style %}
   .footer {
-    background-color: #FAFAF8;
-    border-top: 1px solid var(--color-border-light);
+    background: var(--color-background);
+    color: #2f2f2f;
+    border-top: 1px solid #dcd9d3;
     margin-top: auto;
-    padding: clamp(2rem, 4vw, 3rem) 0 var(--spacing-md);
+    padding: clamp(2.75rem, 6vw, 4rem) 0 2.25rem;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
   }
 
   .footer__inner {
+    max-width: 105rem;
     margin: 0 auto;
-    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    padding: 0 clamp(1.25rem, 4vw, 3.5rem);
   }
 
-  .footer__grid {
+  .footer__cols {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--spacing-md);
-    padding-bottom: var(--spacing-md);
-    border-bottom: 1px solid var(--color-border-light);
+    gap: 2.25rem;
   }
 
-  .footer__menu-wrap {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) 0;
-    width: 100%;
+  @media (min-width: 561px) {
+    .footer__cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.5rem 2rem; }
   }
 
-  .footer__newsletter {
-    border: none;
-    padding: var(--spacing-sm) 0;
-    text-align: left;
-    margin-bottom: 0;
-  }
-
-  @media (min-width: 768px) {
-    .footer__grid {
-      grid-template-columns: 1.25fr 1fr 1fr;
-      gap: var(--spacing-lg);
-      align-items: start;
-    }
-
-    .footer__menu-wrap {
-      padding: 0;
-      gap: var(--spacing-sm);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .footer__grid {
-      grid-template-columns: 1.25fr 1fr 1fr;
-      gap: var(--spacing-xl);
-    }
-  }
-
-  .footer__column {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .footer__logo-link {
-    display: inline-block;
-    margin: 0 0 var(--spacing-sm);
-  }
-
-  .footer__logo-img {
-    display: block;
-    width: auto;
-    max-width: min(var(--header-logo-width, 200px), 11rem);
-    height: auto;
-  }
-
-  .footer__logo-text {
-    font-family: var(--font-heading--family);
-    font-size: 1.2rem;
-    font-weight: 300;
-    letter-spacing: 0.05em;
-    color: var(--color-foreground);
-    margin: 0 0 var(--spacing-sm);
-  }
-
-  .footer__tagline {
-    font-family: var(--font-body--family);
-    font-size: 0.875rem;
-    font-weight: 200;
-    color: var(--color-foreground-light);
-    line-height: 1.65;
-    margin: 0 0 var(--spacing-md);
-    max-width: 32ch;
-    letter-spacing: 0.02em;
-  }
-
-  .footer__contact {
-    font-family: var(--font-body--family);
-    font-size: 0.875rem;
-    font-weight: 200;
-    color: var(--color-foreground-muted);
-    line-height: 1.7;
-    margin: 0;
-    letter-spacing: 0.02em;
-  }
-
-  .footer__contact p {
-    margin: 0 0 var(--spacing-xs);
-  }
-
-  .footer__contact a {
-    color: var(--color-foreground-light);
-    text-decoration: none;
-    transition: color var(--transition-fast);
-  }
-
-  .footer__contact a:hover {
-    color: var(--color-foreground);
+  @media (min-width: 901px) {
+    .footer__cols { grid-template-columns: 1fr 1fr 1.2fr 1.4fr; gap: 2.5rem; }
   }
 
   .footer__heading {
-    font-family: var(--font-body--family);
-    font-size: 0.875rem;
+    margin: 0 0 1rem;
     font-weight: 400;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-foreground);
-    margin: 0 0 var(--spacing-md);
+    line-height: 1.5;
   }
 
   .footer__menu {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.8rem;
+    color: #6b6965;
   }
 
-  .footer__menu li {
-    margin-bottom: 0.4rem;
+  .footer a { color: inherit; text-decoration: none; }
+  .footer__menu a:hover { color: #2f2f2f; }
+
+  .footer__store p { margin: 0 0 1rem; line-height: 1.9; }
+  .footer__store p.footer__heading { margin-bottom: 1rem; line-height: 1.4; }
+
+  .footer .footer__visit {
+    color: #2f2f2f;
+    text-decoration: underline;
+    text-underline-offset: 5px;
   }
 
-  .footer__menu a {
-    font-family: var(--font-body--family);
-    font-size: 0.875rem;
-    font-weight: 200;
-    letter-spacing: 0.04em;
-    color: var(--color-foreground-light);
-    transition: color var(--transition-fast);
-    text-decoration: none;
-  }
-
-  .footer__menu a:hover,
-  .footer__menu a:focus {
-    color: var(--color-foreground);
-    outline: none;
-  }
-
-  .footer__menu a:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-  }
-
-  .footer__newsletter {
-    border: none;
-    padding: var(--spacing-sm) 0;
-    text-align: left;
-    margin-bottom: 0;
-  }
-
-  .footer__newsletter-title {
-    font-family: var(--font-heading--family);
-    font-size: clamp(0.875rem, 0.95vw, 0.875rem);
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-foreground);
-    margin: 0 0 0.5rem;
-  }
-
-  .footer__newsletter-desc {
-    font-family: var(--font-body--family);
-    font-size: clamp(0.875rem, 1vw, 0.875rem);
-    font-weight: 200;
-    color: var(--color-foreground-light);
-    line-height: 1.6;
-    margin: 0 0 1rem;
-    max-width: 38ch;
-  }
-
-  .footer__newsletter-form {
-    width: 100%;
-  }
-
-  .footer__newsletter-fields {
+  .footer__field {
     display: flex;
-    gap: 0.6rem;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.9rem;
+    margin: 0 0 1.35rem;
   }
 
-  .footer__newsletter-input {
-    font-family: var(--font-body--family);
-    font-size: 0.875rem;
-    font-weight: 200;
-    color: var(--color-foreground);
+  .footer__field input {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid #2f2f2f;
     background: transparent;
-    border: 1px solid var(--color-border);
-    border-radius: 0;
-    padding: 0.5rem 0.75rem;
-    flex: 1 1 10rem;
-    min-width: 8rem;
-    max-width: 14rem;
-    outline: none;
-    transition: border-color var(--transition-fast);
-  }
-
-  .footer__newsletter-input::placeholder {
-    color: var(--color-foreground-muted);
-  }
-
-  .footer__newsletter-input:focus {
-    border-color: var(--color-foreground-light);
-  }
-
-  .footer__newsletter-button {
-    font-family: var(--font-body--family);
-    font-size: clamp(0.875rem, 1vw, 0.875rem);
-    font-weight: 400;
-    letter-spacing: 0.14em;
+    padding: 0.85rem 1rem;
+    font: inherit;
+    letter-spacing: 0.08em;
+    color: #2f2f2f;
     text-transform: uppercase;
-    color: var(--color-foreground);
-    background: transparent;
-    border: 1px solid var(--color-foreground);
-    border-radius: 0;
-    padding: 0.5rem 1.6rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    white-space: nowrap;
   }
 
-  .footer__newsletter-button:hover {
-    background-color: var(--color-foreground);
-    color: var(--color-background-alt);
-  }
-
-  .footer__newsletter-success {
-    font-family: var(--font-body--family);
-    font-size: 0.92rem;
-    font-weight: 200;
-    color: var(--color-foreground);
-    margin: 0;
-  }
-
-  .footer__newsletter-error {
-    font-family: var(--font-body--family);
-    font-size: 0.9375rem;
-    color: var(--color-error);
-    margin: 0.6rem 0 0;
-  }
-
-  .footer__bottom {
-    padding-top: var(--spacing-md);
-    text-align: center;
-  }
-
-  .footer__legal {
-    font-family: var(--font-body--family);
-    font-size: 0.875rem;
-    font-weight: 300;
-    color: var(--color-foreground-muted);
-    letter-spacing: 0.04em;
-  }
-
-  .footer__legal p {
-    margin: 0;
-  }
-
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
+  .footer__field button {
     border: 0;
+    background: transparent;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 0;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .footer__menu a,
-    .footer__contact a,
-    .footer__legal {
-      transition: color var(--transition-fast);
-    }
+  .footer__social { margin: 0; }
+  .footer__success, .footer__error { margin: 0 0 1rem; line-height: 1.6; }
+
+  .footer__base {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    color: #6b6965;
+    line-height: 2;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
   }
+
+  .footer__base p { margin: 0; }
 {% endstyle %}
 
 {% schema %}

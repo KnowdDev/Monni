@@ -14,13 +14,16 @@
       "settings": {
         "use_optimized_assets": true,
         "image_left": "shopify://shop_images/monni-split-hero-left.webp",
-        "label_left": "Gifting",
-        "link_left": "/collections/clothing",
+        "label_left": "Beauty",
+        "link_left": "/collections/beauty",
         "blurb_left": "Thoughtfully chosen pieces to make every moment feel special.",
         "cta_left": "Explore",
         "image_right": "shopify://shop_images/monni-split-hero-right.webp",
-        "label_right": "Homewares",
-        "link_right": "/collections/all-home",
+        "label_right": "Jewellery",
+        "link_right": "/collections/all-jewellery",
+        "headline": "Holistic Health, Beauty & Home",
+        "headline_cta": "Shop the collection",
+        "headline_link": "/collections/all",
         "blurb_right": "Objects that bring warmth, texture, and quiet beauty into your space.",
         "cta_right": "Explore"
       }
@@ -28,9 +31,23 @@
     "opening-statement": {
       "type": "homepage-opening-statement",
       "settings": {
-        "line_1": "It begins with love. For ourselves, for others, and for the world around us",
-        "line_2": "We are all connected",
+        "line_1": "A place to pause. A place to reconnect.",
+        "line_2": "We champion women-founded and led businesses that care for people and the planet.",
         "narrow_width": true
+      }
+    },
+    "edit": {
+      "type": "homepage-featured-products",
+      "settings": {
+        "title": "Best sellers",
+        "seasonal_edit": true,
+        "preview_christmas_edit": true,
+        "edit_products": ["tahi-ritual-set", "0af7b240-ab70-11e8-eddc-889464599db6", "wild-earth-quiet-minds-eau-de-parfum", "on-sundays-daily-rituals-set", "mangawhai-honey-native-bush-blend", "0af7b240-ab70-11e8-eddc-53ef7b6d56f1", "turmericandginger", "monni-art-print-nga-maunga-tupuna"],
+        "products_to_show": 8,
+        "show_view_all": true,
+        "view_all_label": "Shop all",
+        "view_all_link": "/collections/all",
+        "collection": "all"
       }
     },
     "category-grid": {
@@ -77,7 +94,7 @@
           "settings": {
             "image": "shopify://shop_images/DSC06893.jpg",
             "title": "Home",
-            "description": "Considered and made to be lived with.",
+            "description": "Made to be lived with.",
             "link": "/collections/all-home"
           }
         },
@@ -100,7 +117,7 @@
         "cat-6"
       ],
       "settings": {
-        "title": "A collection for the way you live"
+        "title": "Shop by category"
       }
     },
     "creations": {
@@ -138,9 +155,9 @@
         }
       },
       "block_order": [
-        "creation-1",
+        "creation-3",
         "creation-2",
-        "creation-3"
+        "creation-1"
       ],
       "settings": {
         "title": "Our Own Creations"
@@ -149,14 +166,14 @@
     "makers": {
       "type": "homepage-makers",
       "settings": {
-        "eyebrow": "Maker of the Month",
+        "eyebrow": "Meet the Maker",
         "maker_name": "Wild Earth Perfume",
-        "maker_location": "Nelly, Gisborne",
-        "description": "Nelly founded Wild Earth in Gisborne, a handmade perfume studio where every bottle begins as a plant. Completely natural fragrance, made slowly, to feel like something you've always carried.",
-        "cta": "Shop Wild Earth",
+        "maker_location": "",
+        "description": "Nelly's handmade Gisborne studio, where every bottle begins as a plant.",
+        "cta": "Shop Wild Earth →",
         "link": "/collections/wild-earth",
-        "cta_secondary": "Read the Journal",
-        "link_secondary": "/blogs/journal/in-the-studio-with-nelly-wild-earth-perfume"
+        "cta_secondary": "",
+        "link_secondary": ""
       }
     },
     "journal": {
@@ -165,34 +182,25 @@
         "post-1": {
           "type": "post",
           "settings": {
-            "image": "shopify://shop_images/00100lPORTRAIT_00100_BURST20200213202512708_COVER.jpg",
-            "title": "Navigating Grief",
-            "subtitle": "On loss, love and the rituals that hold us.",
-            "teaser": "A personal reflection from Monni on finding your way through life's most challenging moments, one quiet act of care at a time.",
-            "cta": "Read",
-            "link": "/blogs/journal/navigating-grief-monni-explores-finding-comfort-and-healing-in-life-s-most-challenging-times"
+            "article": "journal/ten-tips-healthy-locks-molasses-banana-bread",
+            "title": "Ten Tips for Healthy Locks",
+            "teaser": "Amber's tips for healthier hair, plus Monni's molasses banana bread."
           }
         },
         "post-2": {
           "type": "post",
           "settings": {
-            "image": "shopify://shop_images/CK_Fianls__78_of_3__1.jpg",
-            "title": "Motherhood and Making",
-            "subtitle": "A conversation with Hannah Jack, founder of Country Kitchen.",
-            "teaser": "On raising five children, building something meaningful and the quiet strength that holds it all together.",
-            "cta": "Read",
-            "link": "/blogs/journal/a-conversation-on-motherhood-and-work-with-hannah-jack-founder-of-country-kitchen"
+            "article": "journal/in-the-studio-with-nelly-wild-earth-perfume",
+            "title": "In the Studio with Nelly",
+            "teaser": "A conversation with the perfumer behind Wild Earth."
           }
         },
         "post-3": {
           "type": "post",
           "settings": {
-            "image": "shopify://shop_images/Screenshot_2025-04-01_at_1.57.25_pm.png",
-            "title": "Flower Essences Explained",
-            "subtitle": "The ancient practice of plant healing, gently demystified.",
-            "teaser": "What they are, how to use them and why they have been trusted for nearly a century.",
-            "cta": "Read",
-            "link": "/blogs/journal/flower-essences-explained-benefits-uses-and-how-to-harness-their-healing-power"
+            "article": "journal/in-the-studio-with-vicki-fanning-frolic-ceramics",
+            "title": "In the Studio with Vicki Fanning",
+            "teaser": "Kiln mornings and a creative life at Frolic Ceramics."
           }
         }
       },
@@ -203,30 +211,18 @@
       ],
       "settings": {
         "title": "From the Journal",
-        "view_all_label": "Visit the Journal",
+        "view_all_label": "Read more",
         "view_all_link": "/blogs/journal"
-      }
-    },
-    "founder": {
-      "type": "homepage-founder",
-      "settings": {
-        "background_color": "#d9d0c4",
-        "background_image": "shopify://shop_images/MONNIxLOFOTEN004-027.jpg",
-        "image_focus_y": 23,
-        "background_overlay": 40,
-        "quote": "What is the most true and beautiful life you can dream into being?",
-        "cta": "About",
-        "link": "/pages/about"
       }
     }
   },
   "order": [
     "split-hero",
     "opening-statement",
+    "edit",
     "category-grid",
     "creations",
     "makers",
-    "journal",
-    "founder"
+    "journal"
   ]
 }

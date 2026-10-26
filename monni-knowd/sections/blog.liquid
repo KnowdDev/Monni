@@ -8,19 +8,39 @@
   assign articles_per_page = section.settings.articles_per_page | default: 9
   assign show_excerpts = section.settings.show_excerpts
   assign show_dates = section.settings.show_dates
+  assign filter_tags = section.settings.filter_tags | split: ','
+  assign is_journal = false
+  if blog.handle == 'journal'
+    assign is_journal = true
+    assign show_dates = false
+  endif
 -%}
 
-<section class="blog-page">
+<section class="blog-page full-width">
   <div class="container">
     <header class="blog-page__header">
       {%- if blog.handle == 'journal' -%}
-        <p class="blog-page__eyebrow">Stories &amp; Rituals</p>
-        <h1 class="blog-page__title">The Journal</h1>
+        <h1 class="blog-page__title">Stories &amp; Rituals</h1>
         <p class="blog-page__intro">Pour a cup and stay a while. Stories from our makers, seasonal rituals and gentle reflections on living well.</p>
       {%- else -%}
         <h1 class="blog-page__title">{{ blog.title }}</h1>
       {%- endif -%}
     </header>
+
+    {%- if filter_tags.size > 0 -%}
+      <nav class="blog-page__tabs" aria-label="Filter stories">
+        <a href="{{ blog.url }}" class="blog-page__tab{% unless current_tags %} is-active{% endunless %}"{% unless current_tags %} aria-current="page"{% endunless %}>All</a>
+        {%- for tag in filter_tags -%}
+          {%- liquid
+            assign tag_active = false
+            if current_tags contains tag
+              assign tag_active = true
+            endif
+          -%}
+          <a href="{{ blog.url }}/tagged/{{ tag | handleize }}" class="blog-page__tab{% if tag_active %} is-active{% endif %}"{% if tag_active %} aria-current="page"{% endif %}>{{ tag }}</a>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
 
     <div class="blog-page__grid">
       {% paginate blog.articles by articles_per_page %}
@@ -30,9 +50,9 @@
             if excerpt_source == blank
               assign excerpt_source = article.content
             endif
-            assign excerpt_plain = excerpt_source | strip_html | strip | truncatewords: 32, '…'
+            assign excerpt_plain = excerpt_source | strip_html | strip | truncatewords: 24, '…'
           -%}
-          <article class="blog-page__card">
+          <article class="blog-page__card{% if forloop.first and paginate.current_page == 1 and current_tags == blank %} blog-page__card--lead{% endif %}">
             <a href="{{ article.url }}" class="blog-page__card-link">
               {% if article.image %}
                 {%- assign image_alt = article.image.alt | default: article.title -%}
@@ -51,6 +71,18 @@
               {% endif %}
 
               <div class="blog-page__card-content">
+                {%- liquid
+                  assign card_tag = blank
+                  for t in article.tags
+                    if filter_tags contains t
+                      assign card_tag = t
+                      break
+                    endif
+                  endfor
+                -%}
+                {%- if card_tag != blank -%}
+                  <p class="blog-page__card-tag">{{ card_tag }}</p>
+                {%- endif -%}
                 <h2 class="blog-page__card-title">{{ article.title | escape }}</h2>
 
                 {%- if show_dates -%}
@@ -124,6 +156,12 @@
       "step": 3,
       "default": 9,
       "label": "Articles per page"
+    },
+    {
+      "type": "text",
+      "id": "filter_tags",
+      "label": "Category tabs (article tags)",
+      "info": "Comma-separated tags exactly as used on articles, e.g. Rituals,Our Women. Leave blank to hide the tabs."
     },
     {
       "type": "checkbox",

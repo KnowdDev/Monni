@@ -124,7 +124,24 @@
   <!-- Info -->
   <a href="{{ product.url }}" class="card-product__info-link">
     <div class="card-product__info">
-      <h3 class="card-product__title">{{ product.title | escape }}</h3>
+      {%- liquid
+        comment
+          Brand + name on one line. Prepend the vendor only when it is a real brand
+          that the product title does not already start with (titles here usually
+          already lead with the brand, e.g. "Tahi Ritual Set").
+        endcomment
+        assign card_label = product.title
+        assign vendor_down = product.vendor | downcase | strip
+        assign title_down = product.title | downcase
+        if vendor_down != blank and vendor_down != 'not specified' and vendor_down != 'tea & tonic'
+          assign vendor_first = vendor_down | split: ' ' | first
+          assign title_start = title_down | slice: 0, vendor_first.size
+          if title_start != vendor_first
+            assign card_label = product.vendor | append: ' ' | append: product.title
+          endif
+        endif
+      -%}
+      <h3 class="card-product__title">{{ card_label | escape }}</h3>
       <div class="card-product__price">
         {%- if product.compare_at_price > product.price -%}
           <span class="card-product__price--sale">{{ product.price | money }}</span>

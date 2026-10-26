@@ -9,22 +9,9 @@
   style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
 >
   <div class="about-monni__inner">
-    <header class="about-monni__page-header">
-      {% if section.settings.hero_eyebrow != blank %}
-        <p class="about-monni__eyebrow">{{ section.settings.hero_eyebrow }}</p>
-      {% endif %}
-      {% if section.settings.hero_title != blank %}
-        <h1 class="about-monni__tagline">{{ section.settings.hero_title }}</h1>
-      {% endif %}
-      {% if section.settings.hero_subtitle != blank %}
-        <p class="about-monni__hero-sub">{{ section.settings.hero_subtitle }}</p>
-      {% endif %}
-      <div class="about-monni__divider" aria-hidden="true"></div>
-    </header>
-
     <article class="about-monni__block about-monni__block--center">
       {% if section.settings.story_heading != blank %}
-        <h2 class="about-monni__heading">{{ section.settings.story_heading }}</h2>
+        <h1 class="about-monni__heading">{{ section.settings.story_heading }}</h1>
       {% endif %}
       <div class="about-monni__richtext">{{ section.settings.story_body }}</div>
     </article>
@@ -76,11 +63,6 @@
         <h2 class="about-monni__heading">{{ section.settings.offer_heading }}</h2>
       {% endif %}
       <div class="about-monni__richtext">{{ section.settings.offer_body }}</div>
-      {% if section.settings.offer_button_label != blank and section.settings.offer_button_link != blank %}
-        <p class="about-monni__cta">
-          <a class="about-monni__text-link" href="{{ section.settings.offer_button_link }}">{{ section.settings.offer_button_label }}</a>
-        </p>
-      {% endif %}
     </article>
 
     <article class="about-monni__row about-monni__row--media-right">

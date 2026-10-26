@@ -16,7 +16,7 @@
 </style>
 
 <header
-  class="header"
+  class="header{% if template.name == 'index' %} header--overlay{% endif %}"
   data-section-id="{{ section.id }}"
   data-header-root
   data-header-breakpoint="1160"
@@ -78,7 +78,8 @@
     aria-label="Open navigation menu"
     data-header-menu-toggle
   >
-    <span class="header__menu-toggle-label" aria-hidden="true">Menu</span>
+    <span class="header__burger" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="sr-only">Menu</span>
   </button>
 
         <nav class="header__nav header__nav--desktop" aria-label="Primary navigation">
@@ -133,16 +134,18 @@
         <nav class="header__utilities" aria-label="Utility navigation">
           <a href="{{ routes.search_url }}" class="header__utility-link">Search</a>
 
-          {% if shop.customer_accounts_enabled %}
-            {% if customer %}
-              <a href="{{ routes.account_url }}" class="header__utility-link header__utility-link--account">Account</a>
-            {% else %}
-              <a href="{{ routes.account_login_url }}" class="header__utility-link header__utility-link--account">Login</a>
+          {% if section.settings.show_utility_extras %}
+            {% if shop.customer_accounts_enabled %}
+              {% if customer %}
+                <a href="{{ routes.account_url }}" class="header__utility-link header__utility-link--account">Account</a>
+              {% else %}
+                <a href="{{ routes.account_login_url }}" class="header__utility-link header__utility-link--account">Login</a>
+              {% endif %}
             {% endif %}
-          {% endif %}
 
-          {% if section.settings.show_wishlist %}
-            <a href="/pages/wishlist" class="header__utility-link header__utility-link--wishlist">Wishlist</a>
+            {% if section.settings.show_wishlist %}
+              <a href="/pages/wishlist" class="header__utility-link header__utility-link--wishlist">Wishlist</a>
+            {% endif %}
           {% endif %}
 
           <a href="{{ routes.cart_url }}" class="header__utility-link header__utility-link--cart" data-cart-toggle>
@@ -150,6 +153,7 @@
           </a>
         </nav>
 
+        <a href="{{ routes.search_url }}" class="header__mobile-search">Search</a>
         <a href="{{ routes.cart_url }}" class="header__mobile-cart" data-cart-toggle aria-label="Cart, {{ cart.item_count }} items">
           <span class="header__mobile-cart-text">Cart (<span data-cart-count>{{ cart.item_count }}</span>)</span>
         </a>
@@ -295,11 +299,103 @@
 
   .header__shell {
     position: relative;
-    background: rgba(248, 246, 244, 0.95);
-    border-bottom: 1px solid rgba(229, 224, 220, 0.85);
-    box-shadow: 0 0.75rem 2.25rem rgba(61, 61, 61, 0.035);
-    backdrop-filter: blur(18px);
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    box-shadow: none;
     overflow: visible;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .shopify-section.shopify-section-group-header-group { display: contents; }
+
+  /* Floating header (Marle-style): no bar. The logo and links float over the page on
+     every template and stay in view while scrolling. Each zone (menu, logo, utilities)
+     switches between dark and light ink depending on what is directly beneath it
+     (photo or dark section = light ink, otherwise dark ink) — see the script below. */
+  .header--overlay {
+    margin-bottom: calc(-1 * var(--header-overlay-offset, 5rem));
+  }
+
+  .header [data-tone="light"] {
+    --tone-ink: #faf8f4;
+    text-shadow: 0 0 12px rgba(20, 16, 12, 0.4);
+  }
+
+  .header [data-tone="light"] .header__menu-link,
+  .header [data-tone="light"] .header__utility-link,
+  .header [data-tone="light"] .header__mobile-cart,
+  .header [data-tone="light"] .header__mobile-search,
+  .header [data-tone="light"] .header__menu-toggle,
+  .header .header__logo[data-tone="light"] a {
+    color: #faf8f4;
+  }
+
+  .header [data-tone="light"] .header__menu-link::before,
+  .header [data-tone="light"] .header__utility-link::before {
+    background-color: #faf8f4;
+  }
+
+  .header [data-tone="light"] .header__logo-img {
+    filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(20, 16, 12, 0.5));
+  }
+
+  .header [data-tone] { transition: color 0.25s ease; }
+
+  /* Shop menu or mobile drawer open: normal ink on a solid bar. */
+  .header.is-open .header__shell {
+    background: var(--color-background);
+    border-bottom-color: #dcd9d3;
+  }
+
+  .header.is-open [data-tone="light"],
+  .header.header--menu-open [data-tone="light"] { text-shadow: none; }
+
+  .header.is-open [data-tone="light"] .header__menu-link,
+  .header.is-open [data-tone="light"] .header__utility-link,
+  .header.is-open [data-tone="light"] .header__mobile-cart,
+  .header.is-open [data-tone="light"] .header__mobile-search,
+  .header.is-open [data-tone="light"] .header__menu-toggle,
+  .header.is-open .header__logo[data-tone="light"] a {
+    color: var(--color-foreground);
+  }
+
+  .header.is-open [data-tone="light"] .header__menu-link::before,
+  .header.is-open [data-tone="light"] .header__utility-link::before {
+    background-color: var(--color-foreground);
+  }
+
+  .header.is-open [data-tone="light"] .header__logo-img { filter: none; }
+
+  .header__burger {
+    display: grid;
+    gap: 5px;
+    width: 22px;
+  }
+
+  .header__burger i {
+    display: block;
+    height: 1.5px;
+    background: currentColor;
+  }
+
+  .header__mobile-search {
+    display: none;
+    align-items: center;
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-foreground-light);
+    transition: color var(--transition-fast);
+  }
+
+  .header__mobile-search:hover {
+    color: var(--color-foreground);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header__shell { transition: none; }
   }
 
   .header__drawer-backdrop,
@@ -318,7 +414,7 @@
 
   .header__inner {
     position: relative;
-    width: min(var(--content-width), calc(100% - (var(--page-margin) * 2)));
+    width: calc(min(105rem, 100%) - 2 * clamp(1.25rem, 4vw, 3.5rem));
     min-height: 5rem;
     margin: 0 auto;
     padding: 0.875rem 0;
@@ -414,11 +510,11 @@
     display: inline-flex;
     align-items: center;
     padding: 0.35rem 0;
-    font-family: var(--font-heading--family);
-    font-size: clamp(0.92rem, 0.88rem + 0.15vw, 1.05rem);
+    font-family: var(--font-body--family);
+    font-size: 0.72rem;
     font-weight: 400;
-    letter-spacing: 0.02em;
-    text-transform: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     white-space: nowrap;
     color: var(--color-foreground-light);
     transition: color var(--transition-fast);
@@ -461,7 +557,7 @@
     z-index: 6;
     display: none;
     padding: 1.75rem 0 2.25rem;
-    background: rgba(252, 250, 248, 0.98);
+    background: var(--color-background);
     border-top: 1px solid rgba(229, 224, 220, 0.85);
     border-bottom: 1px solid rgba(229, 224, 220, 0.85);
     box-shadow: 0 1.5rem 3rem rgba(61, 61, 61, 0.08);
@@ -494,7 +590,7 @@
   }
 
   .header__mega-inner {
-    width: min(var(--content-width), calc(100% - (var(--page-margin) * 2)));
+    width: calc(min(105rem, 100%) - 2 * clamp(1.25rem, 4vw, 3.5rem));
     margin: 0 auto;
   }
 
@@ -655,11 +751,11 @@
     display: inline-flex;
     align-items: center;
     padding: 0.35rem 0;
-    font-family: var(--font-heading--family);
-    font-size: clamp(0.92rem, 0.88rem + 0.15vw, 1.05rem);
+    font-family: var(--font-body--family);
+    font-size: 0.72rem;
     font-weight: 400;
-    letter-spacing: 0.02em;
-    text-transform: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--color-foreground-light);
     transition: color var(--transition-fast);
   }
@@ -855,8 +951,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
-    background:
-      linear-gradient(180deg, rgba(248, 246, 244, 0.985) 0%, rgba(255, 255, 255, 0.985) 100%);
+    background: var(--color-background);
     border-right: 1px solid rgba(196, 184, 168, 0.32);
     box-shadow: 1.15rem 0 3.8rem rgba(61, 61, 61, 0.14);
     transform: translateX(-100%);
@@ -1146,8 +1241,8 @@
     }
 
     .header__menu-link {
-      font-size: 0.92rem;
-      letter-spacing: 0.02em;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
     }
   }
 
@@ -1173,7 +1268,8 @@
       display: none;
     }
 
-    .header__mobile-cart {
+    .header__mobile-cart,
+    .header__mobile-search {
       display: inline-flex;
       flex-shrink: 0;
       white-space: nowrap;
@@ -1182,6 +1278,7 @@
     }
 
     .header__side--end {
+      gap: clamp(0.75rem, 3.5vw, 1.25rem);
       flex-shrink: 0;
     }
 
@@ -1208,6 +1305,28 @@
     }
   }
 
+  @media (max-width: 430px) {
+    .header__mobile-cart,
+    .header__mobile-search {
+      font-size: 0.625rem;
+      letter-spacing: 0.08em;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .header__inner { column-gap: 0.4rem; }
+    .header__side--end { gap: 0.45rem; }
+    .header__mobile-cart,
+    .header__mobile-search { letter-spacing: 0.04em; }
+    .header__logo .header__logo-img { max-width: 4.4rem; }
+  }
+
+  @media (max-width: 340px) {
+    .header__mobile-cart,
+    .header__mobile-search { font-size: 0.58rem; letter-spacing: 0.02em; }
+    .header__logo .header__logo-img { max-width: 3.9rem; }
+  }
+
   @media (max-width: 767px) {
     .header__announcement {
       padding-block: 0.55rem;
@@ -1216,7 +1335,6 @@
     }
 
     .header__inner {
-      width: min(var(--content-width), calc(100% - (var(--page-margin) * 1.6)));
       min-height: 4.05rem;
       column-gap: 0.7rem;
     }
@@ -1237,8 +1355,12 @@
     }
 
     .header__logo-img {
-      max-width: min(var(--header-logo-width), 8.5rem);
+      max-width: clamp(5.25rem, 24vw, 8.5rem);
       max-height: 2.35rem;
+    }
+
+    .header__side--end {
+      gap: 0.65rem;
     }
 
     .header__mobile-cart,
@@ -1275,6 +1397,77 @@
 {% endstyle %}
 
 {% javascript %}
+  (function () {
+    var hdr = document.querySelector('[data-header-root]');
+    if (!hdr) return;
+    var shell = hdr.querySelector('.header__shell');
+    var zones = hdr.querySelectorAll('.header__side--start, .header__logo, .header__side--end');
+    var ticking = false;
+
+    function lum(rgb) {
+      var m = rgb.match(/[\d.]+/g);
+      if (!m) return 1;
+      return (0.2126 * m[0] + 0.7152 * m[1] + 0.0722 * m[2]) / 255;
+    }
+
+    // Tone for one point: look through transparent layers to the first photo or opaque background.
+    function toneAt(x, y) {
+      var stack = document.elementsFromPoint(x, y);
+      for (var i = 0; i < stack.length; i++) {
+        var el = stack[i];
+        if (hdr.contains(el) || el.classList.contains('header__announcement')) continue;
+        var tag = el.tagName;
+        if (tag === 'IMG' || tag === 'VIDEO' || tag === 'PICTURE' || tag === 'CANVAS') return 'light';
+        var cs = getComputedStyle(el);
+        if (cs.backgroundImage && cs.backgroundImage !== 'none' && cs.backgroundImage.indexOf('url(') > -1) return 'light';
+        var bg = cs.backgroundColor;
+        var alpha = bg.indexOf('rgba') === 0 ? parseFloat(bg.split(',')[3]) : 1;
+        if (bg !== 'transparent' && alpha > 0.6) return lum(bg) < 0.45 ? 'light' : 'dark';
+      }
+      return 'dark';
+    }
+
+    function zoneTone(zone) {
+      var r = zone.getBoundingClientRect();
+      if (!r.width) return 'dark';
+      var y = Math.min(window.innerHeight - 1, Math.max(0, r.top + r.height / 2));
+      var xs = [r.left + 4, r.left + r.width / 2, r.right - 4];
+      for (var i = 0; i < xs.length; i++) {
+        var x = Math.min(window.innerWidth - 1, Math.max(0, xs[i]));
+        if (toneAt(x, y) === 'light') return 'light';
+      }
+      return 'dark';
+    }
+
+    function tone() {
+      ticking = false;
+      zones.forEach(function (z) {
+        var t = zoneTone(z);
+        if (z.getAttribute('data-tone') !== t) z.setAttribute('data-tone', t);
+      });
+    }
+
+    function schedule() {
+      if (!ticking) { ticking = true; requestAnimationFrame(tone); }
+    }
+
+    function update() {
+      if (hdr.classList.contains('header--overlay')) {
+        var h = shell ? shell.offsetHeight : hdr.offsetHeight;
+        hdr.style.setProperty('--header-overlay-offset', h + 'px');
+      }
+      hdr.classList.toggle('is-open', !!hdr.querySelector('.is-shop-open'));
+      schedule();
+    }
+
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', update);
+    document.addEventListener('DOMContentLoaded', update);
+    window.addEventListener('load', update);
+    // Shop mega menu toggles .is-shop-open on its item; mirror it onto the header.
+    new MutationObserver(update).observe(hdr, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    update();
+  })();
   document.querySelectorAll('[data-header-menu-toggle]').forEach(function(el) {
     el.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -1307,6 +1500,13 @@
       "id": "customer_account_menu",
       "label": "t:labels.customer_account_menu",
       "default": "customer-account-main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_utility_extras",
+      "label": "Show Login and Wishlist in the header bar",
+      "info": "Off by default: the header bar shows only Search and Cart. Login and Wishlist stay in the mobile menu.",
+      "default": false
     },
     {
       "type": "checkbox",

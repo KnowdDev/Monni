@@ -19,13 +19,13 @@
       assign policy_display_title = 'Privacy Policy'
       assign policy_body = shop.privacy_policy.body
     when 'terms-of-service'
-      assign policy_display_title = 'Terms & Conditions'
+      assign policy_display_title = 'Terms + Conditions'
       assign policy_body = shop.terms_of_service.body
     when 'refund-policy'
-      assign policy_display_title = 'Returns Policy'
+      assign policy_display_title = 'Returns'
       assign policy_body = shop.refund_policy.body
     when 'shipping-policy'
-      assign policy_display_title = 'Shipping'
+      assign policy_display_title = 'Shipping + Delivery'
       assign policy_body = shop.shipping_policy.body
     when 'contact-information'
       assign policy_display_title = 'Contact'
@@ -48,7 +48,7 @@
   endif
 -%}
 
-<section class="policy section--padding" data-section-id="{{ section.id }}" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+<section class="policy section--padding full-width" data-section-id="{{ section.id }}" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
   <div class="policy__inner container">
     <header class="policy__header">
       <h1 class="policy__title">{{ policy_display_title }}</h1>
@@ -65,87 +65,94 @@
 {% stylesheet %}
   .policy {
     background-color: var(--color-background);
-    color: var(--color-foreground);
-    margin-top: var(--spacing-xl);
-    margin-bottom: var(--spacing-xxl);
+    color: #2f2f2f;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .policy__inner {
-    max-width: var(--page-width);
+    max-width: 105rem;
     margin: 0 auto;
-    padding: 0 var(--page-margin);
+    padding: 0 clamp(1.25rem, 4vw, 3.5rem);
   }
 
   .policy__header {
     text-align: center;
-    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+    margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
   }
 
-  .policy__title {
-    font-size: clamp(2.25rem, 5vw, 3.25rem);
-    font-weight: 300;
-    line-height: 1.06;
-    letter-spacing: 0.005em;
+  .policy .policy__title {
+    font-family: var(--font-body--family);
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     margin: 0;
-    color: var(--color-foreground);
-    text-wrap: balance;
+    color: #2f2f2f;
   }
 
   .policy__legal {
-    max-width: 74ch;
-    margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+    max-width: 38rem;
+    margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
     text-align: center;
-    font-size: 0.8rem;
+    font-family: var(--font-body--family);
+    font-size: 0.72rem;
     font-weight: 400;
-    letter-spacing: 0.04em;
-    line-height: 1.5;
-    color: var(--color-foreground-muted);
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    color: #6b6965;
   }
 
   .policy__content {
-    max-width: 74ch;
+    max-width: 38rem;
     margin: 0 auto;
-    font-size: 1.03rem;
-    font-weight: 200;
-    line-height: 1.85;
-    letter-spacing: 0.01em;
-    color: var(--color-foreground);
+    font-family: var(--font-body--family);
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.7;
+    letter-spacing: 0;
+    color: #2f2f2f;
   }
 
   .policy__content :is(p, ul, ol) {
-    margin: 0 0 var(--spacing-md);
+    margin: 0 0 1rem;
   }
 
-  .policy__content :is(h2, h3, h4) {
-    color: var(--color-foreground);
-    font-weight: 300;
-    letter-spacing: 0.005em;
+  .policy__content p:empty,
+  .policy__content p:has(> br:only-child),
+  .policy__content p:has(> span:only-child > br:only-child) {
+    display: none;
   }
 
-  .policy__content h2 {
-    font-size: clamp(1.75rem, 3.2vw, 2.25rem);
-    margin: clamp(2.25rem, 4vw, 3.25rem) 0 var(--spacing-md);
-    line-height: 1.15;
+  .policy__content strong,
+  .policy__content b {
+    font-weight: 400;
   }
 
-  .policy__content h3 {
-    font-size: 1.25rem;
-    margin: var(--spacing-xl) 0 var(--spacing-sm);
-    line-height: 1.25;
+  .policy__content :is(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--font-body--family);
+    color: #2f2f2f;
+    font-weight: 400;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    margin: 2rem 0 0.6rem;
   }
+
+  .policy__content :is(h1, h2, h3, h4, h5, h6):first-child { margin-top: 0; }
 
   .policy__content a {
-    color: var(--color-accent);
-    text-decoration: none;
+    color: #2f2f2f;
+    text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.2em;
   }
 
   .policy__content a:hover,
-  .policy__content a:focus {
-    color: var(--color-foreground);
-    text-decoration: underline;
-    outline: none;
+  .policy__content a:focus-visible {
+    color: #6b6965;
   }
 
   .policy__content ul,
@@ -160,24 +167,17 @@
   .policy__content hr {
     border: 0;
     height: 1px;
-    background: var(--color-border);
-    margin: clamp(2rem, 4vw, 3rem) 0;
+    background: #dcd9d3;
+    margin: 2rem 0;
   }
+
+  .policy__content table { width: 100%; display: block; overflow-x: auto; }
 
   .policy__content blockquote {
-    margin: var(--spacing-xl) 0;
-    padding: var(--spacing-md) var(--spacing-lg);
-    border-left: 2px solid var(--color-accent);
-    background: color-mix(in srgb, var(--color-border) 55%, transparent);
-    color: var(--color-foreground-light);
-    font-style: italic;
-  }
-
-  @media (max-width: 480px) {
-    .policy__content {
-      font-size: 1rem;
-      line-height: 1.8;
-    }
+    margin: 1.5rem 0;
+    padding: 0.75rem 1.25rem;
+    border-left: 1px solid #2f2f2f;
+    color: #6b6965;
   }
 {% endstylesheet %}
 
@@ -199,7 +199,7 @@
       "step": 4,
       "unit": "px",
       "label": "Top padding",
-      "default": 64
+      "default": 56
     },
     {
       "type": "range",
@@ -209,7 +209,7 @@
       "step": 4,
       "unit": "px",
       "label": "Bottom padding",
-      "default": 96
+      "default": 80
     }
   ],
   "presets": [
