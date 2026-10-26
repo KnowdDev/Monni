@@ -6,16 +6,23 @@
 <article class="article-page">
   <div class="article-page__column">
     <header class="article-page__header">
-      {% if blog.title %}
-        <a href="{{ blog.url }}" class="article-page__blog-link">{{ blog.title }}</a>
+      {%- liquid
+        assign series = blank
+        assign series_names = 'Our Women|Rituals|From Monni|Focus' | split: '|'
+        for series_name in series_names
+          if article.tags contains series_name
+            assign series = series_name
+            break
+          endif
+        endfor
+      -%}
+      {% if series != blank %}
+        <a href="{{ blog.url }}/tagged/{{ series | handleize }}" class="article-page__blog-link">{{ series }}</a>
       {% endif %}
 
       <h1 class="article-page__title">{{ article.title }}</h1>
-
-      <div class="article-page__meta">
-        {% assign date = article.published_at | time_tag: format: 'date' %}
-        <span class="article-page__meta-item">{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</span>
-      </div>
+      <p class="article-page__by">By Monni</p>
+      <time class="visually-hidden" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%B %d, %Y' }}</time>
     </header>
 
     {% if section.settings.show_featured_image and article.image %}
@@ -38,7 +45,44 @@
       {{ article.content }}
     </div>
 
-    {% if blog.comments_enabled? %}
+    {%- liquid
+      assign story_products = article.metafields.custom.shop_products.value
+      assign brand_url = article.metafields.custom.brand_url.value | default: article.metafields.custom.brand_url
+      assign brand_name = article.metafields.custom.brand_name.value | default: article.metafields.custom.brand_name
+    -%}
+    {% if brand_url != blank %}
+      <p class="article-page__shop-brand"><a class="btn btn--outline" href="{{ brand_url }}">Shop {{ brand_name | default: 'the maker' }}</a></p>
+    {% endif %}
+    {% if story_products != blank %}
+      <section class="article-page__shop">
+        <h2>Shop the story</h2>
+        <div class="article-page__shop-grid">
+          {% for story_product in story_products limit: 2 %}
+            {% render 'card-product', card_product: story_product, show_quick_add: false, show_wishlist: false, show_badges: false %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    <section class="article-page__more">
+      <h2>More from the Journal</h2>
+      <div class="article-page__more-grid">
+        {% assign more_count = 0 %}
+        {% for related in blog.articles %}
+          {% if related.id != article.id and more_count < 2 %}
+            <a href="{{ related.url }}">
+              {% if related.image %}
+                {{ related.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 800', alt: related.title }}
+              {% endif %}
+              <span>{{ related.title }}</span>
+            </a>
+            {% assign more_count = more_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    {% if false and blog.comments_enabled? %}
         <section class="article-page__comments" id="comments">
           <h2 class="article-page__comments-title">{{ 'blog.article_comments' | t }}</h2>
 

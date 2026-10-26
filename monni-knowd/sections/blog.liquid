@@ -9,6 +9,9 @@
   assign show_excerpts = section.settings.show_excerpts
   assign show_dates = section.settings.show_dates
   assign filter_tags = section.settings.filter_tags | split: ','
+  if section.settings.filter_tags == blank
+    assign filter_tags = 'Our Women|Rituals|From Monni|Focus' | split: '|'
+  endif
   assign is_journal = false
   if blog.handle == 'journal'
     assign is_journal = true
@@ -50,7 +53,10 @@
             if excerpt_source == blank
               assign excerpt_source = article.content
             endif
-            assign excerpt_plain = excerpt_source | strip_html | strip | truncatewords: 24, '…'
+            assign excerpt_plain = article.excerpt | strip_html | strip
+            if excerpt_plain == blank
+              assign excerpt_plain = article.content | strip_html | strip | split: '.' | first | append: '.'
+            endif
           -%}
           <article class="blog-page__card{% if forloop.first and paginate.current_page == 1 and current_tags == blank %} blog-page__card--lead{% endif %}">
             <a href="{{ article.url }}" class="blog-page__card-link">
@@ -85,12 +91,7 @@
                 {%- endif -%}
                 <h2 class="blog-page__card-title">{{ article.title | escape }}</h2>
 
-                {%- if show_dates -%}
-                  <div class="blog-page__card-meta">
-                    {% assign date = article.published_at | time_tag: format: 'date' %}
-                    <span class="blog-page__card-meta-item">{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</span>
-                  </div>
-                {%- endif -%}
+                {%- comment -%} Dates and author stay off the list. {%- endcomment -%}
 
                 {%- if show_excerpts and excerpt_plain != blank -%}
                   <p class="blog-page__card-excerpt">{{ excerpt_plain | escape }}</p>
@@ -100,49 +101,37 @@
           </article>
         {% endfor %}
 
-        {%- if paginate.pages > 1 -%}
-          <nav class="blog-page__pagination" aria-label="Journal pagination">
-            {%- if paginate.previous -%}
-              <a
-                href="{{ paginate.previous.url }}"
-                rel="prev"
-                class="blog-page__pagination-link blog-page__pagination-link--prev"
-                aria-label="Previous page"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-                Previous
-              </a>
-            {%- endif -%}
-
-            <div class="blog-page__pagination-numbers">
-              {%- for part in paginate.parts -%}
-                {%- if part.is_link -%}
-                  <a href="{{ part.url }}" class="blog-page__pagination-number">{{ part.title }}</a>
-                {%- elsif part.title == paginate.current_page -%}
-                  <span class="blog-page__pagination-number blog-page__pagination-number--current" aria-current="page">{{ part.title }}</span>
-                {%- else -%}
-                  <span class="blog-page__pagination-number blog-page__pagination-number--ellipsis" aria-hidden="true">{{ part.title }}</span>
-                {%- endif -%}
-              {%- endfor -%}
-            </div>
-
-            {%- if paginate.next -%}
-              <a
-                href="{{ paginate.next.url }}"
-                rel="next"
-                class="blog-page__pagination-link blog-page__pagination-link--next"
-                aria-label="Next page"
-              >
-                Next
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              </a>
-            {%- endif -%}
-          </nav>
+        {%- if paginate.next -%}
+          <p class="blog-page__load">
+            <button type="button" class="btn btn--outline" data-load-stories data-next="{{ paginate.next.url }}">Load more stories</button>
+          </p>
         {%- endif -%}
       {% endpaginate %}
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-load-stories]');
+    if (!button) return;
+    var grid = document.querySelector('.blog-page__grid');
+    var next = button.getAttribute('data-next');
+    if (!grid || !next) return;
+    button.disabled = true;
+    fetch(next).then(function (res) { return res.text(); }).then(function (html) {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      doc.querySelectorAll('.blog-page__grid > article').forEach(function (card) { grid.appendChild(card); });
+      var more = doc.querySelector('[data-load-stories]');
+      if (more) {
+        button.setAttribute('data-next', more.getAttribute('data-next'));
+        button.disabled = false;
+      } else {
+        button.remove();
+      }
+    }).catch(function () { button.disabled = false; });
+  });
+</script>
 
 {% schema %}
 {
