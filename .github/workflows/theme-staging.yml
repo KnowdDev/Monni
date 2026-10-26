@@ -29,11 +29,6 @@ jobs:
           grep -q 'config/settings_data.json' .shopifyignore
           grep -q 'templates/index.json' .shopifyignore
 
-      - name: Setup Shopify CLI
-        uses: shopify/cli@v1
-        # Falls back to npm install if action unavailable on runner
-        continue-on-error: true
-
       - name: Install Shopify CLI
         run: npm install -g @shopify/cli @shopify/theme
 
