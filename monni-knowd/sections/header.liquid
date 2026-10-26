@@ -1491,7 +1491,7 @@
       var imgs = photo.querySelectorAll('img');
       if (!inkCanvas) inkCanvas = document.createElement('canvas');
       var ctx = inkCanvas.getContext('2d', { willReadFrequently: true });
-      var sum = 0, n = 0;
+      var values = [];
       for (var k = 0; k < imgs.length; k++) {
         var img = imgs[k];
         if (!img.complete || !img.naturalWidth) continue;
@@ -1521,14 +1521,15 @@
           var data = ctx.getImageData(0, 0, 12, 6).data;
           for (var i = 0; i < data.length; i += 4) {
             if (data[i + 3] < 20) continue;
-            sum += relLuminance(data[i], data[i + 1], data[i + 2]);
-            n++;
+            values.push(relLuminance(data[i], data[i + 1], data[i + 2]));
           }
         } catch (err) {
           continue;
         }
       }
-      return n ? sum / n : null;
+      if (!values.length) return null;
+      values.sort(function (a, b) { return a - b; });
+      return values[Math.floor(values.length / 2)];
     }
 
     function declaredInk(x0, x1, y1) {
@@ -1547,9 +1548,19 @@
     }
 
     function decide(x0, x1, y0, y1) {
+      var declared = declaredInk(x0, x1, y1);
+      var width = Math.max(1, x1 - x0);
+      var nodes = document.querySelectorAll('[data-header-photo] [data-bg]');
+      var cover = 0;
+      for (var i = 0; i < nodes.length; i++) {
+        var r = nodes[i].getBoundingClientRect();
+        if (r.width < 2 || r.bottom < 4 || r.top > y1) continue;
+        cover += Math.max(0, Math.min(x1, r.right) - Math.max(x0, r.left));
+      }
+      if (declared && cover / width >= 0.6) return declared;
       var L = sampleLuminance(x0, x1, y0, y1);
       if (L != null) return inkFromL(L);
-      return declaredInk(x0, x1, y1) || { ink: 'dark', scrim: false };
+      return declared || { ink: 'dark', scrim: false };
     }
 
     function paintGroup(el, decision) {
