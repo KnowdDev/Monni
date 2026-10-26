@@ -32,7 +32,7 @@
     endif
   %}
   {% if use_split_loading %}
-    <img
+    <img crossorigin="anonymous"
       src="{{ hero_src_480 }}"
       srcset="
         {{ hero_src_480 }} 480w,
@@ -47,7 +47,7 @@
       loading="lazy"
       fetchpriority="low"
     >
-    <img
+    <img crossorigin="anonymous"
       src="{{ hero_src }}"
       srcset="
         {{ hero_src_480 }} 480w,
@@ -63,7 +63,7 @@
       fetchpriority="low"
     >
   {% else %}
-    <img
+    <img crossorigin="anonymous"
       src="{{ hero_src }}"
       srcset="
         {{ hero_src_480 }} 480w,
@@ -92,7 +92,7 @@
     assign img_height = image.height | default: img_height
   %}
   {% if use_split_loading %}
-    <img
+    <img crossorigin="anonymous"
       src="{{ mobile_src }}"
       srcset="
         {{ image | image_url: width: 480, format: 'webp' }} 480w,
@@ -107,7 +107,7 @@
       loading="lazy"
       fetchpriority="low"
     >
-    <img
+    <img crossorigin="anonymous"
       src="{{ desktop_src }}"
       srcset="
         {{ image | image_url: width: 480, format: 'webp' }} 480w,
@@ -130,7 +130,7 @@
         srcset="{{ image | image_url: width: 720, format: 'webp' }} 720w"
         sizes="50vw"
       >
-      <img
+      <img crossorigin="anonymous"
         src="{{ mobile_src }}"
         srcset="
           {{ image | image_url: width: 480, format: 'webp' }} 480w,

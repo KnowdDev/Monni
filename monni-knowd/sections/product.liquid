@@ -89,14 +89,14 @@
               <div class="media-gallery__slide{% if media == featured_media %} is-active{% endif %}" data-media-id="{{ media.id }}" data-index="{{ forloop.index0 }}" role="tabpanel">
                 {%- case media.media_type -%}
                   {%- when 'image' -%}
-                    <img src="{{ media | image_url: width: 1200 }}" srcset="{{ media | image_url: width: 1200 }} 1200w, {{ media | image_url: width: 800 }} 800w, {{ media | image_url: width: 600 }} 600w" sizes="(min-width: 1024px) 55vw, 100vw" alt="{{ media.alt | default: product.title | escape }}" loading="{% if media == featured_media %}eager{% else %}lazy{% endif %}"{% if media == featured_media %} fetchpriority="high"{% endif %} decoding="async" width="{{ media.width }}" height="{{ media.height }}" class="media-gallery__image">
+                    <img src="{{ media | image_url: width: 1200 }}" srcset="{{ media | image_url: width: 1400 }} 1400w, {{ media | image_url: width: 1000 }} 1000w, {{ media | image_url: width: 700 }} 700w" sizes="(min-width: 990px) 60vw, 100vw" alt="{{ media.alt | default: product.title | escape }}" loading="{% if media == featured_media %}eager{% else %}lazy{% endif %}"{% if media == featured_media %} fetchpriority="high"{% endif %} decoding="async" crossorigin="anonymous" width="{{ media.width }}" height="{{ media.height }}" class="media-gallery__image">
                   {%- when 'external_video' -%}
                     <div class="media-gallery__video" data-video-url="{{ media | external_video_url }}">
                       <button type="button" class="media-gallery__play" aria-label="Play video"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
-                      <img src="{{ media.preview_image | image_url: width: 1200 }}" alt="{{ media.alt | escape }}" loading="{% if media == featured_media %}eager{% else %}lazy{% endif %}"{% if media == featured_media %} fetchpriority="high"{% endif %} width="{{ media.preview_image.width }}" height="{{ media.preview_image.height }}">
+                      <img src="{{ media.preview_image | image_url: width: 1200 }}" alt="{{ media.alt | escape }}" loading="{% if media == featured_media %}eager{% else %}lazy{% endif %}"{% if media == featured_media %} fetchpriority="high"{% endif %} crossorigin="anonymous" width="{{ media.preview_image.width }}" height="{{ media.preview_image.height }}">
                     </div>
                   {%- else -%}
-                    <img src="{{ media.preview_image | image_url: width: 1200 }}" alt="{{ media.alt | escape }}" loading="lazy" width="{{ media.preview_image.width }}" height="{{ media.preview_image.height }}" class="media-gallery__image">
+                    <img src="{{ media.preview_image | image_url: width: 1200 }}" alt="{{ media.alt | escape }}" loading="lazy" crossorigin="anonymous" width="{{ media.preview_image.width }}" height="{{ media.preview_image.height }}" class="media-gallery__image">
                 {%- endcase -%}
               </div>
             {%- endfor -%}

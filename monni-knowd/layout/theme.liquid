@@ -17,7 +17,8 @@
           {{ product.featured_media | image_url: width: 800, format: 'webp' }} 800w,
           {{ product.featured_media | image_url: width: 1200, format: 'webp' }} 1200w
         "
-        imagesizes="(min-width: 1024px) 55vw, 100vw"
+        imagesizes="(min-width: 990px) 60vw, 100vw"
+        crossorigin="anonymous"
         fetchpriority="high"
       >
     {% endif %}

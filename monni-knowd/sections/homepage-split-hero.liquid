@@ -7,6 +7,7 @@
   <a
     href="{{ section.settings.link_left | default: '/collections/clothing' }}"
     class="split-hero__panel split-hero__panel--left"
+    data-bg="dark"
     aria-label="{{ section.settings.label_left | default: 'Clothing' | escape }} — {{ section.settings.cta_left | default: 'Explore' | escape }}"
   >
     <div class="split-hero__fallback split-hero__fallback--left"></div>
@@ -25,7 +26,7 @@
         lcp: true
       %}
     {% else %}
-      <img
+      <img crossorigin="anonymous"
         src="https://images.unsplash.com/photo-1556905055-8f358fab1e7d?w=800&h=1000&fit=crop&q=80"
         srcset="https://images.unsplash.com/photo-1556905055-8f358fab1e7d?w=400&h=500&fit=crop&q=80 400w, https://images.unsplash.com/photo-1556905055-8f358fab1e7d?w=800&h=1000&fit=crop&q=80 800w"
         sizes="50vw"
@@ -45,6 +46,7 @@
   <a
     href="{{ section.settings.link_right | default: '/collections/all-home' }}"
     class="split-hero__panel split-hero__panel--right"
+    data-bg="light"
     aria-label="{{ section.settings.label_right | default: 'Home' | escape }} — {{ section.settings.cta_right | default: 'Explore' | escape }}"
   >
     <div class="split-hero__fallback split-hero__fallback--right"></div>
@@ -65,7 +67,7 @@
         lazy_below_mobile: true
       %}
     {% else %}
-      <img
+      <img crossorigin="anonymous"
         src="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=400&h=500&fit=crop&q=80"
         srcset="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=400&h=500&fit=crop&q=80 400w, https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=800&h=1000&fit=crop&q=80 800w"
         sizes="100vw"
@@ -77,7 +79,7 @@
         height="1000"
         class="split-hero__image split-hero__image--below-fold-mobile"
       >
-      <img
+      <img crossorigin="anonymous"
         src="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=800&h=1000&fit=crop&q=80"
         srcset="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=400&h=500&fit=crop&q=80 400w, https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?w=800&h=1000&fit=crop&q=80 800w"
         sizes="50vw"

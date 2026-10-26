@@ -17,6 +17,13 @@ class ProductPage {
     this.initGallery();
     this.initVariantSelector();
     this.initQuantitySelector();
+    this.markMadeIn();
+  }
+
+  markMadeIn() {
+    this.productPage.querySelectorAll('.product-page__fold-body p, .product-page__fold-body em').forEach((el) => {
+      if (/^\s*made in\b/i.test(el.textContent || '')) el.classList.add('product-page__madein');
+    });
   }
 
   parseVariants() {
@@ -67,7 +74,7 @@ class ProductPage {
     }
 
     // Zoom stays on desktop. Phone uses the sideways swipe.
-    if (mainGallery && window.matchMedia('(min-width: 1024px)').matches) {
+    if (mainGallery && window.matchMedia('(min-width: 990px)').matches) {
       mainGallery.addEventListener('click', () => {
         const activeSlide = gallery.querySelector('.media-gallery__slide.is-active');
         if (activeSlide) {
@@ -154,7 +161,7 @@ class ProductPage {
     lineEls[index]?.classList.add('is-active');
 
     const main = gallery?.querySelector('.media-gallery__main');
-    if (main && window.matchMedia('(max-width: 1023px)').matches) {
+    if (main && window.matchMedia('(max-width: 989px)').matches) {
       main.scrollTo({ left: main.clientWidth * index, behavior: 'smooth' });
     }
   }
