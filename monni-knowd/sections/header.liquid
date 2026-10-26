@@ -1547,6 +1547,13 @@
       return darkW >= lightW ? { ink: 'light', scrim: false } : { ink: 'dark', scrim: false };
     }
 
+    function withScrim(decision, L) {
+      if (!decision || L == null) return decision;
+      var inkL = decision.ink === 'light' ? 0.903 : 0.0284;
+      if (contrast(L, inkL) >= 4.5) return { ink: decision.ink, scrim: false };
+      return { ink: decision.ink, scrim: true };
+    }
+
     function decide(x0, x1, y0, y1) {
       var declared = declaredInk(x0, x1, y1);
       var width = Math.max(1, x1 - x0);
@@ -1557,8 +1564,8 @@
         if (r.width < 2 || r.bottom < 4 || r.top > y1) continue;
         cover += Math.max(0, Math.min(x1, r.right) - Math.max(x0, r.left));
       }
-      if (declared && cover / width >= 0.6) return declared;
       var L = sampleLuminance(x0, x1, y0, y1);
+      if (declared && cover / width >= 0.6) return withScrim(declared, L);
       if (L != null) return inkFromL(L);
       return declared || { ink: 'dark', scrim: false };
     }
@@ -1593,8 +1600,7 @@
       el.style.setProperty('--ink-l', left.ink === 'light' ? '#f5f4f1' : '#2f2f2f');
       el.style.setProperty('--ink-r', right.ink === 'light' ? '#f5f4f1' : '#2f2f2f');
       el.style.setProperty('--logo-split', pct.toFixed(2) + '%');
-      if (left.scrim || right.scrim) el.setAttribute('data-scrim', 'true');
-      else el.removeAttribute('data-scrim');
+      el.removeAttribute('data-scrim');
     }
 
     function paintInk() {

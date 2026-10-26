@@ -76,13 +76,20 @@ button.btn,
   cursor: pointer;
 }
 
-.product-page__add-to-cart,
-.cart-drawer__checkout-btn,
-button[name="checkout"] {
+button.btn.product-page__add-to-cart,
+button.btn.cart-drawer__checkout-btn,
+button.btn[name="checkout"] {
   background: #000;
   color: #f5f4f1;
   border-color: #000;
   width: 100%;
+}
+
+button.btn.product-page__add-to-cart:hover:not(:disabled),
+button.btn.cart-drawer__checkout-btn:hover:not(:disabled),
+button.btn[name="checkout"]:hover:not(:disabled) {
+  background: #000;
+  color: #f5f4f1;
 }
 
 .product-page__variant-swatch {
