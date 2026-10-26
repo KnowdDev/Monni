@@ -219,10 +219,17 @@
   }
 
   @media (min-width: 768px) {
-    .split-hero__overlay,
-    .split-hero__panel--left .split-hero__overlay,
-    .split-hero__panel--right .split-hero__overlay {
+    .split-hero__panel--left .split-hero__overlay {
       background: var(--shade-top), var(--shade-bottom), rgba(var(--hero-shade), 0.06);
+    }
+
+    /* Right half is a light photograph with dark header ink. A dark top shade
+       would drop that ink under 4.5:1, so the top shade stays cream. */
+    .split-hero__panel--right .split-hero__overlay {
+      background:
+        linear-gradient(to bottom, rgba(245, 244, 241, 0.5) 0, rgba(245, 244, 241, 0) 9.5rem),
+        var(--shade-bottom),
+        rgba(245, 244, 241, 0.05);
     }
   }
 
