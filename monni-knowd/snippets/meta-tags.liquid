@@ -37,19 +37,19 @@
     assign seo_desc = collection.metafields.monni.seo_description.value | default: collection.metafields.monni.seo_description | default: collection.seo.description
   -%}
   {%- if collection.handle == 'fragrance' and seo_title == blank -%}
-    {%- assign seo_title = 'Botanical Fragrance | Natural Perfume | MONNI' -%}
+    {%- assign seo_title = 'Botanical Fragrance | Natural Perfume' -%}
   {%- endif -%}
   {%- if collection.handle == 'fragrance' and seo_desc == blank -%}
-    {%- assign seo_desc = 'Shop botanical perfumes and oils at MONNI. Fragrance from independent perfumers working with raw plant materials, worn softly and remembered long after.' -%}
+    {%- assign seo_desc = 'Shop botanical perfumes and oils at Tea & Tonic. Fragrance from independent perfumers working with raw plant materials, worn softly and remembered long after.' -%}
   {%- endif -%}
   {%- if collection.handle == 'clothing' and seo_title == blank -%}
-    {%- assign seo_title = 'Natural Fibre Clothing | Silk, Linen, Cotton | MONNI' -%}
+    {%- assign seo_title = 'Natural Fibre Clothing | Silk, Linen, Cotton' -%}
   {%- endif -%}
   {%- if collection.handle == 'clothing' and seo_desc == blank -%}
-    {%- assign seo_desc = 'Shop silk, linen, cotton and merino clothing at MONNI. Natural fibres chosen long before slow fashion became a conversation, led by MONNI Label.' -%}
+    {%- assign seo_desc = 'Shop silk, linen, cotton and merino clothing at Tea & Tonic. Natural fibres chosen long before slow fashion became a conversation, led by MONNI Label.' -%}
   {%- endif -%}
   {%- if seo_title == blank -%}
-    {%- assign seo_title = collection.title | append: ' | MONNI' -%}
+    {%- assign seo_title = collection.title | replace: 'Tea & Tonic Matakana', '' | strip -%}
   {%- endif -%}
   {%- capture seo_title -%}{%- render 'monni-line-label', text: seo_title -%}{%- endcapture -%}
   {%- assign seo_title = seo_title | strip -%}
@@ -59,7 +59,7 @@
       {{ collection.metafields.monni.bottom_intro | metafield_tag }}
     {%- endcapture -%}
     {%- assign collection_bottom = collection_bottom | replace: '</p>', ' ' | strip_html | strip | replace: '  ', ' ' -%}
-    {%- assign seo_desc = collection_top | append: ' ' | append: collection_bottom | strip | replace: '—', ', ' | replace: '–', ', ' | truncate: 158 -%}
+    {%- assign seo_desc = collection_top | append: ' ' | append: collection_bottom | strip | replace: '—', ', ' | replace: '–', ', ' | truncatewords: 28, '' -%}
   {%- endif -%}
   {%- capture seo_desc -%}{%- render 'monni-line-label', text: seo_desc -%}{%- endcapture -%}
   {%- assign seo_desc = seo_desc | strip -%}
@@ -75,16 +75,16 @@
     assign brand_tagline = metaobject.tagline.value | default: metaobject.tagline
   -%}
   {%- if seo_title == blank and brand_name != blank -%}
-    {%- assign seo_title = brand_name | append: ' | MONNI' -%}
+    {%- assign seo_title = brand_name -%}
   {%- endif -%}
   {%- if seo_desc == blank and brand_tagline != blank -%}
-    {%- assign seo_desc = brand_tagline | append: ' Shop at MONNI, Matakana.' | replace: '—', ', ' | replace: '–', ', ' | truncate: 158 -%}
+    {%- assign seo_desc = brand_tagline | append: ' Shop at Tea & Tonic, Matakana.' | replace: '—', ', ' | replace: '–', ', ' | truncatewords: 28, '' -%}
   {%- endif -%}
   {%- if seo_desc == blank -%}
     {%- capture brand_body -%}
       {{ metaobject.description | metafield_tag }}
     {%- endcapture -%}
-    {%- assign seo_desc = brand_body | strip_html | strip | replace: '—', ', ' | replace: '–', ', ' | truncate: 158 -%}
+    {%- assign seo_desc = brand_body | strip_html | strip | replace: '—', ', ' | replace: '–', ', ' | truncatewords: 28, '' -%}
   {%- endif -%}
   {%- capture seo_title -%}{%- render 'monni-line-label', text: seo_title -%}{%- endcapture -%}
   {%- assign seo_title = seo_title | strip -%}
@@ -99,25 +99,25 @@
     {%- assign meta_description = seo_desc -%}
   {%- endif -%}
 {%- elsif request.page_type == 'page' and page.handle == 'brands' -%}
-  {%- assign page_title = 'Shop by Brand | Independent Makers | MONNI' -%}
+  {%- assign page_title = 'Our Brands' -%}
   {%- assign og_title = page_title -%}
-  {%- assign meta_description = 'Discover the makers behind MONNI. Independent brands chosen for quality, integrity and the rituals of everyday wellbeing. Shop by brand in Matakana, NZ.' -%}
+  {%- assign meta_description = 'Behind every brand is a maker who creates with heart, cares for the earth and works with intention.' -%}
   {%- assign seo_title_custom = true -%}
 {%- elsif request.page_type == 'page' -%}
   {%- liquid
     case page.handle
       when 'corporate-gifting'
-        assign page_title = 'Corporate Gifting | Tea & Tonic Matakana'
+        assign page_title = 'Corporate Gifting'
         assign meta_description = 'Thoughtful corporate gifts from Matakana. Natural wellbeing, beauty and home gifts, beautifully wrapped and delivered across New Zealand.'
         assign og_title = page_title
         assign seo_title_custom = true
       when 'contact'
-        assign page_title = 'Contact | Tea & Tonic Matakana'
+        assign page_title = 'Contact'
         assign meta_description = 'Contact Tea & Tonic in Matakana Village. Visit us at 2 Matakana Valley Road, call 09 422 9083 or email hello@teaandtonic.co.nz.'
         assign og_title = page_title
         assign seo_title_custom = true
       when 'shop'
-        assign page_title = 'Shop Beauty, Clothing & Gifts | Tea & Tonic Matakana'
+        assign page_title = 'The Collection'
         assign meta_description = 'Shop natural beauty, clothing, jewellery, tea, ceramics, art and gifts at Tea & Tonic, with many women-led and NZ-made brands. Free shipping over $250.'
         assign og_title = page_title
         assign seo_title_custom = true
@@ -128,34 +128,34 @@
     assign policy_handle = request.path | split: '/' | last
     case policy_handle
       when 'shipping-policy'
-        assign page_title = 'Shipping & Delivery | Tea & Tonic Matakana'
+        assign page_title = 'Shipping + Delivery'
         assign meta_description = 'Shipping, delivery and Click + Collect at Tea & Tonic Matakana. Free NZ shipping over $250. Most parcels arrive in two to five working days.'
         assign og_title = page_title
         assign seo_title_custom = true
       when 'refund-policy'
-        assign page_title = 'Returns Policy | Tea & Tonic Matakana'
+        assign page_title = 'Returns'
         assign meta_description = 'Returns, exchanges and store credit at Tea & Tonic. Timeframes, change of mind rules and your rights under the Consumer Guarantees Act.'
         assign og_title = page_title
         assign seo_title_custom = true
       when 'privacy-policy'
-        assign page_title = 'Privacy Policy | Tea & Tonic Matakana'
+        assign page_title = 'Privacy Policy'
         assign meta_description = 'How Tea & Tonic collects, uses and protects your personal information when you shop online or in our Matakana store.'
         assign og_title = page_title
         assign seo_title_custom = true
       when 'terms-of-service'
-        assign page_title = 'Terms & Conditions | Tea & Tonic Matakana'
-        assign meta_description = 'Terms and conditions for shopping at Tea & Tonic Matakana, covering orders, pricing, shipping, product care and use of our website.'
+        assign page_title = 'Terms + Conditions'
+        assign meta_description = 'Terms and conditions for shopping at Tea & Tonic, covering orders, pricing, shipping, product care and use of our website.'
         assign og_title = page_title
         assign seo_title_custom = true
     endcase
   -%}
 {%- endif -%}
 
-{%- assign og_description = meta_description | replace: '—', ', ' | replace: '–', ', ' -%}
+{%- assign og_description = meta_description | replace: '—', ', ' | replace: '–', ', ' | replace: 'Tea & Tonic Matakana', 'Tea & Tonic' | truncatewords: 28, '' -%}
 
 <meta
   property="og:site_name"
-  content="MONNI"
+  content="Tea & Tonic"
 >
 <meta
   property="og:url"
@@ -238,19 +238,16 @@
 {%- endif -%}
 
 {%- liquid
-  assign hide_shop_suffix = seo_title_custom
-  if page_title contains 'MONNI'
-    assign hide_shop_suffix = true
-  endif
-  if page_title contains shop.name
-    assign hide_shop_suffix = true
+  assign trading_name = 'Tea & Tonic'
+  assign page_title = page_title | replace: ' | MONNI', '' | replace: '| MONNI', '' | replace: ' | Tea & Tonic Matakana', '' | replace: 'Tea & Tonic Matakana', 'Tea & Tonic' | replace: ' | Tea & Tonic', '' | strip
+  if page_title == blank
+    assign page_title = trading_name
   endif
 -%}
 <title>
-  {{ page_title }}
+  {{ page_title | strip }} | {{ trading_name }}
   {%- if current_tags %} | tagged {{ current_tags | join: ', ' }}{% endif -%}
   {%- if current_page != 1 %} | Page {{ current_page }}{% endif -%}
-  {%- unless hide_shop_suffix %} | {{ shop.name }}{% endunless -%}
 </title>
 
 <link

@@ -406,19 +406,19 @@
 }
 
 :root {
-  --color-background: #F8F6F4;
-  --color-background-alt: #FFFFFF;
-  --color-foreground: #3D3D3D;
-  --color-foreground-light: #6B6B6B;
-  --color-foreground-muted: #6F6B6B;
+  --color-background: #f5f4f1;
+  --color-background-alt: #ede8df;
+  --color-foreground: #2f2f2f;
+  --color-foreground-light: #6b6965;
+  --color-foreground-muted: #6b6965;
 
-  --color-accent: #C4B8A8;
-  --color-accent-light: #D9D0C4;
-  --color-accent-dark: #A89A8A;
+  --color-accent: #dcd9d3;
+  --color-accent-light: #ede8df;
+  --color-accent-dark: #6b6965;
 
-  --color-border: #E5E0DC;
-  --color-border-light: #F0EBE7;
-  --color-error: #C44B4B;
+  --color-border: #dcd9d3;
+  --color-border-light: #ede8df;
+  --color-error: #2f2f2f;
 
   /* Aliases used by card-product and related components */
   --color-ink: var(--color-foreground);

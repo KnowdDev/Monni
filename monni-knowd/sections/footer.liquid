@@ -4,24 +4,22 @@
       <div>
         <p class="footer__heading">Customer Care</p>
         <ul class="footer__menu">
-          <li><a href="/pages/contact">Contact</a></li>
-          <li><a href="/policies/shipping-policy">Shipping + Delivery</a></li>
-          <li><a href="/policies/refund-policy">Returns</a></li>
-          {%- if pages['start-a-return'] != blank and pages['start-a-return'].content != blank -%}
-            <li><a href="/pages/start-a-return">Start a Return</a></li>
-          {%- endif -%}
+          <li><a href="/pages/contact"{% if request.path == '/pages/contact' %} aria-current="page"{% endif %}>Contact</a></li>
+          <li><a href="/policies/shipping-policy"{% if request.path == '/policies/shipping-policy' %} aria-current="page"{% endif %}>Shipping + Delivery</a></li>
+          <li><a href="/policies/refund-policy"{% if request.path == '/policies/refund-policy' %} aria-current="page"{% endif %}>Returns</a></li>
+          <li><a href="/pages/start-a-return"{% if request.path == '/pages/start-a-return' %} aria-current="page"{% endif %}>Start a Return</a></li>
         </ul>
       </div>
       <div>
         <p class="footer__heading">Info</p>
         <ul class="footer__menu">
-          <li><a href="/pages/brands">Brands</a></li>
-          <li><a href="/blogs/journal">Journal</a></li>
-          <li><a href="/pages/about">About</a></li>
-          <li><a href="/collections/gift-card">Gift Card</a></li>
-          <li><a href="/pages/size-guide">Size Guide</a></li>
-          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
-          <li><a href="/policies/terms-of-service">Terms + Conditions</a></li>
+          <li><a href="/pages/brands"{% if request.path == '/pages/brands' %} aria-current="page"{% endif %}>Brands</a></li>
+          <li><a href="/blogs/journal"{% if request.page_type == 'blog' or request.page_type == 'article' %} aria-current="page"{% endif %}>Journal</a></li>
+          <li><a href="/pages/about"{% if request.path == '/pages/about' %} aria-current="page"{% endif %}>About</a></li>
+          <li><a href="/products/gift-card"{% if request.path == '/products/gift-card' %} aria-current="page"{% endif %}>Gift Card</a></li>
+          <li><a href="/pages/size-guide"{% if request.path == '/pages/size-guide' %} aria-current="page"{% endif %}>Size Guide</a></li>
+          <li><a href="/policies/privacy-policy"{% if request.path == '/policies/privacy-policy' %} aria-current="page"{% endif %}>Privacy Policy</a></li>
+          <li><a href="/policies/terms-of-service"{% if request.path == '/policies/terms-of-service' %} aria-current="page"{% endif %}>Terms + Conditions</a></li>
         </ul>
       </div>
       <div class="footer__store">
@@ -39,8 +37,7 @@
         <p><a class="footer__visit" href="https://maps.google.com/?q=5A+2+Matakana+Valley+Road+Matakana" target="_blank" rel="noopener">Visit us</a></p>
         <p>
           <a href="mailto:{{ settings.contact_email | default: 'hello@teaandtonic.co.nz' }}">{{ settings.contact_email | default: 'hello@teaandtonic.co.nz' }}</a><br>
-          {% assign footer_phone = settings.contact_phone | default: '09 422 9083' %}
-          <a href="tel:{{ footer_phone | replace: ' ', '' }}">{{ footer_phone }}</a>
+          <a href="tel:+6494229083">{{ settings.contact_phone | default: '09 422 9083' }}</a>
         </p>
       </div>
       <div>
@@ -62,15 +59,9 @@
           {% endif %}
         {% endform %}
         <p class="footer__social">
-          {% if settings.social_instagram_link != blank %}
-            <a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener">Instagram</a>
-          {% endif %}
-          {% if settings.social_instagram_link != blank and settings.social_facebook_link != blank %}
-            <span aria-hidden="true"> &nbsp;.&nbsp; </span>
-          {% endif %}
-          {% if settings.social_facebook_link != blank %}
-            <a href="{{ settings.social_facebook_link }}" target="_blank" rel="noopener">Facebook</a>
-          {% endif %}
+          <a href="{{ settings.social_instagram_link | default: 'https://www.instagram.com/teaandtonicmatakana/' }}" target="_blank" rel="noopener">Instagram</a>
+          <span aria-hidden="true"> &nbsp;.&nbsp; </span>
+          <a href="{{ settings.social_facebook_link | default: 'https://www.facebook.com/teaandtonicmatakana' }}" target="_blank" rel="noopener">Facebook</a>
         </p>
       </div>
     </div>
@@ -130,6 +121,7 @@
 
   .footer a { color: inherit; text-decoration: none; }
   .footer__menu a:hover { color: #2f2f2f; }
+  .footer__menu a[aria-current="page"] { color: #2f2f2f; text-decoration: underline; text-underline-offset: 4px; }
 
   .footer__store p { margin: 0 0 1rem; line-height: 1.9; }
   .footer__store p.footer__heading { margin-bottom: 1rem; line-height: 1.4; }

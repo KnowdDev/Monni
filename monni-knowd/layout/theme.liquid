@@ -31,11 +31,6 @@
 
     {% if template.name == 'index' %}
       {% render 'critical-home' %}
-    {% else %}
-      {% unless settings.type_primary_font.system? %}
-        <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-        {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
-      {% endunless %}
     {% endif %}
 
     {% comment %}
@@ -44,8 +39,10 @@
     {% endcomment %}
     {% if template.name == 'index' %}
       {% render 'stylesheet-async', asset: 'critical.css' %}
+      {% render 'stylesheet-async', asset: 'tt-final.css' %}
     {% else %}
       {{ 'critical.css' | asset_url | stylesheet_tag }}
+      {{ 'tt-final.css' | asset_url | stylesheet_tag }}
     {% endif %}
 
     {% # Social, title, etc. %}
@@ -73,7 +70,7 @@
     {% endif %}
   </head>
 
-  <body class="template-{{ template.name | handle }}{% if template.suffix %} template-{{ template.name | handle }}-{{ template.suffix | handle }}{% endif %}">
+  <body class="template-{{ template.name | handle }}{% if template.suffix %} template-{{ template.name | handle }}-{{ template.suffix | handle }}{% endif %}{% if page.handle %} page-{{ page.handle }}{% endif %}{% if product.gift_card? %} product-gift-card{% endif %}">
     {% render 'attribution-bootstrap' %}
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -96,10 +93,6 @@
 
     {% section 'cart-drawer' %}
 
-    {% if template.name == 'index' and settings.newsletter_popup_enable %}
-      {% render 'newsletter-popup' %}
-    {% endif %}
-
     {% # PostHog — after window.load; recorder/surveys/decide disabled %}
     {% render 'posthog' %}
 
@@ -119,29 +112,9 @@
       <script src="{{ 'senderkit-newsletter.js' | asset_url }}" defer></script>
     {% endif %}
 
-  {% if template.name == 'index' %}
-    <script>
-      (function () {
-        function loadDeferredScript(src) {
-          var s = document.createElement('script');
-          s.src = src;
-          s.defer = true;
-          document.body.appendChild(s);
-        }
-        function loadIdleScripts() {
-          loadDeferredScript({{ 'newsletter-popup.js' | asset_url | json }});
-          loadDeferredScript({{ 'animations.js' | asset_url | json }});
-        }
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(loadIdleScripts, { timeout: 3000 });
-        } else {
-          window.addEventListener('load', loadIdleScripts, { once: true });
-        }
-      })();
-    </script>
-  {% else %}
+  {% unless template.name == 'index' %}
     <script src="{{ 'animations.js' | asset_url }}" defer></script>
-  {% endif %}
+  {% endunless %}
 
     <script src="{{ 'cart-drawer.js' | asset_url }}&fs=250" defer></script>
 

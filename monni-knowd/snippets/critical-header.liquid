@@ -34,13 +34,17 @@
   .shopify-section.shopify-section-group-header-group { display: contents; }
 
   .header {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 101;
-    width: 100vw;
-    margin-inline: calc(50% - 50vw);
-    overflow-x: clip;
+    width: 100%;
+    overflow: visible;
   }
+
+  body { padding-top: 64px; }
+  body:has(.header--over-photo) { padding-top: 0; }
 
   .header__announcement {
     width: 100%;
@@ -95,12 +99,14 @@
   }
 
   .header__logo-text {
-    font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
-    font-size: 1.125rem;
-    letter-spacing: 0.12em;
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 1.12rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     text-decoration: none;
-    color: inherit;
+    color: #2f2f2f;
+    white-space: nowrap;
   }
 
   .header__menu,

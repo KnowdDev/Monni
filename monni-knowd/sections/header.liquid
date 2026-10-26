@@ -1,9 +1,3 @@
-{% if section.settings.announcement_text != blank %}
-  <div class="header__announcement" data-section-id="{{ section.id }}--announcement">
-    <span class="header__announcement-text">{{ section.settings.announcement_text | escape }}</span>
-  </div>
-{% endif %}
-
 <style>
   .header__mega-panel[hidden],
   .header__drawer[hidden],
@@ -15,8 +9,17 @@
   }
 </style>
 
+{%- liquid
+  assign header_over_photo = false
+  if template.name == 'index' or template.name == 'product'
+    assign header_over_photo = true
+  endif
+  if page.handle == 'contact'
+    assign header_over_photo = true
+  endif
+-%}
 <header
-  class="header{% if template.name == 'index' %} header--overlay{% endif %}"
+  class="header{% if header_over_photo %} header--over-photo{% endif %}"
   data-section-id="{{ section.id }}"
   data-header-root
   data-header-breakpoint="1160"
@@ -108,25 +111,8 @@
       </div>
 
       <div class="header__logo">
-        <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}" class="header__logo-link">
-          {% if settings.logo != blank %}
-            <img
-              src="{{ settings.logo | image_url: width: settings.logo_width }}"
-              srcset="
-                {{ settings.logo | image_url: width: 400 }} 400w,
-                {{ settings.logo | image_url: width: settings.logo_width }} {{ settings.logo_width }}w
-              "
-              sizes="(max-width: 400px) 100vw, {{ settings.logo_width }}px"
-              alt="{{ shop.name | escape }}"
-              width="{{ settings.logo_width }}"
-              height="{{ settings.logo_width | divided_by: settings.logo.aspect_ratio | round }}"
-              class="header__logo-img"
-              loading="eager"
-              {% if template.name == 'index' %}fetchpriority="low"{% endif %}
-            >
-          {% else %}
-            <span class="header__logo-text">{{ shop.name | escape }}</span>
-          {% endif %}
+        <a href="{{ routes.root_url }}" aria-label="Tea &amp; Tonic" class="header__logo-link">
+          <span class="header__logo-text">Tea &amp; Tonic</span>
         </a>
       </div>
 
@@ -185,17 +171,7 @@
     <div class="header__drawer-panel">
       <div class="header__drawer-top">
         <a href="{{ routes.root_url }}" class="header__drawer-brand" id="header-drawer-title-{{ section.id }}">
-          {% if settings.logo != blank %}
-            <img
-              src="{{ settings.logo | image_url: width: 220 }}"
-              alt="{{ shop.name | escape }}"
-              width="{{ settings.logo_width }}"
-              height="{{ settings.logo_width | divided_by: settings.logo.aspect_ratio | round }}"
-              class="header__logo-img"
-            >
-          {% else %}
-            <span class="header__logo-text">{{ shop.name | escape }}</span>
-          {% endif %}
+          <span class="header__logo-text">Tea &amp; Tonic</span>
         </a>
 
         <button
@@ -287,14 +263,21 @@
   }
 
   .header {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 101;
-    width: 100vw;
-    margin-inline: calc(50% - 50vw);
-    /* Keep overflow visible so the mega panel (absolutely positioned below the bar)
-       stays hoverable — overflow-x: clip/hidden forces overflow-y to auto and breaks Safari hit-testing. */
+    width: 100%;
     overflow: visible;
+  }
+
+  body {
+    padding-top: 64px;
+  }
+
+  body:has(.header--over-photo) {
+    padding-top: 0;
   }
 
   .header__shell {
@@ -308,12 +291,17 @@
 
   .shopify-section.shopify-section-group-header-group { display: contents; }
 
-  /* Floating header (Marle-style): no bar. The logo and links float over the page on
-     every template and stay in view while scrolling. Each zone (menu, logo, utilities)
-     switches between dark and light ink depending on what is directly beneath it
-     (photo or dark section = light ink, otherwise dark ink) — see the script below. */
-  .header--overlay {
-    margin-bottom: calc(-1 * var(--header-overlay-offset, 5rem));
+  .header:not(.header--over-photo) .header__shell,
+  .header--over-photo.is-solid .header__shell,
+  .header.is-open .header__shell,
+  .header.header--menu-open .header__shell {
+    background: #f5f4f1;
+    border-bottom-color: #dcd9d3;
+  }
+
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__shell {
+    background: transparent;
+    border-bottom-color: transparent;
   }
 
   .header [data-tone="light"] {
@@ -471,11 +459,13 @@
   }
 
   .header__logo-text {
-    font-family: var(--font-heading--family);
-    font-size: 1.35rem;
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1.12rem;
     font-weight: 300;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    color: #2f2f2f;
+    white-space: nowrap;
   }
 
   .header__logo-svg {
@@ -1273,8 +1263,10 @@
       display: inline-flex;
       flex-shrink: 0;
       white-space: nowrap;
-      font-size: 0.6875rem;
-      letter-spacing: 0.12em;
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #2f2f2f;
     }
 
     .header__side--end {
@@ -1305,26 +1297,16 @@
     }
   }
 
-  @media (max-width: 430px) {
+  @media (max-width: 389px) {
+    .header__inner { padding-left: 14px; padding-right: 14px; }
+    .header__logo-text { font-size: 1rem; letter-spacing: 0.12em; }
     .header__mobile-cart,
-    .header__mobile-search {
-      font-size: 0.625rem;
-      letter-spacing: 0.08em;
-    }
+    .header__mobile-search { font-size: 0.62rem; letter-spacing: 0.06em; }
+    .header__side--end { gap: 8px; }
   }
 
-  @media (max-width: 360px) {
-    .header__inner { column-gap: 0.4rem; }
-    .header__side--end { gap: 0.45rem; }
-    .header__mobile-cart,
-    .header__mobile-search { letter-spacing: 0.04em; }
-    .header__logo .header__logo-img { max-width: 4.4rem; }
-  }
-
-  @media (max-width: 340px) {
-    .header__mobile-cart,
-    .header__mobile-search { font-size: 0.58rem; letter-spacing: 0.02em; }
-    .header__logo .header__logo-img { max-width: 3.9rem; }
+  @media (max-width: 339px) {
+    .header__logo-text { font-size: 0.92rem; }
   }
 
   @media (max-width: 767px) {
@@ -1400,72 +1382,32 @@
   (function () {
     var hdr = document.querySelector('[data-header-root]');
     if (!hdr) return;
-    var shell = hdr.querySelector('.header__shell');
-    var zones = hdr.querySelectorAll('.header__side--start, .header__logo, .header__side--end');
     var ticking = false;
 
-    function lum(rgb) {
-      var m = rgb.match(/[\d.]+/g);
-      if (!m) return 1;
-      return (0.2126 * m[0] + 0.7152 * m[1] + 0.0722 * m[2]) / 255;
-    }
-
-    // Tone for one point: look through transparent layers to the first photo or opaque background.
-    function toneAt(x, y) {
-      var stack = document.elementsFromPoint(x, y);
-      for (var i = 0; i < stack.length; i++) {
-        var el = stack[i];
-        if (hdr.contains(el) || el.classList.contains('header__announcement')) continue;
-        var tag = el.tagName;
-        if (tag === 'IMG' || tag === 'VIDEO' || tag === 'PICTURE' || tag === 'CANVAS') return 'light';
-        var cs = getComputedStyle(el);
-        if (cs.backgroundImage && cs.backgroundImage !== 'none' && cs.backgroundImage.indexOf('url(') > -1) return 'light';
-        var bg = cs.backgroundColor;
-        var alpha = bg.indexOf('rgba') === 0 ? parseFloat(bg.split(',')[3]) : 1;
-        if (bg !== 'transparent' && alpha > 0.6) return lum(bg) < 0.45 ? 'light' : 'dark';
-      }
-      return 'dark';
-    }
-
-    function zoneTone(zone) {
-      var r = zone.getBoundingClientRect();
-      if (!r.width) return 'dark';
-      var y = Math.min(window.innerHeight - 1, Math.max(0, r.top + r.height / 2));
-      var xs = [r.left + 4, r.left + r.width / 2, r.right - 4];
-      for (var i = 0; i < xs.length; i++) {
-        var x = Math.min(window.innerWidth - 1, Math.max(0, xs[i]));
-        if (toneAt(x, y) === 'light') return 'light';
-      }
-      return 'dark';
-    }
-
-    function tone() {
-      ticking = false;
-      zones.forEach(function (z) {
-        var t = zoneTone(z);
-        if (z.getAttribute('data-tone') !== t) z.setAttribute('data-tone', t);
-      });
-    }
-
-    function schedule() {
-      if (!ticking) { ticking = true; requestAnimationFrame(tone); }
+    function solidNow() {
+      var menuOpen = hdr.classList.contains('header--menu-open') || hdr.classList.contains('is-open') || !!hdr.querySelector('.is-shop-open');
+      if (!hdr.classList.contains('header--over-photo') || menuOpen) return true;
+      var photo = document.querySelector('[data-header-photo]');
+      if (!photo) return true;
+      var bar = hdr.getBoundingClientRect().bottom;
+      return photo.getBoundingClientRect().bottom <= bar + 1;
     }
 
     function update() {
-      if (hdr.classList.contains('header--overlay')) {
-        var h = shell ? shell.offsetHeight : hdr.offsetHeight;
-        hdr.style.setProperty('--header-overlay-offset', h + 'px');
-      }
-      hdr.classList.toggle('is-open', !!hdr.querySelector('.is-shop-open'));
-      schedule();
+      ticking = false;
+      hdr.classList.toggle('is-open', !!hdr.querySelector('.is-shop-open') || hdr.classList.contains('header--menu-open'));
+      hdr.classList.toggle('is-solid', solidNow());
+    }
+
+    function schedule() {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
     }
 
     window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', update);
+    window.addEventListener('resize', schedule);
     document.addEventListener('DOMContentLoaded', update);
     window.addEventListener('load', update);
-    // Shop mega menu toggles .is-shop-open on its item; mirror it onto the header.
-    new MutationObserver(update).observe(hdr, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    new MutationObserver(schedule).observe(hdr, { subtree: true, attributes: true, attributeFilter: ['class'] });
     update();
   })();
   document.querySelectorAll('[data-header-menu-toggle]').forEach(function(el) {

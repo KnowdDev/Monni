@@ -6,7 +6,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": {{ shop.name | json }},
+  "name": "Tea & Tonic",
   "url": {{ shop.url | json }},
   {%- if settings.logo -%}
     "logo": {{ settings.logo | image_url: width: 500 | prepend: 'https:' | json }},
@@ -27,7 +27,7 @@
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": {{ shop.name | json }},
+  "name": "Tea & Tonic",
   "url": {{ shop.url | json }},
   "potentialAction": {
     "@type": "SearchAction",

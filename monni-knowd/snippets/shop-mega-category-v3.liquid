@@ -35,16 +35,15 @@
       {%- comment -%} Live Body collection handle is body-care (title Body). /collections/body 404s. {%- endcomment -%}
       {%- assign sub_links = 'monni-botanicals:MONNI Botanicals,face:Face,body-care|/collections/body-care:Body,hair:Hair,fragrance:Fragrance,mother-and-baby:Mother & Baby' | split: ',' -%}
     {%- when 'clothing' -%}
-      {%- assign sub_links = 'monni-label:MONNI Label,dresses:Dresses,tops:Tops,pants:Pants,skirts:Skirts,shorts:Shorts,jumpsuits:Jumpsuits,kimonos:Kimonos,loungewear:Loungewear' | split: ',' -%}
+      {%- assign sub_links = 'monni-label:MONNI Label,dresses:Dresses,tops:Tops,pants-and-skirts:Pants & Skirts,jumpsuits:Jumpsuits,kimonos:Kimonos' | split: ',' -%}
     {%- when 'jewellery' -%}
       {%- comment -%} Live Bracelets handle is bracelet (singular). /collections/bracelets 404s. {%- endcomment -%}
-      {%- assign sub_links = 'fine-jewellery:Fine jewellery,necklaces:Necklaces,earrings:Earrings,rings:Rings,bracelets:Bracelets' | split: ',' -%}
+      {%- assign sub_links = 'fine-jewellery:Fine Jewellery,necklaces:Necklaces,earrings:Earrings,rings:Rings,bracelets:Bracelets' | split: ',' -%}
     {%- when 'home' -%}
-      {%- comment -%} Candles omitted until assortment is ready. Home Care is live. {%- endcomment -%}
-      {%- comment -%} Category handle is monni-art. The old `art` collection was deleted. {%- endcomment -%}
-      {%- assign sub_links = 'monni-art:MONNI Art,ceramics-shop:Ceramics,crystals-and-rituals:Crystals & Rituals,homewares:Homewares,home-care:Home Care,teaware:Teaware,pantry:Pantry' | split: ',' -%}
+      {%- comment -%} Category handle is monni-art. Crystals and Home Rituals keep the live collection URLs until Admin renames them. {%- endcomment -%}
+      {%- assign sub_links = 'monni-art:MONNI Art,ceramics-shop:Ceramics,crystals-and-rituals:Crystals,home-care:Home Rituals,pantry:Pantry,teaware:Teaware' | split: ',' -%}
     {%- when 'gifting' -%}
-      {%- assign sub_links = 'giftboxes:Gift Boxes,pages/bespoke-gifting:Bespoke Gifting,pages/corporate-gifting:Corporate Gifting,cards:Cards,gift-card:Online Gift Card' | split: ',' -%}
+      {%- assign sub_links = 'giftboxes:Gift Boxes,pages/bespoke-gifting:Bespoke Gifting,pages/corporate-gifting:Corporate Gifting,cards:Cards,gift-card|/products/gift-card:Online Gift Card' | split: ',' -%}
     {%- else -%}
       {%- assign sub_links = '' | split: ',' -%}
   {%- endcase -%}
@@ -79,6 +78,12 @@
         {%- assign sub_collection = collections[sub_handle] -%}
         {%- if sub_collection != blank -%}
           {%- assign sub_url = sub_collection.url -%}
+        {%- elsif sub_handle == 'pants-and-skirts' and collections.pants != blank -%}
+          {%- assign sub_url = collections.pants.url -%}
+        {%- elsif sub_handle == 'crystals' and collections['crystals-and-rituals'] != blank -%}
+          {%- assign sub_url = collections['crystals-and-rituals'].url -%}
+        {%- elsif sub_handle == 'home-rituals' and collections['home-care'] != blank -%}
+          {%- assign sub_url = collections['home-care'].url -%}
         {%- else -%}
           {%- assign sub_url = '/collections/' | append: sub_handle -%}
         {%- endif -%}
