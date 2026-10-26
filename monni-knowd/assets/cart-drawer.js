@@ -269,11 +269,11 @@ class CartDrawer extends HTMLElement {
     }
 
     if (this.subtotalEl) {
-      this.subtotalEl.textContent = this.formatMoney(cart.total_price);
+      this.subtotalEl.textContent = this.formatMoneyPlain(cart.total_price);
     }
 
     const afterpay = this.querySelector('[data-cart-afterpay]');
-    if (afterpay) afterpay.textContent = this.formatMoney(Math.round((cart.total_price || 0) / 4));
+    if (afterpay) afterpay.textContent = this.formatMoneyPlain(Math.round((Number(cart.total_price) || 0) / 4));
 
     this.updateShippingBar(cart.total_price);
 
@@ -416,7 +416,7 @@ class CartDrawer extends HTMLElement {
       if (remaining === 0) {
         this.shippingLabel.textContent = 'Your order ships free within NZ.';
       } else {
-        this.shippingLabel.textContent = `Spend ${this.formatMoney(remaining)} more for free NZ shipping.`;
+        this.shippingLabel.textContent = `Spend ${this.formatMoneyPlain(remaining)} more for free NZ shipping.`;
       }
     }
   }
@@ -428,6 +428,10 @@ class CartDrawer extends HTMLElement {
     const value = (cents / 100).toFixed(2);
     const format = window.Shopify?.money_format || '${{amount}}';
     return format.replace('{{amount}}', value).replace('{{amount_no_decimals}}', Math.round(cents / 100).toString());
+  }
+
+  formatMoneyPlain(cents) {
+    return String(this.formatMoney(cents)).replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
   }
 
   escapeHtml(str) {

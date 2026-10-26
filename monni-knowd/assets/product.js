@@ -18,6 +18,7 @@ class ProductPage {
     this.initVariantSelector();
     this.initQuantitySelector();
     this.markMadeIn();
+    this.syncAfterpay(this.getSelectedVariant());
   }
 
   markMadeIn() {
@@ -239,6 +240,8 @@ class ProductPage {
   }
 
   updatePrice(variant) {
+    this.syncAfterpay(variant);
+
     const wrapper = this.productPage.querySelector('[data-price-wrapper]');
     if (!wrapper) return;
 
@@ -248,8 +251,8 @@ class ProductPage {
     const price = Number(variant.price) || 0;
     const compareAt = Number(variant.compare_at_price) || 0;
     const onSale = compareAt > price;
-    const priceText = variant.price_formatted || this.formatMoney(price);
-    const compareText = variant.compare_at_price_formatted || this.formatMoney(compareAt);
+    const priceText = variant.price_formatted || this.formatMoneyPlain(price);
+    const compareText = variant.compare_at_price_formatted || this.formatMoneyPlain(compareAt);
 
     if (onSale) {
       wrapper.appendChild(
@@ -263,9 +266,14 @@ class ProductPage {
         this.createPriceSpan('product-page__price--regular', 'regularPrice', 'Regular price', priceText)
       );
     }
+  }
 
+  syncAfterpay(variant) {
     const afterpay = this.productPage.querySelector('[data-afterpay-amount]');
-    if (afterpay) afterpay.textContent = this.formatMoney(Math.round(price / 4));
+    if (!afterpay || !variant) return;
+    const price = Number(variant.price);
+    if (!Number.isFinite(price)) return;
+    afterpay.textContent = this.formatMoneyPlain(Math.round(price / 4));
   }
 
   createPriceSpan(className, datasetKey, hiddenLabel, text) {
@@ -358,6 +366,10 @@ class ProductPage {
       (_, key) => replacements[key] || formatted
     );
     return value < 0 ? `-${placeholder}` : placeholder;
+  }
+
+  formatMoneyPlain(cents) {
+    return String(this.formatMoney(cents)).replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
   }
 
   // Quantity selector — select (1–max) with +/- buttons
