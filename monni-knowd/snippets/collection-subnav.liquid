@@ -1,0 +1,54 @@
+{%- liquid
+  assign parent = blank
+  assign links = blank
+  case collection.handle
+    when 'wellness', 'monni-tea', 'tea', 'aromatherapy', 'sleep', 'supplements'
+      assign parent = 'wellness'
+      assign links = 'monni-tea|MONNI Tea,tea|Tea,aromatherapy|Aromatherapy,sleep|Sleep,supplements|Supplements'
+    when 'beauty', 'monni-botanicals', 'face', 'body-care', 'body', 'hair', 'fragrance', 'mother-and-baby'
+      assign parent = 'beauty'
+      assign links = 'monni-botanicals|MONNI Botanicals,face|Face,body-care|Body,hair|Hair,fragrance|Fragrance,mother-and-baby|Mother & Baby'
+    when 'clothing', 'monni-label', 'dresses', 'tops', 'pants', 'skirts', 'shorts', 'pants-and-skirts', 'jumpsuits', 'kimonos'
+      assign parent = 'clothing'
+      assign links = 'monni-label|MONNI Label,dresses|Dresses,tops|Tops,pants|Pants & Skirts,jumpsuits|Jumpsuits,kimonos|Kimonos'
+    when 'all-jewellery', 'jewellery', 'fine-jewellery', 'necklaces', 'earrings', 'rings', 'bracelets', 'bracelet'
+      assign parent = 'all-jewellery'
+      assign links = 'fine-jewellery|Fine Jewellery,necklaces|Necklaces,earrings|Earrings,rings|Rings,bracelets|Bracelets'
+    when 'all-home', 'home', 'homewares', 'monni-art', 'ceramics-shop', 'ceramics', 'crystals-and-rituals', 'home-care', 'pantry', 'teaware'
+      assign parent = 'all-home'
+      assign links = 'monni-art|MONNI Art,ceramics-shop|Ceramics,crystals-and-rituals|Crystals,home-care|Home Rituals,pantry|Pantry,teaware|Teaware'
+    when 'all-gifting', 'gifting', 'giftboxes', 'cards'
+      assign parent = 'all-gifting'
+      assign links = 'giftboxes|Gift Boxes,bespoke|Bespoke Gifting,corporate|Corporate Gifting,cards|Cards,gift-card|Online Gift Card'
+  endcase
+-%}
+{%- if parent != blank -%}
+  <nav class="collection-subnav" aria-label="Sub-categories">
+    <a href="{{ collections[parent].url | default: '/collections/all' }}"{% if collection.handle == parent %} aria-current="page"{% endif %}>All</a>
+    {%- assign items = links | split: ',' -%}
+    {%- for item in items -%}
+      {%- assign parts = item | split: '|' -%}
+      {%- assign handle = parts[0] -%}
+      {%- assign label = parts[1] -%}
+      {%- if handle == 'bespoke' -%}
+        <a href="/pages/bespoke-gifting">{{ label }}</a>
+      {%- elsif handle == 'corporate' -%}
+        <a href="/pages/corporate-gifting">{{ label }}</a>
+      {%- elsif handle == 'gift-card' -%}
+        <a href="/products/gift-card">{{ label }}</a>
+      {%- elsif handle == 'bracelets' -%}
+        <a href="/collections/bracelets"{% if collection.handle == 'bracelets' or collection.handle == 'bracelet' %} aria-current="page"{% endif %}>{{ label }}</a>
+      {%- elsif handle == 'pants' -%}
+        <a href="{% if collections['pants-and-skirts'] != blank %}{{ collections['pants-and-skirts'].url }}{% else %}/collections/pants{% endif %}"{% if collection.handle == 'pants' or collection.handle == 'pants-and-skirts' or collection.handle == 'skirts' or collection.handle == 'shorts' %} aria-current="page"{% endif %}>{{ label }}</a>
+      {%- else -%}
+        {%- liquid
+          assign sub_url = collections[handle].url
+          if sub_url == blank
+            assign sub_url = '/collections/' | append: handle
+          endif
+        -%}
+        <a href="{{ sub_url }}"{% if collection.handle == handle %} aria-current="page"{% endif %}>{{ label }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+  </nav>
+{%- endif -%}

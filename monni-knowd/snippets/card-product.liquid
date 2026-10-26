@@ -10,28 +10,18 @@
       assign aspect_ratio = '4/3'
   endcase
   assign show_quick_add = show_quick_add | default: true
-  assign show_wishlist = show_wishlist | default: true
+  assign show_wishlist = show_wishlist | default: false
   assign show_badges = show_badges | default: true
   assign first_eager = first_eager | default: false
 -%}
 
 {%- assign is_sold_out = false -%}
 {%- unless product.available -%}{%- assign is_sold_out = true -%}{%- endunless -%}
-{%- assign is_preorder = false -%}
-{%- assign card_vendor_down = product.vendor | downcase -%}
-{%- if card_vendor_down == 'monni label' or product.tags contains 'pre-order' or product.tags contains 'Pre-order' or product.tags contains 'monni-label' -%}
-  {%- assign is_preorder = true -%}
+{%- assign is_final_sale = false -%}
+{%- if product.tags contains 'final-sale' or product.tags contains 'final sale' or product.tags contains 'Final sale' -%}
+  {%- assign is_final_sale = true -%}
 {%- endif -%}
-{%- unless is_preorder -%}
-  {%- for collection in product.collections -%}
-    {%- if collection.handle == 'monni-label' -%}
-      {%- assign is_preorder = true -%}
-      {%- break -%}
-    {%- endif -%}
-  {%- endfor -%}
-{%- endunless -%}
-{%- comment -%} Made-to-order / pre-order pieces should not read as sold out on cards. {%- endcomment -%}
-{%- if is_preorder -%}
+{%- if product.tags contains 'made-to-order' or product.tags contains 'made to order' -%}
   {%- assign is_sold_out = false -%}
 {%- endif -%}
 {%- assign has_secondary = false -%}
@@ -45,7 +35,6 @@
   data-product-id="{{ product.id }}"
   {% if has_secondary %}data-has-secondary{% endif %}
   {% if is_sold_out %}data-sold-out{% endif %}
-  {% if is_preorder %}data-preorder{% endif %}
 >
   <div class="card-product__media" style="--card-aspect-ratio: {{ aspect_ratio }};">
     <a href="{{ product.url }}" class="card-product__image-link" aria-label="{{ product.title | escape }}">
@@ -90,22 +79,7 @@
         </div>
       {%- endif -%}
 
-      <!-- Sold out always shown; pre-order / other badges optional -->
-      {%- if is_sold_out -%}
-        <div class="card-product__badges">
-          <span class="card-product__badge card-product__badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
-        </div>
-      {%- elsif show_badges -%}
-        <div class="card-product__badges">
-          {%- if is_preorder -%}
-            <span class="card-product__badge card-product__badge--preorder">Pre-order</span>
-          {%- elsif product.compare_at_price > product.price -%}
-            <span class="card-product__badge card-product__badge--sale">{{ 'products.product.on_sale' | t }}</span>
-          {%- elsif product.tags contains 'new' -%}
-            <span class="card-product__badge card-product__badge--new">{{ 'products.product.new' | t }}</span>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
+      {%- comment -%} Sold out and final sale sit under the photo, not on it. {%- endcomment -%}
     </a>
 
     <!-- Wishlist -->
@@ -130,7 +104,7 @@
           that the product title does not already start with (titles here usually
           already lead with the brand, e.g. "Tahi Ritual Set").
         endcomment
-        assign card_label = product.title
+        assign card_label = product.title | replace: 'Tea & Tonic Matakana', '' | strip
         assign vendor_down = product.vendor | downcase | strip
         assign title_down = product.title | downcase
         if vendor_down != blank and vendor_down != 'not specified' and vendor_down != 'tea & tonic'
@@ -141,6 +115,11 @@
           endif
         endif
       -%}
+      {%- if is_sold_out -%}
+        <p class="card-product__flag">Sold out</p>
+      {%- elsif is_final_sale -%}
+        <p class="card-product__flag">Final sale</p>
+      {%- endif -%}
       <h3 class="card-product__title">{{ card_label | escape }}</h3>
       <div class="card-product__price">
         {%- if product.compare_at_price > product.price -%}
@@ -150,9 +129,6 @@
           <span class="card-product__price--regular">{{ product.price | money }}</span>
         {%- endif -%}
       </div>
-      {%- if product.compare_at_price > product.price -%}
-        <span class="card-product__sale-label">Sale</span>
-      {%- endif -%}
     </div>
   </a>
 </article>

@@ -6,15 +6,8 @@
 <section class="brands-directory section--padding full-width" data-section-id="{{ section.id }}" data-brands-dir-v="8">
   <div class="brands-directory__inner">
     <header class="brands-directory__header">
-      {%- if section.settings.eyebrow != blank -%}
-        <p class="brands-directory__eyebrow">{{ section.settings.eyebrow }}</p>
-      {%- endif -%}
-      {%- if section.settings.title != blank -%}
-        <h1 class="brands-directory__title">{{ section.settings.title }}</h1>
-      {%- endif -%}
-      {%- if section.settings.intro != blank -%}
-        <div class="brands-directory__intro rte">{{ section.settings.intro }}</div>
-      {%- endif -%}
+      <h1 class="brands-directory__title">Our Brands</h1>
+      <p class="brands-directory__intro">Behind every brand is a maker who creates with heart, cares for the earth and works with intention.</p>
     </header>
 
     {%- assign visible_count = 0 -%}
@@ -110,7 +103,7 @@
                   }}
                 {%- else -%}
                   <div class="brands-directory__placeholder" aria-hidden="true">
-                    <span>{{ first_letter }}</span>
+                    <span class="visually-hidden">{{ brand_name }}</span>
                   </div>
                 {%- endif -%}
               </div>
@@ -133,6 +126,7 @@
       <p class="brands-directory__empty">{{ section.settings.empty_message }}</p>
     {%- endif -%}
   </div>
+  <p class="brands-directory__invite">Are you a woman-founded maker? We'd love to hear from you. <a href="mailto:hello@teaandtonic.co.nz">Get in touch</a></p>
 </section>
 
 <script>
@@ -140,7 +134,10 @@
     const root = document.querySelector('[data-section-id="{{ section.id }}"]');
     if (!root) return;
 
+    const grid = root.querySelector('.brands-directory__grid');
     const cards = [...root.querySelectorAll('[data-brand-card]')];
+    cards.sort((a, b) => (a.dataset.name || '').localeCompare(b.dataset.name || '', undefined, { sensitivity: 'base' }));
+    if (grid) cards.forEach((card) => grid.appendChild(card));
     const search = root.querySelector('[data-brand-search]');
     const alpha = root.querySelector('[data-brand-alpha]');
     const empty = root.querySelector('[data-brand-empty]');

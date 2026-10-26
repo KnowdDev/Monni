@@ -52,6 +52,7 @@
       <p class="collection-page__eyebrow">{{ collection_eyebrow }}</p>
     {%- endif -%}
     <h1 class="collection-page__title">{{ collection_display_title }}</h1>
+    {% render 'collection-subnav', collection: collection %}
 
     {%- if collection_intro != blank -%}
       <p class="collection-page__intro">{{ collection_intro }}</p>
@@ -87,8 +88,9 @@
             <line x1="9" y1="8" x2="15" y2="8"/>
             <line x1="17" y1="16" x2="23" y2="16"/>
           </svg>
-          filter
+          Filter + Sort
         </button>
+        <p class="collection-page__count">{{ collection.products_count }} {{ collection.products_count | pluralize: 'product', 'products' }}</p>
       {%- endif -%}
 
       {%- if section.settings.show_sort -%}
@@ -127,14 +129,41 @@
         </div>
 
         <form action="{{ request.path }}" method="get" class="collection-page__filters-form">
+          <details class="collection-page__filter-group" open>
+            <summary class="collection-page__filter-title">Sort</summary>
+            <div class="collection-page__filter-options">
+              <label class="collection-page__filter-label"><input type="radio" name="sort_by" value="manual" {% if collection.sort_by == 'manual' or collection.sort_by == blank %}checked{% endif %}> Featured</label>
+              <label class="collection-page__filter-label"><input type="radio" name="sort_by" value="created-descending" {% if collection.sort_by == 'created-descending' %}checked{% endif %}> Newest</label>
+              <label class="collection-page__filter-label"><input type="radio" name="sort_by" value="price-ascending" {% if collection.sort_by == 'price-ascending' %}checked{% endif %}> Price low to high</label>
+              <label class="collection-page__filter-label"><input type="radio" name="sort_by" value="price-descending" {% if collection.sort_by == 'price-descending' %}checked{% endif %}> Price high to low</label>
+            </div>
+          </details>
           {%- for filter in collection.filters -%}
-            <div class="collection-page__filter-group">
-              <h3 class="collection-page__filter-title">{{ filter.label }}</h3>
+            <details class="collection-page__filter-group">
+              <summary class="collection-page__filter-title">{{ filter.label }}</summary>
               <div class="collection-page__filter-options">
                 {%- case filter.type -%}
                   {%- when 'list' -%}
                     <ul class="collection-page__filter-list">
                       {%- for filter_value in filter.values -%}
+                        {%- liquid
+                          assign value_down = filter_value.label | downcase | strip
+                          assign skip_value = false
+                          if value_down == 'pillows' or value_down == 'not specified' or value_down == 'monni' or value_down == 'monique jansen art' or value_down == 'art'
+                            assign skip_value = true
+                          endif
+                          if value_down == 'b' or value_down == 'g' or value_down contains 'water-resistant' or value_down contains 'water resistant'
+                            assign skip_value = true
+                          endif
+                          assign filter_label_down = filter.label | downcase
+                          assign home_handles = 'all-home,home,homewares,ceramics,ceramics-shop,crystals-and-rituals,home-care,monni-art,teaware,pantry'
+                          if filter_label_down contains 'color' or filter_label_down contains 'colour'
+                            unless home_handles contains collection.handle
+                              assign skip_value = true
+                            endunless
+                          endif
+                        -%}
+                        {%- unless skip_value -%}
                         <li class="collection-page__filter-item">
                           <label class="collection-page__filter-label">
                             <input type="checkbox" 
@@ -147,6 +176,7 @@
                             <span class="collection-page__filter-count">({{ filter_value.count }})</span>
                           </label>
                         </li>
+                        {%- endunless -%}
                       {%- endfor -%}
                     </ul>
                   {%- when 'price_range' -%}
@@ -177,11 +207,11 @@
                     </div>
                 {%- endcase -%}
               </div>
-            </div>
+            </details>
           {%- endfor -%}
 
           <div class="collection-page__filters-footer">
-            <button type="submit" class="collection-page__filters-apply btn btn--primary" data-filters-apply>Apply Filters</button>
+            <button type="submit" class="collection-page__filters-apply btn btn--outline" data-filters-apply>Show {{ collection.products_count }} products</button>
             <button type="button" class="collection-page__filters-clear" data-filters-clear>Clear All</button>
           </div>
         </form>
@@ -198,40 +228,17 @@
                 card_product: product,
                 aspect_ratio: section.settings.card_aspect_ratio,
                 show_quick_add: section.settings.show_quick_add,
-                show_wishlist: true,
-                show_badges: true,
+                show_wishlist: false,
+                show_badges: false,
                 first_eager: forloop.first
               -%}
             {%- endfor -%}
           </div>
 
-          <!-- Pagination -->
-          {%- if paginate.pages > 1 -%}
-            <nav class="collection-page__pagination" aria-label="Pagination">
-              {%- if paginate.previous -%}
-                <a href="{{ paginate.previous.url }}" rel="prev" class="collection-page__pagination-link collection-page__pagination-link--prev" aria-label="Previous page">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
-                  Previous
-                </a>
-              {%- endif -%}
-
-              <div class="collection-page__pagination-numbers">
-                {%- for part in paginate.parts -%}
-                  {%- if part.is_link -%}
-                    <a href="{{ part.url }}" class="collection-page__pagination-number">{{ part.title }}</a>
-                  {%- else -%}
-                    <span class="collection-page__pagination-number collection-page__pagination-number--current">{{ part.title }}</span>
-                  {%- endif -%}
-                {%- endfor -%}
-              </div>
-
-              {%- if paginate.next -%}
-                <a href="{{ paginate.next.url }}" rel="next" class="collection-page__pagination-link collection-page__pagination-link--next" aria-label="Next page">
-                  Next
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
-                </a>
-              {%- endif -%}
-            </nav>
+          {%- if paginate.next -%}
+            <p class="collection-page__load">
+              <button type="button" class="btn btn--outline" data-load-more data-next="{{ paginate.next.url }}">Load more</button>
+            </p>
           {%- endif -%}
         {%- endpaginate -%}
       {%- else -%}
@@ -253,6 +260,31 @@
     </section>
   {%- endif -%}
 </collection-page>
+
+<script>
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-load-more]');
+    if (!button) return;
+    var next = button.getAttribute('data-next');
+    var grid = document.querySelector('.collection-page__grid');
+    if (!next || !grid) return;
+    button.disabled = true;
+    fetch(next)
+      .then(function (res) { return res.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        doc.querySelectorAll('.collection-page__grid > *').forEach(function (card) { grid.appendChild(card); });
+        var more = doc.querySelector('[data-load-more]');
+        if (more) {
+          button.setAttribute('data-next', more.getAttribute('data-next'));
+          button.disabled = false;
+        } else {
+          button.remove();
+        }
+      })
+      .catch(function () { button.disabled = false; });
+  });
+</script>
 
 {% schema %}
 {
