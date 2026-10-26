@@ -115,6 +115,18 @@ class CartDrawer extends HTMLElement {
           this.changeQuantity(quantityInput, value);
         }
       }
+      if (e.target.matches('[data-gift-toggle]')) {
+        const note = this.querySelector('[data-cart-note]');
+        if (note) {
+          note.hidden = !e.target.checked;
+          if (!e.target.checked) {
+            note.value = '';
+            this.updateNote();
+          } else {
+            note.focus();
+          }
+        }
+      }
     });
 
     this.noteInput?.addEventListener('change', () => this.updateNote());
@@ -260,6 +272,9 @@ class CartDrawer extends HTMLElement {
       this.subtotalEl.textContent = this.formatMoney(cart.total_price);
     }
 
+    const afterpay = this.querySelector('[data-cart-afterpay]');
+    if (afterpay) afterpay.textContent = this.formatMoney(Math.round((cart.total_price || 0) / 4));
+
     this.updateShippingBar(cart.total_price);
 
     if (this.noteInput && cart.note !== undefined) {
@@ -283,32 +298,37 @@ class CartDrawer extends HTMLElement {
 
   renderItems(items) {
     if (!this.itemsContainer || !Array.isArray(items)) return;
-    this.itemsContainer.innerHTML = items.map((item, index) => this.renderItem(item, index + 1)).join('');
+    const mto = new Set(
+      Array.from(this.querySelectorAll('[data-mto]')).map((el) => el.closest('[data-cart-item]')?.dataset.variantId).filter(Boolean)
+    );
+    const visible = items.filter((item) => item.handle !== 'gift-wrap' && item.product_title !== 'Gift Wrap');
+    this.itemsContainer.innerHTML = visible.map((item, index) => this.renderItem(item, index + 1, mto.has(String(item.variant_id)))).join('');
   }
 
-  renderItem(item, line) {
+  renderItem(item, line, madeToOrder) {
     const variantTitle = item.variant_title && item.variant_title !== 'Default Title'
       ? `<p class="cart-drawer__item-variant">${this.escapeHtml(item.variant_title)}</p>`
       : '';
-
-    const sellingPlan = item.selling_plan_allocation
-      ? `<p class="cart-drawer__item-plan">${this.escapeHtml(item.selling_plan_allocation.selling_plan.name)}</p>`
-      : '';
+    const mto = madeToOrder ? `<p class="cart-drawer__item-mto">Made to order. Ships within 4 weeks.</p>` : '';
+    const vendor = item.vendor && item.vendor !== 'Tea & Tonic' ? `${this.escapeHtml(item.vendor)} ` : '';
+    const title = (item.product_title || '').replace(/Tea & Tonic Matakana/g, '').trim();
 
     const imageHtml = item.image
-      ? `<img src="${this.escapeHtml(item.image)}" alt="${this.escapeHtml(item.image_alt || item.product_title)}" width="80" height="80" loading="lazy">`
-      : `<div class="cart-drawer__item-image-placeholder">${this.escapeHtml(item.product_title?.charAt(0))}</div>`;
+      ? `<img src="${this.escapeHtml(item.image)}" alt="${this.escapeHtml(item.image_alt || title)}" width="80" height="80" loading="lazy">`
+      : `<div class="cart-drawer__item-image-placeholder">${this.escapeHtml(title.charAt(0))}</div>`;
 
     return `
       <div class="cart-drawer__item" data-cart-item data-line="${line}" data-variant-id="${item.variant_id}">
         <div class="cart-drawer__item-image">
           <a href="${item.url || '#'}">${imageHtml}</a>
         </div>
-        <div class="cart-drawer__item-details">
-          <a href="${item.url || '#'}" class="cart-drawer__item-title">${this.escapeHtml(item.product_title)}</a>
+        <div class="cart-drawer__item-details"${madeToOrder ? ' data-mto' : ''}>
+          <div class="cart-drawer__item-row">
+            <a href="${item.url || '#'}" class="cart-drawer__item-title">${vendor}${this.escapeHtml(title)}</a>
+            <div class="cart-drawer__item-price">${this.formatMoney(item.final_line_price)}</div>
+          </div>
           ${variantTitle}
-          ${sellingPlan}
-          <div class="cart-drawer__item-price">${this.formatMoney(item.final_line_price)}</div>
+          ${mto}
         </div>
         <div class="cart-drawer__item-actions">
           <div class="cart-drawer__item-quantity">
@@ -316,9 +336,7 @@ class CartDrawer extends HTMLElement {
             <input type="number" name="quantity" value="${item.quantity}" min="0" data-quantity-input aria-label="Quantity">
             <button type="button" data-quantity-increase aria-label="Increase quantity">+</button>
           </div>
-          <button type="button" class="cart-drawer__item-remove" data-cart-remove aria-label="Remove ${this.escapeHtml(item.product_title)}">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
+          <button type="button" class="cart-drawer__item-remove" data-cart-remove aria-label="Remove ${this.escapeHtml(title)}">Remove</button>
         </div>
       </div>
     `;
@@ -396,9 +414,9 @@ class CartDrawer extends HTMLElement {
 
     if (this.shippingLabel) {
       if (remaining === 0) {
-        this.shippingLabel.innerHTML = 'You have free shipping!';
+        this.shippingLabel.textContent = 'Your order ships free within NZ.';
       } else {
-        this.shippingLabel.innerHTML = `Free shipping over ${this.formatMoney(threshold)} — <span class="cart-drawer__shipping-remaining">${this.formatMoney(remaining)}</span> away`;
+        this.shippingLabel.textContent = `Spend ${this.formatMoney(remaining)} more for free NZ shipping.`;
       }
     }
   }
