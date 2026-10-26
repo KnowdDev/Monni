@@ -1,0 +1,276 @@
+{%- comment -%}
+  Product buy column. Tag made-to-order / final-sale. Optional fold-outs render only when a metafield has content.
+  Paired products: custom.paired_products (list of products).
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign made_to_order = false
+  if product.tags contains 'made-to-order' or product.tags contains 'Made to order' or product.tags contains 'made to order'
+    assign made_to_order = true
+  endif
+  assign final_sale = false
+  if product.tags contains 'final-sale' or product.tags contains 'final sale' or product.tags contains 'Final sale'
+    assign final_sale = true
+  endif
+  assign one_of_a_kind = false
+  if product.tags contains 'one-of-a-kind' or product.tags contains 'one of a kind'
+    assign one_of_a_kind = true
+  endif
+
+  capture clothing_check
+    render 'is-clothing-product', product: product
+  endcapture
+  assign is_clothing = false
+  if clothing_check contains 'true'
+    assign is_clothing = true
+  endif
+
+  assign type_down = product.type | downcase
+  assign pair_heading = 'Pair it with'
+  if product.tags contains 'beauty' or product.tags contains 'wellness' or type_down contains 'beauty' or type_down contains 'skin' or type_down contains 'tea'
+    assign pair_heading = 'Complete the ritual'
+  endif
+  if is_clothing or product.tags contains 'jewellery' or product.tags contains 'jewelry' or type_down contains 'jewel'
+    assign pair_heading = 'Wear it with'
+  endif
+
+  assign brand_label = product.vendor | strip
+  assign brand_down = brand_label | downcase
+  if brand_down == blank or brand_down == 'tea & tonic' or brand_down == 'tea & tonic matakana' or brand_down == 'not specified'
+    assign brand_label = blank
+  endif
+
+  assign clean_title = product.title | replace: 'Tea & Tonic Matakana', '' | replace: '  ', ' ' | strip
+  if brand_label != blank and clean_title contains brand_label
+    assign clean_title = clean_title | remove_first: brand_label | strip | remove_first: '-' | strip | remove_first: '|' | strip
+  endif
+
+  assign in_store = false
+  if product.tags contains 'in-store' or product.tags contains 'in store'
+    assign in_store = true
+  endif
+
+  assign pairs = product.metafields.custom.paired_products.value
+  if pairs == blank
+    assign pairs = product.metafields.monni.paired_products.value
+  endif
+
+  assign quarter = current_variant.price | divided_by: 4
+-%}
+
+<div class="product-page__buy">
+  {%- if brand_label != blank -%}
+    <p class="product-page__brand">{%- render 'monni-line-label', text: brand_label -%}</p>
+  {%- endif -%}
+
+  <h1 class="product-page__name">{{ clean_title | escape }}</h1>
+
+  <div class="product-page__price" data-price-wrapper>
+    {%- if current_variant.compare_at_price > current_variant.price -%}
+      <span class="product-page__price--sale" data-sale-price>{{ current_variant.price | money }}</span>
+      <span class="product-page__price--compare" data-compare-price>{{ current_variant.compare_at_price | money }}</span>
+    {%- else -%}
+      <span class="product-page__price--regular" data-regular-price>{{ current_variant.price | money }}</span>
+    {%- endif -%}
+    <span class="product-page__currency">NZD</span>
+  </div>
+
+  {%- if final_sale -%}
+    <p class="product-page__final-sale">Not eligible for change-of-mind returns.</p>
+  {%- endif -%}
+  {%- if one_of_a_kind -%}
+    <p class="product-page__note">One of a kind</p>
+  {%- endif -%}
+
+  <product-form class="product-page__form">
+    {%- form 'product', product, id: product_form_id, class: 'form', data-product-form: '' -%}
+      <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+      <input type="hidden" name="quantity" value="1">
+
+      {%- unless product.has_only_default_variant -%}
+        <div class="product-page__variants" data-variant-selector>
+          {%- for option in product.options_with_values -%}
+            {%- if option.values.size > 1 -%}
+              <fieldset class="product-page__variant-fieldset">
+                <legend class="product-page__variant-label">
+                  <span class="visually-hidden">{{ option.name }}</span>
+                  {%- if is_clothing -%}
+                    {%- assign option_name_down = option.name | downcase -%}
+                    {%- if option_name_down contains 'size' -%}
+                      <a href="/pages/size-guide" class="product-page__size-guide-inline">Size Guide</a>
+                    {%- endif -%}
+                  {%- endif -%}
+                </legend>
+                <div class="product-page__variant-options">
+                  {%- for value in option.values -%}
+                    <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" name="{{ option.name }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} class="product-page__variant-input visually-hidden">
+                    <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" class="product-page__variant-swatch{% if option.selected_value == value %} is-selected{% endif %}">{{ value }}</label>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endunless -%}
+
+      {%- if product.gift_card? -%}
+        <label class="product-page__gift-toggle">
+          <input type="checkbox" id="GiftSend-{{ section.id }}" data-gift-toggle>
+          I want to send this as a gift
+        </label>
+        <div class="product-page__gift-fields" id="GiftFields-{{ section.id }}" hidden>
+          <label class="visually-hidden" for="GiftEmail-{{ section.id }}">Recipient email</label>
+          <input id="GiftEmail-{{ section.id }}" type="email" name="properties[Recipient email]" placeholder="RECIPIENT EMAIL" autocomplete="off" disabled>
+          <label class="visually-hidden" for="GiftName-{{ section.id }}">Recipient name</label>
+          <input id="GiftName-{{ section.id }}" type="text" name="properties[Recipient name]" placeholder="RECIPIENT NAME" disabled>
+          <label class="visually-hidden" for="GiftMessage-{{ section.id }}">Message</label>
+          <textarea id="GiftMessage-{{ section.id }}" name="properties[Message]" rows="3" maxlength="200" placeholder="MESSAGE" disabled></textarea>
+          <label class="visually-hidden" for="GiftDate-{{ section.id }}">Send date</label>
+          <input id="GiftDate-{{ section.id }}" type="date" name="properties[Send on]" disabled>
+          <input type="hidden" name="properties[__shopify_send_gift_card_to_recipient]" value="on" disabled data-gift-flag>
+          <input type="hidden" name="properties[__shopify_offset]" value="" disabled data-gift-offset>
+        </div>
+      {%- endif -%}
+
+      {%- if made_to_order -%}
+        <p class="product-page__mto">Made to order. Ships within 4 weeks.</p>
+      {%- endif -%}
+
+      <div class="product-page__actions">
+        <button type="submit" name="add" class="product-page__add-to-cart btn btn--primary"{% unless current_variant.available %} hidden{% endunless %} data-add-to-cart data-add-label="Add to cart" data-available="{% if current_variant.available %}true{% else %}false{% endif %}">
+          <span data-add-to-cart-text>Add to cart</span>
+        </button>
+      </div>
+    {%- endform -%}
+  </product-form>
+
+  <div class="product-page__back-in-stock" data-back-in-stock {% if current_variant.available %}hidden{% endif %}>
+    {%- form 'contact', class: 'product-page__back-in-stock-form' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="product-page__note">Thanks. We'll email you when it's back.</p>
+      {%- else -%}
+        <label class="visually-hidden" for="BackInStockEmail-{{ section.id }}">Email address</label>
+        <input type="email" name="contact[email]" id="BackInStockEmail-{{ section.id }}" placeholder="EMAIL ADDRESS" required aria-label="Email address">
+        <input type="hidden" name="contact[body]" data-back-in-stock-body data-back-in-stock-title="{{ product.title | escape }}" value="Back in stock request for: {{ product.title | escape }}">
+        <button type="submit" class="btn btn--outline">Notify me when it's back</button>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+
+  <p class="product-page__afterpay">Or 4 payments of <span data-afterpay-amount>{{ quarter | money }}</span> with Afterpay</p>
+  <p class="product-page__shipnote">Free NZ shipping over $250 · We ship to NZ &amp; Australia</p>
+
+  <div class="product-page__folds">
+    {%- unless product.gift_card? -%}
+    <details class="product-page__fold" open>
+      <summary>Details</summary>
+      <div class="product-page__fold-body rte">
+        {{ product.description }}
+        {%- if product.metafields.custom.available_in != blank -%}
+          <p>{{ product.metafields.custom.available_in }}</p>
+        {%- endif -%}
+        {%- if product.metafields.custom.made_in != blank -%}
+          <p class="product-page__madein">{{ product.metafields.custom.made_in }}</p>
+        {%- endif -%}
+      </div>
+    </details>
+    {%- endunless -%}
+
+    {%- if product.metafields.custom.directions != blank -%}
+      <details class="product-page__fold"><summary>Directions</summary><div class="product-page__fold-body rte">{{ product.metafields.custom.directions | metafield_tag }}</div></details>
+    {%- endif -%}
+    {%- if product.metafields.custom.ingredients != blank -%}
+      <details class="product-page__fold"><summary>Ingredients</summary><div class="product-page__fold-body rte">{{ product.metafields.custom.ingredients | metafield_tag }}</div></details>
+    {%- endif -%}
+    {%- if product.metafields.custom.size_and_fit != blank -%}
+      <details class="product-page__fold"><summary>Size + Fit</summary><div class="product-page__fold-body rte">{{ product.metafields.custom.size_and_fit | metafield_tag }}</div></details>
+    {%- endif -%}
+    {%- if product.metafields.custom.fabric_and_care != blank -%}
+      <details class="product-page__fold"><summary>Fabric + Care</summary><div class="product-page__fold-body rte">{{ product.metafields.custom.fabric_and_care | metafield_tag }}</div></details>
+    {%- endif -%}
+    {%- if product.metafields.custom.materials != blank -%}
+      <details class="product-page__fold"><summary>Materials</summary><div class="product-page__fold-body rte">{{ product.metafields.custom.materials | metafield_tag }}</div></details>
+    {%- endif -%}
+    {%- if product.metafields.custom.care != blank -%}
+      <details class="product-page__fold"><summary>Care</summary><div class="product-page__fold-body rte">{{ product.metafields.custom.care | metafield_tag }}</div></details>
+    {%- endif -%}
+
+    <details class="product-page__fold">
+      <summary>Delivery + Returns</summary>
+      <div class="product-page__fold-body">
+        {%- if made_to_order -%}
+          <p>Made to order, please allow up to 4 weeks before dispatch. Unworn pieces with tags can be returned for store credit. See <a href="/policies/shipping-policy">Shipping + Delivery</a> and <a href="/policies/refund-policy">Returns</a>.</p>
+        {%- else -%}
+          <p>Usually delivered within 2–5 working days. Opened skincare can't be returned unless faulty. See <a href="/policies/shipping-policy">Shipping + Delivery</a> and <a href="/policies/refund-policy">Returns</a>.</p>
+        {%- endif -%}
+      </div>
+    </details>
+
+    <details class="product-page__fold">
+      <summary>Matakana store availability</summary>
+      <div class="product-page__fold-body">
+        {%- if made_to_order and is_clothing -%}
+          <p>Try it on in our Matakana store.</p>
+        {%- elsif in_store -%}
+          <p>In stock at our Matakana store.</p>
+        {%- else -%}
+          <p>Online only.</p>
+        {%- endif -%}
+        <p>5A, 2 Matakana Valley Road · <a href="https://maps.google.com/?q=5A+2+Matakana+Valley+Road+Matakana" target="_blank" rel="noopener">Visit us</a></p>
+      </div>
+    </details>
+
+    {%- if product.gift_card? -%}
+      <details class="product-page__fold" open>
+        <summary>Details</summary>
+        <div class="product-page__fold-body">
+          <p>Sometimes the most thoughtful gift is the freedom to choose something personal. Our digital gift cards allow your loved one the time and space to select something meaningful for themselves, whether online or in store.</p>
+          <p>We see gift cards not as impersonal, but as a conscious and sustainable way of gifting that allows the recipient to choose what they truly need, love, or feel drawn to.</p>
+          <p>Valid for 3 years from the date of purchase.</p>
+        </div>
+      </details>
+      <details class="product-page__fold">
+        <summary>How it works</summary>
+        <div class="product-page__fold-body">
+          <p>Gift cards are delivered by email, either to you or straight to the person you're gifting, on the day you choose. They include instructions for redeeming online or in our Matakana store. No additional processing fees. Valid for 3 years.</p>
+        </div>
+      </details>
+      <details class="product-page__fold">
+        <summary>In store</summary>
+        <div class="product-page__fold-body">
+          <p>Prefer a printed card? Our gift cards are also available in our Matakana store, beautifully presented and ready to give.</p>
+        </div>
+      </details>
+    {%- endif -%}
+  </div>
+
+  {%- if product.gift_card? -%}
+    <div class="product-page__pair-head">
+      <h2>Gifts they'll love</h2>
+      <a href="/collections/all-gifting">Shop gifts</a>
+    </div>
+  {%- elsif pairs != blank -%}
+    <div class="product-page__pair-head"><h2>{{ pair_heading }}</h2></div>
+    <div class="product-page__pairs">
+      {%- for pair in pairs limit: 2 -%}
+        {%- render 'card-product', card_product: pair, show_quick_add: false, show_wishlist: false, show_badges: false -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    var toggle = document.querySelector('[data-gift-toggle]');
+    var fields = document.getElementById('GiftFields-{{ section.id }}');
+    if (!toggle || !fields) return;
+    var offset = fields.querySelector('[data-gift-offset]');
+    if (offset) offset.value = String(new Date().getTimezoneOffset());
+    function sync() {
+      fields.hidden = !toggle.checked;
+      fields.querySelectorAll('input, textarea').forEach(function (el) { el.disabled = !toggle.checked; });
+    }
+    toggle.addEventListener('change', sync);
+    sync();
+  })();
+</script>

@@ -37,6 +37,7 @@ class ProductPage {
 
     const thumbs = gallery.querySelectorAll('.media-gallery__thumb');
     const dots = gallery.querySelectorAll('.media-gallery__dot');
+    const lines = gallery.querySelectorAll('.media-gallery__line');
     const slides = gallery.querySelectorAll('.media-gallery__slide');
     const mainGallery = gallery.querySelector('.media-gallery__main');
 
@@ -44,7 +45,7 @@ class ProductPage {
     thumbs.forEach(thumb => {
       thumb.addEventListener('click', () => {
         const index = thumb.dataset.index;
-        this.setActiveSlide(index, slides, thumbs, dots);
+        this.setActiveSlide(index, slides, thumbs, dots, lines);
       });
     });
 
@@ -52,12 +53,21 @@ class ProductPage {
     dots.forEach(dot => {
       dot.addEventListener('click', () => {
         const index = dot.dataset.index;
-        this.setActiveSlide(index, slides, thumbs, dots);
+        this.setActiveSlide(index, slides, thumbs, dots, lines);
       });
     });
 
-    // Main gallery click for zoom
     if (mainGallery) {
+      mainGallery.addEventListener('scroll', () => {
+        if (!mainGallery.clientWidth) return;
+        const index = Math.round(mainGallery.scrollLeft / mainGallery.clientWidth);
+        slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+        lines.forEach((line, i) => line.classList.toggle('is-active', i === index));
+      }, { passive: true });
+    }
+
+    // Zoom stays on desktop. Phone uses the sideways swipe.
+    if (mainGallery && window.matchMedia('(min-width: 1024px)').matches) {
       mainGallery.addEventListener('click', () => {
         const activeSlide = gallery.querySelector('.media-gallery__slide.is-active');
         if (activeSlide) {
@@ -82,7 +92,7 @@ class ProductPage {
           newIndex = activeIndex < slides.length - 1 ? activeIndex + 1 : 0;
         }
 
-        this.setActiveSlide(newIndex, slides, thumbs, dots);
+        this.setActiveSlide(newIndex, slides, thumbs, dots, lines);
       }
 
       // Close lightbox with Escape
@@ -130,16 +140,23 @@ class ProductPage {
     }
   }
 
-  setActiveSlide(index, slides, thumbs, dots) {
-    // Remove active classes
+  setActiveSlide(index, slides, thumbs, dots, lines) {
+    const gallery = this.productPage.querySelector('media-gallery');
+    const lineEls = lines || gallery?.querySelectorAll('.media-gallery__line') || [];
     slides.forEach(slide => slide.classList.remove('is-active'));
     thumbs.forEach(thumb => thumb.classList.remove('is-selected'));
     dots.forEach(dot => dot.classList.remove('is-active'));
+    lineEls.forEach(line => line.classList.remove('is-active'));
 
-    // Add active classes
     slides[index]?.classList.add('is-active');
     thumbs[index]?.classList.add('is-selected');
     dots[index]?.classList.add('is-active');
+    lineEls[index]?.classList.add('is-active');
+
+    const main = gallery?.querySelector('.media-gallery__main');
+    if (main && window.matchMedia('(max-width: 1023px)').matches) {
+      main.scrollTo({ left: main.clientWidth * index, behavior: 'smooth' });
+    }
   }
 
   // Variant selector functionality
@@ -240,12 +257,8 @@ class ProductPage {
       );
     }
 
-    if (!variant.available) {
-      const soldOut = document.createElement('span');
-      soldOut.className = 'product-page__price--sold-out';
-      soldOut.textContent = 'Sold out';
-      wrapper.appendChild(soldOut);
-    }
+    const afterpay = this.productPage.querySelector('[data-afterpay-amount]');
+    if (afterpay) afterpay.textContent = this.formatMoney(Math.round(price / 4));
   }
 
   createPriceSpan(className, datasetKey, hiddenLabel, text) {
@@ -269,9 +282,10 @@ class ProductPage {
 
     if (button) {
       const textEl = button.querySelector('[data-add-to-cart-text]');
+      button.hidden = !available;
       button.disabled = !available;
       button.dataset.available = available ? 'true' : 'false';
-      if (textEl) textEl.textContent = available ? addLabel : soldOutLabel;
+      if (textEl) textEl.textContent = addLabel || 'Add to cart';
     }
 
     const backInStock = this.productPage.querySelector('[data-back-in-stock]');
