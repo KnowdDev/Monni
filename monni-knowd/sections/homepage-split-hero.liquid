@@ -1,6 +1,7 @@
 <section
   class="split-hero full-width"
   data-section-id="{{ section.id }}"
+  data-header-photo
   data-tone="{{ section.settings.text_tone | default: 'light' }}"
 >
   <a
@@ -94,7 +95,7 @@
   </a>
 
   <div class="split-hero__text">
-    <h1 class="split-hero__title">{{ section.settings.headline | default: 'Holistic Health, Beauty & Home' | escape }}</h1>
+    <h1 class="split-hero__title"><span>Holistic Health,</span> <span>Beauty &amp; Home</span></h1>
     <a class="split-hero__shop" href="{{ section.settings.headline_link | default: '/collections/all' }}">{{ section.settings.headline_cta | default: 'Shop the collection' | escape }}</a>
   </div>
 </section>
@@ -154,7 +155,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .split-hero__image,
@@ -164,8 +164,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    background-color: var(--color-border-light, #F0EBE7);
-    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    background-color: var(--color-border-light, #ede8df);
   }
 
   .split-hero__image--desktop-only {
@@ -179,14 +178,6 @@
 
     .split-hero__image--below-fold-mobile {
       display: none;
-    }
-  }
-
-  @media (hover: hover) and (min-width: 768px) {
-    .split-hero__panel:hover .split-hero__image,
-    .split-hero__panel:hover picture img,
-    .split-hero__panel:hover .split-hero__fallback {
-      transform: scale(1.03);
     }
   }
 
@@ -275,23 +266,26 @@
 
   .split-hero__title {
     font-family: var(--font-heading--family);
-    font-size: clamp(2rem, 8vw, 2.6rem);
+    font-size: 2rem;
     font-weight: 400;
     letter-spacing: 0;
     color: var(--hero-ink);
     text-shadow: 0 1px 24px rgba(var(--hero-shade), 0.35);
     margin: 0 auto 1.15rem;
     line-height: 1.1;
-    text-wrap: balance;
-    max-width: 14ch;
+    max-width: 12ch;
   }
+
+  .split-hero__title span { display: block; }
 
   @media (min-width: 768px) {
     .split-hero__title {
-      font-size: clamp(1.6rem, 3.4vw, 3rem);
+      font-size: clamp(1.6rem, 3.4vw, 2.4rem);
       max-width: none;
       white-space: nowrap;
     }
+
+    .split-hero__title span { display: inline; }
   }
 
   .split-hero__shop {

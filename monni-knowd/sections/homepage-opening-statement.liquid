@@ -1,11 +1,7 @@
 <section class="opening-statement full-width{% if section.settings.narrow_width %} opening-statement--narrow{% endif %}" data-section-id="{{ section.id }}">
   <div class="opening-statement__inner">
-    <p class="opening-statement__line opening-statement__line--primary">
-      {{ section.settings.line_1 | default: "It begins with love. For ourselves, for others, and for the world around us." }}
-    </p>
-    <p class="opening-statement__line opening-statement__line--secondary">
-      {{ section.settings.line_2 | default: "We are all connected." }}
-    </p>
+    <p class="opening-statement__line opening-statement__line--primary">A place to pause. A place to reconnect.</p>
+    <p class="opening-statement__line opening-statement__line--secondary">Natural skincare and organic tea, handmade jewellery, ceramics and art, slow fashion and pieces for the home. A considered collection from <span class="opening-statement__keep">women-founded</span> makers who care for people and the planet.</p>
   </div>
 </section>
 
@@ -54,11 +50,14 @@
   .opening-statement__line--primary {
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(1.45rem, 2.4vw, 1.9rem);
+    font-size: clamp(1rem, 5.4vw, 1.3rem);
     letter-spacing: 0;
     line-height: 1.35;
-    margin-bottom: 1rem;
+    margin-bottom: 1.35rem;
+    white-space: nowrap;
   }
+
+  .opening-statement__keep { white-space: nowrap; }
 
   .opening-statement__line--secondary {
     font-family: var(--font-body--family);

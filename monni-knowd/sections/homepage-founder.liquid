@@ -4,7 +4,8 @@
   assign overlay_strength = section.settings.background_overlay | default: 72
 -%}
 
-<section
+{% comment %} Quote banner removed. The section stays so an existing theme-editor placement renders nothing. {% endcomment %}
+<section hidden
   class="founder full-width{% if founder_image != blank %} founder--has-image{% endif %}"
   data-section-id="{{ section.id }}"
   style="--founder-bg: {{ founder_bg }}; --founder-overlay: {{ overlay_strength }}%; --founder-image-focus-y: {{ section.settings.image_focus_y | default: 50 }}%;"

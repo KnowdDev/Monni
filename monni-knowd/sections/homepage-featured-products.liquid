@@ -8,7 +8,7 @@
       assign is_christmas = true
     endif
   endif
-  if section.settings.preview_christmas_edit
+  if section.settings.preview_christmas_edit and request.design_mode
     assign is_christmas = true
   endif
 
