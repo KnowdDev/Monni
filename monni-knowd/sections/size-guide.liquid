@@ -584,11 +584,17 @@
     }
 
     .size-guide__desktop-table {
-      display: none;
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .size-guide__table {
+      min-width: 36rem;
     }
 
     .size-guide__mobile-cards {
-      display: block;
+      display: none;
     }
 
     .size-guide__measure-grid {

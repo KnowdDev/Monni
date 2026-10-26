@@ -4,37 +4,22 @@
 
 <div class="contact" data-section-id="{{ section.id }}">
   {%- if section.settings.image != blank -%}
-    <div class="contact__banner">
+    <div class="contact__banner" data-header-photo>
       {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', widths: '800, 1200, 1600, 2000', sizes: '100vw', class: 'contact__banner-image', alt: '' }}
     </div>
   {%- endif -%}
 
   <div class="contact__inner">
     <header class="contact__header">
-      <h1 class="contact__title">{{ section.settings.heading | default: page.title | default: 'Contact' }}</h1>
-      {% if section.settings.subheading != blank %}
-        <p class="contact__subheading">{{ section.settings.subheading | newline_to_br }}</p>
-      {% endif %}
+      <h1 class="contact__title">Contact</h1>
+      <p class="contact__subheading">We'd love to hear from you.<br>We reply within 1–2 working days.</p>
     </header>
 
     <div class="contact__info">
-      {% if section.settings.show_contact_details %}
-        {% if section.settings.contact_email != blank %}
-          <p><span class="contact__label-inline">Email</span><br><a class="contact__inline-link" href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a></p>
-        {% endif %}
-        {% if section.settings.contact_phone != blank %}
-          <p><span class="contact__label-inline">Phone</span><br><a class="contact__inline-link" href="tel:{{ section.settings.contact_phone | replace: ' ', '' }}">{{ section.settings.contact_phone }}</a><br>During store hours</p>
-        {% endif %}
-      {% endif %}
-
-      {% if section.settings.show_store_details %}
-        {% if section.settings.store_hours != blank %}
-          <p><span class="contact__label-inline">Store hours</span><br>{{ section.settings.store_hours | newline_to_br | replace: 'Sunday to Friday:', 'Sunday – Friday |' | replace: 'Saturday:', 'Saturday |' }}</p>
-        {% endif %}
-        {% if section.settings.store_address != blank %}
-          <p><span class="contact__label-inline">Address</span><br>{{ section.settings.store_address | replace: ', Matakana, New Zealand', '<br>Matakana 0985' | newline_to_br }}<br><a class="contact__inline-link" href="https://maps.google.com/?q=5A+2+Matakana+Valley+Road+Matakana" target="_blank" rel="noopener">Visit us</a></p>
-        {% endif %}
-      {% endif %}
+      <p><span class="contact__label-inline">Email</span><br><a class="contact__inline-link" href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a></p>
+      <p><span class="contact__label-inline">Phone</span><br><a class="contact__inline-link" href="tel:+6494229083">09 422 9083</a><br>During store hours</p>
+      <p><span class="contact__label-inline">Store hours</span><br>Sunday – Friday | 10am – 4pm<br>Saturday | 9am – 5pm</p>
+      <p><span class="contact__label-inline">Address</span><br>5A, 2 Matakana Valley Road<br>Matakana 0985<br><a class="contact__inline-link" href="https://maps.google.com/?q=5A+2+Matakana+Valley+Road+Matakana" target="_blank" rel="noopener">Visit us</a></p>
 
       {% if section.settings.show_social %}
         <p class="contact__social">

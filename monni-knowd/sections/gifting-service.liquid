@@ -23,12 +23,41 @@
       <h1 class="gifting-service__title">{{ page.title | escape }}</h1>
       {%- if section.settings.top_line != blank -%}
         <p class="gifting-service__topline">{{ section.settings.top_line | escape }}</p>
+      {%- elsif page.handle == 'corporate-gifting' -%}
+        <p class="gifting-service__topline">A gift worthy of the relationships you've built.</p>
+      {%- else -%}
+        <p class="gifting-service__topline">A gift that feels entirely personal.</p>
       {%- endif -%}
     </header>
 
     {%- if section.settings.body != blank -%}
-      <div class="gifting-service__body rte">{{ section.settings.body }}</div>
+      <div class="gifting-service__body rte">{{ section.settings.body | replace: 'homewares', 'home' | replace: 'Homewares', 'Home' }}</div>
+    {%- elsif page.content != blank -%}
+      <div class="gifting-service__body rte">{{ page.content | replace: 'homewares', 'home' | replace: 'Homewares', 'Home' }}</div>
     {%- endif -%}
+
+    {%- form 'contact', class: 'gifting-service__form' -%}
+      <h2 class="gifting-service__form-title">Send an enquiry</h2>
+      <label class="visually-hidden" for="GiftName-{{ section.id }}">Name</label>
+      <input id="GiftName-{{ section.id }}" type="text" name="contact[name]" placeholder="NAME" required autocomplete="name">
+      <label class="visually-hidden" for="GiftEmail-{{ section.id }}">Email</label>
+      <input id="GiftEmail-{{ section.id }}" type="email" name="contact[email]" placeholder="EMAIL" required autocomplete="email">
+      {%- if page.handle == 'corporate-gifting' -%}
+        <label class="visually-hidden" for="GiftCompany-{{ section.id }}">Company name</label>
+        <input id="GiftCompany-{{ section.id }}" type="text" name="contact[Company]" placeholder="COMPANY NAME">
+        <label class="visually-hidden" for="GiftCount-{{ section.id }}">Number of gifts</label>
+        <input id="GiftCount-{{ section.id }}" type="text" name="contact[Number of gifts]" placeholder="NUMBER OF GIFTS">
+      {%- endif -%}
+      <label class="visually-hidden" for="GiftWho-{{ section.id }}">Who it's for</label>
+      <input id="GiftWho-{{ section.id }}" type="text" name="contact[Who it's for]" placeholder="WHO IT'S FOR">
+      <label class="visually-hidden" for="GiftBudget-{{ section.id }}">Budget</label>
+      <input id="GiftBudget-{{ section.id }}" type="text" name="contact[Budget]" placeholder="BUDGET">
+      <label class="visually-hidden" for="GiftDate-{{ section.id }}">Date needed</label>
+      <input id="GiftDate-{{ section.id }}" type="text" name="contact[Date needed]" placeholder="DATE NEEDED">
+      <label class="visually-hidden" for="GiftMessage-{{ section.id }}">Message</label>
+      <textarea id="GiftMessage-{{ section.id }}" name="contact[body]" rows="4" placeholder="MESSAGE" required></textarea>
+      <button type="submit" class="btn btn--outline">Send</button>
+    {%- endform -%}
 
     {%- if section.settings.contact_email != blank or section.settings.contact_phone != blank -%}
       <div class="gifting-service__contact">

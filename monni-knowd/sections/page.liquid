@@ -5,6 +5,9 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/page
 {% endcomment %}
 
+{%- if page.handle == 'start-a-return' -%}
+  {% render 'start-a-return' %}
+{%- else -%}
 <div class="page section--padding" data-section-id="{{ section.id }}">
   <div class="page__inner container">
     <header class="page__header">
@@ -30,6 +33,7 @@
     </div>
   </div>
 </div>
+{%- endif -%}
 
 {% stylesheet %}
   .page {

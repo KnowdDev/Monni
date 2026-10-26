@@ -1,0 +1,34 @@
+<section class="start-return">
+  <div class="start-return__inner">
+    <h1>Start a Return</h1>
+    <p class="start-return__intro">Please get in touch within 7 days of delivery.<br>We'll reply within 1–2 working days with next steps.</p>
+    {% form 'contact', class: 'start-return__form' %}
+      {% if form.posted_successfully? %}
+        <p role="status">Thank you. We have your return request.</p>
+      {% else %}
+        <input type="hidden" name="contact[tags]" value="return-request">
+        <label class="visually-hidden" for="ReturnName">Name</label>
+        <input id="ReturnName" type="text" name="contact[name]" placeholder="NAME" required autocomplete="name">
+        <label class="visually-hidden" for="ReturnEmail">Email</label>
+        <input id="ReturnEmail" type="email" name="contact[email]" placeholder="EMAIL" required autocomplete="email">
+        <label class="visually-hidden" for="ReturnOrder">Order number</label>
+        <input id="ReturnOrder" type="text" name="contact[Order number]" placeholder="ORDER NUMBER" required>
+        <label class="visually-hidden" for="ReturnItems">Item(s)</label>
+        <input id="ReturnItems" type="text" name="contact[Items]" placeholder="ITEM(S)" required>
+        <label class="visually-hidden" for="ReturnReason">Reason</label>
+        <select id="ReturnReason" name="contact[Reason]" required>
+          <option value="">REASON</option>
+          <option>Store credit</option>
+          <option>Faulty item</option>
+          <option>Damaged in transit</option>
+          <option>Wrong item sent</option>
+        </select>
+        <label class="visually-hidden" for="ReturnDetails">Details</label>
+        <textarea id="ReturnDetails" name="contact[body]" rows="4" placeholder="DETAILS" required></textarea>
+        <p class="start-return__photo">Add a photo (for faulty or damaged items) by emailing it to <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a> with your order number. A photo upload on this form needs a Shopify form app.</p>
+        <button type="submit" class="btn btn--outline">Send</button>
+        <p class="start-return__intro">Read our full <a href="/policies/refund-policy">Returns</a> policy.<br>Or email us at <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a>.</p>
+      {% endif %}
+    {% endform %}
+  </div>
+</section>
