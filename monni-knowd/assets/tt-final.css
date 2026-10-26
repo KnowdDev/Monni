@@ -179,7 +179,12 @@ button[name="checkout"] {
 .card-product__price--compare,
 .product-page__price--compare { text-decoration: line-through; margin-left: 0.4rem; }
 
-.product-page__gallery { margin-inline: calc(50% - 50vw); width: 100vw; }
+.product-page { padding-top: 0; }
+.product-page__gallery {
+  margin-inline: calc(50% - 50vw);
+  width: 100vw;
+  margin-top: 0;
+}
 
 .media-gallery__thumbs,
 .media-gallery__dots,
@@ -190,7 +195,8 @@ button[name="checkout"] {
 .cart-drawer__shipping-bar,
 .cart-drawer__trust,
 .collection-page__sort,
-.collection-page__header .collection-page__count { display: none !important; }
+.collection-page__header .collection-page__count,
+.collection-page__breadcrumb { display: none !important; }
 
 @media (max-width: 1023px) {
   .product-page .media-gallery__main {

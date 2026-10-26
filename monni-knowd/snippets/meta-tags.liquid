@@ -16,7 +16,11 @@
 {%- endif -%}
 
 {%- liquid
-  assign og_title = page_title | default: shop.name
+  assign page_title = page_title | replace: '&amp;', '&' | replace: 'Tea & Tonic Matakana', 'Tea & Tonic' | replace: 'Tea &amp; Tonic Matakana', 'Tea & Tonic'
+  if request.page_type == 'index'
+    assign page_title = 'Tea & Tonic'
+  endif
+  assign og_title = page_title | default: 'Tea & Tonic'
   assign og_url = canonical_url | default: request.origin
   assign og_type = 'website'
   assign meta_description = page_description | default: shop.description | default: shop.name
@@ -129,7 +133,7 @@
     case policy_handle
       when 'shipping-policy'
         assign page_title = 'Shipping + Delivery'
-        assign meta_description = 'Shipping, delivery and Click + Collect at Tea & Tonic Matakana. Free NZ shipping over $250. Most parcels arrive in two to five working days.'
+        assign meta_description = 'Shipping, delivery and Click + Collect at Tea & Tonic. Free NZ shipping over $250. Most parcels arrive in two to five working days.'
         assign og_title = page_title
         assign seo_title_custom = true
       when 'refund-policy'
@@ -239,13 +243,16 @@
 
 {%- liquid
   assign trading_name = 'Tea & Tonic'
-  assign page_title = page_title | replace: ' | MONNI', '' | replace: '| MONNI', '' | replace: ' | Tea & Tonic Matakana', '' | replace: 'Tea & Tonic Matakana', 'Tea & Tonic' | replace: ' | Tea & Tonic', '' | strip
-  if page_title == blank
+  assign page_title = page_title | replace: '&amp;', '&' | replace: ' | MONNI', '' | replace: '| MONNI', '' | replace: 'Tea &amp; Tonic Matakana', 'Tea & Tonic' | replace: 'Tea & Tonic Matakana', 'Tea & Tonic' | replace: ' | Tea & Tonic', '' | strip
+  if page_title == blank or request.page_type == 'index'
     assign page_title = trading_name
+  endif
+  if request.page_type == 'product' and product.handle == 'gift-card'
+    assign page_title = 'Gift Card'
   endif
 -%}
 <title>
-  {{ page_title | strip }} | {{ trading_name }}
+  {%- if page_title == trading_name -%}{{ trading_name }}{%- else -%}{{ page_title | strip }} | {{ trading_name }}{%- endif -%}
   {%- if current_tags %} | tagged {{ current_tags | join: ', ' }}{% endif -%}
   {%- if current_page != 1 %} | Page {{ current_page }}{% endif -%}
 </title>

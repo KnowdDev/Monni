@@ -31,9 +31,9 @@
     </header>
 
     {%- if section.settings.body != blank -%}
-      <div class="gifting-service__body rte">{{ section.settings.body | replace: 'homewares', 'home' | replace: 'Homewares', 'Home' }}</div>
+      <div class="gifting-service__body rte">{{ section.settings.body | replace: 'homewares', 'home' | replace: 'Homewares', 'Home' | replace: 'At MONNI', 'At Tea & Tonic' }}</div>
     {%- elsif page.content != blank -%}
-      <div class="gifting-service__body rte">{{ page.content | replace: 'homewares', 'home' | replace: 'Homewares', 'Home' }}</div>
+      <div class="gifting-service__body rte">{{ page.content | replace: 'homewares', 'home' | replace: 'Homewares', 'Home' | replace: 'At MONNI', 'At Tea & Tonic' }}</div>
     {%- endif -%}
 
     {%- form 'contact', class: 'gifting-service__form' -%}
