@@ -1451,11 +1451,13 @@
   }
 
   .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item][data-scrim="true"] {
-    filter: drop-shadow(0 0 1px rgba(20, 16, 12, 0.55)) drop-shadow(0 1px 1px rgba(20, 16, 12, 0.35));
+    text-shadow: 0 0 8px rgba(20, 16, 12, 0.9), 0 1px 1px rgba(20, 16, 12, 0.75);
+    filter: drop-shadow(0 0 2px rgba(20, 16, 12, 0.8));
   }
 
   .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item][data-ink="dark"][data-scrim="true"] {
-    filter: drop-shadow(0 0 1px rgba(245, 244, 241, 0.8)) drop-shadow(0 1px 1px rgba(245, 244, 241, 0.45));
+    text-shadow: 0 0 8px rgba(250, 248, 244, 0.95), 0 0 2px rgba(250, 248, 244, 0.95);
+    filter: drop-shadow(0 0 2px rgba(250, 248, 244, 0.95));
   }
 
   @media (max-width: 767px) {
