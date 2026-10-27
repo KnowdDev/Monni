@@ -58,6 +58,25 @@
   assign quarter = current_variant.price | divided_by: 4
 -%}
 
+{%- if part == 'pairs' -%}
+  {%- if product.gift_card? or pairs != blank -%}
+    <div class="product-page__matching">
+      {%- if product.gift_card? -%}
+        <div class="product-page__pair-head">
+          <h2>Gifts they'll love</h2>
+          <a href="/collections/all-gifting">Shop gifts</a>
+        </div>
+      {%- elsif pairs != blank -%}
+        <div class="product-page__pair-head"><h2>{{ pair_heading }}</h2></div>
+        <div class="product-page__pairs">
+          {%- for pair in pairs limit: 2 -%}
+            {%- render 'card-product', card_product: pair, show_quick_add: false, show_wishlist: false, show_badges: false -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+{%- else -%}
 <div class="product-page__buy">
   {%- if brand_label != blank -%}
     <p class="product-page__brand">{%- render 'monni-line-label', text: brand_label -%}</p>
@@ -243,22 +262,10 @@
       </details>
     {%- endif -%}
   </div>
-
-  {%- if product.gift_card? -%}
-    <div class="product-page__pair-head">
-      <h2>Gifts they'll love</h2>
-      <a href="/collections/all-gifting">Shop gifts</a>
-    </div>
-  {%- elsif pairs != blank -%}
-    <div class="product-page__pair-head"><h2>{{ pair_heading }}</h2></div>
-    <div class="product-page__pairs">
-      {%- for pair in pairs limit: 2 -%}
-        {%- render 'card-product', card_product: pair, show_quick_add: false, show_wishlist: false, show_badges: false -%}
-      {%- endfor -%}
-    </div>
-  {%- endif -%}
 </div>
+{%- endif -%}
 
+{%- unless part == 'pairs' -%}
 <script>
   (function () {
     var toggle = document.querySelector('[data-gift-toggle]');
@@ -274,3 +281,4 @@
     sync();
   })();
 </script>
+{%- endunless -%}
