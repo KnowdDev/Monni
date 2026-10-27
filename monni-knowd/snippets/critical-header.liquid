@@ -98,6 +98,12 @@
     object-fit: contain;
   }
 
+  .header__logo-link {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+  }
+
   .header__logo-text {
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 300;
@@ -107,6 +113,12 @@
     text-decoration: none;
     color: #2f2f2f;
     white-space: nowrap;
+  }
+
+  .header__logo-text[data-logo-face="b"] {
+    position: absolute;
+    inset: 0;
+    visibility: hidden;
   }
 
   .header__menu,

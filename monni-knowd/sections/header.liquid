@@ -113,10 +113,7 @@
       </div>
 
       <div class="header__logo" data-ink-item="Logo">
-        <a href="{{ routes.root_url }}" aria-label="Tea &amp; Tonic" class="header__logo-link">
-          <span class="header__logo-text" data-logo-face="a">Tea &amp; Tonic</span>
-          <span class="header__logo-text header__logo-text--mirror" data-logo-face="b" aria-hidden="true">Tea &amp; Tonic</span>
-        </a>
+        <a href="{{ routes.root_url }}" aria-label="Tea &amp; Tonic" class="header__logo-link"><span class="header__logo-text" data-logo-face="a">Tea &amp; Tonic</span><span class="header__logo-text header__logo-text--mirror" data-logo-face="b" aria-hidden="true">Tea &amp; Tonic</span></a>
       </div>
 
       <div class="header__side header__side--end">
@@ -442,7 +439,6 @@
     text-align: center;
   }
 
-  .header__logo a,
   .header__drawer-brand {
     display: inline-flex;
     align-items: center;
@@ -451,13 +447,42 @@
     transition: opacity var(--transition-fast);
   }
 
-  .header__logo-link {
-    display: inline-grid;
+  .header__logo a.header__logo-link {
+    position: relative;
+    display: inline-block;
+    color: var(--color-foreground);
+    transition: opacity var(--transition-fast);
+    text-align: left;
+    white-space: nowrap;
   }
 
-  .header__logo-text,
-  .header__logo-text--mirror {
-    grid-area: 1 / 1;
+  .header__logo-link,
+  .header__logo-link::before,
+  .header__logo-text[data-logo-face="a"],
+  .header__logo-text[data-logo-face="b"] {
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 1.12rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .header__logo a.header__logo-link::before {
+    content: "Tea & Tonic";
+    display: block;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .header__logo-text[data-logo-face="a"],
+  .header__logo-text[data-logo-face="b"] {
+    position: absolute;
+    inset: 0;
+    display: block;
+    margin: 0;
+    text-align: left;
   }
 
   .header__logo-text--mirror {
@@ -1320,6 +1345,10 @@
 
   @media (max-width: 389px) {
     .header__inner { padding-left: 14px; padding-right: 14px; }
+    .header__logo-link,
+    .header__logo-link::before,
+    .header__logo-text[data-logo-face="a"],
+    .header__logo-text[data-logo-face="b"],
     .header__logo-text { font-size: 1rem; letter-spacing: 0.12em; }
     .header__mobile-cart,
     .header__mobile-search { font-size: 0.62rem; letter-spacing: 0.06em; }
@@ -1327,6 +1356,10 @@
   }
 
   @media (max-width: 339px) {
+    .header__logo-link,
+    .header__logo-link::before,
+    .header__logo-text[data-logo-face="a"],
+    .header__logo-text[data-logo-face="b"],
     .header__logo-text { font-size: 0.92rem; }
   }
 
@@ -1342,6 +1375,10 @@
       column-gap: 0.7rem;
     }
 
+    .header__logo-link,
+    .header__logo-link::before,
+    .header__logo-text[data-logo-face="a"],
+    .header__logo-text[data-logo-face="b"],
     .header__logo-text {
       font-size: 1rem;
       letter-spacing: 0.12em;
@@ -1425,6 +1462,8 @@
     color: var(--ink-l, #faf8f4);
     -webkit-text-fill-color: var(--ink-l, #faf8f4);
     background-image: none;
+    background-clip: border-box;
+    -webkit-background-clip: border-box;
     clip-path: inset(0 calc(100% - var(--logo-split, 50%)) 0 0);
   }
 
@@ -1432,6 +1471,8 @@
     color: var(--ink-r, #1f1d1a);
     -webkit-text-fill-color: var(--ink-r, #1f1d1a);
     background-image: none;
+    background-clip: border-box;
+    -webkit-background-clip: border-box;
     clip-path: inset(0 0 0 var(--logo-split, 50%));
   }
 
@@ -1451,22 +1492,28 @@
   }
 
   .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item][data-scrim="true"]:not([data-ink-item="Logo"]) {
-    background-image: radial-gradient(closest-side, rgba(20, 16, 12, 0.62), rgba(20, 16, 12, 0) 78%);
-    background-repeat: no-repeat;
-    text-shadow: 0 0 6px rgba(20, 16, 12, 0.9);
+    background-image: none;
+    text-shadow: 0 0 12px rgba(31, 29, 26, 0.35);
   }
 
   .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item][data-ink="dark"][data-scrim="true"]:not([data-ink-item="Logo"]) {
-    background-image: radial-gradient(closest-side, rgba(250, 248, 244, 0.88), rgba(250, 248, 244, 0) 78%);
-    text-shadow: 0 0 6px rgba(250, 248, 244, 0.95);
+    background-image: none;
+    text-shadow: 0 0 12px rgba(250, 248, 244, 0.35);
   }
 
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item="Logo"][data-scrim="true"] {
-    text-shadow: 0 0 10px rgba(20, 16, 12, 0.95), 0 1px 2px rgba(20, 16, 12, 0.9);
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item="Logo"][data-scrim="true"]:not([data-ink="split"]) .header__logo-text {
+    background-image: none;
+    text-shadow: 0 0 12px rgba(31, 29, 26, 0.35);
   }
 
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item="Logo"][data-ink="dark"][data-scrim="true"] {
-    text-shadow: 0 0 10px rgba(250, 248, 244, 0.98), 0 1px 2px rgba(250, 248, 244, 0.95);
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item="Logo"][data-ink="dark"][data-scrim="true"] .header__logo-text {
+    background-image: none;
+    text-shadow: 0 0 12px rgba(250, 248, 244, 0.35);
+  }
+
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item="Logo"][data-ink="split"] .header__logo-text {
+    background-image: none;
+    text-shadow: none;
   }
 
   @media (max-width: 767px) {
@@ -1646,15 +1693,29 @@
       }
       if (!values.length) return null;
       values.sort(function (a, b) { return a - b; });
-      return { p10: percentile(values, 0.1), p90: percentile(values, 0.9) };
+      return { p20: percentile(values, 0.2), p80: percentile(values, 0.8) };
     }
 
     function fromSample(box) {
-      var darkMin = Math.min(contrast(DARK_L, box.p10), contrast(DARK_L, box.p90));
-      var lightMin = Math.min(contrast(LIGHT_L, box.p10), contrast(LIGHT_L, box.p90));
+      var darkMin = Math.min(contrast(DARK_L, box.p20), contrast(DARK_L, box.p80));
+      var lightMin = Math.min(contrast(LIGHT_L, box.p20), contrast(LIGHT_L, box.p80));
       var ink = darkMin >= lightMin ? 'dark' : 'light';
       var score = ink === 'dark' ? darkMin : lightMin;
       return { ink: ink, contrast: score, scrim: score < 4.5, source: 'sample' };
+    }
+
+    function logoFace(el) {
+      return el.querySelector('[data-logo-face="a"]') || el;
+    }
+
+    function textPixelsBox(el) {
+      try {
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        var r = range.getBoundingClientRect();
+        if (r && r.width >= 2 && r.height >= 2) return r;
+      } catch (err) {}
+      return el.getBoundingClientRect();
     }
 
     function overlapW(x0, x1, rect) {
@@ -1719,7 +1780,7 @@
     }
 
     function findSeam(el, y0, y1) {
-      var rect = el.getBoundingClientRect();
+      var rect = logoFace(el).getBoundingClientRect();
       var cols = 20;
       var prev = null;
       var best = 0;
@@ -1727,7 +1788,7 @@
       for (var i = 0; i < cols; i++) {
         var x = rect.left + (rect.width * (i + 0.5)) / cols;
         var box = sampleBox(x - 1, y0, x + 1, y1);
-        var L = box ? (box.p10 + box.p90) / 2 : null;
+        var L = box ? (box.p20 + box.p80) / 2 : null;
         if (L != null && prev != null) {
           var delta = Math.abs(L - prev);
           if (delta > best) {
@@ -1747,11 +1808,11 @@
     }
 
     function paintLogo(el, y0, y1) {
-      var rect = el.getBoundingClientRect();
+      var rect = logoFace(el).getBoundingClientRect();
       if (rect.width < 2) return;
       var mid = rect.left + rect.width / 2;
-      var left = decide(rect.left - 6, mid, y0, y1);
-      var right = decide(mid, rect.right + 6, y0, y1);
+      var left = decide(rect.left, mid, y0, y1);
+      var right = decide(mid, rect.right, y0, y1);
       if (left.ink === right.ink) {
         var matched = left;
         if (left.contrast != null && right.contrast != null) {
@@ -1766,8 +1827,9 @@
         return;
       }
       var seam = findSeam(el, y0, y1);
-      var pct = ((seam - rect.left) / rect.width) * 100;
-      pct = Math.max(4, Math.min(96, pct));
+      var splitPx = seam - rect.left;
+      if (splitPx < 0) splitPx = 0;
+      if (splitPx > rect.width) splitPx = rect.width;
       var scores = [left.contrast, right.contrast].filter(function (n) { return n != null; });
       el.setAttribute('data-ink', 'split');
       el.setAttribute('data-ink-source', left.source === 'sample' || right.source === 'sample' ? 'sample' : (left.source === 'override' || right.source === 'override' ? 'override' : 'fallback'));
@@ -1775,7 +1837,7 @@
       else el.removeAttribute('data-contrast');
       el.style.setProperty('--ink-l', left.ink === 'light' ? '#faf8f4' : '#1f1d1a');
       el.style.setProperty('--ink-r', right.ink === 'light' ? '#faf8f4' : '#1f1d1a');
-      el.style.setProperty('--logo-split', pct.toFixed(2) + '%');
+      el.style.setProperty('--logo-split', splitPx.toFixed(2) + 'px');
       if (left.scrim || right.scrim) el.setAttribute('data-scrim', 'true');
       else el.removeAttribute('data-scrim');
     }
@@ -1792,7 +1854,9 @@
         if (forcedSolid) {
           paintItem(el, { ink: 'dark', contrast: null, scrim: false, source: 'solid' });
         } else if (el.classList.contains('header__logo')) {
-          paintLogo(el, rect.top - 6, rect.bottom + 6);
+          var face = logoFace(el);
+          var faceRect = face.getBoundingClientRect();
+          paintLogo(el, faceRect.top, faceRect.bottom);
         } else {
           decidePaint(el, rect);
         }
@@ -1812,7 +1876,9 @@
     }
 
     function decidePaint(el, rect) {
-      paintItem(el, decide(rect.left - 6, rect.right + 6, rect.top - 6, rect.bottom + 6));
+      var box = textPixelsBox(el);
+      if (!box || box.width < 2) box = rect;
+      paintItem(el, decide(box.left, box.right, box.top, box.bottom));
     }
 
     function bindPhoto() {
