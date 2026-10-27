@@ -711,3 +711,23 @@ product-page.product-page {
     object-fit: cover;
   }
 }
+
+.product-page__matching[hidden] { display: none !important; }
+
+/* Gift card amounts come from the product's variants. Seven options wrap. */
+.product-gift-card .product-page__variant-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(4.75rem, 1fr));
+  gap: 8px;
+}
+
+.product-gift-card .product-page__variant-swatch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 8px 6px;
+  text-align: center;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}

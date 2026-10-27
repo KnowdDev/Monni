@@ -2,11 +2,27 @@
   <div class="opening-statement__inner">
     <p class="opening-statement__line opening-statement__line--primary">{{ section.settings.line_1 | default: 'A place to pause. A place to reconnect.' | escape }}</p>
     {%- liquid
-      assign statement = section.settings.statement
-      if statement == blank
-        assign statement = 'A considered collection of natural skincare, botanical perfume, organic tea, handmade jewellery, ceramics, art, slow fashion and pieces for the home, from women-founded makers who care for people and planet.'
+      assign lead = section.settings.statement
+      assign ending = section.settings.statement_ending
+      if lead == blank
+        assign lead = 'A considered collection of natural skincare, botanical perfume, organic tea, handmade jewellery, ceramics, art, slow fashion and pieces for the home,'
       endif
-      assign statement_html = statement | escape | replace: 'women-founded', '<span class="opening-statement__keep">women-founded</span>'
+      assign legacy_ending = 'from women-founded makers who care for people and planet.'
+      if lead contains legacy_ending
+        assign lead = lead | replace: legacy_ending, '' | strip
+      endif
+      assign lead = lead | strip
+      if ending != blank
+        assign ending = ending | strip
+      endif
+      capture statement_text
+        echo lead
+        if ending != blank
+          echo ' '
+          echo ending
+        endif
+      endcapture
+      assign statement_html = statement_text | strip | escape | replace: 'women-founded', '<span class="opening-statement__keep">women-founded</span>'
     -%}
     <p class="opening-statement__line opening-statement__line--secondary">{{ statement_html }}</p>
   </div>
@@ -73,8 +89,16 @@
     {
       "type": "textarea",
       "id": "statement",
-      "label": "Paragraph",
-      "default": "A considered collection of natural skincare, botanical perfume, organic tea, handmade jewellery, ceramics, art, slow fashion and pieces for the home, from women-founded makers who care for people and planet."
+      "label": "Sentence",
+      "info": "The line under the double photo, including the comma at the end.",
+      "default": "A considered collection of natural skincare, botanical perfume, organic tea, handmade jewellery, ceramics, art, slow fashion and pieces for the home,"
+    },
+    {
+      "type": "text",
+      "id": "statement_ending",
+      "label": "Sentence ending",
+      "info": "Shown after the sentence. Clear this field to drop the ending without a code change.",
+      "default": "from women-founded makers who care for people and planet."
     }
   ],
   "presets": [

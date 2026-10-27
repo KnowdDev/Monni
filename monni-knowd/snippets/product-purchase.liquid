@@ -1,6 +1,7 @@
 {%- comment -%}
   Product buy column. Tag made-to-order / final-sale. Optional fold-outs render only when a metafield has content.
-  Paired products: custom.paired_products (list of products).
+  Paired products: custom.paired_products, then monni.paired_products, then recommendations.
+  A row renders only when that source can show exactly two in-stock products that are not this one.
 {%- endcomment -%}
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
@@ -50,45 +51,85 @@
     assign in_store = true
   endif
 
-  assign pairs = product.metafields.custom.paired_products.value
-  if pairs == blank
-    assign pairs = product.metafields.monni.paired_products.value
-  endif
-  assign pair_shown = 0
-  if pairs != blank
-    for pair in pairs
-      if pair != blank and pair.id != blank
-        assign pair_shown = pair_shown | plus: 1
-      endif
-    endfor
-  endif
-
   assign quarter = current_variant.price | divided_by: 4
 -%}
 
 {%- if part == 'pairs' -%}
-  {%- if product.gift_card? or pair_shown > 0 -%}
+  {%- liquid
+    assign custom_pairs = product.metafields.custom.paired_products.value
+    assign monni_pairs = product.metafields.monni.paired_products.value
+    assign custom_pair_count = 0
+    assign custom_seen = ''
+    if custom_pairs.first.id != blank
+      for pair in custom_pairs
+        if pair != blank and pair.id != blank and pair.id != product.id and pair.available
+          assign pair_token = '|' | append: pair.id | append: '|'
+          unless custom_seen contains pair_token
+            assign custom_seen = custom_seen | append: pair_token
+            assign custom_pair_count = custom_pair_count | plus: 1
+          endunless
+        endif
+      endfor
+    endif
+    assign monni_pair_count = 0
+    assign monni_seen = ''
+    if monni_pairs.first.id != blank
+      for pair in monni_pairs
+        if pair != blank and pair.id != blank and pair.id != product.id and pair.available
+          assign pair_token = '|' | append: pair.id | append: '|'
+          unless monni_seen contains pair_token
+            assign monni_seen = monni_seen | append: pair_token
+            assign monni_pair_count = monni_pair_count | plus: 1
+          endunless
+        endif
+      endfor
+    endif
+  -%}
+  {%- if product.gift_card? -%}
     <div class="product-page__matching">
-      {%- if product.gift_card? -%}
-        <div class="product-page__pair-head">
-          <h2>Gifts they'll love</h2>
-          <a href="/collections/all-gifting">Shop gifts</a>
-        </div>
-      {%- elsif pair_shown > 0 -%}
-        <div class="product-page__pair-head"><h2>{{ pair_heading }}</h2></div>
-        <div class="product-page__pairs">
-          {%- assign rendered_pairs = 0 -%}
-          {%- for pair in pairs -%}
-            {%- if rendered_pairs < 2 and pair != blank and pair.id != blank -%}
-              {%- render 'card-product', card_product: pair, show_quick_add: false, show_wishlist: false, show_badges: false -%}
-              {%- assign rendered_pairs = rendered_pairs | plus: 1 -%}
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
+      <div class="product-page__pair-head">
+        <h2>Gifts they'll love</h2>
+        <a href="/collections/all-gifting">Shop gifts</a>
+      </div>
     </div>
-  {%- elsif pair_shown == 0 -%}
-    <div class="product-page__matching" data-auto-pairs data-product-id="{{ product.id }}" hidden>
+  {%- elsif custom_pair_count >= 2 -%}
+    <div class="product-page__matching" data-pair-source="custom">
+      <div class="product-page__pair-head"><h2>{{ pair_heading }}</h2></div>
+      <div class="product-page__pairs">
+        {%- assign rendered_pairs = 0 -%}
+        {%- assign rendered_seen = '' -%}
+        {%- for pair in custom_pairs -%}
+          {%- if rendered_pairs < 2 and pair != blank and pair.id != blank and pair.id != product.id and pair.available -%}
+            {%- assign pair_token = '|' | append: pair.id | append: '|' -%}
+            {%- unless rendered_seen contains pair_token -%}
+              {%- render 'card-product', card_product: pair, show_quick_add: false, show_wishlist: false, show_badges: false -%}
+              {%- assign rendered_seen = rendered_seen | append: pair_token -%}
+              {%- assign rendered_pairs = rendered_pairs | plus: 1 -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- elsif monni_pair_count >= 2 -%}
+    <div class="product-page__matching" data-pair-source="monni">
+      <div class="product-page__pair-head"><h2>{{ pair_heading }}</h2></div>
+      <div class="product-page__pairs">
+        {%- assign rendered_pairs = 0 -%}
+        {%- assign rendered_seen = '' -%}
+        {%- for pair in monni_pairs -%}
+          {%- if rendered_pairs < 2 and pair != blank and pair.id != blank and pair.id != product.id and pair.available -%}
+            {%- assign pair_token = '|' | append: pair.id | append: '|' -%}
+            {%- unless rendered_seen contains pair_token -%}
+              {%- render 'card-product', card_product: pair, show_quick_add: false, show_wishlist: false, show_badges: false -%}
+              {%- assign rendered_seen = rendered_seen | append: pair_token -%}
+              {%- assign rendered_pairs = rendered_pairs | plus: 1 -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- else -%}
+    <div class="product-page__matching" data-auto-pairs data-pair-source="recommendations" data-product-id="{{ product.id }}" hidden>
       <div class="product-page__pair-head"><h2>{{ pair_heading }}</h2></div>
       <div class="product-page__pairs" data-auto-pairs-grid></div>
     </div>
@@ -100,11 +141,12 @@
         var base = (window.Shopify && Shopify.routes && Shopify.routes.root) || '/';
         if (base.slice(-1) !== '/') base += '/';
         function load(intent) {
-          var url = base + 'recommendations/products?section_id=product-recommendations&product_id={{ product.id }}&limit=2&intent=' + intent;
+          var url = base + 'recommendations/products?section_id=product-recommendations&product_id={{ product.id }}&limit=10&intent=' + intent;
           return fetch(url).then(function (response) { return response.text(); }).then(function (html) {
             var doc = new DOMParser().parseFromString(html, 'text/html');
             var found = doc.querySelector('[data-rec-grid]');
-            return found ? found.innerHTML.trim() : '';
+            if (!found || found.querySelectorAll('.card-product').length !== 2) return '';
+            return found.innerHTML.trim();
           });
         }
         load('complementary').then(function (html) {

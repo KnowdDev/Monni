@@ -1,14 +1,37 @@
 {%- comment -%}
   Rendered only via /recommendations/products?section_id=product-recommendations
-  Complementary first, then related. Max 2. Not placed on the product template.
+  Complementary first, then related. The grid is omitted unless exactly two
+  in-stock products remain after dropping this product and sold-out products.
 {%- endcomment -%}
 <div class="product-recommendations" data-rec-root>
   {%- if recommendations.performed and recommendations.products_count > 0 -%}
-    <div data-rec-grid>
-      {%- for rec in recommendations.products limit: 2 -%}
-        {%- render 'card-product', card_product: rec, show_quick_add: false, show_wishlist: false, show_badges: false -%}
-      {%- endfor -%}
-    </div>
+    {%- assign eligible = 0 -%}
+    {%- assign seen = '' -%}
+    {%- for rec in recommendations.products -%}
+      {%- if eligible < 2 and rec != blank and rec.id != blank and rec.id != product.id and rec.available -%}
+        {%- assign token = '|' | append: rec.id | append: '|' -%}
+        {%- unless seen contains token -%}
+          {%- assign seen = seen | append: token -%}
+          {%- assign eligible = eligible | plus: 1 -%}
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if eligible == 2 -%}
+      <div data-rec-grid>
+        {%- assign shown = 0 -%}
+        {%- assign seen = '' -%}
+        {%- for rec in recommendations.products -%}
+          {%- if shown < 2 and rec != blank and rec.id != blank and rec.id != product.id and rec.available -%}
+            {%- assign token = '|' | append: rec.id | append: '|' -%}
+            {%- unless seen contains token -%}
+              {%- render 'card-product', card_product: rec, show_quick_add: false, show_wishlist: false, show_badges: false -%}
+              {%- assign seen = seen | append: token -%}
+              {%- assign shown = shown | plus: 1 -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   {%- endif -%}
 </div>
 

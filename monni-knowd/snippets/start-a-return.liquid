@@ -1,7 +1,16 @@
 <section class="start-return">
   <div class="start-return__inner">
     <h1>Start a Return</h1>
-    <p class="start-return__intro">Please get in touch within 7 days of delivery.<br>We'll reply within 1–2 working days with next steps.</p>
+
+    {%- if shop.refund_policy.body != blank -%}
+      <div class="start-return__policy rte">{{ shop.refund_policy.body }}</div>
+    {%- elsif page.content != blank -%}
+      <div class="start-return__policy rte">{{ page.content }}</div>
+    {%- else -%}
+      <p class="start-return__placeholder">Placeholder. The returns wording is not on this page yet. Monni needs to add it in Shopify admin under Settings, Policies, Refund policy. This page will show that text. Do not type return windows, conditions, or fees into the theme.</p>
+    {%- endif -%}
+
+    <h2 class="start-return__form-title">Send a return request</h2>
     {% form 'contact', class: 'start-return__form' %}
       {% if form.posted_successfully? %}
         <p role="status">Thank you. We have your return request.</p>
@@ -25,10 +34,89 @@
         </select>
         <label class="visually-hidden" for="ReturnDetails">Details</label>
         <textarea id="ReturnDetails" name="contact[body]" rows="4" placeholder="DETAILS" required></textarea>
-        <p class="start-return__photo">Add a photo (for faulty or damaged items) by emailing it to <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a> with your order number. A photo upload on this form needs a Shopify form app.</p>
+        <p class="start-return__photo">For a faulty or damaged item, email a photo to <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a> with your order number.</p>
         <button type="submit" class="btn btn--outline">Send</button>
-        <p class="start-return__intro">Read our full <a href="/policies/refund-policy">Returns</a> policy.<br>Or email us at <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a>.</p>
+        <p class="start-return__alt">Or email <a href="mailto:hello@teaandtonic.co.nz">hello@teaandtonic.co.nz</a>.</p>
       {% endif %}
     {% endform %}
   </div>
 </section>
+
+<style>
+  .start-return {
+    background: #f5f4f1;
+    color: #2f2f2f;
+    padding: 48px 0 72px;
+  }
+
+  @media (min-width: 761px) {
+    .start-return { padding: 72px 0 96px; }
+  }
+
+  .start-return__policy,
+  .start-return__placeholder,
+  .start-return__photo,
+  .start-return__alt {
+    font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 300;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #2f2f2f;
+  }
+
+  .start-return__policy {
+    max-width: 38rem;
+    margin: 0 auto 2.5rem;
+    text-align: left;
+  }
+
+  .start-return__policy :is(p, ul, ol) { margin: 0 0 1rem; }
+
+  .start-return__policy :is(h1, h2, h3, h4, h5, h6),
+  .start-return__form-title {
+    font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    margin: 2rem 0 0.6rem;
+    color: #2f2f2f;
+  }
+
+  .start-return__policy :is(h1, h2, h3, h4, h5, h6):first-child { margin-top: 0; }
+
+  .start-return__policy :is(strong, b) { font-weight: 400; }
+
+  .start-return__policy a,
+  .start-return__photo a,
+  .start-return__alt a {
+    color: #2f2f2f;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .start-return__policy ul,
+  .start-return__policy ol { padding-left: 1.25rem; }
+
+  .start-return__policy li { margin-bottom: 0.35rem; }
+
+  .start-return__form-title {
+    text-align: center;
+    margin: 0 0 0.25rem;
+  }
+
+  .start-return__placeholder,
+  .start-return__photo,
+  .start-return__alt {
+    color: #6b6965;
+    text-align: center;
+  }
+
+  .start-return__placeholder {
+    max-width: 38rem;
+    margin: 0 auto 2.5rem;
+    padding: 16px;
+    border: 1px dashed #2f2f2f;
+  }
+</style>
