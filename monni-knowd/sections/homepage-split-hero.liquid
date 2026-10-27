@@ -8,7 +8,6 @@
     href="{{ section.settings.link_left | default: '/collections/clothing' }}"
     class="split-hero__panel split-hero__panel--left"
     data-bg="dark"
-    data-ink-override="{{ section.settings.header_ink_left | default: 'auto' }}"
     aria-label="{{ section.settings.label_left | default: 'Clothing' | escape }} — {{ section.settings.cta_left | default: 'Explore' | escape }}"
   >
     <div class="split-hero__fallback split-hero__fallback--left"></div>
@@ -48,7 +47,6 @@
     href="{{ section.settings.link_right | default: '/collections/all-home' }}"
     class="split-hero__panel split-hero__panel--right"
     data-bg="light"
-    data-ink-override="{{ section.settings.header_ink_right | default: 'auto' }}"
     aria-label="{{ section.settings.label_right | default: 'Home' | escape }} — {{ section.settings.cta_right | default: 'Explore' | escape }}"
   >
     <div class="split-hero__fallback split-hero__fallback--right"></div>
@@ -199,10 +197,8 @@
       linear-gradient(200deg, var(--color-border-light) 0%, var(--color-accent-light) 40%, var(--color-background) 100%);
   }
 
-  /* Soft shade behind the floating header (top) and the headline (bottom) so the
-     type reads on any photograph, without visibly darkening the picture. */
+  /* Headline shade only. Header contrast comes from the full-width top fade. */
   .split-hero__overlay {
-    --shade-top: linear-gradient(to bottom, rgba(var(--hero-shade), 0.42) 0, rgba(var(--hero-shade), 0) 9.5rem);
     --shade-bottom: linear-gradient(to top, rgba(var(--hero-shade), 0.5) 0, rgba(var(--hero-shade), 0) 55%);
     position: absolute;
     inset: 0;
@@ -211,27 +207,47 @@
     background: rgba(var(--hero-shade), 0.06);
   }
 
-  /* Phone: header floats over the first photo, headline sits on the second. */
-  .split-hero__panel--left .split-hero__overlay {
-    background: var(--shade-top), rgba(var(--hero-shade), 0.06);
-  }
-
+  /* Phone: the headline sits on the second photo, so only that panel is shaded. */
   .split-hero__panel--right .split-hero__overlay {
     background: var(--shade-bottom), rgba(var(--hero-shade), 0.06);
   }
 
   @media (min-width: 768px) {
-    .split-hero__panel--left .split-hero__overlay {
-      background: var(--shade-top), var(--shade-bottom), rgba(var(--hero-shade), 0.06);
+    .split-hero__panel .split-hero__overlay {
+      background: var(--shade-bottom), rgba(var(--hero-shade), 0.06);
     }
+  }
 
-    /* Right half is a light photograph with dark header ink. A dark top shade
-       would drop that ink under 4.5:1, so the top shade stays cream. */
-    .split-hero__panel--right .split-hero__overlay {
-      background:
-        linear-gradient(to bottom, rgba(245, 244, 241, 0.5) 0, rgba(245, 244, 241, 0) 9.5rem),
-        var(--shade-bottom),
-        rgba(245, 244, 241, 0.05);
+  /* Soft dark vignette across both halves. Strength is held through the header
+     so light ink clears 4.5:1 on the pale ceramics, then eases out above the headline. */
+  .split-hero::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10.5rem;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(20, 18, 16, 0.58) 0,
+      rgba(20, 18, 16, 0.54) 4.2rem,
+      rgba(20, 18, 16, 0.18) 7.5rem,
+      rgba(20, 18, 16, 0) 100%
+    );
+  }
+
+  @media (min-width: 768px) {
+    .split-hero::after {
+      height: 14.5rem;
+      background: linear-gradient(
+        to bottom,
+        rgba(20, 18, 16, 0.58) 0,
+        rgba(20, 18, 16, 0.54) 5rem,
+        rgba(20, 18, 16, 0.2) 9rem,
+        rgba(20, 18, 16, 0) 100%
+      );
     }
   }
 
@@ -393,33 +409,9 @@
     },
     {
       "type": "select",
-      "id": "header_ink_left",
-      "label": "Header ink on the left photo",
-      "info": "Auto samples the photograph. Light ink or dark ink forces that colour for header items on this half.",
-      "options": [
-        { "value": "auto", "label": "Auto" },
-        { "value": "light", "label": "Light ink" },
-        { "value": "dark", "label": "Dark ink" }
-      ],
-      "default": "auto"
-    },
-    {
-      "type": "select",
-      "id": "header_ink_right",
-      "label": "Header ink on the right photo",
-      "info": "Auto samples the photograph. Light ink or dark ink forces that colour for header items on this half.",
-      "options": [
-        { "value": "auto", "label": "Auto" },
-        { "value": "light", "label": "Light ink" },
-        { "value": "dark", "label": "Dark ink" }
-      ],
-      "default": "auto"
-    },
-    {
-      "type": "select",
       "id": "text_tone",
       "label": "Text over the photos",
-      "info": "Light text suits dark or mid-tone photographs; choose Dark text if both hero photos are pale. Header ink is sampled from the photo unless a half is forced below.",
+      "info": "Light text suits dark or mid-tone photographs; choose Dark text if both hero photos are pale. The homepage header stays light over the hero.",
       "options": [
         { "value": "light", "label": "Light text" },
         { "value": "dark", "label": "Dark text" }
