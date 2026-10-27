@@ -113,7 +113,7 @@
       </div>
 
       <div class="header__logo" data-ink-item="Logo">
-        <a href="{{ routes.root_url }}" aria-label="Tea &amp; Tonic" class="header__logo-link"><span class="header__logo-text" data-logo-face="a">Tea &amp; Tonic</span><span class="header__logo-text header__logo-text--mirror" data-logo-face="b" aria-hidden="true">Tea &amp; Tonic</span></a>
+        <a href="{{ routes.root_url }}" aria-label="Tea &amp; Tonic" class="header__logo-link"><span class="header__logo-text">Tea &amp; Tonic</span></a>
       </div>
 
       <div class="header__side header__side--end">
@@ -328,8 +328,9 @@
     filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(20, 16, 12, 0.5));
   }
 
-  .header [data-ink-item] {
-    transition: color 200ms ease, filter 200ms ease, -webkit-text-fill-color 200ms ease;
+  .header [data-ink-item],
+  .header .header__logo-text {
+    transition: color 200ms ease, filter 200ms ease, text-shadow 200ms ease, -webkit-text-fill-color 200ms ease;
   }
 
   /* Shop menu or mobile drawer open: normal ink on a solid bar. */
@@ -457,9 +458,7 @@
   }
 
   .header__logo-link,
-  .header__logo-link::before,
-  .header__logo-text[data-logo-face="a"],
-  .header__logo-text[data-logo-face="b"] {
+  .header__logo-text {
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 300;
     font-size: 1.12rem;
@@ -467,27 +466,6 @@
     text-transform: uppercase;
     line-height: 1;
     white-space: nowrap;
-  }
-
-  .header__logo a.header__logo-link::before {
-    content: "Tea & Tonic";
-    display: block;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .header__logo-text[data-logo-face="a"],
-  .header__logo-text[data-logo-face="b"] {
-    position: absolute;
-    inset: 0;
-    display: block;
-    margin: 0;
-    text-align: left;
-  }
-
-  .header__logo-text--mirror {
-    visibility: hidden;
-    pointer-events: none;
   }
 
   .header__logo a:hover,
@@ -1346,9 +1324,6 @@
   @media (max-width: 389px) {
     .header__inner { padding-left: 14px; padding-right: 14px; }
     .header__logo-link,
-    .header__logo-link::before,
-    .header__logo-text[data-logo-face="a"],
-    .header__logo-text[data-logo-face="b"],
     .header__logo-text { font-size: 1rem; letter-spacing: 0.12em; }
     .header__mobile-cart,
     .header__mobile-search { font-size: 0.62rem; letter-spacing: 0.06em; }
@@ -1357,9 +1332,6 @@
 
   @media (max-width: 339px) {
     .header__logo-link,
-    .header__logo-link::before,
-    .header__logo-text[data-logo-face="a"],
-    .header__logo-text[data-logo-face="b"],
     .header__logo-text { font-size: 0.92rem; }
   }
 
@@ -1376,9 +1348,6 @@
     }
 
     .header__logo-link,
-    .header__logo-link::before,
-    .header__logo-text[data-logo-face="a"],
-    .header__logo-text[data-logo-face="b"],
     .header__logo-text {
       font-size: 1rem;
       letter-spacing: 0.12em;
@@ -1454,43 +1423,20 @@
     background-color: #faf8f4;
   }
 
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__logo[data-ink="split"] .header__logo-text--mirror {
-    visibility: visible;
-  }
-
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__logo[data-ink="split"] .header__logo-text[data-logo-face="a"] {
-    color: var(--ink-l, #faf8f4);
-    -webkit-text-fill-color: var(--ink-l, #faf8f4);
-    background-image: none;
-    background-clip: border-box;
-    -webkit-background-clip: border-box;
-    clip-path: inset(0 calc(100% - var(--logo-split, 50%)) 0 0);
-  }
-
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__logo[data-ink="split"] .header__logo-text[data-logo-face="b"] {
-    color: var(--ink-r, #1f1d1a);
-    -webkit-text-fill-color: var(--ink-r, #1f1d1a);
-    background-image: none;
-    background-clip: border-box;
-    -webkit-background-clip: border-box;
-    clip-path: inset(0 0 0 var(--logo-split, 50%));
-  }
-
   .header--over-photo.is-solid .header__logo-text,
   .header.is-open .header__logo-text,
   .header.header--menu-open .header__logo-text {
     background-image: none;
-    clip-path: none;
     color: #2f2f2f;
     -webkit-text-fill-color: #2f2f2f;
   }
 
-  .header--over-photo.is-solid .header__logo-text--mirror,
-  .header.is-open .header__logo-text--mirror,
-  .header.header--menu-open .header__logo-text--mirror {
-    visibility: hidden;
+  .header--over-photo.is-solid:not(.is-open):not(.header--menu-open) [data-ink-item] {
+    color: #2f2f2f;
+    -webkit-text-fill-color: #2f2f2f;
   }
 
+  /* Low contrast on the homepage hero only. Static shadow from 7a7f737 — no halo, no scroll change. */
   .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item][data-scrim="true"]:not([data-ink-item="Logo"]) {
     background-image: none;
     text-shadow: 0 0 12px rgba(31, 29, 26, 0.35);
@@ -1501,7 +1447,7 @@
     text-shadow: 0 0 12px rgba(250, 248, 244, 0.35);
   }
 
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item="Logo"][data-scrim="true"]:not([data-ink="split"]) .header__logo-text {
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item="Logo"][data-scrim="true"] .header__logo-text {
     background-image: none;
     text-shadow: 0 0 12px rgba(31, 29, 26, 0.35);
   }
@@ -1511,7 +1457,13 @@
     text-shadow: 0 0 12px rgba(250, 248, 244, 0.35);
   }
 
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item="Logo"][data-ink="split"] .header__logo-text {
+  /* Product and gift card stay one dark ink, transparent or solid. */
+  body.template-product .header.header--over-photo:not(.is-open):not(.header--menu-open) [data-ink-item],
+  body.product-gift-card .header.header--over-photo:not(.is-open):not(.header--menu-open) [data-ink-item],
+  body.template-product .header.header--over-photo:not(.is-open):not(.header--menu-open) [data-ink-item] .header__logo-text,
+  body.product-gift-card .header.header--over-photo:not(.is-open):not(.header--menu-open) [data-ink-item] .header__logo-text {
+    color: #1f1d1a;
+    -webkit-text-fill-color: #1f1d1a;
     background-image: none;
     text-shadow: none;
   }
@@ -1530,11 +1482,9 @@
     }
 
     body:not([data-ink-ready]):has(.split-hero__panel--left[data-bg="dark"]):has(.split-hero__panel--right[data-bg="light"]) .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__logo-text {
-      background-image: linear-gradient(90deg, #f5f4f1 0 50%, #2f2f2f 50% 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
+      background-image: none;
+      color: #faf8f4;
+      -webkit-text-fill-color: #faf8f4;
     }
   }
 {% endstyle %}
@@ -1543,10 +1493,9 @@
   (function () {
     var hdr = document.querySelector('[data-header-root]');
     if (!hdr) return;
-    var ticking = false;
 
     function solidNow() {
-      var menuOpen = hdr.classList.contains('header--menu-open') || hdr.classList.contains('is-open') || !!hdr.querySelector('.is-shop-open');
+      var menuOpen = hdr.classList.contains('header--menu-open') || !!hdr.querySelector('.is-shop-open');
       if (!hdr.classList.contains('header--over-photo') || menuOpen) return true;
       var photo = document.querySelector('[data-header-photo]');
       if (!photo) return true;
@@ -1573,6 +1522,9 @@
     var bitmaps = {};
     var pendingSrc = {};
     var failedSrc = {};
+    var bitmapPaints = 0;
+    var sampleHero = document.body.classList.contains('template-index') && !!document.querySelector('.split-hero[data-header-photo]');
+    var lastWidth = window.innerWidth;
 
     function percentile(sorted, p) {
       if (!sorted.length) return null;
@@ -1614,7 +1566,10 @@
       loader.onload = function () {
         bitmaps[src] = loader;
         pendingSrc[src] = false;
-        schedule();
+        if (bitmapPaints < 2 && hdr.querySelector('[data-ink-source="fallback"]')) {
+          bitmapPaints += 1;
+          scheduleInk();
+        }
       };
       loader.onerror = function () {
         pendingSrc[src] = false;
@@ -1704,10 +1659,6 @@
       return { ink: ink, contrast: score, scrim: score < 4.5, source: 'sample' };
     }
 
-    function logoFace(el) {
-      return el.querySelector('[data-logo-face="a"]') || el;
-    }
-
     function textPixelsBox(el) {
       try {
         var range = document.createRange();
@@ -1779,100 +1730,59 @@
       el.style.removeProperty('--logo-split');
     }
 
-    function findSeam(el, y0, y1) {
-      var rect = logoFace(el).getBoundingClientRect();
-      var cols = 20;
-      var prev = null;
-      var best = 0;
-      var at = null;
-      for (var i = 0; i < cols; i++) {
-        var x = rect.left + (rect.width * (i + 0.5)) / cols;
-        var box = sampleBox(x - 1, y0, x + 1, y1);
-        var L = box ? (box.p20 + box.p80) / 2 : null;
-        if (L != null && prev != null) {
-          var delta = Math.abs(L - prev);
-          if (delta > best) {
-            best = delta;
-            at = rect.left + (rect.width * i) / cols;
-          }
-        }
-        if (L != null) prev = L;
-      }
-      if (at != null && best >= 0.08) return at;
-      var panels = document.querySelectorAll('[data-header-photo] [data-bg]');
-      for (var j = 0; j < panels.length; j++) {
-        var pr = panels[j].getBoundingClientRect();
-        if (pr.right > rect.left + 8 && pr.right < rect.right - 8 && pr.bottom > y0 && pr.top < y1) return pr.right;
-      }
-      return rect.left + rect.width / 2;
+    function paintLogo(el) {
+      var text = el.querySelector('.header__logo-text') || el;
+      var rect = textPixelsBox(text);
+      if (!rect || rect.width < 2) return;
+      paintItem(el, decide(rect.left, rect.right, rect.top, rect.bottom));
     }
 
-    function paintLogo(el, y0, y1) {
-      var rect = logoFace(el).getBoundingClientRect();
-      if (rect.width < 2) return;
-      var mid = rect.left + rect.width / 2;
-      var left = decide(rect.left, mid, y0, y1);
-      var right = decide(mid, rect.right, y0, y1);
-      if (left.ink === right.ink) {
-        var matched = left;
-        if (left.contrast != null && right.contrast != null) {
-          matched = {
-            ink: left.ink,
-            contrast: Math.min(left.contrast, right.contrast),
-            scrim: left.scrim || right.scrim,
-            source: left.source === 'sample' || right.source === 'sample' ? 'sample' : left.source
-          };
-        }
-        paintItem(el, matched);
-        return;
+    function reportInk(bits, mode) {
+      if (!bits.length) return;
+      hdr.setAttribute('data-ink-mode', mode);
+      var report = hdr.querySelector('[data-header-ink-report]');
+      if (report) report.textContent = bits.join(' | ');
+      document.body.setAttribute('data-ink-ready', 'true');
+    }
+
+    function paintLocked() {
+      var items = hdr.querySelectorAll('[data-ink-item]');
+      var bits = [];
+      for (var i = 0; i < items.length; i++) {
+        var el = items[i];
+        var rect = el.getBoundingClientRect();
+        if (rect.width < 2 || rect.height < 2) continue;
+        paintItem(el, { ink: 'dark', contrast: null, scrim: false, source: 'locked' });
+        bits.push(el.getAttribute('data-ink-item') + ' ink=dark contrast=n/a source=locked');
       }
-      var seam = findSeam(el, y0, y1);
-      var splitPx = seam - rect.left;
-      if (splitPx < 0) splitPx = 0;
-      if (splitPx > rect.width) splitPx = rect.width;
-      var scores = [left.contrast, right.contrast].filter(function (n) { return n != null; });
-      el.setAttribute('data-ink', 'split');
-      el.setAttribute('data-ink-source', left.source === 'sample' || right.source === 'sample' ? 'sample' : (left.source === 'override' || right.source === 'override' ? 'override' : 'fallback'));
-      if (scores.length) el.setAttribute('data-contrast', Math.min.apply(null, scores).toFixed(2));
-      else el.removeAttribute('data-contrast');
-      el.style.setProperty('--ink-l', left.ink === 'light' ? '#faf8f4' : '#1f1d1a');
-      el.style.setProperty('--ink-r', right.ink === 'light' ? '#faf8f4' : '#1f1d1a');
-      el.style.setProperty('--logo-split', splitPx.toFixed(2) + 'px');
-      if (left.scrim || right.scrim) el.setAttribute('data-scrim', 'true');
-      else el.removeAttribute('data-scrim');
+      reportInk(bits, 'locked');
     }
 
     function paintInk() {
+      if (!sampleHero) {
+        paintLocked();
+        return;
+      }
       var items = hdr.querySelectorAll('[data-ink-item]');
-      var forcedSolid = solidNow();
       var bits = [];
       var sampled = false;
       for (var i = 0; i < items.length; i++) {
         var el = items[i];
         var rect = el.getBoundingClientRect();
         if (rect.width < 2 || rect.height < 2) continue;
-        if (forcedSolid) {
-          paintItem(el, { ink: 'dark', contrast: null, scrim: false, source: 'solid' });
-        } else if (el.classList.contains('header__logo')) {
-          var face = logoFace(el);
-          var faceRect = face.getBoundingClientRect();
-          paintLogo(el, faceRect.top, faceRect.bottom);
-        } else {
-          decidePaint(el, rect);
-        }
+        if (el.classList.contains('header__logo')) paintLogo(el);
+        else decidePaint(el, rect);
+        if (el.getAttribute('data-ink') === 'split') el.setAttribute('data-ink', 'dark');
         if (el.getAttribute('data-ink-source') === 'sample') sampled = true;
         bits.push(
           el.getAttribute('data-ink-item') +
           ' ink=' + el.getAttribute('data-ink') +
           ' contrast=' + (el.getAttribute('data-contrast') || 'n/a') +
           ' source=' + el.getAttribute('data-ink-source') +
-          (el.getAttribute('data-scrim') === 'true' ? ' scrim' : '')
+          (el.getAttribute('data-scrim') === 'true' ? ' shadow' : '')
         );
       }
-      hdr.setAttribute('data-ink-mode', forcedSolid ? 'solid' : (sampled ? 'sample' : 'fallback'));
-      var report = hdr.querySelector('[data-header-ink-report]');
-      if (report) report.textContent = bits.join(' | ');
-      document.body.setAttribute('data-ink-ready', 'true');
+      reportInk(bits, sampled ? 'sample' : 'fallback');
     }
 
     function decidePaint(el, rect) {
@@ -1881,38 +1791,110 @@
       paintItem(el, decide(box.left, box.right, box.top, box.bottom));
     }
 
-    function bindPhoto() {
-      var photo = document.querySelector('[data-header-photo]');
-      if (!photo || photo.getAttribute('data-ink-bound') === '1') return;
-      photo.setAttribute('data-ink-bound', '1');
-      var imgs = photo.querySelectorAll('img');
-      for (var i = 0; i < imgs.length; i++) imgs[i].addEventListener('load', schedule);
-      var scroller = photo.querySelector('.media-gallery__main');
-      if (scroller) scroller.addEventListener('scroll', schedule, { passive: true });
-      new MutationObserver(schedule).observe(photo, { subtree: true, attributes: true, attributeFilter: ['class'] });
-    }
-
-    function update() {
-      ticking = false;
-      hdr.classList.toggle('is-open', !!hdr.querySelector('.is-shop-open') || hdr.classList.contains('header--menu-open'));
+    function syncSolid() {
+      var menuOpen = hdr.classList.contains('header--menu-open') || !!hdr.querySelector('.is-shop-open');
+      hdr.classList.toggle('is-open', menuOpen);
       hdr.classList.toggle('is-solid', solidNow());
-      bindPhoto();
-      paintInk();
     }
 
-    function schedule() {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    var solidTick = false;
+    function scheduleSolid() {
+      if (solidTick) return;
+      solidTick = true;
+      requestAnimationFrame(function () {
+        solidTick = false;
+        syncSolid();
+      });
     }
 
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
-    window.addEventListener('orientationchange', schedule);
-    document.addEventListener('DOMContentLoaded', update);
-    window.addEventListener('load', update);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
-    if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', schedule);
-    new MutationObserver(schedule).observe(hdr, { subtree: true, attributes: true, attributeFilter: ['class'] });
-    update();
+    var inkTick = false;
+    function scheduleInk() {
+      if (inkTick) return;
+      inkTick = true;
+      requestAnimationFrame(function () {
+        inkTick = false;
+        paintInk();
+        syncSolid();
+      });
+    }
+
+    function heroCandidates() {
+      var photo = document.querySelector('.split-hero[data-header-photo]');
+      if (!photo) return [];
+      var imgs = photo.querySelectorAll('img');
+      var out = [];
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        var style = window.getComputedStyle(img);
+        if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0) continue;
+        var rect = img.getBoundingClientRect();
+        if (rect.width < 2 || rect.height < 2) continue;
+        out.push(img);
+      }
+      return out;
+    }
+
+    function whenHeroDecoded(done) {
+      var imgs = heroCandidates();
+      if (!imgs.length) { done(); return; }
+      var left = imgs.length;
+      function one() {
+        left -= 1;
+        if (left <= 0) done();
+      }
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        if (typeof img.decode === 'function') img.decode().then(one, one);
+        else if (img.complete) one();
+        else {
+          img.addEventListener('load', one, { once: true });
+          img.addEventListener('error', one, { once: true });
+        }
+      }
+    }
+
+    function bindHeroSlides() {
+      var photo = document.querySelector('.split-hero[data-header-photo]');
+      if (!photo || photo.getAttribute('data-ink-slides') === '1') return;
+      photo.setAttribute('data-ink-slides', '1');
+      new MutationObserver(function (records) {
+        for (var i = 0; i < records.length; i++) {
+          var el = records[i].target;
+          if (!el || !el.matches || !el.matches('.split-hero__slide, [data-hero-slide], [data-slide]')) continue;
+          var prev = (records[i].oldValue || '').split(/\s+/);
+          var was = prev.indexOf('is-active') !== -1;
+          if (was !== el.classList.contains('is-active')) { scheduleInk(); return; }
+        }
+      }).observe(photo, { subtree: true, attributes: true, attributeOldValue: true, attributeFilter: ['class'] });
+    }
+
+    function bootInk() {
+      whenHeroDecoded(function () {
+        paintInk();
+        bindHeroSlides();
+      });
+    }
+
+    window.addEventListener('scroll', scheduleSolid, { passive: true });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth === lastWidth) scheduleSolid();
+      else {
+        lastWidth = window.innerWidth;
+        scheduleInk();
+      }
+    });
+    window.addEventListener('orientationchange', function () {
+      lastWidth = window.innerWidth;
+      scheduleInk();
+    });
+    new MutationObserver(scheduleSolid).observe(hdr, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    syncSolid();
+    if (!sampleHero) paintInk();
+    else if (document.fonts && document.fonts.ready) document.fonts.ready.then(bootInk);
+    else bootInk();
+    window.addEventListener('load', function () {
+      if (!document.body.getAttribute('data-ink-ready')) scheduleInk();
+    }, { once: true });
   })();
   document.querySelectorAll('[data-header-menu-toggle]').forEach(function(el) {
     el.addEventListener('keydown', function(e) {
