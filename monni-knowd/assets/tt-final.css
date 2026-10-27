@@ -357,6 +357,7 @@ product-page.product-page {
     overflow-y: auto;
   }
 
+  .product-page__form { margin-bottom: 0; }
   .product-page__afterpay { margin-top: 22px; }
 
   .product-page__name {
