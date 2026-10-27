@@ -141,9 +141,8 @@
   }
 
   .category-grid__rail {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 50%;
+    container-type: inline-size;
+    display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
@@ -153,12 +152,11 @@
 
   .category-grid__rail::-webkit-scrollbar { display: none; }
 
-  @media (min-width: 768px) {
-    .category-grid__rail { grid-auto-columns: calc(100% / 3); }
-  }
-
   .category-grid__item {
     display: block;
+    flex: 0 0 50cqi;
+    width: 50cqi;
+    max-width: 50cqi;
     min-width: 0;
     scroll-snap-align: none;
     text-decoration: none;
@@ -168,6 +166,12 @@
   .category-grid__item:nth-child(2n + 1) { scroll-snap-align: start; }
 
   @media (min-width: 768px) {
+    .category-grid__item {
+      flex-basis: calc(100cqi / 3);
+      width: calc(100cqi / 3);
+      max-width: calc(100cqi / 3);
+    }
+
     .category-grid__item:nth-child(2n + 1) { scroll-snap-align: none; }
     .category-grid__item:nth-child(3n + 1) { scroll-snap-align: start; }
   }
