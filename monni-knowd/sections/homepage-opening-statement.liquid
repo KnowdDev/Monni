@@ -1,74 +1,60 @@
-<section class="opening-statement full-width{% if section.settings.narrow_width %} opening-statement--narrow{% endif %}" data-section-id="{{ section.id }}">
+<section class="opening-statement full-width" data-section-id="{{ section.id }}">
   <div class="opening-statement__inner">
-    <p class="opening-statement__line opening-statement__line--primary">A place to pause. A place to reconnect.</p>
-    <p class="opening-statement__line opening-statement__line--secondary">Natural skincare and organic tea, handmade jewellery, ceramics and art, slow fashion and pieces for the home. A considered collection from <span class="opening-statement__keep">women-founded</span> makers who care for people and the planet.</p>
+    <p class="opening-statement__line opening-statement__line--primary">{{ section.settings.line_1 | default: 'A place to pause. A place to reconnect.' | escape }}</p>
+    {%- liquid
+      assign statement = section.settings.statement
+      if statement == blank
+        assign statement = 'A considered collection of natural skincare, botanical perfume, organic tea, handmade jewellery, ceramics, art, slow fashion and pieces for the home, from women-founded makers who care for people and planet.'
+      endif
+      assign statement_html = statement | escape | replace: 'women-founded', '<span class="opening-statement__keep">women-founded</span>'
+    -%}
+    <p class="opening-statement__line opening-statement__line--secondary">{{ statement_html }}</p>
   </div>
 </section>
 
 {% style %}
   .opening-statement {
     background-color: var(--color-background);
-    padding: clamp(3rem, 8vw, 5.5rem) 0 0;
+    padding: 80px 16px;
     text-align: center;
   }
 
   .opening-statement__inner {
-    max-width: var(--opening-statement-max, 48ch);
+    max-width: 760px;
     margin: 0 auto;
-    padding-inline: var(--opening-statement-padding, 1.5rem);
-  }
-
-  .opening-statement--narrow .opening-statement__inner {
-    --opening-statement-max: 46ch;
-  }
-
-  @media (min-width: 768px) {
-    .opening-statement--narrow .opening-statement__inner {
-      --opening-statement-max: 64rem;
-      --opening-statement-padding: clamp(1.5rem, 4vw, 3.5rem);
-    }
-
-    .opening-statement__line--secondary { max-width: none; }
-  }
-
-  @media (max-width: 767px) {
-    .opening-statement--narrow .opening-statement__inner {
-      --opening-statement-max: 17.5rem;
-      --opening-statement-padding: clamp(2.25rem, 11vw, 3.5rem);
-    }
   }
 
   .opening-statement__line {
-    font-family: var(--font-heading--family);
-    font-weight: 300;
-    color: var(--color-foreground);
     margin: 0;
-    line-height: 1.6;
-    text-wrap: balance;
   }
 
   .opening-statement__line--primary {
+    font-family: var(--font-heading--family);
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(1rem, 5.4vw, 1.3rem);
+    font-size: 1rem;
     letter-spacing: 0;
     line-height: 1.35;
-    margin-bottom: 1.35rem;
+    color: var(--color-foreground);
+    margin-bottom: 22px;
     white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .opening-statement__line--primary { font-size: 1.9rem; }
   }
 
   .opening-statement__keep { white-space: nowrap; }
 
   .opening-statement__line--secondary {
     font-family: var(--font-body--family);
-    font-size: clamp(0.92rem, 1.2vw, 1rem);
+    font-size: 1.05rem;
     font-weight: 300;
     font-style: normal;
     color: #6b6965;
     letter-spacing: 0;
-    line-height: 1.7;
-    max-width: 42ch;
-    margin-inline: auto;
+    line-height: 1.65;
+    text-wrap: balance;
   }
 {% endstyle %}
 
@@ -79,23 +65,16 @@
   "class": "shopify-section",
   "settings": [
     {
-      "type": "textarea",
+      "type": "text",
       "id": "line_1",
       "label": "First line",
-      "default": "It begins with love. For ourselves, for others, and for the world around us."
+      "default": "A place to pause. A place to reconnect."
     },
     {
       "type": "textarea",
-      "id": "line_2",
-      "label": "Second line",
-      "default": "We are all connected."
-    },
-    {
-      "type": "checkbox",
-      "id": "narrow_width",
-      "label": "Narrow text width",
-      "default": false,
-      "info": "Tightens the text column for a narrower opening statement."
+      "id": "statement",
+      "label": "Paragraph",
+      "default": "A considered collection of natural skincare, botanical perfume, organic tea, handmade jewellery, ceramics, art, slow fashion and pieces for the home, from women-founded makers who care for people and planet."
     }
   ],
   "presets": [

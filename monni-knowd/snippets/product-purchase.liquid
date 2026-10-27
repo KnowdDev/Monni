@@ -87,6 +87,36 @@
         </div>
       {%- endif -%}
     </div>
+  {%- elsif pair_shown == 0 -%}
+    <div class="product-page__matching" data-auto-pairs data-product-id="{{ product.id }}" hidden>
+      <div class="product-page__pair-head"><h2>{{ pair_heading }}</h2></div>
+      <div class="product-page__pairs" data-auto-pairs-grid></div>
+    </div>
+    <script>
+      (function () {
+        var root = document.querySelector('[data-auto-pairs][data-product-id="{{ product.id }}"]');
+        if (!root) return;
+        var grid = root.querySelector('[data-auto-pairs-grid]');
+        var base = (window.Shopify && Shopify.routes && Shopify.routes.root) || '/';
+        if (base.slice(-1) !== '/') base += '/';
+        function load(intent) {
+          var url = base + 'recommendations/products?section_id=product-recommendations&product_id={{ product.id }}&limit=2&intent=' + intent;
+          return fetch(url).then(function (response) { return response.text(); }).then(function (html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var found = doc.querySelector('[data-rec-grid]');
+            return found ? found.innerHTML.trim() : '';
+          });
+        }
+        load('complementary').then(function (html) {
+          if (html) return html;
+          return load('related');
+        }).then(function (html) {
+          if (!html || !grid) return;
+          grid.innerHTML = html;
+          root.hidden = false;
+        }).catch(function () {});
+      })();
+    </script>
   {%- endif -%}
 {%- else -%}
 <div class="product-page__buy">

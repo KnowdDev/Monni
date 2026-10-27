@@ -1,10 +1,13 @@
 <section class="category-grid full-width" data-section-id="{{ section.id }}">
-  <div class="category-grid__inner">
+  <div class="category-grid__head">
     {% if section.settings.title != blank %}
       <h2 class="category-grid__title">{{ section.settings.title }}</h2>
     {% endif %}
+    <p class="category-grid__count" data-cat-count>1 / 2</p>
+  </div>
 
-    <div class="category-grid__grid">
+  <div class="category-grid__viewport">
+    <div class="category-grid__rail" data-cat-rail>
       {% for block in section.blocks %}
         <a
           href="{{ block.settings.link | default: '#' }}"
@@ -17,150 +20,237 @@
                 image: block.settings.image,
                 alt: block.settings.title,
                 class: 'category-grid__image',
-                sizes: '(max-width: 767px) 45vw, (max-width: 1023px) 50vw, 33vw',
-                widths: '200,280,360,480',
-                default_width: 280,
-                width: 600,
-                height: 750,
+                sizes: '(max-width: 767px) 50vw, 33vw',
+                widths: '240,360,480,720',
+                default_width: 480,
+                width: 720,
+                height: 960,
                 loading: 'lazy'
               %}
             {% else %}
               {% assign unsplash_ids = "photo-1556228578-0d85b1a4d571,photo-1571781926291-c477ebfd024b,photo-1516762689617-e1cffcef479d,photo-1611591437281-460bfbe1220a,photo-1586023492125-27b2c045efd7,photo-1549465220-1a8b9238cd48" | split: "," %}
+              {% assign fallback_i = forloop.index0 | modulo: 6 %}
               <img
-                src="https://images.unsplash.com/{{ unsplash_ids[forloop.index0] }}?w=600&h=750&fit=crop&q=80"
-                srcset="
-                  https://images.unsplash.com/{{ unsplash_ids[forloop.index0] }}?w=300&h=375&fit=crop&q=80 300w,
-                  https://images.unsplash.com/{{ unsplash_ids[forloop.index0] }}?w=600&h=750&fit=crop&q=80 600w,
-                  https://images.unsplash.com/{{ unsplash_ids[forloop.index0] }}?w=900&h=1125&fit=crop&q=80 900w
-                "
-                sizes="(max-width: 1023px) 50vw, 33vw"
+                src="https://images.unsplash.com/{{ unsplash_ids[fallback_i] }}?w=720&h=960&fit=crop&q=80"
                 alt="{{ block.settings.title | escape }}"
                 loading="{% if forloop.index <= 3 %}eager{% else %}lazy{% endif %}"
-                width="600"
-                height="750"
+                width="720"
+                height="960"
                 class="category-grid__image"
               >
             {% endif %}
           </div>
-          <div class="category-grid__text">
-            <h3 class="category-grid__label">{{ block.settings.title | escape }}</h3>
-            {% if block.settings.description != blank %}
-              <p class="category-grid__desc">{{ block.settings.description | escape }}</p>
-            {% endif %}
-          </div>
+          <h3 class="category-grid__label">{{ block.settings.title | escape }}</h3>
+          {% if block.settings.description != blank %}
+            <p class="category-grid__desc">{{ block.settings.description | escape }}</p>
+          {% endif %}
         </a>
       {% endfor %}
     </div>
+    <button class="category-grid__btn category-grid__btn--prev" type="button" aria-label="Previous" data-cat-prev hidden></button>
+    <button class="category-grid__btn category-grid__btn--next" type="button" aria-label="Next" data-cat-next></button>
   </div>
 </section>
 
+<script>
+  (function () {
+    var root = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (!root) return;
+    var rail = root.querySelector('[data-cat-rail]');
+    var prev = root.querySelector('[data-cat-prev]');
+    var next = root.querySelector('[data-cat-next]');
+    var count = root.querySelector('[data-cat-count]');
+    if (!rail || !count) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var phone = window.matchMedia('(max-width: 767px)');
+    function per() { return phone.matches ? 2 : 3; }
+    function pages() {
+      var n = rail.querySelectorAll('.category-grid__item').length;
+      return Math.max(1, Math.ceil(n / per()));
+    }
+    function index() {
+      if (rail.clientWidth < 1) return 0;
+      return Math.max(0, Math.min(pages() - 1, Math.round(rail.scrollLeft / rail.clientWidth)));
+    }
+    function paint() {
+      var i = index();
+      var total = pages();
+      count.textContent = (i + 1) + ' / ' + total;
+      if (prev) prev.hidden = i <= 0;
+      if (next) next.hidden = i >= total - 1;
+    }
+    function go(dir) {
+      rail.scrollBy({ left: dir * rail.clientWidth, behavior: reduce ? 'auto' : 'smooth' });
+    }
+    if (next) next.addEventListener('click', function () { go(1); });
+    if (prev) prev.addEventListener('click', function () { go(-1); });
+    rail.addEventListener('scroll', function () {
+      window.clearTimeout(rail._t);
+      rail._t = window.setTimeout(paint, 80);
+    }, { passive: true });
+    window.addEventListener('resize', paint);
+    if (phone.addEventListener) phone.addEventListener('change', paint);
+    paint();
+  })();
+</script>
+
 {% style %}
   .category-grid {
-    --hp-gutter: clamp(1.25rem, 4vw, 3.5rem);
     background-color: var(--color-background);
-    padding: clamp(2.5rem, 5vw, 4.5rem) 0 0;
+    padding: 0 0 80px;
   }
 
-  .category-grid__inner {
-    max-width: 105rem;
-    margin: 0 auto;
-    padding: 0 var(--hp-gutter);
+  .category-grid__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin: 0 0 20px;
+    padding: 0 16px;
   }
 
   .category-grid__title {
     font-family: var(--font-body--family);
-    font-size: 0.76rem;
+    font-size: 13px;
     font-weight: 400;
     text-align: left;
     color: var(--color-foreground);
-    margin: 0 0 1.1rem;
+    margin: 0;
     letter-spacing: 0.2em;
     text-transform: uppercase;
   }
 
-  .category-grid__grid {
+  .category-grid__count {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: #6b6965;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .category-grid__title { font-size: 1rem; }
+    .category-grid__count { font-size: 0.9rem; }
+  }
+
+  .category-grid__viewport {
+    position: relative;
+    container-type: inline-size;
+  }
+
+  .category-grid__rail {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px 12px;
+    grid-auto-flow: column;
+    grid-auto-columns: 50%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
-  @media (min-width: 561px) {
-    .category-grid__grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 28px 16px;
-    }
-  }
+  .category-grid__rail::-webkit-scrollbar { display: none; }
 
-  @media (min-width: 901px) {
-    .category-grid__grid {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 16px;
-    }
+  @media (min-width: 768px) {
+    .category-grid__rail { grid-auto-columns: calc(100% / 3); }
   }
 
   .category-grid__item {
     display: block;
     min-width: 0;
+    scroll-snap-align: none;
     text-decoration: none;
     color: inherit;
   }
 
+  .category-grid__item:nth-child(2n + 1) { scroll-snap-align: start; }
+
+  @media (min-width: 768px) {
+    .category-grid__item:nth-child(2n + 1) { scroll-snap-align: none; }
+    .category-grid__item:nth-child(3n + 1) { scroll-snap-align: start; }
+  }
+
   .category-grid__image-wrap {
     position: relative;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
     background-color: var(--color-border-light);
   }
 
-  @media (min-width: 561px) {
-    .category-grid__image-wrap { aspect-ratio: 3 / 4; }
-  }
-
-  .category-grid__image,
-  .category-grid__fallback {
+  .category-grid__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  @media (hover: hover) {
-    .category-grid__item:hover .category-grid__image { transform: scale(1.04); }
-  }
-
-  .category-grid__fallback {
-    background: linear-gradient(135deg, var(--color-accent-light), var(--color-border-light));
-  }
-
-  .category-grid__text {
-    padding-top: 0.7rem;
-    text-align: left;
   }
 
   .category-grid__label {
     font-family: var(--font-body--family);
-    font-size: 0.7rem;
     font-weight: 400;
-    letter-spacing: 0.18em;
+    font-size: 13px;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
+    line-height: 1.6;
     color: var(--color-foreground);
-    margin: 0;
+    margin: 18px 0 0;
+    padding: 0 16px;
   }
 
   .category-grid__desc {
     font-family: var(--font-body--family);
-    font-size: 0.8rem;
     font-weight: 300;
-    color: var(--color-foreground-light);
-    margin: 0.25rem 0 0;
-    line-height: 1.45;
+    font-size: 15px;
     letter-spacing: 0;
-    max-width: none;
+    color: #6b6965;
+    line-height: 1.55;
+    margin: 6px 0 0;
+    padding: 0 16px;
   }
 
-  @media (min-width: 561px) {
-    .category-grid__desc { font-size: 0.82rem; }
+  @media (min-width: 768px) {
+    .category-grid__label { font-size: 0.875rem; }
+    .category-grid__desc { font-size: 1rem; }
+  }
+
+  .category-grid__btn {
+    position: absolute;
+    top: calc(100cqi / 3);
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  @media (min-width: 768px) {
+    .category-grid__btn { top: calc(100cqi * 2 / 9); }
+  }
+
+  .category-grid__btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 14px;
+    height: 14px;
+    border-right: 1.5px solid #fff;
+    border-bottom: 1.5px solid #fff;
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.4));
+  }
+
+  .category-grid__btn--next { right: 20px; }
+  .category-grid__btn--next::before { transform: translateX(-3px) rotate(-45deg); }
+  .category-grid__btn--prev { left: 20px; }
+  .category-grid__btn--prev::before { transform: translateX(3px) rotate(135deg); }
+  .category-grid__btn[hidden] { display: none; }
+
+  .category-grid__btn:focus-visible {
+    outline: 1px solid #fff;
+    outline-offset: 2px;
   }
 {% endstyle %}
 
@@ -174,7 +264,7 @@
       "type": "text",
       "id": "title",
       "label": "Title",
-      "default": "A collection for the way you live."
+      "default": "Shop by category"
     }
   ],
   "blocks": [
@@ -248,14 +338,14 @@
           "type": "category",
           "settings": {
             "title": "Home",
-            "description": "Considered and made to be lived with.",
+            "description": "Made to be lived with.",
             "link": "/collections/all-home"
           }
         },
         "category-5": {
           "type": "category",
           "settings": {
-            "title": "Gifts",
+            "title": "Gifting",
             "description": "Chosen with intention. Wrapped with love.",
             "link": "/collections/all-gifting"
           }

@@ -1,3 +1,4 @@
+{%- if section.settings.enabled -%}
 <section class="journal full-width" data-section-id="{{ section.id }}">
   <div class="journal__inner">
     <div class="journal__head">
@@ -222,6 +223,7 @@
     .journal__teaser { font-size: 0.88rem; line-height: 1.5; }
   }
 {% endstyle %}
+{%- endif -%}
 
 {% schema %}
 {
@@ -229,6 +231,13 @@
   "tag": "section",
   "class": "shopify-section",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Show on the homepage",
+      "default": false,
+      "info": "Off hides this row. Journal stays in the menu and the footer. Delete the section in the theme editor when you are done with it."
+    },
     {
       "type": "text",
       "id": "title",

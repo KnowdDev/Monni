@@ -1,0 +1,22 @@
+{%- comment -%}
+  Rendered only via /recommendations/products?section_id=product-recommendations
+  Complementary first, then related. Max 2. Not placed on the product template.
+{%- endcomment -%}
+<div class="product-recommendations" data-rec-root>
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <div data-rec-grid>
+      {%- for rec in recommendations.products limit: 2 -%}
+        {%- render 'card-product', card_product: rec, show_quick_add: false, show_wishlist: false, show_badges: false -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Product recommendations",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": []
+}
+{% endschema %}

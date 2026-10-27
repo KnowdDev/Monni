@@ -13,6 +13,7 @@
   assign show_wishlist = show_wishlist | default: false
   assign show_badges = show_badges | default: true
   assign first_eager = first_eager | default: false
+  assign strip_divider = strip_divider | default: false
 -%}
 
 {%- assign is_sold_out = false -%}
@@ -113,6 +114,9 @@
           if title_start != vendor_first
             assign card_label = product.vendor | append: ' ' | append: product.title
           endif
+        endif
+        if strip_divider
+          assign card_label = card_label | replace: ' | ', ' ' | replace: '|', '' | replace: '  ', ' ' | replace: '  ', ' ' | strip
         endif
       -%}
       {%- if is_sold_out -%}
