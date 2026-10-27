@@ -65,6 +65,13 @@
         </p>
       </div>
     </div>
+    {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+      <ul class="footer__payments" role="list" aria-label="Payment methods">
+        {%- for type in shop.enabled_payment_types -%}
+          <li class="footer__payments-item">{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
     <div class="footer__base">
       <p>Free NZ shipping over $250 · We ship to NZ &amp; Australia</p>
       <p>&copy; {{ 'now' | date: '%Y' }} Ayson and Anastasia Limited trading as Tea &amp; Tonic. Site by Knowd Digital.</p>
@@ -166,8 +173,26 @@
   .footer__social { margin: 0; }
   .footer__success, .footer__error { margin: 0 0 1rem; line-height: 1.6; }
 
+  .footer__payments {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin: clamp(1.75rem, 4vw, 2.5rem) 0 0;
+    padding: 0;
+  }
+
+  .footer__payments-item { margin: 0; line-height: 0; }
+
+  .footer__payments svg {
+    display: block;
+    width: 38px;
+    height: 24px;
+  }
+
   .footer__base {
-    margin-top: clamp(2rem, 4vw, 3rem);
+    margin-top: clamp(1.25rem, 3vw, 2rem);
     color: #6b6965;
     line-height: 2;
     display: flex;

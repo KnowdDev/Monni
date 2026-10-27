@@ -19,6 +19,47 @@ class ProductPage {
     this.initQuantitySelector();
     this.markMadeIn();
     this.syncAfterpay(this.getSelectedVariant());
+    this.fitFold();
+    this._onFoldResize = () => {
+      cancelAnimationFrame(this._foldFrame);
+      this._foldFrame = requestAnimationFrame(() => this.fitFold());
+    };
+    window.addEventListener('resize', this._onFoldResize);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => this.fitFold());
+    }
+  }
+
+  foldCta() {
+    const add = this.productPage.querySelector('[data-add-to-cart]');
+    if (add && !add.hidden && add.getClientRects().length) return add;
+    const notify = this.productPage.querySelector('.product-page__back-in-stock button');
+    if (notify && notify.getClientRects().length) return notify;
+    return null;
+  }
+
+  /* Below 390px, shorten the gallery only as far as needed so Add to cart stays inside the viewport. */
+  fitFold() {
+    const root = this.productPage;
+    if (!root) return;
+    const main = root.querySelector('.media-gallery__main');
+    const narrow = window.matchMedia('(max-width: 389px)').matches;
+    root.classList.remove('is-gallery-capped');
+    root.style.removeProperty('--pdp-gallery-cap');
+    if (!narrow || !main) {
+      root.classList.add('is-fold-ready');
+      return;
+    }
+    root.classList.add('is-fold-ready');
+    const target = this.foldCta();
+    if (!target) return;
+    const natural = main.getBoundingClientRect().height;
+    const overflow = target.getBoundingClientRect().bottom - window.innerHeight;
+    if (overflow > 0.5) {
+      const cap = Math.max(64, Math.floor(natural - overflow - 8));
+      root.style.setProperty('--pdp-gallery-cap', cap + 'px');
+      root.classList.add('is-gallery-capped');
+    }
   }
 
   markMadeIn() {

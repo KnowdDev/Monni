@@ -54,23 +54,35 @@
   if pairs == blank
     assign pairs = product.metafields.monni.paired_products.value
   endif
+  assign pair_shown = 0
+  if pairs != blank
+    for pair in pairs
+      if pair != blank and pair.id != blank
+        assign pair_shown = pair_shown | plus: 1
+      endif
+    endfor
+  endif
 
   assign quarter = current_variant.price | divided_by: 4
 -%}
 
 {%- if part == 'pairs' -%}
-  {%- if product.gift_card? or pairs != blank -%}
+  {%- if product.gift_card? or pair_shown > 0 -%}
     <div class="product-page__matching">
       {%- if product.gift_card? -%}
         <div class="product-page__pair-head">
           <h2>Gifts they'll love</h2>
           <a href="/collections/all-gifting">Shop gifts</a>
         </div>
-      {%- elsif pairs != blank -%}
+      {%- elsif pair_shown > 0 -%}
         <div class="product-page__pair-head"><h2>{{ pair_heading }}</h2></div>
         <div class="product-page__pairs">
-          {%- for pair in pairs limit: 2 -%}
-            {%- render 'card-product', card_product: pair, show_quick_add: false, show_wishlist: false, show_badges: false -%}
+          {%- assign rendered_pairs = 0 -%}
+          {%- for pair in pairs -%}
+            {%- if rendered_pairs < 2 and pair != blank and pair.id != blank -%}
+              {%- render 'card-product', card_product: pair, show_quick_add: false, show_wishlist: false, show_badges: false -%}
+              {%- assign rendered_pairs = rendered_pairs | plus: 1 -%}
+            {%- endif -%}
           {%- endfor -%}
         </div>
       {%- endif -%}
