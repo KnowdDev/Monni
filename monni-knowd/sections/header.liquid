@@ -76,6 +76,7 @@
   <button
     type="button"
     class="header__menu-toggle"
+    data-ink-item="Menu"
     aria-controls="header-drawer-{{ section.id }}"
     aria-expanded="false"
     aria-label="Open navigation menu"
@@ -95,52 +96,54 @@
                 aria-expanded="false"
                 aria-controls="HeaderShopMega-{{ section.id }}"
                 data-header-shop-trigger
+                data-ink-item="Shop"
               >Shop</a>
             </li>
             <li class="header__menu-item">
-              <a href="{{ header_brands_url }}" class="header__menu-link"{% if request.path == header_brands_url %} aria-current="page"{% endif %}>Brands</a>
+              <a href="{{ header_brands_url }}" class="header__menu-link" data-ink-item="Brands"{% if request.path == header_brands_url %} aria-current="page"{% endif %}>Brands</a>
             </li>
             <li class="header__menu-item">
-              <a href="{{ header_journal_url }}" class="header__menu-link"{% if request.page_type == 'blog' or request.page_type == 'article' %} aria-current="page"{% endif %}>Journal</a>
+              <a href="{{ header_journal_url }}" class="header__menu-link" data-ink-item="Journal"{% if request.page_type == 'blog' or request.page_type == 'article' %} aria-current="page"{% endif %}>Journal</a>
             </li>
             <li class="header__menu-item">
-              <a href="{{ header_about_url }}" class="header__menu-link"{% if request.path == header_about_url %} aria-current="page"{% endif %}>About</a>
+              <a href="{{ header_about_url }}" class="header__menu-link" data-ink-item="About"{% if request.path == header_about_url %} aria-current="page"{% endif %}>About</a>
             </li>
           </ul>
         </nav>
       </div>
 
-      <div class="header__logo">
+      <div class="header__logo" data-ink-item="Logo">
         <a href="{{ routes.root_url }}" aria-label="Tea &amp; Tonic" class="header__logo-link">
-          <span class="header__logo-text">Tea &amp; Tonic</span>
+          <span class="header__logo-text" data-logo-face="a">Tea &amp; Tonic</span>
+          <span class="header__logo-text header__logo-text--mirror" data-logo-face="b" aria-hidden="true">Tea &amp; Tonic</span>
         </a>
       </div>
 
       <div class="header__side header__side--end">
         <nav class="header__utilities" aria-label="Utility navigation">
-          <a href="{{ routes.search_url }}" class="header__utility-link">Search</a>
+          <a href="{{ routes.search_url }}" class="header__utility-link" data-ink-item="Search">Search</a>
 
           {% if section.settings.show_utility_extras %}
             {% if shop.customer_accounts_enabled %}
               {% if customer %}
-                <a href="{{ routes.account_url }}" class="header__utility-link header__utility-link--account">Account</a>
+                <a href="{{ routes.account_url }}" class="header__utility-link header__utility-link--account" data-ink-item="Account">Account</a>
               {% else %}
-                <a href="{{ routes.account_login_url }}" class="header__utility-link header__utility-link--account">Login</a>
+                <a href="{{ routes.account_login_url }}" class="header__utility-link header__utility-link--account" data-ink-item="Account">Login</a>
               {% endif %}
             {% endif %}
 
             {% if section.settings.show_wishlist %}
-              <a href="/pages/wishlist" class="header__utility-link header__utility-link--wishlist">Wishlist</a>
+              <a href="/pages/wishlist" class="header__utility-link header__utility-link--wishlist" data-ink-item="Wishlist">Wishlist</a>
             {% endif %}
           {% endif %}
 
-          <a href="{{ routes.cart_url }}" class="header__utility-link header__utility-link--cart" data-cart-toggle>
+          <a href="{{ routes.cart_url }}" class="header__utility-link header__utility-link--cart" data-ink-item="Cart" data-cart-toggle>
             Cart (<span data-cart-count>{{ cart.item_count }}</span>)
           </a>
         </nav>
 
-        <a href="{{ routes.search_url }}" class="header__mobile-search">Search</a>
-        <a href="{{ routes.cart_url }}" class="header__mobile-cart" data-cart-toggle aria-label="Cart, {{ cart.item_count }} items">
+        <a href="{{ routes.search_url }}" class="header__mobile-search" data-ink-item="Search">Search</a>
+        <a href="{{ routes.cart_url }}" class="header__mobile-cart" data-ink-item="Cart" data-cart-toggle aria-label="Cart, {{ cart.item_count }} items">
           <span class="header__mobile-cart-text">Cart (<span data-cart-count>{{ cart.item_count }}</span>)</span>
         </a>
       </div>
@@ -148,6 +151,7 @@
 
     {%- render 'header-shop-megamenu', menu: section.settings.menu, section: section, section_id: section.id, variant: 'desktop' -%}
   </div>
+  <p class="sr-only" data-header-ink-report></p>
 
   <button
     type="button"
@@ -327,7 +331,9 @@
     filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(20, 16, 12, 0.5));
   }
 
-  .header [data-tone] { transition: color 0.25s ease; }
+  .header [data-ink-item] {
+    transition: color 200ms ease, filter 200ms ease, -webkit-text-fill-color 200ms ease;
+  }
 
   /* Shop menu or mobile drawer open: normal ink on a solid bar. */
   .header.is-open .header__shell {
@@ -383,7 +389,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .header__shell { transition: none; }
+    .header__shell,
+    .header [data-ink-item] { transition: none; }
   }
 
   .header__drawer-backdrop,
@@ -442,6 +449,20 @@
     justify-content: center;
     color: var(--color-foreground);
     transition: opacity var(--transition-fast);
+  }
+
+  .header__logo-link {
+    display: inline-grid;
+  }
+
+  .header__logo-text,
+  .header__logo-text--mirror {
+    grid-area: 1 / 1;
+  }
+
+  .header__logo-text--mirror {
+    visibility: hidden;
+    pointer-events: none;
   }
 
   .header__logo a:hover,
@@ -1377,52 +1398,64 @@
     }
   }
 
-  /* Per-region ink over a photo. Dark photo → light type. Light photo → dark type. */
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__side[data-ink="light"],
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__side[data-ink="light"] a,
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__side[data-ink="light"] button,
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__logo[data-ink="light"] .header__logo-text {
-    color: #f5f4f1;
-    -webkit-text-fill-color: #f5f4f1;
+  /* Per-item ink over a photo. Each link samples the pixels behind itself. */
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item][data-ink="light"],
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item][data-ink="light"] .header__logo-text {
+    color: #faf8f4;
+    -webkit-text-fill-color: #faf8f4;
     background-image: none;
   }
 
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__side[data-ink="dark"],
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__side[data-ink="dark"] a,
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__side[data-ink="dark"] button,
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__logo[data-ink="dark"] .header__logo-text {
-    color: #2f2f2f;
-    -webkit-text-fill-color: #2f2f2f;
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item][data-ink="dark"],
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item][data-ink="dark"] .header__logo-text {
+    color: #1f1d1a;
+    -webkit-text-fill-color: #1f1d1a;
     background-image: none;
   }
 
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__logo[data-ink="split"] .header__logo-text {
-    background-image: linear-gradient(90deg, var(--ink-l, #f5f4f1) 0 var(--logo-split, 50%), var(--ink-r, #2f2f2f) var(--logo-split, 50%) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item][data-ink="light"]::before {
+    background-color: #faf8f4;
+  }
+
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__logo[data-ink="split"] .header__logo-text--mirror {
+    visibility: visible;
+  }
+
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__logo[data-ink="split"] .header__logo-text[data-logo-face="a"] {
+    color: var(--ink-l, #faf8f4);
+    -webkit-text-fill-color: var(--ink-l, #faf8f4);
+    background-image: none;
+    clip-path: inset(0 calc(100% - var(--logo-split, 50%)) 0 0);
+  }
+
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__logo[data-ink="split"] .header__logo-text[data-logo-face="b"] {
+    color: var(--ink-r, #1f1d1a);
+    -webkit-text-fill-color: var(--ink-r, #1f1d1a);
+    background-image: none;
+    clip-path: inset(0 0 0 var(--logo-split, 50%));
   }
 
   .header--over-photo.is-solid .header__logo-text,
   .header.is-open .header__logo-text,
   .header.header--menu-open .header__logo-text {
     background-image: none;
+    clip-path: none;
     color: #2f2f2f;
     -webkit-text-fill-color: #2f2f2f;
   }
 
-  .header [data-scrim="true"] { position: relative; }
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-scrim="true"]::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    pointer-events: none;
-    inset: 0 -8px;
-    background: linear-gradient(to bottom, rgba(20, 16, 12, 0.28), rgba(20, 16, 12, 0));
+  .header--over-photo.is-solid .header__logo-text--mirror,
+  .header.is-open .header__logo-text--mirror,
+  .header.header--menu-open .header__logo-text--mirror {
+    visibility: hidden;
   }
-  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink="dark"][data-scrim="true"]::before {
-    background: linear-gradient(to bottom, rgba(245, 244, 241, 0.62), rgba(245, 244, 241, 0));
+
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item][data-scrim="true"] {
+    filter: drop-shadow(0 0 1px rgba(20, 16, 12, 0.55)) drop-shadow(0 1px 1px rgba(20, 16, 12, 0.35));
+  }
+
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink-item][data-ink="dark"][data-scrim="true"] {
+    filter: drop-shadow(0 0 1px rgba(245, 244, 241, 0.8)) drop-shadow(0 1px 1px rgba(245, 244, 241, 0.45));
   }
 
   @media (max-width: 767px) {
@@ -1476,102 +1509,197 @@
       return (hi + 0.05) / (lo + 0.05);
     }
 
-    function inkFromL(L) {
-      var cDark = contrast(L, 0.0284);
-      var cLight = contrast(L, 0.903);
-      if (cDark >= 4.5 && cDark >= cLight) return { ink: 'dark', scrim: false };
-      if (cLight >= 4.5) return { ink: 'light', scrim: false };
-      return { ink: cDark >= cLight ? 'dark' : 'light', scrim: true };
+    var DARK_L = relLuminance(31, 29, 26);
+    var LIGHT_L = relLuminance(250, 248, 244);
+    var inkCanvas;
+    var bitmaps = {};
+    var pendingSrc = {};
+    var failedSrc = {};
+
+    function percentile(sorted, p) {
+      if (!sorted.length) return null;
+      var idx = (sorted.length - 1) * p;
+      var lo = Math.floor(idx);
+      var hi = Math.ceil(idx);
+      if (lo === hi) return sorted[lo];
+      return sorted[lo] + (sorted[hi] - sorted[lo]) * (idx - lo);
     }
 
-    var inkCanvas;
-    function sampleLuminance(x0, x1, y0, y1) {
+    function axisPos(token, space, size) {
+      if (!token || token === 'center') return (space - size) / 2;
+      if (token === 'left' || token === 'top') return 0;
+      if (token === 'right' || token === 'bottom') return space - size;
+      if (token.charAt(token.length - 1) === '%') return (space - size) * (parseFloat(token) / 100);
+      if (token.slice(-2) === 'px') return parseFloat(token);
+      return (space - size) / 2;
+    }
+
+    function imgUsable(img) {
+      if (!img || !img.complete || !img.naturalWidth) return false;
+      var node = img;
+      var depth = 0;
+      while (node && node !== document.body && depth < 8) {
+        var style = window.getComputedStyle(node);
+        if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0) return false;
+        node = node.parentElement;
+        depth += 1;
+      }
+      var ir = img.getBoundingClientRect();
+      return ir.width >= 2 && ir.height >= 2;
+    }
+
+    function ensureBitmap(src) {
+      if (!src || bitmaps[src] || pendingSrc[src] || failedSrc[src]) return;
+      pendingSrc[src] = true;
+      var loader = new Image();
+      loader.crossOrigin = 'anonymous';
+      loader.onload = function () {
+        bitmaps[src] = loader;
+        pendingSrc[src] = false;
+        schedule();
+      };
+      loader.onerror = function () {
+        pendingSrc[src] = false;
+        failedSrc[src] = true;
+      };
+      loader.src = src;
+    }
+
+    function sampleBox(x0, y0, x1, y1) {
       var photo = document.querySelector('[data-header-photo]');
       if (!photo) return null;
-      var imgs = photo.querySelectorAll('img');
       if (!inkCanvas) inkCanvas = document.createElement('canvas');
       var ctx = inkCanvas.getContext('2d', { willReadFrequently: true });
+      if (!ctx) return null;
       var values = [];
+      var imgs = photo.querySelectorAll('img');
       for (var k = 0; k < imgs.length; k++) {
         var img = imgs[k];
-        if (!img.complete || !img.naturalWidth) continue;
-        var style = window.getComputedStyle(img);
-        if (style.display === 'none' || style.visibility === 'hidden') continue;
+        if (!imgUsable(img)) continue;
         var ir = img.getBoundingClientRect();
-        if (ir.width < 2 || ir.height < 2) continue;
         var ix0 = Math.max(x0, ir.left);
         var iy0 = Math.max(y0, ir.top);
         var ix1 = Math.min(x1, ir.right);
         var iy1 = Math.min(y1, ir.bottom);
         if (ix1 - ix0 < 2 || iy1 - iy0 < 2) continue;
-        var scale = Math.max(ir.width / img.naturalWidth, ir.height / img.naturalHeight);
-        var offX = ir.left + (ir.width - img.naturalWidth * scale) / 2;
-        var offY = ir.top + (ir.height - img.naturalHeight * scale) / 2;
-        var sx = Math.max(0, (ix0 - offX) / scale);
-        var sy = Math.max(0, (iy0 - offY) / scale);
-        var sw = (ix1 - ix0) / scale;
-        var sh = (iy1 - iy0) / scale;
-        if (sx + sw > img.naturalWidth) sw = img.naturalWidth - sx;
-        if (sy + sh > img.naturalHeight) sh = img.naturalHeight - sy;
+        var style = window.getComputedStyle(img);
+        var fit = style.objectFit || 'cover';
+        var parts = (style.objectPosition || '50% 50%').trim().split(/\s+/);
+        var nw = img.naturalWidth;
+        var nh = img.naturalHeight;
+        var scaleX;
+        var scaleY;
+        if (fit === 'contain' || fit === 'scale-down') {
+          var contain = Math.min(ir.width / nw, ir.height / nh);
+          if (fit === 'scale-down') contain = Math.min(1, contain);
+          scaleX = scaleY = contain;
+        } else if (fit === 'none') {
+          scaleX = scaleY = 1;
+        } else if (fit === 'fill') {
+          scaleX = ir.width / nw;
+          scaleY = ir.height / nh;
+        } else {
+          var cover = Math.max(ir.width / nw, ir.height / nh);
+          scaleX = scaleY = cover;
+        }
+        var dispW = nw * scaleX;
+        var dispH = nh * scaleY;
+        var offX = ir.left + axisPos(parts[0], ir.width, dispW);
+        var offY = ir.top + axisPos(parts[1] || parts[0], ir.height, dispH);
+        var sx = (ix0 - offX) / scaleX;
+        var sy = (iy0 - offY) / scaleY;
+        var sw = (ix1 - ix0) / scaleX;
+        var sh = (iy1 - iy0) / scaleY;
+        if (sx < 0) { sw += sx; sx = 0; }
+        if (sy < 0) { sh += sy; sy = 0; }
+        if (sx + sw > nw) sw = nw - sx;
+        if (sy + sh > nh) sh = nh - sy;
         if (sw < 1 || sh < 1) continue;
-        inkCanvas.width = 12;
-        inkCanvas.height = 6;
+        var src = img.currentSrc || img.src;
+        var drawable = (src && bitmaps[src]) ? bitmaps[src] : img;
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var cw = Math.max(4, Math.min(48, Math.round((ix1 - ix0) * dpr)));
+        var ch = Math.max(4, Math.min(24, Math.round((iy1 - iy0) * dpr)));
+        inkCanvas.width = cw;
+        inkCanvas.height = ch;
         try {
-          ctx.drawImage(img, sx, sy, sw, sh, 0, 0, 12, 6);
-          var data = ctx.getImageData(0, 0, 12, 6).data;
+          ctx.drawImage(drawable, sx, sy, sw, sh, 0, 0, cw, ch);
+          var data = ctx.getImageData(0, 0, cw, ch).data;
           for (var i = 0; i < data.length; i += 4) {
             if (data[i + 3] < 20) continue;
             values.push(relLuminance(data[i], data[i + 1], data[i + 2]));
           }
         } catch (err) {
-          continue;
+          ensureBitmap(src);
         }
       }
       if (!values.length) return null;
       values.sort(function (a, b) { return a - b; });
-      return values[Math.floor(values.length / 2)];
+      return { p10: percentile(values, 0.1), p90: percentile(values, 0.9) };
     }
 
-    function declaredInk(x0, x1, y1) {
-      var nodes = document.querySelectorAll('[data-header-photo] [data-bg]');
-      var darkW = 0, lightW = 0;
+    function fromSample(box) {
+      var darkMin = Math.min(contrast(DARK_L, box.p10), contrast(DARK_L, box.p90));
+      var lightMin = Math.min(contrast(LIGHT_L, box.p10), contrast(LIGHT_L, box.p90));
+      var ink = darkMin >= lightMin ? 'dark' : 'light';
+      var score = ink === 'dark' ? darkMin : lightMin;
+      return { ink: ink, contrast: score, scrim: score < 4.5, source: 'sample' };
+    }
+
+    function overlapW(x0, x1, rect) {
+      return Math.max(0, Math.min(x1, rect.right) - Math.max(x0, rect.left));
+    }
+
+    function hitsBand(rect, y0, y1) {
+      return rect.width >= 2 && rect.bottom > y0 && rect.top < y1;
+    }
+
+    function forcedInk(x0, x1, y0, y1) {
+      var nodes = document.querySelectorAll('[data-header-photo] [data-ink-override]');
+      var best = null;
+      var bestW = 0;
+      var width = Math.max(1, x1 - x0);
       for (var i = 0; i < nodes.length; i++) {
-        var r = nodes[i].getBoundingClientRect();
-        if (r.width < 2 || r.bottom < 4 || r.top > y1) continue;
-        var overlap = Math.max(0, Math.min(x1, r.right) - Math.max(x0, r.left));
+        var mode = nodes[i].getAttribute('data-ink-override');
+        if (!mode || mode === 'auto') continue;
+        var rect = nodes[i].getBoundingClientRect();
+        if (!hitsBand(rect, y0, y1)) continue;
+        var w = overlapW(x0, x1, rect);
+        if (w > bestW) { bestW = w; best = mode; }
+      }
+      if (!best || bestW / width < 0.6) return null;
+      return { ink: best, contrast: null, scrim: false, source: 'override' };
+    }
+
+    function declaredInk(x0, x1, y0, y1) {
+      var nodes = document.querySelectorAll('[data-header-photo] [data-bg]');
+      var darkW = 0;
+      var lightW = 0;
+      for (var i = 0; i < nodes.length; i++) {
+        var rect = nodes[i].getBoundingClientRect();
+        if (!hitsBand(rect, y0, y1)) continue;
+        var w = overlapW(x0, x1, rect);
         var tone = nodes[i].getAttribute('data-bg');
-        if (tone === 'dark') darkW += overlap;
-        else if (tone === 'light') lightW += overlap;
+        if (tone === 'dark') darkW += w;
+        else if (tone === 'light') lightW += w;
       }
       if (darkW + lightW < 1) return null;
-      return darkW >= lightW ? { ink: 'light', scrim: false } : { ink: 'dark', scrim: false };
-    }
-
-    function withScrim(decision, L) {
-      if (!decision || L == null) return decision;
-      var inkL = decision.ink === 'light' ? 0.903 : 0.0284;
-      if (contrast(L, inkL) >= 4.5) return { ink: decision.ink, scrim: false };
-      return { ink: decision.ink, scrim: true };
+      return { ink: darkW >= lightW ? 'light' : 'dark', contrast: null, scrim: false, source: 'fallback' };
     }
 
     function decide(x0, x1, y0, y1) {
-      var declared = declaredInk(x0, x1, y1);
-      var width = Math.max(1, x1 - x0);
-      var nodes = document.querySelectorAll('[data-header-photo] [data-bg]');
-      var cover = 0;
-      for (var i = 0; i < nodes.length; i++) {
-        var r = nodes[i].getBoundingClientRect();
-        if (r.width < 2 || r.bottom < 4 || r.top > y1) continue;
-        cover += Math.max(0, Math.min(x1, r.right) - Math.max(x0, r.left));
-      }
-      var L = sampleLuminance(x0, x1, y0, y1);
-      if (declared && cover / width >= 0.6) return withScrim(declared, L);
-      if (L != null) return inkFromL(L);
-      return declared || { ink: 'dark', scrim: false };
+      var forced = forcedInk(x0, x1, y0, y1);
+      if (forced) return forced;
+      var box = sampleBox(x0, y0, x1, y1);
+      if (box) return fromSample(box);
+      return declaredInk(x0, x1, y0, y1) || { ink: 'dark', contrast: null, scrim: false, source: 'fallback' };
     }
 
-    function paintGroup(el, decision) {
+    function paintItem(el, decision) {
       el.setAttribute('data-ink', decision.ink);
+      el.setAttribute('data-ink-source', decision.source);
+      if (decision.contrast == null) el.removeAttribute('data-contrast');
+      else el.setAttribute('data-contrast', decision.contrast.toFixed(2));
       if (decision.scrim) el.setAttribute('data-scrim', 'true');
       else el.removeAttribute('data-scrim');
       el.style.removeProperty('--ink-l');
@@ -1579,50 +1707,101 @@
       el.style.removeProperty('--logo-split');
     }
 
+    function findSeam(el, y0, y1) {
+      var rect = el.getBoundingClientRect();
+      var cols = 20;
+      var prev = null;
+      var best = 0;
+      var at = null;
+      for (var i = 0; i < cols; i++) {
+        var x = rect.left + (rect.width * (i + 0.5)) / cols;
+        var box = sampleBox(x - 1, y0, x + 1, y1);
+        var L = box ? (box.p10 + box.p90) / 2 : null;
+        if (L != null && prev != null) {
+          var delta = Math.abs(L - prev);
+          if (delta > best) {
+            best = delta;
+            at = rect.left + (rect.width * i) / cols;
+          }
+        }
+        if (L != null) prev = L;
+      }
+      if (at != null && best >= 0.08) return at;
+      var panels = document.querySelectorAll('[data-header-photo] [data-bg]');
+      for (var j = 0; j < panels.length; j++) {
+        var pr = panels[j].getBoundingClientRect();
+        if (pr.right > rect.left + 8 && pr.right < rect.right - 8 && pr.bottom > y0 && pr.top < y1) return pr.right;
+      }
+      return rect.left + rect.width / 2;
+    }
+
     function paintLogo(el, y0, y1) {
-      var r = el.getBoundingClientRect();
-      if (r.width < 2) return;
-      var mid = r.left + r.width / 2;
-      var left = decide(r.left, mid, y0, y1);
-      var right = decide(mid, r.right, y0, y1);
+      var rect = el.getBoundingClientRect();
+      if (rect.width < 2) return;
+      var mid = rect.left + rect.width / 2;
+      var left = decide(rect.left - 6, mid, y0, y1);
+      var right = decide(mid, rect.right + 6, y0, y1);
       if (left.ink === right.ink) {
-        paintGroup(el, left);
+        var matched = left;
+        if (left.contrast != null && right.contrast != null) {
+          matched = {
+            ink: left.ink,
+            contrast: Math.min(left.contrast, right.contrast),
+            scrim: left.scrim || right.scrim,
+            source: left.source === 'sample' || right.source === 'sample' ? 'sample' : left.source
+          };
+        }
+        paintItem(el, matched);
         return;
       }
-      var seam = mid;
-      var panels = document.querySelectorAll('[data-header-photo] [data-bg]');
-      for (var i = 0; i < panels.length; i++) {
-        var pr = panels[i].getBoundingClientRect();
-        if (pr.right > r.left + 4 && pr.right < r.right - 4 && pr.top < y1 && pr.bottom > y0) seam = pr.right;
-      }
-      var pct = Math.max(8, Math.min(92, ((seam - r.left) / r.width) * 100));
+      var seam = findSeam(el, y0, y1);
+      var pct = ((seam - rect.left) / rect.width) * 100;
+      pct = Math.max(4, Math.min(96, pct));
+      var scores = [left.contrast, right.contrast].filter(function (n) { return n != null; });
       el.setAttribute('data-ink', 'split');
-      el.style.setProperty('--ink-l', left.ink === 'light' ? '#f5f4f1' : '#2f2f2f');
-      el.style.setProperty('--ink-r', right.ink === 'light' ? '#f5f4f1' : '#2f2f2f');
+      el.setAttribute('data-ink-source', left.source === 'sample' || right.source === 'sample' ? 'sample' : (left.source === 'override' || right.source === 'override' ? 'override' : 'fallback'));
+      if (scores.length) el.setAttribute('data-contrast', Math.min.apply(null, scores).toFixed(2));
+      else el.removeAttribute('data-contrast');
+      el.style.setProperty('--ink-l', left.ink === 'light' ? '#faf8f4' : '#1f1d1a');
+      el.style.setProperty('--ink-r', right.ink === 'light' ? '#faf8f4' : '#1f1d1a');
       el.style.setProperty('--logo-split', pct.toFixed(2) + '%');
-      el.removeAttribute('data-scrim');
+      if (left.scrim || right.scrim) el.setAttribute('data-scrim', 'true');
+      else el.removeAttribute('data-scrim');
     }
 
     function paintInk() {
-      var bar = hdr.getBoundingClientRect();
-      var y0 = Math.max(0, bar.top);
-      var y1 = Math.max(y0 + 8, bar.bottom);
-      var forced = solidNow();
-      var groups = ['.header__side--start', '.header__logo', '.header__side--end'];
-      for (var i = 0; i < groups.length; i++) {
-        var el = hdr.querySelector(groups[i]);
-        if (!el) continue;
-        if (forced) {
-          paintGroup(el, { ink: 'dark', scrim: false });
-          continue;
+      var items = hdr.querySelectorAll('[data-ink-item]');
+      var forcedSolid = solidNow();
+      var bits = [];
+      var sampled = false;
+      for (var i = 0; i < items.length; i++) {
+        var el = items[i];
+        var rect = el.getBoundingClientRect();
+        if (rect.width < 2 || rect.height < 2) continue;
+        if (forcedSolid) {
+          paintItem(el, { ink: 'dark', contrast: null, scrim: false, source: 'solid' });
+        } else if (el.classList.contains('header__logo')) {
+          paintLogo(el, rect.top - 6, rect.bottom + 6);
+        } else {
+          decidePaint(el, rect);
         }
-        if (groups[i] === '.header__logo') paintLogo(el, y0, y1);
-        else {
-          var r = el.getBoundingClientRect();
-          paintGroup(el, decide(r.left, r.right, y0, y1));
-        }
+        if (el.getAttribute('data-ink-source') === 'sample') sampled = true;
+        bits.push(
+          el.getAttribute('data-ink-item') +
+          ' ink=' + el.getAttribute('data-ink') +
+          ' contrast=' + (el.getAttribute('data-contrast') || 'n/a') +
+          ' source=' + el.getAttribute('data-ink-source') +
+          (el.getAttribute('data-scrim') === 'true' ? ' scrim' : '')
+        );
       }
+      hdr.setAttribute('data-ink-mode', forcedSolid ? 'solid' : (sampled ? 'sample' : 'fallback'));
+      var report = hdr.querySelector('[data-header-ink-report]');
+      if (report) report.textContent = bits.join(' | ');
       document.body.setAttribute('data-ink-ready', 'true');
+    }
+
+    function decidePaint(el, rect) {
+      paintItem(el, decide(rect.left - 6, rect.right + 6, rect.top - 6, rect.bottom + 6));
     }
 
     function bindPhoto() {
@@ -1633,6 +1812,7 @@
       for (var i = 0; i < imgs.length; i++) imgs[i].addEventListener('load', schedule);
       var scroller = photo.querySelector('.media-gallery__main');
       if (scroller) scroller.addEventListener('scroll', schedule, { passive: true });
+      new MutationObserver(schedule).observe(photo, { subtree: true, attributes: true, attributeFilter: ['class'] });
     }
 
     function update() {
@@ -1649,8 +1829,11 @@
 
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
+    window.addEventListener('orientationchange', schedule);
     document.addEventListener('DOMContentLoaded', update);
     window.addEventListener('load', update);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+    if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', schedule);
     new MutationObserver(schedule).observe(hdr, { subtree: true, attributes: true, attributeFilter: ['class'] });
     update();
   })();

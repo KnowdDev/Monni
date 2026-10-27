@@ -8,6 +8,7 @@
     href="{{ section.settings.link_left | default: '/collections/clothing' }}"
     class="split-hero__panel split-hero__panel--left"
     data-bg="dark"
+    data-ink-override="{{ section.settings.header_ink_left | default: 'auto' }}"
     aria-label="{{ section.settings.label_left | default: 'Clothing' | escape }} — {{ section.settings.cta_left | default: 'Explore' | escape }}"
   >
     <div class="split-hero__fallback split-hero__fallback--left"></div>
@@ -47,6 +48,7 @@
     href="{{ section.settings.link_right | default: '/collections/all-home' }}"
     class="split-hero__panel split-hero__panel--right"
     data-bg="light"
+    data-ink-override="{{ section.settings.header_ink_right | default: 'auto' }}"
     aria-label="{{ section.settings.label_right | default: 'Home' | escape }} — {{ section.settings.cta_right | default: 'Explore' | escape }}"
   >
     <div class="split-hero__fallback split-hero__fallback--right"></div>
@@ -391,9 +393,33 @@
     },
     {
       "type": "select",
+      "id": "header_ink_left",
+      "label": "Header ink on the left photo",
+      "info": "Auto samples the photograph. Light ink or dark ink forces that colour for header items on this half.",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "light", "label": "Light ink" },
+        { "value": "dark", "label": "Dark ink" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "header_ink_right",
+      "label": "Header ink on the right photo",
+      "info": "Auto samples the photograph. Light ink or dark ink forces that colour for header items on this half.",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "light", "label": "Light ink" },
+        { "value": "dark", "label": "Dark ink" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
       "id": "text_tone",
       "label": "Text over the photos",
-      "info": "Light text suits dark or mid-tone photographs; choose Dark text if both hero photos are pale. The header follows this setting.",
+      "info": "Light text suits dark or mid-tone photographs; choose Dark text if both hero photos are pale. Header ink is sampled from the photo unless a half is forced below.",
       "options": [
         { "value": "light", "label": "Light text" },
         { "value": "dark", "label": "Dark text" }
