@@ -136,6 +136,32 @@
     endcapture
     assign breadcrumb_parent_title = breadcrumb_parent_title | strip
   endif
+
+  assign show_parent_link = false
+  if breadcrumb_parent != blank
+    capture parent_link_visible
+      render 'collection-link-visible', href: breadcrumb_parent.url
+    endcapture
+    assign parent_link_visible = parent_link_visible | strip
+    if parent_link_visible == '1'
+      assign show_parent_link = true
+    endif
+  endif
+
+  assign show_primary_link = false
+  if product != blank and breadcrumb_primary != blank
+    capture primary_link_visible
+      render 'collection-link-visible', href: breadcrumb_primary.url
+    endcapture
+    assign primary_link_visible = primary_link_visible | strip
+    if primary_link_visible == '1'
+      assign show_primary_link = true
+    endif
+  endif
+
+  unless show_parent_link
+    assign breadcrumb_collapsible = false
+  endunless
 -%}
 
 <nav
@@ -153,7 +179,7 @@
       </li>
     {%- endif -%}
 
-    {%- if breadcrumb_parent != blank -%}
+    {%- if show_parent_link -%}
       <li class="breadcrumb__item breadcrumb__item--parent">
         <a
           href="{{ breadcrumb_parent.url }}"
@@ -166,24 +192,28 @@
     {%- endif -%}
 
     {%- if breadcrumb_primary != blank -%}
-      <li class="breadcrumb__item"{% unless product != blank %} aria-current="page"{% endunless %}>
-        {%- if product != blank -%}
-          <a
-            href="{{ breadcrumb_primary.url }}"
-            class="breadcrumb__link"
-            title="{{ breadcrumb_primary_title | escape }}"
-          >
-            {{- breadcrumb_primary_title -}}
-          </a>
-        {%- else -%}
+      {%- if product != blank -%}
+        {%- if show_primary_link -%}
+          <li class="breadcrumb__item">
+            <a
+              href="{{ breadcrumb_primary.url }}"
+              class="breadcrumb__link"
+              title="{{ breadcrumb_primary_title | escape }}"
+            >
+              {{- breadcrumb_primary_title -}}
+            </a>
+          </li>
+        {%- endif -%}
+      {%- else -%}
+        <li class="breadcrumb__item" aria-current="page">
           <span
             class="breadcrumb__link breadcrumb__link--current"
             title="{{ breadcrumb_primary_title | escape }}"
           >
             {{- breadcrumb_primary_title -}}
           </span>
-        {%- endif -%}
-      </li>
+        </li>
+      {%- endif -%}
     {%- endif -%}
   </ol>
 </nav>
@@ -193,11 +223,11 @@
   {%- capture breadcrumb_items -%}
     {%- assign position = position | plus: 1 -%}
     { "@type": "ListItem", "position": {{ position }}, "name": {{ home_label | json }}, "item": {{ shop.url | json }} }
-    {%- if breadcrumb_parent != blank -%}
+    {%- if show_parent_link -%}
       {%- assign position = position | plus: 1 -%}
       , { "@type": "ListItem", "position": {{ position }}, "name": {{ breadcrumb_parent_title | json }}, "item": {{ shop.url | append: breadcrumb_parent.url | json }} }
     {%- endif -%}
-    {%- if product != blank and breadcrumb_primary != blank -%}
+    {%- if show_primary_link -%}
       {%- assign position = position | plus: 1 -%}
       , { "@type": "ListItem", "position": {{ position }}, "name": {{ breadcrumb_primary_title | json }}, "item": {{ shop.url | append: breadcrumb_primary.url | json }} }
     {%- endif -%}

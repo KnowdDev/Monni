@@ -1,0 +1,21 @@
+{% doc %}
+  Whether a resolved href should be rendered.
+  Collection URLs (/collections/<handle>, including explicit overrides) render only when that collection exists and products_count > 0.
+  Page and product URLs are left unchanged.
+  Outputs 1 when the link should show.
+
+  @param {string} href - Resolved link href
+{% enddoc %}
+{%- liquid
+  assign show_link = true
+  if href contains '/collections/'
+    assign link_handle = href | split: '/collections/' | last | split: '?' | first | split: '#' | first | split: '/' | first | strip
+    assign link_collection = collections[link_handle]
+    if link_handle == blank or link_collection == blank or link_collection.products_count == 0
+      assign show_link = false
+    endif
+  endif
+  if show_link
+    echo '1'
+  endif
+-%}

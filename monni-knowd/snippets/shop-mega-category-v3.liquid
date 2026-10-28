@@ -92,9 +92,15 @@
     {%- if sub_label == 'Bracelets' -%}
       {%- assign sub_url = '/collections/bracelets' -%}
     {%- endif -%}
-    <li>
-      <!-- mega-v3 -->
-      <a href="{{ sub_url }}" class="{{ link_class }}" data-mega-v3="1">{{ sub_label | escape }}</a>
-    </li>
+    {%- capture link_visible -%}
+      {%- render 'collection-link-visible', href: sub_url -%}
+    {%- endcapture -%}
+    {%- assign link_visible = link_visible | strip -%}
+    {%- if link_visible == '1' -%}
+      <li>
+        <!-- mega-v3 -->
+        <a href="{{ sub_url }}" class="{{ link_class }}" data-mega-v3="1">{{ sub_label | escape }}</a>
+      </li>
+    {%- endif -%}
   {%- endfor -%}
 </ul>

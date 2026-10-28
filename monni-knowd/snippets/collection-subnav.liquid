@@ -27,27 +27,48 @@
     <a href="{{ collections[parent].url | default: '/collections/all' }}"{% if collection.handle == parent %} aria-current="page"{% endif %}>All</a>
     {%- assign items = links | split: ',' -%}
     {%- for item in items -%}
-      {%- assign parts = item | split: '|' -%}
-      {%- assign handle = parts[0] -%}
-      {%- assign label = parts[1] -%}
-      {%- if handle == 'bespoke' -%}
-        <a href="/pages/bespoke-gifting">{{ label }}</a>
-      {%- elsif handle == 'corporate' -%}
-        <a href="/pages/corporate-gifting">{{ label }}</a>
-      {%- elsif handle == 'gift-card' -%}
-        <a href="/products/gift-card">{{ label }}</a>
-      {%- elsif handle == 'bracelets' -%}
-        <a href="/collections/bracelets"{% if collection.handle == 'bracelets' or collection.handle == 'bracelet' %} aria-current="page"{% endif %}>{{ label }}</a>
-      {%- elsif handle == 'pants' -%}
-        <a href="{% if collections['pants-and-skirts'] != blank %}{{ collections['pants-and-skirts'].url }}{% else %}/collections/pants{% endif %}"{% if collection.handle == 'pants' or collection.handle == 'pants-and-skirts' or collection.handle == 'skirts' or collection.handle == 'shorts' %} aria-current="page"{% endif %}>{{ label }}</a>
-      {%- else -%}
-        {%- liquid
+      {%- liquid
+        assign parts = item | split: '|'
+        assign handle = parts[0]
+        assign label = parts[1]
+        assign sub_url = blank
+        assign sub_current = false
+        if handle == 'bespoke'
+          assign sub_url = '/pages/bespoke-gifting'
+        elsif handle == 'corporate'
+          assign sub_url = '/pages/corporate-gifting'
+        elsif handle == 'gift-card'
+          assign sub_url = '/products/gift-card'
+        elsif handle == 'bracelets'
+          assign sub_url = '/collections/bracelets'
+          if collection.handle == 'bracelets' or collection.handle == 'bracelet'
+            assign sub_current = true
+          endif
+        elsif handle == 'pants'
+          if collections['pants-and-skirts'] != blank
+            assign sub_url = collections['pants-and-skirts'].url
+          else
+            assign sub_url = '/collections/pants'
+          endif
+          if collection.handle == 'pants' or collection.handle == 'pants-and-skirts' or collection.handle == 'skirts' or collection.handle == 'shorts'
+            assign sub_current = true
+          endif
+        else
           assign sub_url = collections[handle].url
           if sub_url == blank
             assign sub_url = '/collections/' | append: handle
           endif
-        -%}
-        <a href="{{ sub_url }}"{% if collection.handle == handle %} aria-current="page"{% endif %}>{{ label }}</a>
+          if collection.handle == handle
+            assign sub_current = true
+          endif
+        endif
+      -%}
+      {%- capture link_visible -%}
+        {%- render 'collection-link-visible', href: sub_url -%}
+      {%- endcapture -%}
+      {%- assign link_visible = link_visible | strip -%}
+      {%- if link_visible == '1' -%}
+        <a href="{{ sub_url }}"{% if sub_current %} aria-current="page"{% endif %}>{{ label }}</a>
       {%- endif -%}
     {%- endfor -%}
   </nav>
