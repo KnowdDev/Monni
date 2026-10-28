@@ -1,17 +1,17 @@
-<footer class="footer full-width" data-section-id="{{ section.id }}">
+<footer class="footer full-width" data-section-id="{{ section.id }}" data-footer-layout="editorial">
   <div class="footer__inner">
     <div class="footer__cols">
-      <div>
-        <p class="footer__heading">Customer Care</p>
+      <details class="footer__disclosure footer__disclosure--care" open>
+        <summary class="footer__heading">Customer Care</summary>
         <ul class="footer__menu">
           <li><a href="/pages/contact"{% if request.path == '/pages/contact' %} aria-current="page"{% endif %}>Contact</a></li>
           <li><a href="/policies/shipping-policy"{% if request.path == '/policies/shipping-policy' %} aria-current="page"{% endif %}>Shipping + Delivery</a></li>
           <li><a href="/policies/refund-policy"{% if request.path == '/policies/refund-policy' %} aria-current="page"{% endif %}>Returns</a></li>
           <li><a href="/pages/start-a-return"{% if request.path == '/pages/start-a-return' %} aria-current="page"{% endif %}>Start a Return</a></li>
         </ul>
-      </div>
-      <div>
-        <p class="footer__heading">Info</p>
+      </details>
+      <details class="footer__disclosure footer__disclosure--info" open>
+        <summary class="footer__heading">Info</summary>
         <ul class="footer__menu">
           <li><a href="/pages/brands"{% if request.path == '/pages/brands' %} aria-current="page"{% endif %}>Brands</a></li>
           <li><a href="/blogs/journal"{% if request.page_type == 'blog' or request.page_type == 'article' %} aria-current="page"{% endif %}>Journal</a></li>
@@ -21,7 +21,7 @@
           <li><a href="/policies/privacy-policy"{% if request.path == '/policies/privacy-policy' %} aria-current="page"{% endif %}>Privacy Policy</a></li>
           <li><a href="/policies/terms-of-service"{% if request.path == '/policies/terms-of-service' %} aria-current="page"{% endif %}>Terms + Conditions</a></li>
         </ul>
-      </div>
+      </details>
       <div class="footer__store">
         <p class="footer__heading">Our Store</p>
         <p>In the heart of Matakana Village,<br>Aotearoa New Zealand.</p>
@@ -40,7 +40,7 @@
           <a href="tel:+6494229083">{{ settings.contact_phone | default: '09 422 9083' }}</a>
         </p>
       </div>
-      <div>
+      <div class="footer__news">
         <p class="footer__heading">Subscribe to our newsletter for 10% off your first order.</p>
         {% form 'customer', class: 'footer__form' %}
           {% if form.posted_successfully? %}
@@ -77,6 +77,32 @@
       <p>&copy; {{ 'now' | date: '%Y' }} Ayson and Anastasia Limited trading as Tea &amp; Tonic. Site by Knowd Digital.</p>
     </div>
   </div>
+  <script>
+    (function () {
+      var mq = window.matchMedia('(min-width: 768px)');
+      var groups = document.querySelectorAll('.footer__disclosure');
+      function apply() {
+        var desk = mq.matches;
+        groups.forEach(function (el) {
+          var summary = el.querySelector('summary');
+          if (desk) {
+            el.open = true;
+            if (summary) summary.tabIndex = -1;
+          } else {
+            el.open = false;
+            if (summary) summary.removeAttribute('tabindex');
+          }
+        });
+      }
+      groups.forEach(function (el) {
+        el.addEventListener('toggle', function () {
+          if (mq.matches && !el.open) el.open = true;
+        });
+      });
+      apply();
+      if (mq.addEventListener) mq.addEventListener('change', apply);
+    })();
+  </script>
 </footer>
 
 {% style %}
@@ -115,6 +141,40 @@
     margin: 0 0 1rem;
     font-weight: 400;
     line-height: 1.5;
+  }
+
+  .footer__disclosure {
+    margin: 0;
+    min-width: 0;
+  }
+
+  .footer__disclosure summary {
+    list-style: none;
+  }
+
+  .footer__disclosure summary::-webkit-details-marker { display: none; }
+  .footer__disclosure summary::marker { content: ""; }
+
+  .footer__disclosure summary.footer__heading {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    font-weight: 400;
+    color: inherit;
+    text-align: inherit;
+    cursor: pointer;
+  }
+
+  .footer__disclosure::details-content { transition: none; }
+
+  @media (min-width: 768px) {
+    .footer__disclosure summary.footer__heading {
+      cursor: default;
+      pointer-events: none;
+    }
   }
 
   .footer__menu {
@@ -203,6 +263,247 @@
   }
 
   .footer__base p { margin: 0; }
+
+  @media (max-width: 767px) {
+    .footer {
+      background: #f5f4f1;
+      color: #2f2f2f;
+      border-top: 1px solid #2f2f2f;
+      padding: 0 0 1.75rem;
+      overflow-x: clip;
+      text-transform: none;
+      font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 300;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+      line-height: 1.65;
+    }
+
+    .footer__inner {
+      max-width: 100%;
+      padding: 0 22px;
+    }
+
+    .footer__cols {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .footer__store { order: 1; }
+    .footer__news { order: 2; }
+    .footer__disclosure--care { order: 3; }
+    .footer__disclosure--info { order: 4; }
+
+    .footer__store,
+    .footer__news,
+    .footer__disclosure {
+      border-bottom: 1px solid #2f2f2f;
+    }
+
+    .footer__store,
+    .footer__news { padding: 1.65rem 0; }
+    .footer__store { padding-top: 2.15rem; }
+    .footer__disclosure { padding: 0.15rem 0; }
+
+    .footer__heading {
+      margin: 0 0 1.1rem;
+      font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 400;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      line-height: 1.4;
+      color: #2f2f2f;
+    }
+
+    .footer__disclosure summary.footer__heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 2.75rem;
+      margin: 0;
+      padding: 0.85rem 0;
+      cursor: pointer;
+      pointer-events: auto;
+      font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+
+    .footer__disclosure summary.footer__heading::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-right: 1px solid #2f2f2f;
+      border-bottom: 1px solid #2f2f2f;
+      transform: rotate(45deg);
+      margin-top: -4px;
+      flex: none;
+    }
+
+    .footer__disclosure[open] summary.footer__heading::after {
+      transform: rotate(-135deg);
+      margin-top: 2px;
+    }
+
+    .footer__disclosure summary:focus-visible {
+      outline: 1px solid #2f2f2f;
+      outline-offset: 3px;
+    }
+
+    .footer__menu {
+      gap: 0.9rem;
+      padding: 0.85rem 0 0.15rem;
+      color: #2f2f2f;
+      font-weight: 300;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    .footer__menu a:hover,
+    .footer__menu a:focus-visible {
+      color: #2f2f2f;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .footer__store p {
+      margin: 0 0 1.05rem;
+      font-weight: 300;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      color: #2f2f2f;
+    }
+
+    .footer__store p.footer__heading {
+      margin-bottom: 1.15rem;
+      font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      line-height: 1.4;
+      color: #2f2f2f;
+    }
+    .footer__store p:last-child { margin-bottom: 0; }
+
+    .footer__news .footer__heading {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(1.6rem, 7.4vw, 1.85rem);
+      letter-spacing: 0;
+      text-transform: none;
+      line-height: 1.12;
+      max-width: 14em;
+      margin: 0 0 1.2rem;
+      text-wrap: balance;
+    }
+
+    .footer__field {
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0 0 1.2rem;
+      max-width: 100%;
+    }
+
+    .footer__field input {
+      flex: 1 1 auto;
+      width: 1%;
+      min-width: 0;
+      min-height: 48px;
+      padding: 0.7rem 0.85rem;
+      border: 1px solid #2f2f2f;
+      border-radius: 0;
+      background: transparent;
+      font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #2f2f2f;
+    }
+
+    .footer__field input::placeholder { color: #6b6965; opacity: 1; }
+
+    .footer__field button {
+      flex: none;
+      min-height: 48px;
+      padding: 0 0.15rem;
+      font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .footer__social {
+      margin: 0;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .footer__social span { color: #6b6965; }
+
+    .footer__success,
+    .footer__error {
+      font-size: 0.95rem;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      line-height: 1.55;
+    }
+
+    .footer a:focus-visible,
+    .footer button:focus-visible,
+    .footer input:focus-visible {
+      outline: 1px solid #2f2f2f;
+      outline-offset: 3px;
+    }
+
+    .footer__payments {
+      margin: 1.35rem 0 0;
+      gap: 0.4rem;
+      max-width: 100%;
+    }
+
+    .footer__payments svg {
+      width: 36px;
+      height: 22px;
+    }
+
+    .footer__base {
+      display: block;
+      margin-top: 1.1rem;
+      padding-top: 0;
+      border-top: 0;
+      color: #6b6965;
+      font-size: 0.78rem;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      line-height: 1.65;
+      text-transform: none;
+    }
+
+    .footer__base p + p { margin-top: 0.55rem; }
+
+    .footer a { overflow-wrap: anywhere; }
+  }
+
+  @media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+    .footer__disclosure summary.footer__heading::after { transition: none; }
+  }
 {% endstyle %}
 
 {% schema %}
