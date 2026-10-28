@@ -731,3 +731,26 @@ product-page.product-page {
   letter-spacing: 0.06em;
   white-space: nowrap;
 }
+
+/* iPhone zooms the page when a field's text is under 16px, which makes the gift card fields jump. Keep phone fields at 16px. */
+@media (max-width: 767px) {
+  .gifting-service__form input,
+  .gifting-service__form textarea,
+  .start-return__form input,
+  .start-return__form textarea,
+  .start-return__form select,
+  .product-page__gift-fields input,
+  .product-page__gift-fields textarea,
+  .product-page__back-in-stock-form input,
+  .contact__input,
+  .contact__textarea { font-size: 16px; }
+}
+.product-page__gift-fields input,
+.product-page__gift-fields textarea {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  min-height: 48px;
+}
+.product-page__gift-fields input[type="date"] { display: block; min-width: 0; }
+.product-page__gift-fields textarea { resize: vertical; }
