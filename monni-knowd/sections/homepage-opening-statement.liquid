@@ -53,11 +53,16 @@
     line-height: 1.35;
     color: var(--color-foreground);
     margin-bottom: 22px;
-    white-space: nowrap;
+    text-wrap: balance;
+    overflow-wrap: break-word;
   }
 
   @media (min-width: 768px) {
     .opening-statement__line--primary { font-size: 1.9rem; }
+  }
+
+  @media (min-width: 1100px) {
+    .opening-statement__line--primary { white-space: nowrap; }
   }
 
   .opening-statement__keep { white-space: nowrap; }
