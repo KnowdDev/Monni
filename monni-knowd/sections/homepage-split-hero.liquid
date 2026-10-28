@@ -5,10 +5,10 @@
   data-tone="{{ section.settings.text_tone | default: 'light' }}"
 >
   <a
-    href="{{ section.settings.link_left | default: '/collections/clothing' }}"
+    href="{{ section.settings.link_left | default: '/collections/all-jewellery' }}"
     class="split-hero__panel split-hero__panel--left"
     data-bg="dark"
-    aria-label="{{ section.settings.label_left | default: 'Clothing' | escape }} — {{ section.settings.cta_left | default: 'Explore' | escape }}"
+    aria-label="{{ section.settings.label_left | default: 'Jewellery' | escape }} — {{ section.settings.cta_left | default: 'Explore' | escape }}"
   >
     <div class="split-hero__fallback split-hero__fallback--left"></div>
     {% if section.settings.use_optimized_assets != false %}
@@ -30,7 +30,7 @@
         src="https://images.unsplash.com/photo-1556905055-8f358fab1e7d?w=800&h=1000&fit=crop&q=80"
         srcset="https://images.unsplash.com/photo-1556905055-8f358fab1e7d?w=400&h=500&fit=crop&q=80 400w, https://images.unsplash.com/photo-1556905055-8f358fab1e7d?w=800&h=1000&fit=crop&q=80 800w"
         sizes="50vw"
-        alt="Clothing"
+        alt="Jewellery"
         loading="eager"
         fetchpriority="high"
         decoding="async"
@@ -40,7 +40,7 @@
       >
     {% endif %}
     <div class="split-hero__overlay"></div>
-    <span class="split-hero__doorway">{{ section.settings.label_left | default: 'Beauty' | escape }}</span>
+    <span class="split-hero__doorway">{{ section.settings.label_left | default: 'Jewellery' | escape }}</span>
   </a>
 
   <a
@@ -310,10 +310,14 @@
     text-shadow: 0 1px 24px rgba(var(--hero-shade), 0.35);
     margin: 0 auto 1.15rem;
     line-height: 1.1;
-    max-width: 12ch;
+    max-width: none;
   }
 
-  .split-hero__title span { display: block; }
+  .split-hero__title span { display: block; white-space: nowrap; }
+
+  @media (max-width: 359px) {
+    .split-hero__title { font-size: 1.75rem; }
+  }
 
   @media (min-width: 768px) {
     .split-hero__title {
@@ -370,7 +374,7 @@
       "type": "text",
       "id": "label_left",
       "label": "Left label",
-      "default": "Gifting"
+      "default": "Jewellery"
     },
     {
       "type": "url",
