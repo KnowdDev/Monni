@@ -1,6 +1,6 @@
 <section class="opening-statement full-width" data-section-id="{{ section.id }}">
   <div class="opening-statement__inner">
-    <p class="opening-statement__line opening-statement__line--primary">{{ section.settings.line_1 | default: 'A place to pause. A place to reconnect.' | escape }}</p>
+    <p class="opening-statement__line opening-statement__line--primary">{{ section.settings.line_1 | default: 'A place to pause. A place to connect.' | escape }}</p>
     {%- liquid
       assign lead = section.settings.statement
       assign ending = section.settings.statement_ending
@@ -89,7 +89,7 @@
       "type": "text",
       "id": "line_1",
       "label": "First line",
-      "default": "A place to pause. A place to reconnect."
+      "default": "A place to pause. A place to connect."
     },
     {
       "type": "textarea",

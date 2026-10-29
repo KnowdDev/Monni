@@ -82,21 +82,15 @@
       var mq = window.matchMedia('(min-width: 768px)');
       var groups = document.querySelectorAll('.footer__disclosure');
       function apply() {
-        var desk = mq.matches;
         groups.forEach(function (el) {
           var summary = el.querySelector('summary');
-          if (desk) {
-            el.open = true;
-            if (summary) summary.tabIndex = -1;
-          } else {
-            el.open = false;
-            if (summary) summary.removeAttribute('tabindex');
-          }
+          el.open = true;
+          if (summary) summary.tabIndex = -1;
         });
       }
       groups.forEach(function (el) {
         el.addEventListener('toggle', function () {
-          if (mq.matches && !el.open) el.open = true;
+          if (!el.open) el.open = true;
         });
       });
       apply();
@@ -290,21 +284,24 @@
       gap: 0;
     }
 
-    .footer__store { order: 1; }
-    .footer__news { order: 2; }
-    .footer__disclosure--care { order: 3; }
-    .footer__disclosure--info { order: 4; }
-
-    .footer__store,
-    .footer__news,
-    .footer__disclosure {
-      border-bottom: 1px solid #2f2f2f;
+    .footer__cols {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: 1.5rem;
     }
 
+    .footer__store { order: 1; grid-column: 1 / -1; }
+    .footer__disclosure--care { order: 2; }
+    .footer__disclosure--info { order: 3; }
+    .footer__news { order: 4; grid-column: 1 / -1; }
+
     .footer__store,
-    .footer__news { padding: 1.65rem 0; }
-    .footer__store { padding-top: 2.15rem; }
-    .footer__disclosure { padding: 0.15rem 0; }
+    .footer__news { border-bottom: 1px solid #dcd9d3; }
+    .footer__disclosure { border-bottom: 1px solid #dcd9d3; padding: 1.75rem 0; }
+
+    .footer__store,
+    .footer__news { padding: 1.75rem 0; }
+    .footer__store { padding-top: 2.25rem; }
 
     .footer__heading {
       margin: 0 0 1.1rem;
@@ -322,11 +319,10 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      min-height: 2.75rem;
-      margin: 0;
-      padding: 0.85rem 0;
-      cursor: pointer;
-      pointer-events: auto;
+      margin: 0 0 1.1rem;
+      padding: 0;
+      cursor: default;
+      pointer-events: none;
       font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
       font-size: 0.68rem;
       font-weight: 400;
@@ -336,6 +332,7 @@
     }
 
     .footer__disclosure summary.footer__heading::after {
+      display: none;
       content: "";
       width: 7px;
       height: 7px;
@@ -357,8 +354,8 @@
     }
 
     .footer__menu {
-      gap: 0.9rem;
-      padding: 0.85rem 0 0.15rem;
+      gap: 0.7rem;
+      padding: 0;
       color: #2f2f2f;
       font-weight: 300;
       font-size: 0.95rem;
@@ -398,19 +395,20 @@
     .footer__news .footer__heading {
       font-family: "Cormorant Garamond", Georgia, serif;
       font-weight: 400;
-      font-size: clamp(1.6rem, 7.4vw, 1.85rem);
+      font-style: italic;
+      font-size: 1.2rem;
       letter-spacing: 0;
       text-transform: none;
-      line-height: 1.12;
-      max-width: 14em;
-      margin: 0 0 1.2rem;
+      line-height: 1.35;
+      max-width: 22em;
+      margin: 0 0 0.9rem;
       text-wrap: balance;
     }
 
     .footer__field {
       flex-wrap: nowrap;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0;
       margin: 0 0 1.2rem;
       max-width: 100%;
     }
@@ -419,9 +417,10 @@
       flex: 1 1 auto;
       width: 1%;
       min-width: 0;
-      min-height: 48px;
-      padding: 0.7rem 0.85rem;
-      border: 1px solid #2f2f2f;
+      min-height: 44px;
+      padding: 0.5rem 0;
+      border: 0;
+      border-bottom: 1px solid #2f2f2f;
       border-radius: 0;
       background: transparent;
       font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
@@ -436,8 +435,9 @@
 
     .footer__field button {
       flex: none;
-      min-height: 48px;
-      padding: 0 0.15rem;
+      min-height: 44px;
+      border-bottom: 1px solid #2f2f2f;
+      padding: 0 0 0 0.75rem;
       font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
       font-size: 0.68rem;
       font-weight: 400;
