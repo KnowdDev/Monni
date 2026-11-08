@@ -166,12 +166,13 @@
     "makers": {
       "type": "homepage-makers",
       "settings": {
-        "eyebrow": "Meet the Maker",
-        "maker_name": "Wild Earth Perfume",
-        "maker_location": "",
-        "description": "Nelly's handmade Gisborne studio, where every bottle begins as a plant.",
-        "cta": "Shop Wild Earth →",
-        "link": "/collections/wild-earth",
+        "image": "shopify://shop_images/Lisa_Webb_Flatlay_06.jpg",
+        "eyebrow": "Maker of the Month",
+        "maker_name": "Lisa Webb — Jeweller",
+        "maker_location": "Lisa, Matakana",
+        "description": "Lisa Webb is a jeweller and artist based in Matakana, Aotearoa New Zealand, creating jewellery inspired by a life lived close to nature. Drawing on the colours, textures and organic forms of the natural world, each piece brings together precious metals, pearls, gemstones and natural materials — thoughtfully made to capture the beauty all around us and the feeling of carrying a little piece of it with you.",
+        "cta": "Shop Lisa Webb",
+        "link": "/pages/brands/lisa-webb",
         "cta_secondary": "",
         "link_secondary": ""
       }

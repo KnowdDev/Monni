@@ -412,7 +412,11 @@
       gap: 0;
       margin: 0 0 1.2rem;
       max-width: 100%;
+      border-bottom: 1px solid #2f2f2f;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
+
+    .footer__field:focus-within { box-shadow: 0 1px 0 0 #2f2f2f; }
 
     .footer__field input {
       flex: 1 1 auto;
@@ -421,9 +425,10 @@
       min-height: 44px;
       padding: 0.5rem 0;
       border: 0;
-      border-bottom: 1px solid #2f2f2f;
       border-radius: 0;
       background: transparent;
+      -webkit-appearance: none;
+      appearance: none;
       font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
       font-size: 16px;
       font-weight: 300;
@@ -437,7 +442,7 @@
     .footer__field button {
       flex: none;
       min-height: 44px;
-      border-bottom: 1px solid #2f2f2f;
+      border: 0;
       padding: 0 0 0 0.75rem;
       font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
       font-size: 0.68rem;
@@ -467,10 +472,16 @@
     }
 
     .footer a:focus-visible,
-    .footer button:focus-visible,
-    .footer input:focus-visible {
+    .footer button:focus-visible {
       outline: 1px solid #2f2f2f;
       outline-offset: 3px;
+    }
+
+    /* Email field: the underline on .footer__field is the focus indicator. */
+    .footer .footer__field input:focus,
+    .footer .footer__field input:focus-visible {
+      outline: none;
+      border: 0;
     }
 
     .footer__payments {
