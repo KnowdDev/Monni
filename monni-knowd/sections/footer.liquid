@@ -42,7 +42,7 @@
       </div>
       <div class="footer__news">
         <p class="footer__heading">Subscribe to our newsletter for 10% off your first order.</p>
-        {% form 'customer', class: 'footer__form' %}
+        {% form 'customer', class: 'footer__form', data-senderkit-newsletter: true %}
           {% if form.posted_successfully? %}
             <p class="footer__success">Thank you. Your 10% welcome code is on its way.</p>
           {% else %}
