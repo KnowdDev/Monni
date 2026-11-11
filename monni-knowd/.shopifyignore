@@ -40,6 +40,8 @@ templates/page.size-guide.json
 templates/page.gifting-service.json
 templates/page.corporate-gifting.json
 templates/page.bespoke-gifting.json
+templates/page.links.json
+templates/page.subscribe.json
 
 # Metaobject templates (brand profile layout settings)
 templates/metaobject/brand.json

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#f5f4f1">
+    {% render 'fonts-brand' %}
+    {% render 'css-variables' %}
+    {{ 'critical.css' | asset_url | stylesheet_tag }}
+    {% render 'meta-tags' %}
+    {{ content_for_header }}
+    <meta name="senderkit-signup-slug" content="{{ settings.senderkit_signup_slug | default: 'monni-edit' | escape }}">
+    <style>
+      html, body { margin: 0; background: #f5f4f1; color: #2f2f2f; font-family: var(--body); }
+    </style>
+  </head>
+  <body class="template-links">
+    {% render 'attribution-bootstrap' %}
+    <main id="main-content">
+      {{ content_for_layout }}
+    </main>
+    {% render 'posthog' %}
+    <script src="{{ 'posthog-shopify.js' | asset_url }}" defer></script>
+    <script src="{{ 'senderkit-newsletter.js' | asset_url }}" defer></script>
+  </body>
+</html>

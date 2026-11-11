@@ -1,0 +1,134 @@
+<section class="sb{% if section.settings.image != blank %} sb--has-image{% endif %}">
+  {%- if section.settings.image != blank -%}
+    <div class="sb__media">
+      {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1400', sizes: '(min-width: 900px) 50vw, 100vw', alt: section.settings.image.alt | default: shop.name }}
+    </div>
+  {%- endif -%}
+  <div class="sb__panel">
+    <div class="sb__inner">
+      <a class="sb__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 600 | image_tag: class: 'sb__logo', width: 220, alt: shop.name, loading: 'eager' }}
+        {%- else -%}
+          <span class="sb__wordmark">Tea &amp; Tonic</span>
+        {%- endif -%}
+      </a>
+      {%- if section.settings.eyebrow != blank -%}<p class="sb__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h1 class="sb__title">{{ section.settings.heading }}</h1>
+      {%- if section.settings.intro != blank -%}<p class="sb__intro">{{ section.settings.intro }}</p>{%- endif -%}
+
+      {% form 'customer', class: 'newsletter-v2__form sb__form', data-senderkit-newsletter: true %}
+        {% if form.posted_successfully? %}
+          <p class="sb__success">{{ section.settings.success_message }}</p>
+        {% else %}
+          <input type="hidden" name="contact[tags]" value="newsletter,subscribe-page">
+          <input type="hidden" name="contact[accepts_marketing]" value="true">
+          <input type="hidden" name="contact[first_name]" value="">
+          <input type="hidden" name="contact[last_name]" value="">
+          <input type="text" name="sb_name" class="sb__input" placeholder="Your name" aria-label="Your name" required autocomplete="name">
+          <input type="email" name="contact[email]" class="sb__input" placeholder="Your email address" aria-label="Your email address" required autocomplete="email" autocapitalize="off">
+          <button type="submit" class="sb__button">{{ section.settings.button_label }}</button>
+          {% if form.errors %}<p class="sb__error">{{ form.errors.messages['email'] }}</p>{% endif %}
+          <p class="sb__fine">{{ section.settings.fine_print }}</p>
+        {% endif %}
+      {% endform %}
+
+      <ol class="sb__benefits">
+        {%- for block in section.blocks -%}
+          <li class="sb__benefit" {{ block.shopify_attributes }}>
+            <span class="sb__num">{{ forloop.index | prepend: '0' }}</span>
+            <div>
+              <h2 class="sb__bt">{{ block.settings.title }}</h2>
+              <p class="sb__bd">{{ block.settings.text }}</p>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var form = document.querySelector('.sb__form');
+    if (!form) return;
+    function split() {
+      var n = (form.elements['sb_name'].value || '').trim().replace(/\s+/g, ' ');
+      var i = n.indexOf(' ');
+      form.elements['contact[first_name]'].value = i === -1 ? n : n.slice(0, i);
+      form.elements['contact[last_name]'].value = i === -1 ? '' : n.slice(i + 1);
+    }
+    form.addEventListener('input', split);
+    form.addEventListener('submit', split, true);
+  })();
+</script>
+
+{% stylesheet %}
+  .sb { min-height: 100vh; background: #f5f4f1; display: grid; grid-template-columns: 1fr; }
+  .sb__media { aspect-ratio: 4 / 3; overflow: hidden; background: #ede8df; }
+  .sb__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .sb__panel { display: flex; justify-content: center; padding: 3rem 1.5rem 4rem; }
+  .sb__inner { width: 100%; max-width: 30rem; }
+  .sb__brand { display: inline-block; color: #2f2f2f; text-decoration: none; margin-bottom: 3.5rem; }
+  .sb__wordmark { font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight: 300; font-size: 1.3rem; letter-spacing: .14em; text-transform: uppercase; line-height: 1; }
+  .sb__logo { display: block; width: 11rem; max-width: 100%; height: auto; }
+  .sb__eyebrow { font-size: .7rem; letter-spacing: .28em; text-transform: uppercase; color: #6b6965; margin: 0 0 1.1rem; }
+  .sb__title { font-family: var(--display); font-weight: 300; font-style: italic; font-size: clamp(2.6rem, 7vw, 4.2rem); line-height: 1.05; letter-spacing: -.01em; margin: 0 0 1.4rem; color: #2f2f2f; text-wrap: balance; }
+  .sb__intro { font-weight: 300; line-height: 1.8; color: #6b6965; margin: 0 0 2.4rem; max-width: 26rem; }
+  .sb__form { display: grid; gap: 1rem; margin-bottom: 3.5rem; }
+  .sb__input { font: inherit; font-size: 1rem; font-weight: 300; padding: .8rem 0; border: 0; border-bottom: 1px solid #2f2f2f; background: transparent; border-radius: 0; color: #2f2f2f; width: 100%; box-sizing: border-box; }
+  .sb__input::placeholder { color: #6b6965; }
+  .sb__input:focus { outline: none; border-bottom-width: 2px; padding-bottom: calc(.8rem - 1px); }
+  .sb__button { margin-top: .8rem; font-family: var(--body); font-size: .75rem; letter-spacing: .22em; text-transform: uppercase; padding: 1.05rem 1.5rem; background: #2f2f2f; color: #f5f4f1; border: 1px solid #2f2f2f; border-radius: 0; cursor: pointer; transition: background-color .25s ease, color .25s ease; }
+  .sb__button:hover { background: transparent; color: #2f2f2f; }
+  .sb__fine { font-size: .75rem; color: #6b6965; margin: 0; }
+  .sb__success { font-family: var(--display); font-style: italic; font-size: 1.5rem; line-height: 1.4; margin: 0; color: #2f2f2f; }
+  .sb__error { font-size: .85rem; margin: 0; }
+  .sb__benefits { list-style: none; margin: 0; padding: 2.4rem 0 0; border-top: 1px solid #dcd9d3; display: grid; gap: 1.8rem; counter-reset: none; }
+  .sb__benefit { display: grid; grid-template-columns: 2.6rem 1fr; align-items: baseline; }
+  .sb__num { font-family: var(--display); font-style: italic; font-size: 1.1rem; color: #6b6965; }
+  .sb__bt { font-family: var(--display); font-weight: 400; font-size: 1.45rem; line-height: 1.2; margin: 0 0 .4rem; color: #2f2f2f; }
+  .sb__bd { margin: 0; font-weight: 300; line-height: 1.75; color: #6b6965; font-size: .95rem; }
+  @media (min-width: 900px) {
+    .sb--has-image { grid-template-columns: 1fr 1fr; }
+    .sb--has-image .sb__media { aspect-ratio: auto; position: sticky; top: 0; height: 100vh; }
+    .sb__panel { align-items: center; padding: 4rem clamp(2rem, 5vw, 5rem); }
+    .sb:not(.sb--has-image) .sb__panel { padding-top: 5rem; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Newsletter subscribe page",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Editorial image (shown beside the form on desktop)" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Tea & Tonic Journal Letter" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Be the first to know." },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Join the Tea & Tonic newsletter for early access to new releases, first looks at new products and subscriber-only giveaways." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" },
+    { "type": "text", "id": "fine_print", "label": "Fine print", "default": "No spam. Unsubscribe anytime." },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thank you, you're on the list. Keep an eye on your inbox." }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Benefit" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Newsletter subscribe page",
+      "blocks": [
+        { "type": "benefit", "settings": { "title": "New releases, first", "text": "Hear about new arrivals before they're announced on Instagram or the website." } },
+        { "type": "benefit", "settings": { "title": "New products", "text": "Be first to see new makers, brands and collections as they land in store." } },
+        { "type": "benefit", "settings": { "title": "Giveaways", "text": "Subscriber-only giveaways and the occasional surprise." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
