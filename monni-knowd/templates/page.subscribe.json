@@ -4,13 +4,42 @@
     "main": {
       "type": "subscribe-page",
       "blocks": {
-        "b1": { "type": "benefit", "settings": { "title": "New releases, first", "text": "Hear about new arrivals before they're announced on Instagram or the website." } },
-        "b2": { "type": "benefit", "settings": { "title": "New products", "text": "Be first to see new makers, brands and collections as they land in store." } },
-        "b3": { "type": "benefit", "settings": { "title": "Giveaways", "text": "Subscriber-only giveaways and the occasional surprise." } }
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "title": "New releases, first",
+            "text": "Hear about new arrivals before they're announced on Instagram or the website."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "title": "New products",
+            "text": "Be first to see new makers, brands and collections as they land in store."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Giveaways",
+            "text": "Subscriber-only giveaways and the occasional surprise."
+          }
+        }
       },
-      "block_order": ["b1", "b2", "b3"],
-      "settings": {}
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ],
+      "settings": {
+        "show_feed": true,
+        "feed_heading": "New in store",
+        "feed_collection": "new-website-featured",
+        "feed_limit": 6
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
