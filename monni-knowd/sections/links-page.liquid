@@ -7,6 +7,9 @@
 
     <ul class="lt__list">
       {%- for block in section.blocks -%}
+        {%- if block.type == 'product' -%}
+          {%- continue -%}
+        {%- endif -%}
         {%- if block.type == 'latest_article' -%}
           {%- assign latest = blogs[block.settings.blog].articles.first -%}
           {%- if latest != blank -%}
@@ -29,7 +32,7 @@
     </ul>
 
     {%- if section.settings.show_feed -%}
-      {% render 'links-feed', collection: section.settings.feed_collection, limit: section.settings.feed_limit, heading: section.settings.feed_heading %}
+      {% render 'links-feed', section: section, collection: section.settings.feed_collection, limit: section.settings.feed_limit, heading: section.settings.feed_heading %}
     {%- endif -%}
 
     <div class="lt__links">
@@ -51,10 +54,17 @@
     { "type": "header", "content": "Product feed" },
     { "type": "checkbox", "id": "show_feed", "label": "Show product feed under the buttons", "default": true },
     { "type": "text", "id": "feed_heading", "label": "Feed heading", "default": "In store now" },
-    { "type": "collection", "id": "feed_collection", "label": "Feed collection", "info": "Tiles show product photos and link straight to each product." },
-    { "type": "range", "id": "feed_limit", "label": "Tiles", "min": 6, "max": 24, "step": 3, "default": 12 }
+    { "type": "collection", "id": "feed_collection", "label": "Fallback collection", "info": "Used only when no Feed product blocks are added.", "info": "Tiles show product photos and link straight to each product." },
+    { "type": "range", "id": "feed_limit", "label": "Tiles (collection fallback)", "min": 6, "max": 24, "step": 3, "default": 12 }
   ],
   "blocks": [
+    {
+      "type": "product",
+      "name": "Feed product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product", "info": "Adds a photo tile that links to this product. If you add any, they replace the collection fallback." }
+      ]
+    },
     {
       "type": "link",
       "name": "Link",

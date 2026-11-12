@@ -1,29 +1,52 @@
 {% doc %}
-  Editorial product grid (Instagram-feed style). Every tile links to the product.
-  @param {collection} collection - Source collection
-  @param {number} [limit] - Tiles to show (default 12)
+  Editorial product grid. Every tile links to the product.
+  Uses hand-picked product blocks from the section when present, otherwise the fallback collection.
+  @param {object} section - The section (reads product blocks)
+  @param {collection} [collection] - Fallback collection
+  @param {number} [limit] - Max tiles for the collection fallback (default 12)
   @param {string} [heading] - Heading
 {% enddoc %}
 {%- liquid
   assign feed_limit = limit | default: 12
+  assign picked = section.blocks | where: 'type', 'product'
   assign shown = 0
+  assign has_feed = false
+  if picked.size > 0
+    assign has_feed = true
+  elsif collection != blank and collection.products_count > 0
+    assign has_feed = true
+  endif
 -%}
-{%- if collection != blank and collection.products_count > 0 -%}
+{%- if has_feed -%}
   <div class="lt__feed-head">
     <h2 class="lt__feed-title">{{ heading | default: 'In store now' }}</h2>
-    <a class="lt__feed-link" href="{{ collection.url }}">View all</a>
+    {%- if picked.size == 0 -%}<a class="lt__feed-link" href="{{ collection.url }}">View all</a>{%- endif -%}
   </div>
   <ul class="lt__feed">
-    {%- for product in collection.products -%}
-      {%- if product.featured_image != blank and product.available and shown < feed_limit -%}
-        {%- assign shown = shown | plus: 1 -%}
-        <li>
-          <a class="lt__tile" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
-            {{ product.featured_image | image_url: width: 480 | image_tag: widths: '240, 360, 480', sizes: '(min-width: 600px) 180px, 33vw', loading: 'lazy', alt: product.featured_image.alt | default: product.title }}
-            <span class="lt__tile-cap">{{ product.title | truncate: 38 }}</span>
-          </a>
-        </li>
-      {%- endif -%}
-    {%- endfor -%}
+    {%- if picked.size > 0 -%}
+      {%- for block in picked -%}
+        {%- assign product = block.settings.product -%}
+        {%- if product != blank and product.featured_image != blank -%}
+          <li {{ block.shopify_attributes }}>
+            <a class="lt__tile" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+              {{ product.featured_image | image_url: width: 480 | image_tag: widths: '240, 360, 480', sizes: '(min-width: 600px) 180px, 33vw', loading: 'lazy', alt: product.featured_image.alt | default: product.title }}
+              <span class="lt__tile-cap">{{ product.title | truncate: 38 }}</span>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for product in collection.products -%}
+        {%- if product.featured_image != blank and product.available and shown < feed_limit -%}
+          {%- assign shown = shown | plus: 1 -%}
+          <li>
+            <a class="lt__tile" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+              {{ product.featured_image | image_url: width: 480 | image_tag: widths: '240, 360, 480', sizes: '(min-width: 600px) 180px, 33vw', loading: 'lazy', alt: product.featured_image.alt | default: product.title }}
+              <span class="lt__tile-cap">{{ product.title | truncate: 38 }}</span>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
   </ul>
 {%- endif -%}

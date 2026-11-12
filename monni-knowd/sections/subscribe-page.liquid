@@ -30,7 +30,8 @@
 
     <div class="lt__rule"></div>
     <ol class="lt__benefits">
-      {%- for block in section.blocks -%}
+      {%- assign benefits = section.blocks | where: 'type', 'benefit' -%}
+      {%- for block in benefits -%}
         <li class="lt__benefit" {{ block.shopify_attributes }}>
           <span class="lt__num">{{ forloop.index | prepend: '0' }}</span>
           <div>
@@ -42,7 +43,7 @@
     </ol>
 
     {%- if section.settings.show_feed -%}
-      {% render 'links-feed', collection: section.settings.feed_collection, limit: section.settings.feed_limit, heading: section.settings.feed_heading %}
+      {% render 'links-feed', section: section, collection: section.settings.feed_collection, limit: section.settings.feed_limit, heading: section.settings.feed_heading %}
     {%- endif -%}
 
     <div class="lt__follow">
@@ -84,10 +85,17 @@
     { "type": "header", "content": "Product feed" },
     { "type": "checkbox", "id": "show_feed", "label": "Show product feed", "default": false },
     { "type": "text", "id": "feed_heading", "label": "Feed heading", "default": "New in store" },
-    { "type": "collection", "id": "feed_collection", "label": "Feed collection" },
-    { "type": "range", "id": "feed_limit", "label": "Tiles", "min": 3, "max": 12, "step": 3, "default": 6 }
+    { "type": "collection", "id": "feed_collection", "label": "Fallback collection", "info": "Used only when no Feed product blocks are added." },
+    { "type": "range", "id": "feed_limit", "label": "Tiles (collection fallback)", "min": 3, "max": 12, "step": 3, "default": 6 }
   ],
   "blocks": [
+    {
+      "type": "product",
+      "name": "Feed product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product", "info": "Adds a photo tile that links to this product. If you add any, they replace the collection fallback." }
+      ]
+    },
     {
       "type": "benefit",
       "name": "Benefit",
