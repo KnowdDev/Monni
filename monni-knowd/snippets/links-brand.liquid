@@ -1,7 +1,1 @@
-<a class="lt__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
-  {%- if settings.logo != blank -%}
-    {{ settings.logo | image_url: width: 600 | image_tag: class: 'lt__logo', width: 200, alt: shop.name, loading: 'eager' }}
-  {%- else -%}
-    <span class="lt__wordmark">Tea &amp; Tonic</span>
-  {%- endif -%}
-</a>
+<a class="lt__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">TEA <span class="lt__amp">&amp;</span> TONIC</a>

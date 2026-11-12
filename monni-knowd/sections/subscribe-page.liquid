@@ -2,14 +2,13 @@
   <div class="lt__inner">
     {%- if section.settings.image != blank -%}
       <div class="lt__banner">
-        {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200', sizes: '(min-width: 600px) 34rem, 100vw', alt: section.settings.image.alt | default: shop.name }}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200', sizes: '(min-width: 600px) 30rem, 100vw', alt: section.settings.image.alt | default: shop.name }}
       </div>
     {%- endif -%}
     {% render 'links-brand' %}
-    {% render 'links-social' %}
-    {%- if section.settings.eyebrow != blank -%}<p class="lt__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
-    <h1 class="lt__title lt__title--xl">{{ section.settings.heading }}</h1>
+    <h1 class="lt__title">{{ section.settings.heading }}</h1>
     {%- if section.settings.intro != blank -%}<p class="lt__bio">{{ section.settings.intro }}</p>{%- endif -%}
+    {%- if section.settings.perk != blank -%}<p class="lt__perk">{{ section.settings.perk }}</p>{%- endif -%}
 
     {% form 'customer', class: 'newsletter-v2__form lt__form sb__form', data-senderkit-newsletter: true %}
       {% if form.posted_successfully? %}
@@ -19,14 +18,17 @@
         <input type="hidden" name="contact[accepts_marketing]" value="true">
         <input type="hidden" name="contact[first_name]" value="">
         <input type="hidden" name="contact[last_name]" value="">
-        <input type="text" name="sb_name" class="lt__input" placeholder="Your name" aria-label="Your name" required autocomplete="name">
-        <input type="email" name="contact[email]" class="lt__input" placeholder="Your email address" aria-label="Your email address" required autocomplete="email" autocapitalize="off">
-        <button type="submit" class="lt__btn lt__btn--solid"><span class="lt__btn-label">{{ section.settings.button_label }}</span></button>
+        <label for="sb-name" class="visually-hidden">Your name</label>
+        <input id="sb-name" type="text" name="sb_name" class="lt__input" placeholder="Your name" required autocomplete="name">
+        <label for="sb-email" class="visually-hidden">Your email address</label>
+        <input id="sb-email" type="email" name="contact[email]" class="lt__input" placeholder="Your email address" required autocomplete="email" autocapitalize="off">
+        <button type="submit" class="lt__submit">{{ section.settings.button_label }}</button>
         {% if form.errors %}<p class="lt__error">{{ form.errors.messages['email'] }}</p>{% endif %}
-        <p class="lt__fine">{{ section.settings.fine_print }}</p>
       {% endif %}
     {% endform %}
+    {%- if section.settings.fine_print != blank -%}<p class="lt__fine">{{ section.settings.fine_print }}</p>{%- endif -%}
 
+    <div class="lt__rule"></div>
     <ol class="lt__benefits">
       {%- for block in section.blocks -%}
         <li class="lt__benefit" {{ block.shopify_attributes }}>
@@ -43,7 +45,13 @@
       {% render 'links-feed', collection: section.settings.feed_collection, limit: section.settings.feed_limit, heading: section.settings.feed_heading %}
     {%- endif -%}
 
-    <p class="lt__foot"><a href="{{ routes.root_url }}">teaandtonic.co.nz</a></p>
+    <div class="lt__follow">
+      <span class="lt__follow-label">Follow along</span>
+      <div class="lt__links">
+        <a class="lt__link" href="{{ settings.social_instagram_link | default: 'https://www.instagram.com/teaandtonicmatakana/' }}" target="_blank" rel="noopener">Instagram</a>
+        <a class="lt__link" href="{{ settings.social_facebook_link | default: 'https://www.facebook.com/teaandtonicmatakana' }}" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -67,14 +75,14 @@
   "name": "Newsletter subscribe page",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Banner image (optional)" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Tea & Tonic Journal Letter" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Be the first to know." },
-    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Join the Tea & Tonic newsletter for early access to new releases, first looks at new products and subscriber-only giveaways." },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "New arrivals before anyone else, stories from our makers, holistic health and beauty tips, and subscriber-only gifts." },
+    { "type": "text", "id": "perk", "label": "Highlight line", "default": "Plus 10% off your first order" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" },
-    { "type": "text", "id": "fine_print", "label": "Fine print", "default": "No spam. Unsubscribe anytime." },
+    { "type": "text", "id": "fine_print", "label": "Fine print (optional)" },
     { "type": "text", "id": "success_message", "label": "Success message", "default": "Thank you, you're on the list. Keep an eye on your inbox." },
     { "type": "header", "content": "Product feed" },
-    { "type": "checkbox", "id": "show_feed", "label": "Show product feed", "default": true },
+    { "type": "checkbox", "id": "show_feed", "label": "Show product feed", "default": false },
     { "type": "text", "id": "feed_heading", "label": "Feed heading", "default": "New in store" },
     { "type": "collection", "id": "feed_collection", "label": "Feed collection" },
     { "type": "range", "id": "feed_limit", "label": "Tiles", "min": 3, "max": 12, "step": 3, "default": 6 }

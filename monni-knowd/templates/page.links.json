@@ -21,7 +21,7 @@
         "b3": {
           "type": "link",
           "settings": {
-            "label": "Tea & Tonic Gift Voucher",
+            "label": "Gift Card",
             "url": "/products/gift-card"
           }
         },
@@ -37,15 +37,23 @@
           "settings": {
             "label": "Navigating Grief",
             "url": "/blogs/journal/navigating-grief-monni-explores-finding-comfort-and-healing-in-life-s-most-challenging-times",
-            "subtext": "A personal read from Monni"
+            "subtext": "A personal reflection from Monni"
           }
         },
         "b6": {
           "type": "link",
           "settings": {
-            "label": "Join the newsletter",
+            "label": "Visit the Store",
+            "url": "/pages/contact",
+            "subtext": "Open daily \u00b7 Hours and directions"
+          }
+        },
+        "b7": {
+          "type": "link",
+          "settings": {
+            "label": "Join the Newsletter",
             "url": "/pages/subscribe",
-            "subtext": "New releases first, new products + giveaways",
+            "subtext": "New arrivals first, stories from our makers, subscriber-only gifts and 10% off your first order.",
             "highlight": true
           }
         }
@@ -56,11 +64,15 @@
         "b3",
         "b4",
         "b5",
-        "b6"
+        "b6",
+        "b7"
       ],
       "settings": {
-        "name": "Tea & Tonic Matakana",
-        "bio": "Women-led wellness, fashion, homewares & gifts. Matakana Village, Aotearoa NZ.",
+        "tagline": "A place to pause. A place to connect.",
+        "bio": "Natural skincare, organic tea, jewellery, art, slow fashion and pieces for the home, from women-founded makers.",
+        "place": "Matakana Village, Aotearoa",
+        "show_instagram": false,
+        "show_facebook": true,
         "show_feed": true,
         "feed_heading": "In store now",
         "feed_collection": "new-website-featured",

@@ -1,9 +1,9 @@
 <section class="lt">
   <div class="lt__inner">
     {% render 'links-brand' %}
-    <h1 class="lt__title">{{ section.settings.name }}</h1>
+    {%- if section.settings.tagline != blank -%}<h1 class="lt__tagline">{{ section.settings.tagline }}</h1>{%- endif -%}
     {%- if section.settings.bio != blank -%}<p class="lt__bio">{{ section.settings.bio }}</p>{%- endif -%}
-    {% render 'links-social' %}
+    {%- if section.settings.place != blank -%}<p class="lt__place">{{ section.settings.place }}</p>{%- endif -%}
 
     <ul class="lt__list">
       {%- for block in section.blocks -%}
@@ -32,7 +32,10 @@
       {% render 'links-feed', collection: section.settings.feed_collection, limit: section.settings.feed_limit, heading: section.settings.feed_heading %}
     {%- endif -%}
 
-    <p class="lt__foot"><a href="{{ routes.root_url }}">teaandtonic.co.nz</a></p>
+    <div class="lt__links">
+      {%- if section.settings.show_instagram -%}<a class="lt__link" href="{{ settings.social_instagram_link | default: 'https://www.instagram.com/teaandtonicmatakana/' }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
+      {%- if section.settings.show_facebook -%}<a class="lt__link" href="{{ settings.social_facebook_link | default: 'https://www.facebook.com/teaandtonicmatakana' }}" target="_blank" rel="noopener">Facebook</a>{%- endif -%}
+    </div>
   </div>
 </section>
 
@@ -40,8 +43,11 @@
 {
   "name": "Link in bio",
   "settings": [
-    { "type": "text", "id": "name", "label": "Heading", "default": "Tea & Tonic Matakana" },
-    { "type": "textarea", "id": "bio", "label": "Bio", "default": "Women-led wellness, fashion, homewares & gifts. Matakana Village, Aotearoa NZ." },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "A place to pause. A place to connect." },
+    { "type": "textarea", "id": "bio", "label": "Bio", "default": "Natural skincare, organic tea, jewellery, art, slow fashion and pieces for the home, from women-founded makers." },
+    { "type": "text", "id": "place", "label": "Location line", "default": "Matakana Village, Aotearoa" },
+    { "type": "checkbox", "id": "show_instagram", "label": "Show Instagram link", "default": false },
+    { "type": "checkbox", "id": "show_facebook", "label": "Show Facebook link", "default": true },
     { "type": "header", "content": "Product feed" },
     { "type": "checkbox", "id": "show_feed", "label": "Show product feed under the buttons", "default": true },
     { "type": "text", "id": "feed_heading", "label": "Feed heading", "default": "In store now" },
