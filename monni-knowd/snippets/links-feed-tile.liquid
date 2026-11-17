@@ -1,0 +1,31 @@
+{% doc %}
+  One feed tile. Index 1 is the lead, index 4 is a wide still, the rest sit in pairs.
+  @param {product} product
+  @param {number} index - 1-based position in the feed
+  @param {object} [block] - Section block, when the tile comes from a product block
+{% enddoc %}
+{%- liquid
+  assign role = 'pair'
+  if index == 1
+    assign role = 'lead'
+  elsif index == 4
+    assign role = 'wide'
+  endif
+  if role == 'pair'
+    assign img_sizes = '(min-width: 700px) 230px, 50vw'
+    assign img_widths = '240, 360, 480'
+  else
+    assign img_sizes = '(min-width: 700px) 480px, 100vw'
+    assign img_widths = '360, 540, 720, 960'
+  endif
+-%}
+<li class="lt__cell lt__cell--{{ role }}"{% if block %} {{ block.shopify_attributes }}{% endif %}>
+  <a class="lt__tile" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {%- if index == 1 -%}
+      {{ product.featured_image | image_url: width: 960 | image_tag: widths: img_widths, sizes: img_sizes, loading: 'eager', alt: product.featured_image.alt | default: product.title }}
+    {%- else -%}
+      {{ product.featured_image | image_url: width: 960 | image_tag: widths: img_widths, sizes: img_sizes, loading: 'lazy', alt: product.featured_image.alt | default: product.title }}
+    {%- endif -%}
+    <span class="lt__tile-cap">{{ product.title | truncate: 42 }}</span>
+  </a>
+</li>

@@ -113,7 +113,7 @@
       </div>
 
       <div class="header__logo" data-ink-item="Logo">
-        <a href="{{ routes.root_url }}" aria-label="Tea &amp; Tonic" class="header__logo-link"><span class="header__logo-text">Tea &amp; Tonic</span></a>
+        <a href="{{ routes.root_url }}" aria-label="Tea &amp; Tonic" class="header__logo-link">{% render 'logo-tea-tonic', class: 'header__logo-mark' %}</a>
       </div>
 
       <div class="header__side header__side--end">
@@ -172,7 +172,7 @@
     <div class="header__drawer-panel">
       <div class="header__drawer-top">
         <a href="{{ routes.root_url }}" class="header__drawer-brand" id="header-drawer-title-{{ section.id }}">
-          <span class="header__logo-text">Tea &amp; Tonic</span>
+          {% render 'logo-tea-tonic', class: 'header__logo-mark' %}
         </a>
 
         <button
@@ -1472,6 +1472,43 @@
 
   body.template-index .header.header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__burger i {
     background: #faf8f4;
+  }
+
+  /* Wordmark follows the bar: charcoal on light, cream on dark. */
+  .header__logo-mark {
+    display: block;
+    width: 13.68rem;
+    max-width: 25.92vw;
+    height: auto;
+    color: #3a3a3c;
+  }
+
+  .header__drawer-brand .header__logo-mark {
+    width: 9.6rem;
+    max-width: 62vw;
+    color: #3a3a3c;
+  }
+
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink="light"] .header__logo .header__logo-mark,
+  body.template-index .header.header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) .header__logo .header__logo-mark {
+    color: #e3d6b3;
+  }
+
+  .header--over-photo:not(.is-solid):not(.is-open):not(.header--menu-open) [data-ink="dark"] .header__logo .header__logo-mark,
+  .header.is-solid .header__logo-mark,
+  .header.is-open .header__logo-mark,
+  .header.header--menu-open .header__logo-mark,
+  body.template-product .header .header__logo-mark,
+  body.product-gift-card .header .header__logo-mark {
+    color: #3a3a3c;
+  }
+
+  @media (max-width: 1160px) {
+    .header__logo-mark { width: 7.6rem; max-width: 34vw; }
+  }
+
+  @media (max-width: 389px) {
+    .header__logo-mark { width: 6.8rem; }
   }
 {% endstyle %}
 

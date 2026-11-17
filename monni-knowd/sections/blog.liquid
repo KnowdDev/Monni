@@ -35,18 +35,26 @@
         <a href="{{ blog.url }}" class="blog-page__tab{% unless current_tags %} is-active{% endunless %}"{% unless current_tags %} aria-current="page"{% endunless %}>All</a>
         {%- for tag in filter_tags -%}
           {%- liquid
+            assign tag_label = tag | strip
             assign tag_active = false
-            if current_tags contains tag
-              assign tag_active = true
-            endif
+            assign tag_down = tag_label | downcase
+            for current_tag in current_tags
+              assign current_down = current_tag | downcase
+              if current_down == tag_down
+                assign tag_active = true
+              endif
+            endfor
           -%}
-          <a href="{{ blog.url }}/tagged/{{ tag | handleize }}" class="blog-page__tab{% if tag_active %} is-active{% endif %}"{% if tag_active %} aria-current="page"{% endif %}>{{ tag }}</a>
+          <a href="{{ blog.url }}/tagged/{{ tag_label | handleize }}" class="blog-page__tab{% if tag_active %} is-active{% endif %}"{% if tag_active %} aria-current="page"{% endif %}>{{ tag_label }}</a>
         {%- endfor -%}
       </nav>
     {%- endif -%}
 
-    <div class="blog-page__grid">
-      {% paginate blog.articles by articles_per_page %}
+    {% paginate blog.articles by articles_per_page %}
+      <div class="blog-page__grid" data-stories-grid>
+        {%- if blog.articles.size == 0 -%}
+          <p class="blog-page__empty">No stories in this series yet.</p>
+        {%- endif -%}
         {% for article in blog.articles %}
           {%- liquid
             assign excerpt_source = article.excerpt
@@ -80,8 +88,15 @@
                 {%- liquid
                   assign card_tag = blank
                   for t in article.tags
-                    if filter_tags contains t
-                      assign card_tag = t
+                    assign t_down = t | downcase
+                    for filter_tag in filter_tags
+                      assign filter_down = filter_tag | strip | downcase
+                      if t_down == filter_down
+                        assign card_tag = filter_tag | strip
+                        break
+                      endif
+                    endfor
+                    if card_tag != blank
                       break
                     endif
                   endfor
@@ -100,37 +115,116 @@
             </a>
           </article>
         {% endfor %}
+      </div>
 
-        {%- if paginate.next -%}
-          <p class="blog-page__load">
-            <button type="button" class="btn btn--outline" data-load-stories data-next="{{ paginate.next.url }}">Load more stories</button>
-          </p>
-        {%- endif -%}
-      {% endpaginate %}
-    </div>
+      {%- if paginate.next -%}
+        <div class="blog-page__load" data-stories-more data-next="{{ paginate.next.url }}">
+          <button type="button" class="btn btn--outline" data-load-stories>Load more stories</button>
+        </div>
+      {%- endif -%}
+    {% endpaginate %}
   </div>
 </section>
 
 <script>
-  document.addEventListener('click', function (event) {
-    var button = event.target.closest('[data-load-stories]');
-    if (!button) return;
-    var grid = document.querySelector('.blog-page__grid');
-    var next = button.getAttribute('data-next');
-    if (!grid || !next) return;
-    button.disabled = true;
-    fetch(next).then(function (res) { return res.text(); }).then(function (html) {
-      var doc = new DOMParser().parseFromString(html, 'text/html');
-      doc.querySelectorAll('.blog-page__grid > article').forEach(function (card) { grid.appendChild(card); });
-      var more = doc.querySelector('[data-load-stories]');
-      if (more) {
-        button.setAttribute('data-next', more.getAttribute('data-next'));
-        button.disabled = false;
-      } else {
-        button.remove();
+  (function () {
+    var root = document.querySelector('[data-stories-more]');
+    var grid = document.querySelector('[data-stories-grid]');
+    if (!root || !grid || root.dataset.bound === 'true') return;
+    root.dataset.bound = 'true';
+    var button = root.querySelector('[data-load-stories]');
+    var loading = false;
+    var scrolling = false;
+    var observer = null;
+
+    function nearView() {
+      var rect = root.getBoundingClientRect();
+      return rect.top < window.innerHeight + 700;
+    }
+
+    function loadNext() {
+      var next = root.getAttribute('data-next');
+      if (!next || loading) return Promise.resolve(false);
+      loading = true;
+      if (button) button.disabled = true;
+      var status = root.querySelector('[data-stories-status]');
+      if (status) status.hidden = false;
+      return fetch(next)
+        .then(function (res) { return res.text(); })
+        .then(function (html) {
+          var doc = new DOMParser().parseFromString(html, 'text/html');
+          var incoming = doc.querySelector('[data-stories-grid]');
+          if (incoming) {
+            incoming.querySelectorAll('article').forEach(function (card) {
+              card.classList.remove('blog-page__card--lead');
+              grid.appendChild(card);
+            });
+          }
+          var more = doc.querySelector('[data-stories-more]');
+          var nextUrl = more && more.getAttribute('data-next');
+          if (nextUrl) {
+            root.setAttribute('data-next', nextUrl);
+            return true;
+          }
+          root.removeAttribute('data-next');
+          if (observer) observer.disconnect();
+          root.remove();
+          return false;
+        })
+        .catch(function () {
+          if (button) button.disabled = false;
+          return false;
+        })
+        .finally(function () {
+          loading = false;
+          var liveStatus = root.querySelector && root.querySelector('[data-stories-status]');
+          if (liveStatus) liveStatus.hidden = true;
+        });
+    }
+
+    function keepFilling() {
+      if (!scrolling || !root.isConnected || !root.getAttribute('data-next') || !nearView()) return;
+      loadNext().then(function (more) {
+        if (more) keepFilling();
+      });
+    }
+
+    function armScroll() {
+      scrolling = true;
+      if (button) button.remove();
+      button = null;
+      if (!root.querySelector('[data-stories-status]')) {
+        var status = document.createElement('p');
+        status.className = 'blog-page__status';
+        status.setAttribute('data-stories-status', '');
+        status.setAttribute('aria-live', 'polite');
+        status.hidden = true;
+        status.textContent = 'Loading stories';
+        root.appendChild(status);
       }
-    }).catch(function () { button.disabled = false; });
-  });
+      var sentinel = document.createElement('div');
+      sentinel.className = 'blog-page__sentinel';
+      sentinel.setAttribute('aria-hidden', 'true');
+      root.appendChild(sentinel);
+      if ('IntersectionObserver' in window) {
+        observer = new IntersectionObserver(function (entries) {
+          if (entries.some(function (entry) { return entry.isIntersecting; })) keepFilling();
+        }, { rootMargin: '700px 0px' });
+        observer.observe(sentinel);
+      } else {
+        window.addEventListener('scroll', keepFilling, { passive: true });
+      }
+      keepFilling();
+    }
+
+    if (button) {
+      button.addEventListener('click', function () {
+        loadNext().then(function (more) {
+          if (more) armScroll();
+        });
+      });
+    }
+  })();
 </script>
 
 {% schema %}

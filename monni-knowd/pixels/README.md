@@ -27,14 +27,14 @@ node scripts/remove-mailchimp-pixel.mjs
 
 Newsletter signups use SenderKit (`senderkit-newsletter.js`), not Mailchimp.
 
-## Deferred Google + Meta pixels (PageSpeed)
+## Meta pixel
 
-Disconnect the **Google & YouTube** and **Facebook & Instagram** app pixels first, then add custom pixels:
+The Facebook & Instagram **sales channel stays installed**. Its app pixel stays disconnected. Paste `meta-deferred.js` as a custom pixel so `fbevents.js` stays in Shopify’s sandbox.
 
-| Pixel file | Replaces | Est. savings |
-|---|---|---|
-| `gtm-deferred.js` | Google & YouTube app pixel | ~223 KiB unused JS + 244ms main-thread |
-| `meta-deferred.js` | Facebook & Instagram app pixel | ~40 KiB unused JS + 122ms main-thread |
+| Pixel file | Where |
+|---|---|
+| `meta-deferred.js` | Customer events → custom pixel `Meta` (dataset `338962594137574`) |
+| `gtm-deferred.js` | Google & YouTube app pixel replacement |
 
 ```bash
 node scripts/optimize-tracking-pixels.mjs --print-deferred-code

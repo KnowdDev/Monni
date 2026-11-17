@@ -1,80 +1,166 @@
 /**
- * Deferred Meta / Facebook pixel — paste into Shopify Admin.
+ * Meta pixel for Shopify Customer Events.
  *
- * Admin → Settings → Customer events → Add custom pixel → Connect
- * FIRST disconnect the "Facebook & Instagram" app pixel to avoid duplicate fbq loads.
+ * Admin → Settings → Customer events → Add custom pixel
+ * Name: Meta
+ * Permission: Marketing
+ * Paste this file, then Connect.
+ *
+ * Do not paste this into theme.liquid. The Facebook & Instagram app pixel
+ * must stay disconnected, or purchases are counted twice.
  *
  * Pixel ID: 338962594137574
  */
 (function () {
+  var PIXEL_ID = '338962594137574';
   var loaded = false;
-  var loading = false;
-  var waiters = [];
-  var pixelId = '338962594137574';
 
-  function runFb(fn) {
-    if (loaded && window.fbq) fn();
-    else waiters.push(fn);
+  function rawId(value) {
+    if (value == null || value === '') return '';
+    var id = String(value);
+    var parts = id.split('/');
+    return parts[parts.length - 1];
   }
 
-  function flush() {
-    waiters.splice(0).forEach(function (fn) {
-      try { fn(); } catch (e) {}
-    });
+  function money(amount) {
+    var n = parseFloat(amount);
+    return isNaN(n) ? 0 : n;
   }
 
-  function loadFb() {
-    if (loaded || loading) return;
-    loading = true;
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(
-    window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', pixelId);
+  function ensureFb() {
+    if (loaded || window.fbq) {
+      loaded = true;
+      return;
+    }
     loaded = true;
-    flush();
+    !(function (f, b, e, v, n, t) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = !0;
+      t.src = v;
+      (b.head || b.documentElement).appendChild(t);
+    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', PIXEL_ID);
   }
 
-  function ensureFb() { loadFb(); }
+  function track(name, params, eventId) {
+    ensureFb();
+    if (eventId) fbq('track', name, params || {}, { eventID: String(eventId) });
+    else if (params) fbq('track', name, params);
+    else fbq('track', name);
+  }
 
-  ['scroll', 'click', 'keydown', 'touchstart'].forEach(function (evt) {
-    document.addEventListener(evt, loadFb, { once: true, passive: true });
-  });
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(loadFb, { timeout: 4000 });
-  } else {
-    setTimeout(loadFb, 2500);
+  function variantContent(variant, quantity) {
+    if (!variant) return null;
+    var id = rawId(variant.id);
+    if (!id) return null;
+    var price = variant.price || {};
+    return {
+      id: id,
+      quantity: quantity || 1,
+      value: money(price.amount),
+      currency: price.currencyCode || 'NZD',
+      name: (variant.product && variant.product.title) || variant.title || ''
+    };
+  }
+
+  function lineContents(checkout) {
+    var items = (checkout && checkout.lineItems) || [];
+    var ids = [];
+    var contents = [];
+    var count = 0;
+    items.forEach(function (item) {
+      var content = variantContent(item.variant, item.quantity || 1);
+      if (!content) return;
+      ids.push(content.id);
+      contents.push({ id: content.id, quantity: content.quantity });
+      count += content.quantity;
+    });
+    return { ids: ids, contents: contents, count: count };
   }
 
   analytics.subscribe('page_viewed', function () {
-    ensureFb();
-    runFb(function () { fbq('track', 'PageView'); });
+    track('PageView');
   });
 
   analytics.subscribe('product_viewed', function (event) {
-    ensureFb();
-    var v = event.data && event.data.productVariant;
-    if (!v) return;
-    runFb(function () {
-      fbq('track', 'ViewContent', {
-        content_ids: [v.sku || v.id],
-        content_name: v.product.title,
-        value: v.price.amount,
-        currency: v.price.currencyCode
-      });
+    var content = variantContent(event.data && event.data.productVariant, 1);
+    if (!content) return;
+    track('ViewContent', {
+      content_ids: [content.id],
+      content_type: 'product',
+      content_name: content.name,
+      value: content.value,
+      currency: content.currency
+    });
+  });
+
+  analytics.subscribe('product_added_to_cart', function (event) {
+    var line = event.data && event.data.cartLine;
+    var variant = line && (line.merchandise || line.variant);
+    var content = variantContent(variant, (line && line.quantity) || 1);
+    if (!content) return;
+    var lineCost = line && line.cost && line.cost.totalAmount;
+    track('AddToCart', {
+      content_ids: [content.id],
+      content_type: 'product',
+      content_name: content.name,
+      contents: [{ id: content.id, quantity: content.quantity }],
+      value: lineCost ? money(lineCost.amount) : content.value * content.quantity,
+      currency: (lineCost && lineCost.currencyCode) || content.currency
+    });
+  });
+
+  analytics.subscribe('checkout_started', function (event) {
+    var checkout = event.data && event.data.checkout;
+    if (!checkout) return;
+    var lines = lineContents(checkout);
+    var total = checkout.totalPrice || {};
+    track('InitiateCheckout', {
+      content_ids: lines.ids,
+      content_type: 'product',
+      contents: lines.contents,
+      num_items: lines.count,
+      value: money(total.amount),
+      currency: total.currencyCode || 'NZD'
     });
   });
 
   analytics.subscribe('checkout_completed', function (event) {
-    ensureFb();
     var checkout = event.data && event.data.checkout;
     if (!checkout) return;
-    runFb(function () {
-      fbq('track', 'Purchase', {
-        value: checkout.totalPrice && checkout.totalPrice.amount,
-        currency: checkout.currencyCode
-      });
-    });
+    ensureFb();
+    var user = {};
+    if (checkout.email) user.em = checkout.email;
+    var phone = checkout.phone || (checkout.shippingAddress && checkout.shippingAddress.phone);
+    if (phone) user.ph = phone;
+    if (user.em || user.ph) fbq('init', PIXEL_ID, user);
+
+    var lines = lineContents(checkout);
+    var total = checkout.totalPrice || {};
+    var orderId = rawId(checkout.order && checkout.order.id) || checkout.token || '';
+    track('Purchase', {
+      content_ids: lines.ids,
+      content_type: 'product',
+      contents: lines.contents,
+      num_items: lines.count,
+      value: money(total.amount),
+      currency: total.currencyCode || 'NZD'
+    }, orderId);
+  });
+
+  analytics.subscribe('search_submitted', function (event) {
+    var search = event.data && event.data.searchResult;
+    var query = search && search.query;
+    if (!query) return;
+    track('Search', { search_string: query });
   });
 })();

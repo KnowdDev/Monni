@@ -103,6 +103,15 @@
     position: relative;
     display: inline-block;
     white-space: nowrap;
+    color: #3a3a3c;
+  }
+
+  .header__logo-mark {
+    display: block;
+    width: 13.68rem;
+    max-width: 25.92vw;
+    height: auto;
+    color: #3a3a3c;
   }
 
   .header__logo-text {
@@ -233,5 +242,13 @@
     .header__logo-text
   ) {
     color: #faf8f4;
+  }
+
+  body.template-index .header--over-photo:not(.is-solid) .header__logo .header__logo-mark {
+    color: #e3d6b3;
+  }
+
+  @media (max-width: 1160px) {
+    .header__logo-mark { width: 7.6rem; max-width: 34vw; }
   }
 {% endstyle %}

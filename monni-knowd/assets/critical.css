@@ -2447,11 +2447,11 @@ a.breadcrumb__link:focus-visible {
   width: 100% !important;
   max-width: 100% !important;
   height: auto !important;
-  max-height: min(72vh, 42rem);
+  max-height: none;
   margin: 2em 0;
-  object-fit: contain;
+  object-fit: unset;
   object-position: center;
-  background-color: var(--color-border-light);
+  background-color: transparent;
 }
 
 .article-page__content figure img,
