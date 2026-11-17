@@ -29,12 +29,12 @@
     assign maker_bio = maker.maker_bio.value | default: maker.maker_bio | strip
     assign maker_image = maker.maker_image.value | default: maker.maker_image
     assign maker_name = maker.name.value | default: maker.name
-    assign collection_handle = maker.collection_handle.value | default: maker.collection_handle
-    assign maker_collection = collections[collection_handle]
-    if maker_collection != blank
-      assign maker_url = maker_collection.url
-    else
-      assign maker_url = maker.system.url | default: maker.url
+    assign maker_url = maker.system.url | default: maker.url
+    if maker_url == blank
+      assign brand_handle = maker.system.handle | default: maker.handle
+      if brand_handle != blank
+        assign maker_url = '/pages/brands/' | append: brand_handle
+      endif
     endif
   endif
 -%}
