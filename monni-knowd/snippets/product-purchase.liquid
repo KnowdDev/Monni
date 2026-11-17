@@ -279,6 +279,8 @@
     </details>
     {%- endunless -%}
 
+    {%- render 'product-maker', product: product -%}
+
     {%- if product.metafields.custom.directions != blank -%}
       <details class="product-page__fold"><summary>Directions</summary><div class="product-page__fold-body rte">{{ product.metafields.custom.directions | metafield_tag }}</div></details>
     {%- endif -%}

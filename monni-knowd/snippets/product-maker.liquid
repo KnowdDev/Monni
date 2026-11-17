@@ -1,0 +1,147 @@
+{%- comment -%}
+  About the Maker. Shown under the product description when the product
+  vendor matches a brand that has a maker bio. Edit Maker bio and Maker photo
+  on the brand in Shopify admin. One edit updates every product from that brand,
+  including products added later. Leave Maker bio blank to hide the block.
+{%- endcomment -%}
+{%- liquid
+  assign vendor_key = product.vendor | strip | downcase
+  assign maker = blank
+  if vendor_key != blank
+    for brand in shop.metaobjects.brand.values
+      assign published = brand.published.value | default: brand.published
+      if published == false
+        continue
+      endif
+      assign match_name = brand.vendor_match.value | default: brand.vendor_match | default: brand.name.value | default: brand.name | strip | downcase
+      if match_name == vendor_key
+        assign maker = brand
+        break
+      endif
+    endfor
+  endif
+
+  assign maker_bio = blank
+  assign maker_image = blank
+  assign maker_name = blank
+  assign maker_url = blank
+  if maker != blank
+    assign maker_bio = maker.maker_bio.value | default: maker.maker_bio | strip
+    assign maker_image = maker.maker_image.value | default: maker.maker_image
+    assign maker_name = maker.name.value | default: maker.name
+    assign collection_handle = maker.collection_handle.value | default: maker.collection_handle
+    assign maker_collection = collections[collection_handle]
+    if maker_collection != blank
+      assign maker_url = maker_collection.url
+    else
+      assign maker_url = maker.system.url | default: maker.url
+    endif
+  endif
+-%}
+{%- if maker_bio != blank -%}
+  <aside class="product-maker" aria-label="About the Maker">
+    <p class="product-maker__eyebrow">About the Maker</p>
+    <div class="product-maker__row">
+      {%- if maker_image != blank -%}
+        {{
+          maker_image
+          | image_url: width: 480
+          | image_tag:
+            class: 'product-maker__photo',
+            widths: '160, 240, 360, 480',
+            sizes: '84px',
+            alt: maker_name,
+            loading: 'lazy'
+        }}
+      {%- endif -%}
+      <div class="product-maker__copy">
+        {%- if maker_name != blank -%}
+          <p class="product-maker__name">{%- render 'monni-line-label', text: maker_name -%}</p>
+        {%- endif -%}
+        <p class="product-maker__bio">{{ maker_bio | escape | newline_to_br }}</p>
+        {%- if maker_url != blank -%}
+          <a class="product-maker__link" href="{{ maker_url }}">Shop {{ maker_name | escape }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </aside>
+{%- endif -%}
+{% stylesheet %}
+    .product-maker {
+      border-top: 1px solid #dcd9d3;
+      margin-top: 0.15rem;
+      padding: 1rem 0 0.45rem;
+    }
+
+    .product-maker__eyebrow {
+      margin: 0 0 0.75rem;
+      font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 400;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #2f2f2f;
+    }
+
+    .product-maker__row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+    }
+
+    .product-maker__photo {
+      width: 5.25rem;
+      height: 6.6rem;
+      flex: 0 0 auto;
+      object-fit: cover;
+      object-position: 22% 28%;
+      background: #e7e4de;
+    }
+
+    .product-maker__name {
+      margin: 0 0 0.3rem;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 400;
+      font-size: 1.2rem;
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+      color: #2f2f2f;
+    }
+
+    .product-maker__bio {
+      margin: 0;
+      max-width: 36rem;
+      font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 300;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #2f2f2f;
+    }
+
+    .product-maker__link {
+      display: inline-block;
+      margin-top: 0.7rem;
+      font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #2f2f2f;
+      text-underline-offset: 0.28em;
+    }
+
+    .product-maker__link:hover {
+      color: #2f2f2f;
+    }
+
+    @media (max-width: 989px) {
+      .product-maker__photo {
+        width: 4.6rem;
+        height: 5.8rem;
+      }
+
+      .product-maker__bio {
+        font-size: 0.88rem;
+      }
+    }
+  {% endstylesheet %}
