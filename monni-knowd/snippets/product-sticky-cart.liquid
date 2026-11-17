@@ -1,0 +1,232 @@
+{%- comment -%}
+  Shown once the main Add to cart button has scrolled away.
+  Submits the product form already on the page.
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign brand_label = product.vendor | strip
+  assign brand_down = brand_label | downcase
+  if brand_down == blank or brand_down == 'tea & tonic' or brand_down == 'tea & tonic matakana' or brand_down == 'not specified'
+    assign brand_label = blank
+  endif
+  assign clean_title = product.title | replace: 'Tea & Tonic Matakana', '' | replace: '  ', ' ' | strip
+  if brand_label != blank and clean_title contains brand_label
+    assign clean_title = clean_title | remove_first: brand_label | strip | remove_first: '-' | strip | remove_first: '|' | strip
+  endif
+-%}
+<div class="sticky-atc" data-sticky-atc hidden>
+  <div class="sticky-atc__inner">
+    {%- if product.featured_image != blank -%}
+      <img
+        class="sticky-atc__photo"
+        data-sticky-photo
+        src="{{ product.featured_image | image_url: width: 160 }}"
+        alt=""
+        width="44"
+        height="56"
+      >
+    {%- endif -%}
+    <div class="sticky-atc__meta">
+      <p class="sticky-atc__name">{{ clean_title | escape }}</p>
+      <p class="sticky-atc__detail">
+        <span data-sticky-price>{{ current_variant.price | money }}</span>
+        <span data-sticky-variant hidden></span>
+      </p>
+    </div>
+    <button
+      type="submit"
+      class="sticky-atc__button"
+      form="{{ product_form_id }}"
+      data-sticky-add
+      {% unless current_variant.available %}disabled{% endunless %}
+    >
+      {%- if current_variant.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+    </button>
+  </div>
+</div>
+<script>
+  (function () {
+    var root = document.querySelector('product-page');
+    var bar = document.querySelector('[data-sticky-atc]');
+    if (!root || !bar) return;
+    var source = root.querySelector('[data-add-to-cart]');
+    var buy = root.querySelector('.product-page__buy');
+    var stickyPrice = bar.querySelector('[data-sticky-price]');
+    var stickyVariant = bar.querySelector('[data-sticky-variant]');
+    var stickyBtn = bar.querySelector('[data-sticky-add]');
+    var photo = bar.querySelector('[data-sticky-photo]');
+    if (!source || !stickyBtn) return;
+
+    var frame = 0;
+    var sourceSeen = true;
+
+    function priceText() {
+      var price = root.querySelector('[data-price-wrapper]');
+      if (!price) return '';
+      var sale = price.querySelector('[data-sale-price]');
+      var regular = price.querySelector('[data-regular-price]');
+      var node = sale || regular;
+      return (node ? node.textContent : '').replace(/\s+/g, ' ').trim();
+    }
+
+    function variantText() {
+      var parts = [];
+      root.querySelectorAll('.product-page__variant-input:checked').forEach(function (input) {
+        if (input.value) parts.push(input.value);
+      });
+      return parts.join(' · ');
+    }
+
+    function sync() {
+      var label = source.querySelector('[data-add-to-cart-text]');
+      var text = (label ? label.textContent : source.textContent || '').replace(/\s+/g, ' ').trim();
+      var unavailable = source.hidden || source.dataset.available === 'false';
+      var busy = text === 'Adding...' || text === 'Added!';
+      stickyBtn.textContent = unavailable ? 'Sold out' : (text || 'Add to cart');
+      stickyBtn.disabled = unavailable || busy;
+      if (stickyPrice) {
+        var nextPrice = priceText();
+        if (nextPrice) stickyPrice.textContent = nextPrice;
+      }
+      if (stickyVariant) {
+        var nextVariant = variantText();
+        stickyVariant.hidden = !nextVariant;
+        stickyVariant.textContent = nextVariant ? ' · ' + nextVariant : '';
+      }
+      if (photo) {
+        var active = root.querySelector('.media-gallery__slide.is-active img');
+        var src = active && (active.currentSrc || active.src);
+        if (src) photo.src = src;
+      }
+      var show = !sourceSeen;
+      bar.hidden = !show;
+      document.body.classList.toggle('has-sticky-atc', show);
+    }
+
+    function schedule() {
+      if (frame) return;
+      frame = requestAnimationFrame(function () {
+        frame = 0;
+        sync();
+      });
+    }
+
+    var visibility = new IntersectionObserver(function (entries) {
+      sourceSeen = entries.some(function (entry) { return entry.isIntersecting; });
+      schedule();
+    }, { threshold: 0.2 });
+    visibility.observe(source);
+
+    var changes = new MutationObserver(schedule);
+    changes.observe(source, { attributes: true, childList: true, subtree: true, characterData: true });
+    if (buy) changes.observe(buy, { childList: true, subtree: true, characterData: true });
+
+    root.addEventListener('change', schedule);
+
+    var drawer = document.querySelector('cart-drawer');
+    if (drawer) {
+      new MutationObserver(function () {
+        bar.classList.toggle('is-suppressed', drawer.classList.contains('is-open'));
+      }).observe(drawer, { attributes: true, attributeFilter: ['class'] });
+    }
+  })();
+</script>
+{% stylesheet %}
+  .sticky-atc {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 180;
+    background: #f5f4f1;
+    border-top: 1px solid #dcd9d3;
+    color: #2f2f2f;
+  }
+
+  .sticky-atc[hidden] {
+    display: none !important;
+  }
+
+  .sticky-atc.is-suppressed {
+    visibility: hidden;
+  }
+
+  .sticky-atc__inner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0.6rem 1rem calc(0.6rem + env(safe-area-inset-bottom));
+  }
+
+  .sticky-atc__photo {
+    width: 2.75rem;
+    height: 3.4rem;
+    flex: 0 0 auto;
+    object-fit: cover;
+    background: #e7e4de;
+  }
+
+  .sticky-atc__meta {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .sticky-atc__name,
+  .sticky-atc__detail {
+    margin: 0;
+    font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .sticky-atc__name {
+    overflow: hidden;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .sticky-atc__detail {
+    margin-top: 0.15rem;
+    color: #6b6965;
+    font-size: 0.78rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+  }
+
+  .sticky-atc__button {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0.85rem 1.05rem;
+    border: 1px solid #000;
+    background: #000;
+    color: #f5f4f1;
+    font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    line-height: 1;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .sticky-atc__button:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+
+  body.has-sticky-atc {
+    padding-bottom: calc(4.6rem + env(safe-area-inset-bottom));
+  }
+
+  @media (max-width: 389px) {
+    .sticky-atc__button {
+      padding-inline: 0.75rem;
+    }
+  }
+{% endstylesheet %}
